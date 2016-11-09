@@ -8,23 +8,50 @@ import com.citycon.dao.DAO;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.1
+ * @version 1.2
  * @see  CityEntity
  */
 public class ORMCity extends ORMEntity {
 	DAO dao = daoFactory.getCityDAO();
 	CityEntity city = new CityEntity();
+
+
+	//Get-set interface for incapsulated object
 	
+	public int getId() {
+		return city.getId();
+	}
+	public void setId(int id) {
+		city.setId(id);
+	}
+
+	public String getName() {
+		return city.getName();
+	}
+	public String getCountryName() {
+		return city.getCountryName();
+	}
+
+	public void setName(String name) {
+		city.setName(name);
+	}
+	public void setCountryName(String countryName) {
+		city.setCountryName(countryName);
+	}
+
+
+	//ORM interface for incapsulated object
+
 	public int create() {
-		return 0;
+		return dao.create(city);
 	}
     public int read() {
-    	return 0;
+    	return dao.read(city);
     }
     public int update() {
-    	return 0;
+    	return dao.update(city);
     }
     public void delete() {
-
+    	dao.delete(city);
     }
 }
