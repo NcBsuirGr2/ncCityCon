@@ -13,6 +13,11 @@ public class RouterConnectionEntity extends Entity {
 	private String firstRouterId;
 	private String secondRouterId;
 
+	public RouterConnectionEntity() {
+		firstRouterId = String.valueOf((int)(Math.random()*100000));
+		secondRouterId = String.valueOf((int)(Math.random()*100000));
+	}
+
 	public String getFirstRouterId() {
 		return firstRouterId;
 	}
