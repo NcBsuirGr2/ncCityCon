@@ -1,4 +1,4 @@
-package com.citycon.model.systmunits.orm;
+package com.citycon.model.systemunits.orm;
 /**
  * Common interface for the ORM entities. ORM entities are the wrappers for
  * the plain entities and aimed to provide CRUD interface for them. ORMEntity 
