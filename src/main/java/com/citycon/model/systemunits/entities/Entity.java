@@ -1,4 +1,4 @@
-package com.citycon.model.systmunits.entities;
+package com.citycon.model.systemunits.entities;
 /**
  * Common interface for system entities. System entities are the plain
  * java beans. They must be obtained from DAO layer and be used in jsp-pages 

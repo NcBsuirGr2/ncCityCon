@@ -1,4 +1,4 @@
-package com.citycon.model.systmunits.entities;
+package com.citycon.model.systemunits.entities;
 
 import com.citycon.model.Grant;
 /**
