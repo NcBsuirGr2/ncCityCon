@@ -7,6 +7,8 @@ import com.citycon.model.systemunits.entities.Entity;
  * Created by Vojts on 09.11.2016.
  */
 public class UserDAO extends MySQLDAO {
+    private static volatile UserDAO instance;
+
     private UserDAO(){}
 
     public int create(Entity newElement) {
@@ -24,7 +26,16 @@ public class UserDAO extends MySQLDAO {
     public void delete(Entity deleteElement) {
 
     }
-    public DAO getInstance() {
-        return new UserDAO();
+    public static UserDAO getInstance() {
+        UserDAO localInstance = instance;
+        if (localInstance == null) {
+            synchronized (UserDAO.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new UserDAO();
+                }
+            }
+        }
+        return localInstance;
     }
 }
