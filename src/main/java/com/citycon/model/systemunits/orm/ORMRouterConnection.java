@@ -1,6 +1,7 @@
 package com.citycon.model.systemunits.orm;
 
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
+import com.citycon.dao.DAO;
 
 /**
  * ORM wrapper for the <code>RouterConnectionEntity</code>. This class must be used 
@@ -11,5 +12,19 @@ import com.citycon.model.systemunits.entities.RouterConnectionEntity;
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {
+	DAO dao = daoFactory.getRouterConnectionDAO();
+	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
+	
+	public int create() {
+		return 0;
+	}
+    public int read() {
+    	return 0;
+    }
+    public int update() {
+    	return 0;
+    }
+    public void delete() {
 
-}
+    }
+}	
