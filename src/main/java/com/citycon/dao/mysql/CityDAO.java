@@ -8,6 +8,8 @@ import com.citycon.model.systemunits.entities.Entity;
  */
 
 public class CityDAO extends MySQLDAO {
+    private static volatile CityDAO instance;
+
     private CityDAO(){}
 
     public int create(Entity newElement) {
@@ -25,7 +27,16 @@ public class CityDAO extends MySQLDAO {
     public void delete(Entity deleteElement) {
 
     }
-    public DAO getInstance() {
-        return new CityDAO();
+    public static CityDAO getInstance() {
+        CityDAO localInstance = instance;
+        if (localInstance == null) {
+            synchronized (UserDAO.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new CityDAO();
+                }
+            }
+        }
+        return localInstance;
     }
 }

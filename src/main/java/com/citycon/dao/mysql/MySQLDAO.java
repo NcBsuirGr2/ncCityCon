@@ -10,6 +10,4 @@ import java.util.ArrayList;
  */
 public abstract class MySQLDAO implements DAO {
     static ArrayList<Connection> connections;
-
-    public abstract DAO getInstance();
 }

@@ -7,6 +7,8 @@ import com.citycon.model.systemunits.entities.Entity;
  * Created by Vojts on 09.11.2016.
  */
 public class RouterConnectionDAO extends MySQLDAO {
+    private static volatile RouterConnectionDAO instance;
+
     private RouterConnectionDAO(){}
 
     public int create(Entity newElement) {
@@ -24,7 +26,16 @@ public class RouterConnectionDAO extends MySQLDAO {
     public void delete(Entity deleteElement) {
 
     }
-    public DAO getInstance() {
-        return new RouterConnectionDAO();
+    public static RouterConnectionDAO getInstance() {
+        RouterConnectionDAO localInstance = instance;
+        if (localInstance == null) {
+            synchronized (UserDAO.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new RouterConnectionDAO();
+                }
+            }
+        }
+        return localInstance;
     }
 }

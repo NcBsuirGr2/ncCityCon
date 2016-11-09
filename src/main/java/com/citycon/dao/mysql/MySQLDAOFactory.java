@@ -8,18 +8,18 @@ import com.citycon.dao.DAOAbstractFactory;
  */
 public class MySQLDAOFactory extends DAOAbstractFactory {
     public DAO getUserDAO() {
-        return null;
+        return UserDAO.getInstance();
     }
 
     public DAO getCityDAO() {
-        return null;
+        return CityDAO.getInstance();
     }
 
     public DAO getRouterDAO() {
-        return null;
+        return RouterDAO.getInstance();
     }
 
     public DAO getRouterConnectionDAO() {
-        return null;
+        return RouterConnectionDAO.getInstance();
     }
 }
