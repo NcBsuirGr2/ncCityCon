@@ -30,7 +30,7 @@ public class CityDAO extends MySQLDAO {
     public static CityDAO getInstance() {
         CityDAO localInstance = instance;
         if (localInstance == null) {
-            synchronized (UserDAO.class) {
+            synchronized (CityDAO.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new CityDAO();
