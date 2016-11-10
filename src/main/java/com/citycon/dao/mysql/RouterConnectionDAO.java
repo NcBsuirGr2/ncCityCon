@@ -29,7 +29,7 @@ public class RouterConnectionDAO extends MySQLDAO {
     public static RouterConnectionDAO getInstance() {
         RouterConnectionDAO localInstance = instance;
         if (localInstance == null) {
-            synchronized (UserDAO.class) {
+            synchronized (RouterConnectionDAO.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new RouterConnectionDAO();
