@@ -3,6 +3,7 @@ package com.citycon.model.systemunits.orm;
 import com.citycon.dao.DAOAbstractFactory;
 import com.citycon.dao.mysql.MySQLDAOFactory;
 import com.citycon.dao.DAOException;
+import com.citycon.model.systemunits.entities.Entity;
 
 /**
  * Common interface for the ORM entities. ORM entities are the wrappers for
@@ -10,10 +11,10 @@ import com.citycon.dao.DAOException;
  * also provides common DAOAbstractFactory for concrete ORM entities.
  * 
  * @author Mike
- * @version 1.3
+ * @version 1.4
  */
 public abstract class ORMEntity {
-	DAOAbstractFactory daoFactory = new MySQLDAOFactory();
+	static DAOAbstractFactory daoFactory = new MySQLDAOFactory();
 	
 	/**
 	 * Ask DAO layer to create new entity. Sends the incapsulated Entity object 

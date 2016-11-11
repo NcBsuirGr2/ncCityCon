@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
@@ -10,7 +11,7 @@ import com.citycon.model.Grant;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.3
+ * @version 1.4
  * @see  UserEntity
  */
 public class ORMUser extends ORMEntity {
@@ -94,5 +95,29 @@ public class ORMUser extends ORMEntity {
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot delete user", cause);
     	}
+    }
+
+     /**
+	 * Get any page of users from DAO layer. 
+	 *
+	 * @param  page number of page to show
+	 * @param  itemsPerPage number of items to show on one page
+	 * @param  sortBy field to sort by
+	 * @param  asc sorting in asc order if true
+	 * @return id the id of deleted element.
+	 * @throws ORMException if error occurs during delete operation
+	 */
+    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    	DAO staticDAO = daoFactory.getUserDAO();
+        UserEntity[] users = null;
+        try {
+        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        	users = (UserEntity[])temp;
+        } catch (DAOException cause) {
+        	throw new ORMException("Cannot get users page", cause);
+        } catch (ClassCastException exception) {
+        	throw new ORMException("Cannot cast Entity[] from DAO to UserEntity[]", exception);
+        }
+        return users;
     }
 }

@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
@@ -9,7 +10,7 @@ import com.citycon.dao.DAOException;
  * in servlets to manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.3
+ * @version 1.4
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {
@@ -76,5 +77,29 @@ public class ORMRouterConnection extends ORMEntity {
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot delete connection", cause);
 		}
+    }
+
+     /**
+	 * Get any page of routerConnections from DAO layer. 
+	 *
+	 * @param  page number of page to show
+	 * @param  itemsPerPage number of items to show on one page
+	 * @param  sortBy field to sort by
+	 * @param  asc sorting in asc order if true
+	 * @return id the id of deleted element.
+	 * @throws ORMException if error occurs during delete operation
+	 */
+    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+        DAO staticDAO = daoFactory.getRouterDAO();
+        RouterConnectionEntity[] routerConnections = null;
+        try {
+        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        	routerConnections = (RouterConnectionEntity[])temp;
+        } catch (DAOException cause) {
+        	throw new ORMException("Cannot get routerConnections page", cause);
+        } catch (ClassCastException exception) {
+        	throw new ORMException("Cannot cast Entity[] from DAO to RouterConnectionEntity[]", exception);
+        }
+        return routerConnections;
     }
 }	

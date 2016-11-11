@@ -3,6 +3,7 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
+import com.citycon.model.systemunits.entities.CityEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,15 @@ public class CityDAO extends MySQLDAO {
 
     private CityDAO(){}
 
-    public List<Entity> getList(int begin, int count) {
-        return new ArrayList<Entity>();
+    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
+        if (false) {
+            throw new DAOException("Dummy");
+        }
+        CityEntity cities[] = new CityEntity[itemsPerPage];
+        for (int i = 0; i< itemsPerPage; ++i) {
+            cities[i] = new CityEntity();
+        }
+        return cities;
     }
 
     public int create(Entity newElement) throws DAOException {

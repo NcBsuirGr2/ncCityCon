@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
@@ -9,7 +10,7 @@ import com.citycon.dao.DAOException;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.3
+ * @version 1.4
  * @see  RouterEntity
  */
 public class ORMRouter extends ORMEntity {
@@ -86,5 +87,29 @@ public class ORMRouter extends ORMEntity {
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot delete router", cause);
 		}
+    }
+
+     /**
+	 * Get any page of routers from DAO layer. 
+	 *
+	 * @param  page number of page to show
+	 * @param  itemsPerPage number of items to show on one page
+	 * @param  sortBy field to sort by
+	 * @param  asc sorting in asc order if true
+	 * @return id the id of deleted element.
+	 * @throws ORMException if error occurs during delete operation
+	 */
+    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+        DAO staticDAO = daoFactory.getRouterDAO();
+        RouterEntity[] routers = null;
+        try {
+        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        	routers = (RouterEntity[])temp;
+        } catch (DAOException cause) {
+        	throw new ORMException("Cannot get routers page", cause);
+        } catch (ClassCastException exception) {
+        	throw new ORMException("Cannot cast Entity[] from DAO to RouterEntity[]", exception);
+        }
+        return routers;
     }
 }

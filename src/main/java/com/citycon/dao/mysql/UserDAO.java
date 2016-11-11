@@ -16,8 +16,15 @@ public class UserDAO extends MySQLDAO {
 
     private UserDAO(){}
 
-    public List<Entity> getList(int begin, int count) {
-        return new ArrayList<Entity>();
+    public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
+        if (false) {
+            throw new DAOException("Dummy");
+        }
+        UserEntity users[] = new UserEntity[itemsPerPage];
+        for (int i = 0; i< itemsPerPage; ++i) {
+            users[i] = new UserEntity();
+        }
+        return users;
     }
 
     public int create(Entity newElement) throws DAOException {

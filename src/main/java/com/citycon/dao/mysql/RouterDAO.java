@@ -3,6 +3,7 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
+import com.citycon.model.systemunits.entities.RouterEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,18 @@ import java.util.List;
  */
 public class RouterDAO extends MySQLDAO{
     private static volatile RouterDAO instance;
+
     private RouterDAO(){}
 
-    public List<Entity> getList(int begin, int count) {
-        return new ArrayList<Entity>();
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
+        if (false) {
+            throw new DAOException("Dummy");
+        }
+        RouterEntity routers[] = new RouterEntity[itemsPerPage];
+        for (int i = 0; i< itemsPerPage; ++i) {
+            routers[i] = new RouterEntity();
+        }
+        return routers;
     }
 
     public int create(Entity newElement) throws DAOException {
