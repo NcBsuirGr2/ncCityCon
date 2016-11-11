@@ -2,6 +2,7 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.dao.DAO;
+import com.citycon.dao.DAOException;
 import com.citycon.model.Grant;
 
 /**
@@ -9,7 +10,7 @@ import com.citycon.model.Grant;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.2
+ * @version 1.3
  * @see  UserEntity
  */
 public class ORMUser extends ORMEntity {
@@ -60,16 +61,38 @@ public class ORMUser extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() {
-		return dao.create(user);
+	public int create() throws ORMException {
+		int userId = -1;
+		try {
+			userId = dao.create(user);
+		} catch(DAOException cause) {
+			throw new ORMException("Cannot create user", cause);
+		}
+		return userId;
 	}
-    public int read() {
-    	return dao.read(user);
+    public int read() throws ORMException {
+    	int userId = -1;
+    	try {
+    		userId = dao.read(user);
+    	} catch(DAOException cause) {
+    		throw new ORMException("Cannot read user", cause);
+    	}
+    	return userId;
     }
-    public int update() {
-    	return dao.update(user);
+    public int update() throws ORMException {
+    	int userId = -1;
+    	try {
+ 		   	userId = dao.update(user);
+    	} catch(DAOException cause) {
+    		throw new ORMException("Cannot update user", cause);
+    	}
+    	return userId;
     }
-    public void delete() {
-    	dao.delete(user);
+    public void delete() throws ORMException {
+    	try {
+    		dao.delete(user);
+    	} catch(DAOException cause) {
+    		throw new ORMException("Cannot delete user", cause);
+    	}
     }
 }

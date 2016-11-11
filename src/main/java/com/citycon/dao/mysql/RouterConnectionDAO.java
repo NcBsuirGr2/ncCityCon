@@ -1,6 +1,7 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.DAO;
+import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 
 import java.util.ArrayList;
@@ -18,20 +19,31 @@ public class RouterConnectionDAO extends MySQLDAO {
         return new ArrayList<Entity>();
     }
 
-    public int create(Entity newElement) {
+    public int create(Entity newElement) throws DAOException {
+        if(false) {
+            throw new DAOException("Dummy");
+        }
         return 0;
     }
 
-    public int read(Entity readElement) {
+    public int read(Entity readElement) throws DAOException {
+        if(false) {
+            throw new DAOException("Dummy");
+        }
         return 0;
     }
 
-    public int update(Entity updateElement) {
+    public int update(Entity updateElement) throws DAOException {
+        if(false) {
+            throw new DAOException("Dummy");
+        }
         return 0;
     }
 
-    public void delete(Entity deleteElement) {
-
+    public void delete(Entity deleteElement) throws DAOException {
+        if(false) {
+            throw new DAOException("Dummy");
+        }
     }
     public static RouterConnectionDAO getInstance() {
         RouterConnectionDAO localInstance = instance;

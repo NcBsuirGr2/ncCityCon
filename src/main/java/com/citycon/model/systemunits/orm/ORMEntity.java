@@ -2,6 +2,7 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.dao.DAOAbstractFactory;
 import com.citycon.dao.mysql.MySQLDAOFactory;
+import com.citycon.dao.DAOException;
 
 /**
  * Common interface for the ORM entities. ORM entities are the wrappers for
@@ -9,7 +10,7 @@ import com.citycon.dao.mysql.MySQLDAOFactory;
  * also provides common DAOAbstractFactory for concrete ORM entities.
  * 
  * @author Mike
- * @version 1.2
+ * @version 1.3
  */
 public abstract class ORMEntity {
 	DAOAbstractFactory daoFactory = new MySQLDAOFactory();
@@ -20,16 +21,18 @@ public abstract class ORMEntity {
 	 * should not contain id field.
 	 * 
 	 * @return id the id of created element.
+	 * @throws ORMException if error occurs during create operation
 	 */
-	public abstract int create();
+	public abstract int create() throws ORMException;
 
 	/**
 	 * Retrive new Entity from DAO layer. If there was another Entity saved in
 	 * this ORMEntity, it will be lost.
 	 * 
 	 * @return id the id of retrieved element.
+	 * @throws ORMException if error occurs during read operation
 	 */
-    public abstract int read();
+    public abstract int read() throws ORMException;
 
     /**
 	 * Ask DAO layer to update entity with current values. Sends the incapsulated 
@@ -37,8 +40,9 @@ public abstract class ORMEntity {
 	 * concrete DAO class. Setting 'id' field is prefered.
 	 * 
 	 * @return id the id of updated element.
+	 * @throws ORMException if error occurs during update operation
 	 */
-    public abstract int update();
+    public abstract int update() throws ORMException;
 
     /**
 	 * Ask DAO layer to delete current entity. The incapsulated Entity must contain 
@@ -46,6 +50,7 @@ public abstract class ORMEntity {
 	 * concrete DAO class. Setting 'id' field is prefered.
 	 * 
 	 * @return id the id of deleted element.
+	 * @throws ORMException if error occurs during delete operation
 	 */
-    public abstract void delete();
+    public abstract void delete() throws ORMException;
 }

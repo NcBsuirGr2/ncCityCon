@@ -2,13 +2,14 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.dao.DAO;
+import com.citycon.dao.DAOException;
 
 /**
  * ORM wrapper for the <code>RouterConnectionEntity</code>. This class must be used 
  * in servlets to manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.2
+ * @version 1.3
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {
@@ -42,16 +43,38 @@ public class ORMRouterConnection extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() {
-		return dao.create(routerConnection);
+	public int create() throws ORMException {
+		int connectionId = -1;
+		try {
+			connectionId = dao.create(routerConnection);
+		} catch(DAOException cause) {
+			throw new ORMException("Cannot create connection", cause);
+		}
+		return connectionId;
 	}
-    public int read() {
-    	return dao.read(routerConnection);
+    public int read() throws ORMException {
+    	int connectionId = -1;
+		try {
+			connectionId = dao.read(routerConnection);
+		} catch(DAOException cause) {
+			throw new ORMException("Cannot read connection", cause);
+		}
+		return connectionId;
     }
-    public int update() {
-    	return dao.update(routerConnection);
+    public int update() throws ORMException {
+    	int connectionId = -1;
+		try {
+			connectionId = dao.update(routerConnection);
+		} catch(DAOException cause) {
+			throw new ORMException("Cannot update connection", cause);
+		}
+		return connectionId;
     }
-    public void delete() {
-    	dao.delete(routerConnection);
+    public void delete() throws ORMException {
+		try {
+			dao.delete(routerConnection);
+		} catch(DAOException cause) {
+			throw new ORMException("Cannot delete connection", cause);
+		}
     }
 }	
