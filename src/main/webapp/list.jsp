@@ -22,7 +22,7 @@
         		</tr>
         	</thead>
         	<tbody>
-				<c:forEach items="${users}" var="user">
+				<c:forEach items="${entityArray}" var="user">
 					<tr>
 						<td><c:out value="${user.name}" /></td>
 						<td><c:out value="${user.login}" /></td>
