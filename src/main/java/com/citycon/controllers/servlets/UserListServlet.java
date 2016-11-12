@@ -23,7 +23,6 @@ public class UserListServlet extends HttpServlet {
 		} catch (ORMException e) {
 			//TODO: logging
 		}
-	//	String array[] = {name,login,email};
 		
 		request.setAttribute("entityClass", "users");
 		request.setAttribute("entityArray", users);

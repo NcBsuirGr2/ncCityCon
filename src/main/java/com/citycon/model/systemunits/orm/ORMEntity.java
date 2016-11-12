@@ -27,8 +27,8 @@ public abstract class ORMEntity {
 	public abstract int create() throws ORMException;
 
 	/**
-	 * Retrive new Entity from DAO layer. If there was another Entity saved in
-	 * this ORMEntity, it will be lost.
+	 * Retrive new Entity from DAO layer. Updates the incapsulated Entity object. If 
+	 * there was another Entity saved in this ORMEntity, it will be lost.
 	 * 
 	 * @return id the id of retrieved element.
 	 * @throws ORMException if error occurs during read operation

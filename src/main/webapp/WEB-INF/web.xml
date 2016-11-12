@@ -17,4 +17,13 @@
     	<servlet-name>UserListServlet</servlet-name>
     	<url-pattern>/app</url-pattern>
     </servlet-mapping>
+
+    <filter>
+    	<filter-name>LoginFilter</filter-name>
+    	<filter-class>com.citycon.controllers.filters.LoginFilter</filter-class>
+    </filter>
+ 	<filter-mapping>
+ 		<filter-name>LoginFilter</filter-name>
+ 		<url-pattern>/loginfiltertest/*</url-pattern>
+ 	</filter-mapping>
 </web-app>
