@@ -1,0 +1,31 @@
+body{
+	width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+}
+img{
+    max-width:100%;
+    height: auto;
+}
+#header {
+	background: #2980b9;
+	margin: 0;
+	height: 93px;
+	border: 0;
+	box-shadow: 0 0 3px rgba(0,0,0,15);
+}
+#header img {
+    position: relative;
+    top: 28px;
+    left: 25px;
+    max-height: 80px;
+}
+#footer{
+	background: #EEE8CD;
+	margin: 100px 0 50px;
+	height: 73px;
+	border: 0;
+    box-shadow: 0 0 3px rgba(0,0,0,15);
+}
