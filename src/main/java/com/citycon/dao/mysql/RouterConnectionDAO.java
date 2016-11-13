@@ -35,6 +35,10 @@ public class RouterConnectionDAO extends MySQLDAO {
         }
     }
 
+    public Entity read(int id) throws DAOException {
+        return null;
+    }
+
     public void read(Entity readElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");

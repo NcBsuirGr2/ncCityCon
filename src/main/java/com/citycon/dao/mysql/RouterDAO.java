@@ -29,11 +29,14 @@ public class RouterDAO extends MySQLDAO{
         return routers;
     }
 
-    public int create(Entity newElement) throws DAOException {
+    public void create(Entity newElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
+    }
+
+    public Entity read(int id) throws DAOException {
+        return null;
     }
 
     public int read(Entity readElement) throws DAOException {
@@ -43,11 +46,10 @@ public class RouterDAO extends MySQLDAO{
         return 0;
     }
 
-    public int update(Entity updateElement) throws DAOException {
+    public void update(Entity updateElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
     public void delete(Entity deleteElement) throws DAOException {
