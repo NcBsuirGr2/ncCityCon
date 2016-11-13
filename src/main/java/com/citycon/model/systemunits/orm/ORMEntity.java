@@ -11,7 +11,7 @@ import com.citycon.model.systemunits.entities.Entity;
  * also provides common DAOAbstractFactory for concrete ORM entities.
  * 
  * @author Mike
- * @version 1.4
+ * @version 0.4
  */
 public abstract class ORMEntity {
 	static DAOAbstractFactory daoFactory = new MySQLDAOFactory();

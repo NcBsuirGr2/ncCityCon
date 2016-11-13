@@ -11,12 +11,15 @@ import com.citycon.model.Grant;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.4
+ * @version 0.4
  * @see  UserEntity
  */
 public class ORMUser extends ORMEntity {
 	DAO dao = daoFactory.getUserDAO();
 	UserEntity user = new UserEntity();
+
+	public ORMUser() throws DAOException {
+	}
 
 	//Get-set interface for incapsulated object
 	
@@ -107,7 +110,7 @@ public class ORMUser extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
     	DAO staticDAO = daoFactory.getUserDAO();
         UserEntity[] users = null;
         try {

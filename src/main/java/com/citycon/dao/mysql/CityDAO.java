@@ -15,7 +15,9 @@ import java.util.List;
 public class CityDAO extends MySQLDAO {
     private static volatile CityDAO instance;
 
-    private CityDAO(){}
+    private CityDAO() throws DAOException {
+        super();
+    }
 
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         if (false) {
@@ -55,13 +57,17 @@ public class CityDAO extends MySQLDAO {
         }
     }
     
-    public static CityDAO getInstance() {
+    public static CityDAO getInstance() throws DAOException {
         CityDAO localInstance = instance;
         if (localInstance == null) {
             synchronized (CityDAO.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new CityDAO();
+                    try {
+                        instance = localInstance = new CityDAO();
+                    } catch (DAOException e) {
+                        throw new DAOException("Dummy");
+                    }
                 }
             }
         }

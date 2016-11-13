@@ -1,12 +1,8 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Vojts on 09.11.2016.
@@ -14,7 +10,9 @@ import java.util.List;
 public class UserDAO extends MySQLDAO {
     private static volatile UserDAO instance;
 
-    private UserDAO(){}
+    private UserDAO() throws DAOException {
+        super();
+    }
 
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         if (false) {
@@ -53,13 +51,17 @@ public class UserDAO extends MySQLDAO {
             throw new DAOException("Dummy");
         }
     }
-    public static UserDAO getInstance() {
+    public static UserDAO getInstance() throws DAOException {
         UserDAO localInstance = instance;
         if (localInstance == null) {
             synchronized (UserDAO.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new UserDAO();
+                    try {
+                        instance = localInstance = new UserDAO();
+                    } catch (DAOException e) {
+                        throw new DAOException("Dummy");
+                    }
                 }
             }
         }

@@ -10,7 +10,7 @@ import com.citycon.dao.DAOException;
  * in servlets to manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.4
+ * @version 0.4
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {

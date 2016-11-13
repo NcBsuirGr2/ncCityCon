@@ -14,7 +14,9 @@ import java.util.List;
 public class RouterDAO extends MySQLDAO{
     private static volatile RouterDAO instance;
 
-    private RouterDAO(){}
+    private RouterDAO() throws DAOException {
+        super();
+    }
 
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         if (false) {
@@ -53,13 +55,17 @@ public class RouterDAO extends MySQLDAO{
             throw new DAOException("Dummy");
         }
     }
-    public static RouterDAO getInstance() {
+    public static RouterDAO getInstance() throws DAOException {
         RouterDAO localInstance = instance;
         if (localInstance == null) {
             synchronized (RouterDAO.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new RouterDAO();
+                    try {
+                        instance = localInstance = new RouterDAO();
+                    } catch (DAOException e) {
+                        throw new DAOException("Dummy");
+                    }
                 }
             }
         }
