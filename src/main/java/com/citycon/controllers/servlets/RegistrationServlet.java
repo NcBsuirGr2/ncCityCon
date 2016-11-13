@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import com.citycon.dao.DAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMException;
@@ -20,7 +21,13 @@ public class RegistrationServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        ORMUser user = new ORMUser();
+        ORMUser user = null;
+        try {
+            user = new ORMUser();   //TODO: logging
+                                    //TODO: error page
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         Grant grant = new Grant();
         grant.setUsersBranchLevel(1); //может что-то напутано с правами
 
@@ -37,7 +44,7 @@ public class RegistrationServlet extends HttpServlet {
             //перенаправление на страницу после регистрации(пока не созданы) (заменить /index.html и /error)
         } catch (ORMException e) {
             e.printStackTrace();
-            rd = getServletContext().getRequestDispatcher("/error");
+            rd = getServletContext().getRequestDispatcher("/error.jsp");
             //TODO: logging
             //TODO: error page
         }

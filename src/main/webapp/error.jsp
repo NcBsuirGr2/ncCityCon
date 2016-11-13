@@ -1,17 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: root
-  Date: 13.11.16
-  Time: 23.00
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <h1>Error</h1>
-    <h3>Переделан bd слой, нужно переделать bl</h3>>
+    <%@ include file="html/header.html" %>
+    <h1 align="center">Error</h1>
+    <h3 align="center">Переделан bd слой, нужно переделать bl</h3>>
+    <%@ include file="html/footer.html" %>
 </body>
 </html>
