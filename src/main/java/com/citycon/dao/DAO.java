@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface DAO {
     void create(Entity newElement) throws DAOException;
-    void read(Entity readElement) throws DAOException;
+    Entity read(int id) throws DAOException;
     void update(Entity updateElement) throws DAOException;
     void delete(Entity deleteElement) throws DAOException;
     Entity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException;
