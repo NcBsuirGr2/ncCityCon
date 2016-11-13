@@ -43,6 +43,7 @@ public class AuthorizationServlet extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/error.jsp");
             //TODO: logging
             //TODO: error page
+            //ываыва
         }
 
 

@@ -27,6 +27,7 @@ public class UserListServlet extends HttpServlet {
 			e.printStackTrace();
 			//TODO: error page
 		}
+		/////delete me
 
 		request.setAttribute("entityClass", "users");
 		request.setAttribute("entityArray", users);
