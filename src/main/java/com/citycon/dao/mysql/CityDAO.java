@@ -30,25 +30,22 @@ public class CityDAO extends MySQLDAO {
         return cities;
     }
 
-    public int create(Entity newElement) throws DAOException {
+    public void create(Entity newElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
-    public int read(Entity readElement) throws DAOException {
+    public void read(Entity readElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
-    public int update(Entity updateElement) throws DAOException {
+    public void update(Entity updateElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
     public void delete(Entity deleteElement) throws DAOException {

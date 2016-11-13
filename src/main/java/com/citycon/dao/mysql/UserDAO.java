@@ -3,13 +3,9 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
-import sun.util.calendar.BaseCalendar;
-import sun.util.calendar.LocalGregorianCalendar;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 /**
@@ -33,7 +29,7 @@ public class UserDAO extends MySQLDAO {
         return users;
     }
 
-    public int create(Entity newElement) throws DAOException {
+    public void create(Entity newElement) throws DAOException {
         try{
             UserEntity user= (UserEntity) newElement;
 
@@ -58,24 +54,18 @@ public class UserDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("Dummy");
         }
-        if(false) {
-            throw new DAOException("Dummy");
-        }
-        return 0;
     }
 
-    public int read(Entity readElement) throws DAOException {
+    public void read(Entity readElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
-    public int update(Entity updateElement) throws DAOException {
+    public void update(Entity updateElement) throws DAOException {
         if(false) {
             throw new DAOException("Dummy");
         }
-        return 0;
     }
 
     public void delete(Entity deleteElement) throws DAOException {

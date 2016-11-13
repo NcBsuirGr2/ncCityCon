@@ -47,32 +47,26 @@ public class ORMCity extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int cityId = -1;
+	public void create() throws ORMException {
 		try {
-			cityId = dao.create(city);
+			dao.create(city);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create city", cause);
 		}
-		return cityId;
 	}
-    public int read() throws ORMException {
-    	int cityId = -1;
+    public void read() throws ORMException {
 		try {
-			cityId = dao.read(city);
+			dao.read(city);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read city", cause);
 		}
-		return cityId;
     }
-    public int update() throws ORMException {
-    	int cityId = -1;
+    public void update() throws ORMException {
 		try {
-			cityId = dao.update(city);
+			dao.update(city);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot update city", cause);
 		}
-		return cityId;
     }
     public void delete() throws ORMException {
 		try {

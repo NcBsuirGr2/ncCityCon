@@ -47,32 +47,27 @@ public class ORMRouterConnection extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int connectionId = -1;
+	public void create() throws ORMException {
 		try {
-			connectionId = dao.create(routerConnection);
+			dao.create(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create connection", cause);
 		}
-		return connectionId;
 	}
-    public int read() throws ORMException {
+    public void read() throws ORMException {
     	int connectionId = -1;
 		try {
-			connectionId = dao.read(routerConnection);
+			dao.read(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read connection", cause);
 		}
-		return connectionId;
     }
-    public int update() throws ORMException {
-    	int connectionId = -1;
+    public void update() throws ORMException {
 		try {
-			connectionId = dao.update(routerConnection);
+			dao.update(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot update connection", cause);
 		}
-		return connectionId;
     }
     public void delete() throws ORMException {
 		try {

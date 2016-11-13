@@ -65,32 +65,26 @@ public class ORMUser extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int userId = -1;
+	public void create() throws ORMException {
 		try {
-			userId = dao.create(user);
+			dao.create(user);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create user", cause);
 		}
-		return userId;
 	}
-    public int read() throws ORMException {
-    	int userId = -1;
+    public void read() throws ORMException {
     	try {
-    		userId = dao.read(user);
+    		dao.read(user);
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot read user", cause);
     	}
-    	return userId;
     }
-    public int update() throws ORMException {
-    	int userId = -1;
+    public void update() throws ORMException {
     	try {
- 		   	userId = dao.update(user);
+ 		   	dao.update(user);
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot update user", cause);
     	}
-    	return userId;
     }
     public void delete() throws ORMException {
     	try {
