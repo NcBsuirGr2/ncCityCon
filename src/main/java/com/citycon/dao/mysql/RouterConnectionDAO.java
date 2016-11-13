@@ -130,19 +130,22 @@ public class RouterConnectionDAO extends MySQLDAO {
         }
     }
     public static RouterConnectionDAO getInstance() throws DAOException {
-        RouterConnectionDAO localInstance = instance;
-        if (localInstance == null) {
-            synchronized (RouterConnectionDAO.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    try {
-                        instance = localInstance = new RouterConnectionDAO();
-                    } catch (DAOException e) {
-                        throw new DAOException("Dummy");
-                    }
-                }
-            }
-        }
-        return localInstance;
+        return new RouterConnectionDAO();
     }
+//    public static RouterConnectionDAO getInstance() throws DAOException {
+//        RouterConnectionDAO localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (RouterConnectionDAO.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    try {
+//                        instance = localInstance = new RouterConnectionDAO();
+//                    } catch (DAOException e) {
+//                        throw new DAOException("Dummy");
+//                    }
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 }

@@ -143,19 +143,22 @@ public class UserDAO extends MySQLDAO {
         }
     }
     public static UserDAO getInstance() throws DAOException {
-        UserDAO localInstance = instance;
-        if (localInstance == null) {
-            synchronized (UserDAO.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    try {
-                        instance = localInstance = new UserDAO();
-                    } catch (DAOException e) {
-                        throw new DAOException("Dummy");
-                    }
-                }
-            }
-        }
-        return localInstance;
+        return new UserDAO();
     }
+//    public static UserDAO getInstance() throws DAOException {
+//        UserDAO localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (UserDAO.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    try {
+//                        instance = localInstance = new UserDAO();
+//                    } catch (DAOException e) {
+//                        throw new DAOException("Dummy");
+//                    }
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 }

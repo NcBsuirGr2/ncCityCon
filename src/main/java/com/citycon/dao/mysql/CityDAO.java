@@ -130,21 +130,24 @@ public class CityDAO extends MySQLDAO {
             throw new DAOException("Delete city failed");
         }
     }
-    
     public static CityDAO getInstance() throws DAOException {
-        CityDAO localInstance = instance;
-        if (localInstance == null) {
-            synchronized (CityDAO.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    try {
-                        instance = localInstance = new CityDAO();
-                    } catch (DAOException e) {
-                        throw new DAOException("Dummy");
-                    }
-                }
-            }
-        }
-        return localInstance;
+        return new CityDAO();
     }
+    
+//    public static CityDAO getInstance() throws DAOException {
+//        CityDAO localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (CityDAO.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    try {
+//                        instance = localInstance = new CityDAO();
+//                    } catch (DAOException e) {
+//                        throw new DAOException("Dummy");
+//                    }
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 }
