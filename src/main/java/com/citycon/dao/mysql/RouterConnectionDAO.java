@@ -22,7 +22,7 @@ public class RouterConnectionDAO extends MySQLDAO {
 
     private RouterConnectionDAO() throws DAOException {
         super();
-        nameTable = "RouterConnection";
+        nameTable = " RouterConnection";
     }
 
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {

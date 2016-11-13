@@ -22,7 +22,7 @@ public class CityDAO extends MySQLDAO {
 
     private CityDAO() throws DAOException {
         super();
-        nameTable = "City ";
+        nameTable = " City ";
     }
 
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {

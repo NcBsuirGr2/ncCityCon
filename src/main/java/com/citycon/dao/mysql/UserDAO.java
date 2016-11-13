@@ -18,7 +18,7 @@ public class UserDAO extends MySQLDAO {
 
     private UserDAO() throws DAOException {
         super();
-        nameTable = "User ";
+        nameTable = " User ";
     }
 
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
@@ -54,9 +54,6 @@ public class UserDAO extends MySQLDAO {
     public void create(Entity newElement) throws DAOException {
         try{
             UserEntity user= (UserEntity) newElement;
-
-            Calendar calendar = Calendar.getInstance();
-            java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
 
             String insert = "insert into" + nameTable +
                     "(`Login`, `Pass`, `E-mail`, `Name`, `Group`, `create_date`)" +

@@ -21,7 +21,7 @@ public class RouterDAO extends MySQLDAO{
 
     private RouterDAO() throws DAOException {
         super();
-        nameTable = "Router";
+        nameTable = " Router";
     }
 
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
