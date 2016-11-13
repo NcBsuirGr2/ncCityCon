@@ -3,6 +3,14 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
+import sun.util.calendar.BaseCalendar;
+import sun.util.calendar.LocalGregorianCalendar;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 /**
  * Created by Vojts on 09.11.2016.
@@ -26,6 +34,30 @@ public class UserDAO extends MySQLDAO {
     }
 
     public int create(Entity newElement) throws DAOException {
+        try{
+            UserEntity user= (UserEntity) newElement;
+
+            Calendar calendar = Calendar.getInstance();
+            java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+
+            String insert = "insert into `User` " +
+                    "(`Login`, `Pass`, `E-mail`, `Name`, `Group`, `create_date`)" +
+                    " values (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(insert);
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getName());
+            preparedStatement.setString(5, "guest");
+            preparedStatement.setDate(6,  startDate);
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        }catch (SQLException e){
+            throw new DAOException("Dummy");
+        }
         if(false) {
             throw new DAOException("Dummy");
         }

@@ -17,6 +17,9 @@ public class ORMRouterConnection extends ORMEntity {
 	DAO dao = daoFactory.getRouterConnectionDAO();
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
 
+	public ORMRouterConnection() throws DAOException {
+	}
+
 
 	//Get-set interface for incapsulated object
 	
@@ -89,7 +92,7 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
         DAO staticDAO = daoFactory.getRouterDAO();
         RouterConnectionEntity[] routerConnections = null;
         try {

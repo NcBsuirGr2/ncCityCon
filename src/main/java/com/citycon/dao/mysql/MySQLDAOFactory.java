@@ -19,21 +19,21 @@ public class MySQLDAOFactory extends DAOAbstractFactory {
     /**
      * @return
      */
-    public DAO getCityDAO() {
+    public DAO getCityDAO() throws DAOException {
         return CityDAO.getInstance();
     }
 
     /**
      * @return
      */
-    public DAO getRouterDAO() {
+    public DAO getRouterDAO() throws DAOException {
         return RouterDAO.getInstance();
     }
 
     /**
      * @return
      */
-    public DAO getRouterConnectionDAO() {
+    public DAO getRouterConnectionDAO() throws DAOException {
         return RouterConnectionDAO.getInstance();
     }
 }

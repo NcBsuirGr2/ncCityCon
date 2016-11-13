@@ -5,7 +5,7 @@ package com.citycon.dao;
  */
 public abstract class DAOAbstractFactory {
     public abstract DAO getUserDAO() throws DAOException;
-    public abstract DAO getCityDAO();
-    public abstract DAO getRouterDAO();
-    public abstract DAO getRouterConnectionDAO();
+    public abstract DAO getCityDAO() throws DAOException;
+    public abstract DAO getRouterDAO() throws DAOException;
+    public abstract DAO getRouterConnectionDAO() throws DAOException;
 }

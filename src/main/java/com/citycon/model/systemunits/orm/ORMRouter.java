@@ -16,7 +16,10 @@ import com.citycon.dao.DAOException;
 public class ORMRouter extends ORMEntity {
 	DAO dao = daoFactory.getRouterDAO();
 	RouterEntity router = new RouterEntity();
-	
+
+	public ORMRouter() throws DAOException {
+	}
+
 
 	//Get-set interface for incapsulated object
 	
@@ -99,7 +102,7 @@ public class ORMRouter extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
         DAO staticDAO = daoFactory.getRouterDAO();
         RouterEntity[] routers = null;
         try {

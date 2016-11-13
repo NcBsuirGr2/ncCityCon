@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import com.citycon.model.systemunits.orm.ORMException;
@@ -22,8 +23,10 @@ public class UserListServlet extends HttpServlet {
 			users = ORMUser.getPage(1,3,"name",true);
 		} catch (ORMException e) {
 			//TODO: logging
+		} catch (DAOException e) {
+			e.printStackTrace();
 		}
-		
+
 		request.setAttribute("entityClass", "users");
 		request.setAttribute("entityArray", users);
 		

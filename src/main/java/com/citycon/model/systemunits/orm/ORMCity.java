@@ -17,6 +17,9 @@ public class ORMCity extends ORMEntity {
 	DAO dao = daoFactory.getCityDAO();
 	CityEntity city = new CityEntity();
 
+	public ORMCity() throws DAOException {
+	}
+
 
 	//Get-set interface for incapsulated object
 	
@@ -89,7 +92,7 @@ public class ORMCity extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
         DAO staticDAO = daoFactory.getCityDAO();
         CityEntity[] cities = null;
         try {
