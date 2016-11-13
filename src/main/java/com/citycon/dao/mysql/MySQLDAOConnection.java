@@ -32,21 +32,25 @@ public class MySQLDAOConnection {
     }
 
     public static MySQLDAOConnection getInstance() throws DAOException {
-        MySQLDAOConnection localInstance = instance;
-        if (localInstance == null) {
-            synchronized (MySQLDAOConnection.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    try {
-                        instance = localInstance = new MySQLDAOConnection();
-                    } catch (DAOException e) {
-                        throw new DAOException("Dummy");
-                    }
-                }
-            }
-        }
-        return localInstance;
+        return new MySQLDAOConnection();
     }
+
+//    public static MySQLDAOConnection getInstance() throws DAOException {
+//        MySQLDAOConnection localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (MySQLDAOConnection.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    try {
+//                        instance = localInstance = new MySQLDAOConnection();
+//                    } catch (DAOException e) {
+//                        throw new DAOException("Dummy");
+//                    }
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 
     public Connection getConnection(){
         return connection;

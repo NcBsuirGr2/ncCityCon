@@ -21,7 +21,7 @@ public class RouterDAO extends MySQLDAO{
 
     private RouterDAO() throws DAOException {
         super();
-        nameTable = "Router";
+        nameTable = " Router";
     }
 
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
@@ -143,19 +143,22 @@ public class RouterDAO extends MySQLDAO{
         }
     }
     public static RouterDAO getInstance() throws DAOException {
-        RouterDAO localInstance = instance;
-        if (localInstance == null) {
-            synchronized (RouterDAO.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    try {
-                        instance = localInstance = new RouterDAO();
-                    } catch (DAOException e) {
-                        throw new DAOException("Dummy");
-                    }
-                }
-            }
-        }
-        return localInstance;
+        return new RouterDAO();
     }
+//    public static RouterDAO getInstance() throws DAOException {
+//        RouterDAO localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (RouterDAO.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    try {
+//                        instance = localInstance = new RouterDAO();
+//                    } catch (DAOException e) {
+//                        throw new DAOException("Dummy");
+//                    }
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 }
