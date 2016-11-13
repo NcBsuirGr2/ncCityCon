@@ -68,6 +68,11 @@ public class ORMRouterConnection extends ORMEntity {
 			throw new ORMException("Cannot update connection", cause);
 		}
     }
+
+	public RouterConnectionEntity getEntity()  {
+		return routerConnection;
+	}
+
     public void delete() throws ORMException {
 		try {
 			dao.delete(routerConnection);

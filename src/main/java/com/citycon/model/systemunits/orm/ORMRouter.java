@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.dao.DAO;
@@ -78,6 +79,10 @@ public class ORMRouter extends ORMEntity {
 			throw new ORMException("Cannot update router", cause);
 		}
     }
+	public RouterEntity getEntity()  {
+		return router;
+	}
+
     public void delete() throws ORMException {
 		try {
 			dao.update(router);

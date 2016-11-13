@@ -53,5 +53,12 @@ public abstract class ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
+
+	public abstract Entity getEntity() throws ORMException;
+
+	/**
+	 * @return simple entity from orm object
+	 */
+
     public abstract void delete() throws ORMException;
 }

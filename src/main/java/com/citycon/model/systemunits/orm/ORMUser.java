@@ -86,6 +86,11 @@ public class ORMUser extends ORMEntity {
     		throw new ORMException("Cannot update user", cause);
     	}
     }
+
+	public UserEntity getEntity()  {
+		return user;
+	}
+
     public void delete() throws ORMException {
     	try {
     		dao.delete(user);

@@ -1,16 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: root
-  Date: 13.11.16
-  Time: 19.05
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
-<head>
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <title>List</title>
+    </head>
+    <body>
+        <%@ include file="html/header.html" %>
+        <h1 align="center">Registration form</h1>
+        <form align="center" method="post" action="registration" >
+            <p><input name="login" type="text" placeholder="Enter your login"></p>
+            <p><input name="password" type="text" placeholder="Enter your password"></p>
+            <p><input name="E-mail" type="email" placeholder="Enter your email"></p>
+            <p><input type="submit" value="Enter"></p>
+        </form>
+
+        <%@ include file="html/footer.html" %>
+    </body>
 </html>
+

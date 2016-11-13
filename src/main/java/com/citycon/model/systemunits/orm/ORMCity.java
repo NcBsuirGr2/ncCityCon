@@ -76,6 +76,10 @@ public class ORMCity extends ORMEntity {
 		}
     }
 
+    public CityEntity getEntity()  {
+		return city;
+	}
+
      /**
 	 * Get any page of cities from DAO layer. 
 	 *

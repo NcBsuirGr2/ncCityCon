@@ -16,7 +16,7 @@ public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String LIST = "/list.jsp";
 	
-	protected void doGet(HttpServletRequest request,
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		UserEntity users[] = null;
 		try {
@@ -25,6 +25,7 @@ public class UserListServlet extends HttpServlet {
 			//TODO: logging
 		} catch (DAOException e) {
 			e.printStackTrace();
+			//TODO: error page
 		}
 
 		request.setAttribute("entityClass", "users");
