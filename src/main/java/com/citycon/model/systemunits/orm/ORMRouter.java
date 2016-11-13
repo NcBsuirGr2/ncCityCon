@@ -10,13 +10,16 @@ import com.citycon.dao.DAOException;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.4
+ * @version 0.4
  * @see  RouterEntity
  */
 public class ORMRouter extends ORMEntity {
 	DAO dao = daoFactory.getRouterDAO();
 	RouterEntity router = new RouterEntity();
-	
+
+	public ORMRouter() throws DAOException {
+	}
+
 
 	//Get-set interface for incapsulated object
 	
@@ -54,32 +57,26 @@ public class ORMRouter extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int routerId = -1;
+	public void create() throws ORMException {
 		try {
-			routerId = dao.create(router);
+			dao.create(router);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create router", cause);
 		}
-		return routerId;
 	}
-    public int read() throws ORMException {
-    	int routerId = -1;
+    public void read() throws ORMException {
 		try {
-			routerId = dao.read(router);
+			dao.read(router.getId());
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read router", cause);
 		}
-		return routerId;
     }
-    public int update() throws ORMException {
-    	int routerId = -1;
+    public void update() throws ORMException {
 		try {
-			routerId = dao.update(router);
+			dao.update(router);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot update router", cause);
 		}
-		return routerId;
     }
     public void delete() throws ORMException {
 		try {
@@ -99,7 +96,7 @@ public class ORMRouter extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
         DAO staticDAO = daoFactory.getRouterDAO();
         RouterEntity[] routers = null;
         try {

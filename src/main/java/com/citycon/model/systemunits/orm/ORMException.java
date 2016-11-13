@@ -5,7 +5,7 @@ package com.citycon.model.systemunits.orm;
  * Represents exceptions during ORM operations. 
  *
  * @author Mike
- * @version 1.0
+ * @version 0.1
  */
 public class ORMException extends Exception {
 	public ORMException(String message, Throwable cause) {

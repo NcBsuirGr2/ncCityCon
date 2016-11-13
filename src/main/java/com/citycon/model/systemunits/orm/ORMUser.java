@@ -11,12 +11,15 @@ import com.citycon.model.Grant;
  * manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.4
+ * @version 0.4
  * @see  UserEntity
  */
 public class ORMUser extends ORMEntity {
 	DAO dao = daoFactory.getUserDAO();
 	UserEntity user = new UserEntity();
+
+	public ORMUser() throws DAOException {
+	}
 
 	//Get-set interface for incapsulated object
 	
@@ -62,32 +65,26 @@ public class ORMUser extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int userId = -1;
+	public void create() throws ORMException {
 		try {
-			userId = dao.create(user);
+			dao.create(user);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create user", cause);
 		}
-		return userId;
 	}
-    public int read() throws ORMException {
-    	int userId = -1;
+    public void read() throws ORMException {
     	try {
-    		userId = dao.read(user);
+    		dao.read(user.getId());
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot read user", cause);
     	}
-    	return userId;
     }
-    public int update() throws ORMException {
-    	int userId = -1;
+    public void update() throws ORMException {
     	try {
- 		   	userId = dao.update(user);
+ 		   	dao.update(user);
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot update user", cause);
     	}
-    	return userId;
     }
     public void delete() throws ORMException {
     	try {
@@ -107,7 +104,7 @@ public class ORMUser extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
     	DAO staticDAO = daoFactory.getUserDAO();
         UserEntity[] users = null;
         try {

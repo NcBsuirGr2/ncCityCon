@@ -10,12 +10,15 @@ import com.citycon.dao.DAOException;
  * in servlets to manipulate CRUD operations for the plain entity through the concrete DAO.
  *
  * @author Mike
- * @version 1.4
+ * @version 0.4
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {
 	DAO dao = daoFactory.getRouterConnectionDAO();
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
+
+	public ORMRouterConnection() throws DAOException {
+	}
 
 
 	//Get-set interface for incapsulated object
@@ -27,49 +30,43 @@ public class ORMRouterConnection extends ORMEntity {
 		routerConnection.setId(id);
 	}
 
-	public String getFirstRouterId() {
+	public int getFirstRouterId() {
 		return routerConnection.getFirstRouterId();
 	}
-	public String getSecondRouterId() {
+	public int getSecondRouterId() {
 		return routerConnection.getSecondRouterId();
 	}
 
-	public void setFirstRouterId(String firstRouterId) {
+	public void setFirstRouterId(int firstRouterId) {
 		routerConnection.setFirstRouterId(firstRouterId);
 	}
-	public void setSecondRouterId(String secondRouterId) {
+	public void setSecondRouterId(int secondRouterId) {
 		routerConnection.setSecondRouterId(secondRouterId);
 	}
 
 
 	//ORM interface for incapsulated object
 
-	public int create() throws ORMException {
-		int connectionId = -1;
+	public void create() throws ORMException {
 		try {
-			connectionId = dao.create(routerConnection);
+			dao.create(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot create connection", cause);
 		}
-		return connectionId;
 	}
-    public int read() throws ORMException {
-    	int connectionId = -1;
+    public void read() throws ORMException {
 		try {
-			connectionId = dao.read(routerConnection);
+			dao.read(routerConnection.getId());
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read connection", cause);
 		}
-		return connectionId;
     }
-    public int update() throws ORMException {
-    	int connectionId = -1;
+    public void update() throws ORMException {
 		try {
-			connectionId = dao.update(routerConnection);
+			dao.update(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot update connection", cause);
 		}
-		return connectionId;
     }
     public void delete() throws ORMException {
 		try {
@@ -89,7 +86,7 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException {
+    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
         DAO staticDAO = daoFactory.getRouterDAO();
         RouterConnectionEntity[] routerConnections = null;
         try {

@@ -11,7 +11,7 @@ import com.citycon.model.systemunits.entities.Entity;
  * also provides common DAOAbstractFactory for concrete ORM entities.
  * 
  * @author Mike
- * @version 1.4
+ * @version 0.4
  */
 public abstract class ORMEntity {
 	static DAOAbstractFactory daoFactory = new MySQLDAOFactory();
@@ -24,7 +24,7 @@ public abstract class ORMEntity {
 	 * @return id the id of created element.
 	 * @throws ORMException if error occurs during create operation
 	 */
-	public abstract int create() throws ORMException;
+	public abstract void create() throws ORMException;
 
 	/**
 	 * Retrive new Entity from DAO layer. Updates the incapsulated Entity object. If 
@@ -33,7 +33,7 @@ public abstract class ORMEntity {
 	 * @return id the id of retrieved element.
 	 * @throws ORMException if error occurs during read operation
 	 */
-    public abstract int read() throws ORMException;
+    public abstract void read() throws ORMException;
 
     /**
 	 * Ask DAO layer to update entity with current values. Sends the incapsulated 
@@ -43,7 +43,7 @@ public abstract class ORMEntity {
 	 * @return id the id of updated element.
 	 * @throws ORMException if error occurs during update operation
 	 */
-    public abstract int update() throws ORMException;
+    public abstract void update() throws ORMException;
 
     /**
 	 * Ask DAO layer to delete current entity. The incapsulated Entity must contain 

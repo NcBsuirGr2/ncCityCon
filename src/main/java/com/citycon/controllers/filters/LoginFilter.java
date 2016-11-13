@@ -16,7 +16,7 @@ import java.io.IOException;
  * request futher.
  *
  * @author Mike
- * @version 1.0 
+ * @version 0.1
  */
 public class LoginFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {

@@ -1,3 +1,4 @@
 target/
 .idea/
 cityCon.iml
+src/main/java/com/citycon/dao/mysql/SqlTest.java

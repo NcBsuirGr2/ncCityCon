@@ -5,7 +5,7 @@ package com.citycon.model;
  * that user can perform.
  *
  * @author  Mike
- * @version  1.1
+ * @version  0.3
  */
 public class Grant {
 	public final static int NONE = 0;
