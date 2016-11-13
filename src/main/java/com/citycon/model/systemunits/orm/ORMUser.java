@@ -74,7 +74,7 @@ public class ORMUser extends ORMEntity {
 	}
     public void read() throws ORMException {
     	try {
-    		dao.read(user);
+    		dao.read(user.getId());
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot read user", cause);
     	}

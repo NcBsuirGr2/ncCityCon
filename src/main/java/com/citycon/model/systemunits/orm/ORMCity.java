@@ -56,7 +56,7 @@ public class ORMCity extends ORMEntity {
 	}
     public void read() throws ORMException {
 		try {
-			dao.read(city);
+			dao.read(city.getId());
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read city", cause);
 		}

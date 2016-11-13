@@ -30,17 +30,17 @@ public class ORMRouterConnection extends ORMEntity {
 		routerConnection.setId(id);
 	}
 
-	public String getFirstRouterId() {
+	public int getFirstRouterId() {
 		return routerConnection.getFirstRouterId();
 	}
-	public String getSecondRouterId() {
+	public int getSecondRouterId() {
 		return routerConnection.getSecondRouterId();
 	}
 
-	public void setFirstRouterId(String firstRouterId) {
+	public void setFirstRouterId(int firstRouterId) {
 		routerConnection.setFirstRouterId(firstRouterId);
 	}
-	public void setSecondRouterId(String secondRouterId) {
+	public void setSecondRouterId(int secondRouterId) {
 		routerConnection.setSecondRouterId(secondRouterId);
 	}
 
@@ -55,9 +55,8 @@ public class ORMRouterConnection extends ORMEntity {
 		}
 	}
     public void read() throws ORMException {
-    	int connectionId = -1;
 		try {
-			dao.read(routerConnection);
+			dao.read(routerConnection.getId());
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read connection", cause);
 		}

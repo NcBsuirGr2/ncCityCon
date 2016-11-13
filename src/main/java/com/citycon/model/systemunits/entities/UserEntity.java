@@ -1,6 +1,9 @@
 package com.citycon.model.systemunits.entities;
 
 import com.citycon.model.Grant;
+
+import java.sql.Date;
+
 /**
  * Represents all necessary information about user. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -15,6 +18,8 @@ public class UserEntity extends Entity {
 	private String password;	
 	private String email;
 	private Grant grant;
+	private String group;
+	private Date createDate;
 
 	public UserEntity() {
 		String names[] = {"Mike", "Alex", "Tim", "Dima", "Karin"};
@@ -63,5 +68,21 @@ public class UserEntity extends Entity {
 	}
 	public void setGrant(Grant grant) {
 		this.grant = grant;
+	}
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 }

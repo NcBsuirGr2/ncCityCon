@@ -14,6 +14,7 @@ public class RouterEntity extends Entity {
 	private String SN;
 	private int portsNum;
 	private boolean isActive;
+	private int cityId;
 
 	public RouterEntity() {
 		String names[] = {"Router1", "Router2", "CentralLidaRouter", "WestAmericaRouter", "TestRouter", "BSUIRRouter", "CreatedByMikeRouter"};
@@ -51,5 +52,13 @@ public class RouterEntity extends Entity {
 	}
 	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+	public int getCityId() {
+		return cityId;
 	}
 }

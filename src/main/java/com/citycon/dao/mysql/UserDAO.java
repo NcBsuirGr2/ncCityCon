@@ -18,12 +18,13 @@ public class UserDAO extends MySQLDAO {
 
     private UserDAO() throws DAOException {
         super();
+        nameTable = "User ";
     }
 
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         ArrayList<UserEntity> users = new ArrayList();
         try {
-            String search = "select * from `User` limit ?,?";
+            String search = "select * from" + nameTable + "limit ?,?";
 
             PreparedStatement search_users = connection.prepareStatement(search);
             search_users.setInt((int)1, page*itemsPerPage);
@@ -38,6 +39,8 @@ public class UserDAO extends MySQLDAO {
                 user.setPassword(resultSet.getString("Pass"));
                 user.setEmail(resultSet.getString("E-mail"));
                 user.setName(resultSet.getString("Name"));
+                user.setGroup(resultSet.getString("Group"));
+                user.setCreateDate(resultSet.getDate("create_date"));
                 users.add(user);
             }
             resultSet.close();
@@ -55,7 +58,7 @@ public class UserDAO extends MySQLDAO {
             Calendar calendar = Calendar.getInstance();
             java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
 
-            String insert = "insert into `User` " +
+            String insert = "insert into" + nameTable +
                     "(`Login`, `Pass`, `E-mail`, `Name`, `Group`, `create_date`)" +
                     " values (?, ?, ?, ?, ?, ?)";
 
@@ -64,8 +67,8 @@ public class UserDAO extends MySQLDAO {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getName());
-            preparedStatement.setString(5, "guest");
-            preparedStatement.setDate(6,  startDate);
+            preparedStatement.setString(5, user.getGroup());
+            preparedStatement.setDate(6,  user.getCreateDate());
 
             preparedStatement.executeUpdate();
 
@@ -78,7 +81,7 @@ public class UserDAO extends MySQLDAO {
     public Entity read(int id) throws DAOException {
         UserEntity user = null;
         try {
-            String search = "select * from `User` when id=?";
+            String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_user = connection.prepareStatement(search);
             search_user.setInt((int)1, id);
@@ -92,6 +95,8 @@ public class UserDAO extends MySQLDAO {
                 user.setPassword(resultSet.getString("Pass"));
                 user.setEmail(resultSet.getString("E-mail"));
                 user.setName(resultSet.getString("Name"));
+                user.setGroup(resultSet.getString("Group"));
+                user.setCreateDate(resultSet.getDate("create_date"));
             }
             resultSet.close();
             search_user.close();
@@ -105,18 +110,15 @@ public class UserDAO extends MySQLDAO {
         try {
             UserEntity user= (UserEntity) updateElement;
 
-            Calendar calendar = Calendar.getInstance();
-            java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-
-            String update = "update `User` set `Login`=?, `Pass`=?, `E-mail`=?, `Name`=?, `Group`=?, `create_date`=? where `id`=?";
+            String update = "update" + nameTable + "set `Login`=?, `Pass`=?, `E-mail`=?, `Name`=?, `Group`=?, `create_date`=? where `id`=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getName());
-            preparedStatement.setString(5, "guest");
-            preparedStatement.setDate(6,  startDate);
+            preparedStatement.setString(5, user.getGroup());
+            preparedStatement.setDate(6,  user.getCreateDate());
             preparedStatement.setInt(7, user.getId());
 
             preparedStatement.executeUpdate();
@@ -131,7 +133,7 @@ public class UserDAO extends MySQLDAO {
         try {
             UserEntity user= (UserEntity) deleteElement;
 
-            String delete = "delete from `User` where `id`=?";
+            String delete = "delete from" + nameTable + "where `id`=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(delete);
 

@@ -1,6 +1,5 @@
 package com.citycon.model.systemunits.entities;
 
-import com.citycon.model.Grant;
 /**
  * Represents all necessary information about router connection. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -10,25 +9,25 @@ import com.citycon.model.Grant;
  * @version 1.1
  */
 public class RouterConnectionEntity extends Entity {
-	private String firstRouterId;
-	private String secondRouterId;
+	private int firstRouterId;
+	private int secondRouterId;
 
 	public RouterConnectionEntity() {
-		firstRouterId = String.valueOf((int)(Math.random()*100000));
-		secondRouterId = String.valueOf((int)(Math.random()*100000));
+		firstRouterId = (int)(Math.random()*100000);
+		secondRouterId = (int)(Math.random()*100000);
 	}
 
-	public String getFirstRouterId() {
+	public int getFirstRouterId() {
 		return firstRouterId;
 	}
-	public String getSecondRouterId() {
+	public int getSecondRouterId() {
 		return secondRouterId;
 	}
 
-	public void setFirstRouterId(String firstRouterId) {
+	public void setFirstRouterId(int firstRouterId) {
 		this.firstRouterId = firstRouterId;
 	}
-	public void setSecondRouterId(String secondRouterId) {
+	public void setSecondRouterId(int secondRouterId) {
 		this.secondRouterId = secondRouterId;
 	}
 }

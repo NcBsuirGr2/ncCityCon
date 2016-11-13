@@ -66,7 +66,7 @@ public class ORMRouter extends ORMEntity {
 	}
     public void read() throws ORMException {
 		try {
-			dao.read(router);
+			dao.read(router.getId());
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read router", cause);
 		}

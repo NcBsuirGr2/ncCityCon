@@ -4,8 +4,13 @@ import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.UserEntity;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,44 +22,112 @@ public class CityDAO extends MySQLDAO {
 
     private CityDAO() throws DAOException {
         super();
+        nameTable = "City ";
     }
 
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
-        if (false) {
-            throw new DAOException("Dummy");
+        ArrayList<CityEntity> cities = new ArrayList();
+        try {
+            String search = "select * from" + nameTable + "limit ?,?";
+
+            PreparedStatement search_cities = connection.prepareStatement(search);
+            search_cities.setInt((int)1, page*itemsPerPage);
+            search_cities.setInt((int)2, itemsPerPage);
+
+            ResultSet resultSet =  search_cities.executeQuery();
+
+            while(resultSet.next()) {
+                CityEntity city = new CityEntity();
+                city.setId(resultSet.getInt("id"));
+                city.setName(resultSet.getString("Name"));
+                city.setCountryName(resultSet.getString("Country"));
+                cities.add(city);
+            }
+            resultSet.close();
+            search_cities.close();
+        }catch (SQLException e){
+            throw new DAOException("GetPage city failed\n" + e.toString());
         }
-        CityEntity cities[] = new CityEntity[itemsPerPage];
-        for (int i = 0; i< itemsPerPage; ++i) {
-            cities[i] = new CityEntity();
-        }
-        return cities;
+        return (CityEntity[]) cities.toArray();
     }
 
     public void create(Entity newElement) throws DAOException {
-        if(false) {
-            throw new DAOException("Dummy");
+        try{
+            CityEntity city = (CityEntity) newElement;
+
+            String insert = "insert into" + nameTable +
+                    "(`Name`, `Country`)" +
+                    " values (?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(insert);
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        }catch (SQLException e){
+            throw new DAOException("Create city failed");
         }
     }
 
     public Entity read(int id) throws DAOException {
-        return null;
-    }
+        CityEntity city = null;
+        try {
+            String search = "select * from" + nameTable + "when id=?";
 
-    public void read(Entity readElement) throws DAOException {
-        if(false) {
-            throw new DAOException("Dummy");
+            PreparedStatement search_city = connection.prepareStatement(search);
+            search_city.setInt((int)1, id);
+
+            ResultSet resultSet =  search_city.executeQuery();
+
+            while(resultSet.next()) {
+                city = new CityEntity();
+                city.setId(resultSet.getInt("id"));
+                city.setName(resultSet.getString("Name"));
+                city.setCountryName(resultSet.getString("Country"));
+            }
+            resultSet.close();
+            search_city.close();
+        }catch (SQLException e){
+            throw new DAOException("Read city failed\n" + e.toString());
         }
+        return city;
     }
 
     public void update(Entity updateElement) throws DAOException {
-        if(false) {
-            throw new DAOException("Dummy");
+        try {
+            CityEntity city = (CityEntity) updateElement;
+
+            String update = "update" + nameTable + "set `Name`=?, `Country`=? where `id`=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(update);
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());;
+            preparedStatement.setInt(3, city.getId());
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new DAOException("Update city failed");
         }
     }
 
     public void delete(Entity deleteElement) throws DAOException {
-        if(false) {
-            throw new DAOException("Dummy");
+        try {
+            CityEntity city = (CityEntity) deleteElement;
+
+            String delete = "delete from" + nameTable + "where `id`=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(delete);
+
+            preparedStatement.setInt(1, city.getId());
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new DAOException("Delete city failed");
         }
     }
     
