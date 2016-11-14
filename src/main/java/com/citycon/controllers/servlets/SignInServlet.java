@@ -24,7 +24,7 @@ public class SignInServlet extends HttpServlet {
         ORMUser user = null;
         try {
             user = new ORMUser();
-        } catch (DAOException e) {
+        } catch (ORMException e) {
             e.printStackTrace();
         }   //TODO: logging
             //TODO: error page

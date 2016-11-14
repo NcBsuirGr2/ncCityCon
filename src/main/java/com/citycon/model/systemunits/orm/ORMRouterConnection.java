@@ -14,10 +14,15 @@ import com.citycon.dao.DAOException;
  * @see  RouterConnectionEntity
  */
 public class ORMRouterConnection extends ORMEntity {
-	DAO dao = daoFactory.getRouterConnectionDAO();
+	DAO dao;
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
 
-	public ORMRouterConnection() throws DAOException {
+	public ORMRouterConnection() throws ORMException {
+		try {
+			dao = daoFactory.getRouterConnectionDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}
 	}
 
 
@@ -56,7 +61,7 @@ public class ORMRouterConnection extends ORMEntity {
 	}
     public void read() throws ORMException {
 		try {
-			dao.read(routerConnection.getId());
+			dao.read(routerConnection);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read connection", cause);
 		}

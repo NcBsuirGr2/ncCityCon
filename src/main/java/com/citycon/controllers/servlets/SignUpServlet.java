@@ -25,7 +25,7 @@ public class SignUpServlet extends HttpServlet {
         try {
             user = new ORMUser();   //TODO: logging
                                     //TODO: error page
-        } catch (DAOException e) {
+        } catch (ORMException e) {
             e.printStackTrace();
         }
         Grant grant = new Grant();

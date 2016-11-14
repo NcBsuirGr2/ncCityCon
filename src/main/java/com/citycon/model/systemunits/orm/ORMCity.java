@@ -14,10 +14,15 @@ import com.citycon.dao.DAOException;
  * @see  CityEntity
  */
 public class ORMCity extends ORMEntity {
-	DAO dao = daoFactory.getCityDAO();
+	DAO dao;
 	CityEntity city = new CityEntity();
 
-	public ORMCity() throws DAOException {
+	public ORMCity() throws ORMException {
+		try {
+			dao = daoFactory.getCityDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}		
 	}
 
 
@@ -56,7 +61,7 @@ public class ORMCity extends ORMEntity {
 	}
     public void read() throws ORMException {
 		try {
-			dao.read(city.getId());
+			dao.read(city);
 		} catch(DAOException cause) {
 			throw new ORMException("Cannot read city", cause);
 		}

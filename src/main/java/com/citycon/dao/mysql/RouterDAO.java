@@ -76,18 +76,17 @@ public class RouterDAO extends MySQLDAO{
         }
     }
 
-    public Entity read(int id) throws DAOException {
-        RouterEntity router = null;
+    public void read(Entity readElement) throws DAOException {
+        RouterEntity router = (RouterEntity)readElement;
         try {
             String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_router = connection.prepareStatement(search);
-            search_router.setInt((int)1, id);
+            search_router.setInt((int)1, readElement.getId());
 
             ResultSet resultSet =  search_router.executeQuery();
 
             while(resultSet.next()) {
-                router = new RouterEntity();
                 router.setId(resultSet.getInt("id"));
                 router.setName(resultSet.getString("Name"));
                 router.setSN(resultSet.getString("SN"));
@@ -100,7 +99,7 @@ public class RouterDAO extends MySQLDAO{
         }catch (SQLException e){
             throw new DAOException("Read router failed\n" + e.toString());
         }
-        return router;    }
+    }
 
     public void update(Entity updateElement) throws DAOException {
         try {

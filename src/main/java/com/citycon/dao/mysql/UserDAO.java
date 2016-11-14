@@ -75,18 +75,17 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
-    public Entity read(int id) throws DAOException {
-        UserEntity user = null;
+    public void read(Entity readElement) throws DAOException {
+        UserEntity user = (UserEntity)readElement;
         try {
             String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_user = connection.prepareStatement(search);
-            search_user.setInt((int)1, id);
+            search_user.setInt((int)1, readElement.getId());
 
             ResultSet resultSet =  search_user.executeQuery();
 
             while(resultSet.next()) {
-                user = new UserEntity();
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("Login"));
                 user.setPassword(resultSet.getString("Pass"));
@@ -100,7 +99,6 @@ public class UserDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("Read user failed\n" + e.toString());
         }
-        return user;
     }
 
     public void update(Entity updateElement) throws DAOException {

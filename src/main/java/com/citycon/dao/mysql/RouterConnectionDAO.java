@@ -71,13 +71,13 @@ public class RouterConnectionDAO extends MySQLDAO {
         }
     }
 
-    public Entity read(int id) throws DAOException {
-        RouterConnectionEntity  routerConnection  = null;
+    public void read(Entity readElement) throws DAOException {
+        RouterConnectionEntity  routerConnection  = (RouterConnectionEntity)readElement;
         try {
             String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_routerConnection = connection.prepareStatement(search);
-            search_routerConnection.setInt((int)1, id);
+            search_routerConnection.setInt((int)1, readElement.getId());
 
             ResultSet resultSet =  search_routerConnection.executeQuery();
 
@@ -91,7 +91,6 @@ public class RouterConnectionDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("Read routerConnection failed\n" + e.toString());
         }
-        return routerConnection;
     }
 
     public void update(Entity updateElement) throws DAOException {

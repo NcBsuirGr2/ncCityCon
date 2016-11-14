@@ -71,18 +71,17 @@ public class CityDAO extends MySQLDAO {
         }
     }
 
-    public Entity read(int id) throws DAOException {
-        CityEntity city = null;
+    public void read(Entity readElement) throws DAOException {
+        CityEntity city = (CityEntity)readElement;
         try {
             String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_city = connection.prepareStatement(search);
-            search_city.setInt((int)1, id);
+            search_city.setInt((int)1, readElement.getId());
 
             ResultSet resultSet =  search_city.executeQuery();
 
             while(resultSet.next()) {
-                city = new CityEntity();
                 city.setId(resultSet.getInt("id"));
                 city.setName(resultSet.getString("Name"));
                 city.setCountryName(resultSet.getString("Country"));
@@ -92,7 +91,6 @@ public class CityDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("Read city failed\n" + e.toString());
         }
-        return city;
     }
 
     public void update(Entity updateElement) throws DAOException {

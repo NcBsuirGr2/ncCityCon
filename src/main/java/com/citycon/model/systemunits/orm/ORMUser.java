@@ -15,10 +15,15 @@ import com.citycon.model.Grant;
  * @see  UserEntity
  */
 public class ORMUser extends ORMEntity {
-	DAO dao = daoFactory.getUserDAO();
+	DAO dao;
 	UserEntity user = new UserEntity();
 
-	public ORMUser() throws DAOException {
+	public ORMUser() throws ORMException {
+		try {
+			dao = daoFactory.getUserDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}
 	}
 
 	//Get-set interface for incapsulated object
@@ -74,7 +79,7 @@ public class ORMUser extends ORMEntity {
 	}
     public void read() throws ORMException {
     	try {
-    		dao.read(user.getId());
+    		dao.read(user);
     	} catch(DAOException cause) {
     		throw new ORMException("Cannot read user", cause);
     	}
