@@ -6,6 +6,8 @@ import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.Grant;
 
+import java.sql.Date;
+
 /**
  * ORM wrapper for the <code>UserEntity</code>. This class must be used in servlets to
  * manipulate CRUD operations for the plain entity through the concrete DAO.
@@ -50,6 +52,12 @@ public class ORMUser extends ORMEntity {
 	public Grant getGrant() {
 		return user.getGrant();
 	}
+	public String getGroup() {
+		return user.getGroup();
+	}
+	public Date getCreateDate() {
+		return user.getCreateDate();
+	}
 
 	public void setName(String name) {
 		user.setName(name);
@@ -66,7 +74,12 @@ public class ORMUser extends ORMEntity {
 	public void setGrant(Grant grant) {
 		user.setGrant(grant);
 	}
-
+	public void setGroup(String group) {
+		user.setGroup(group);
+	}
+	public void setCreateDate(Date createDate) {
+		user.setCreateDate(createDate);
+	}
 
 	//ORM interface for incapsulated object
 
