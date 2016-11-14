@@ -106,8 +106,14 @@ public class ORMRouter extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
-        DAO staticDAO = daoFactory.getRouterDAO();
+    public static RouterEntity[] getPage(int page, int itemsPerPage, 
+    									String sortBy, boolean asc) throws ORMException {
+        DAO staticDAO;
+        try {
+			staticDAO = daoFactory.getRouterDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}
         RouterEntity[] routers = null;
         try {
         	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);

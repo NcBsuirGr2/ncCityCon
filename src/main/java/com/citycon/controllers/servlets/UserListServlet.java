@@ -15,17 +15,16 @@ import com.citycon.model.systemunits.orm.ORMException;
 public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String LIST = "/admin.jsp";
-	
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+
+	public void doGet(HttpServletRequest request, 
+		HttpServletResponse response) throws ServletException, IOException {
+		
 		UserEntity users[] = null;
 		try {
 			users = ORMUser.getPage(1,3,"name",true);
 		} catch (ORMException e) {
 			//TODO: logging
-		} catch (DAOException e) {
 			e.printStackTrace();
-			//TODO: error page
 		}
 		/////delete me
 
@@ -35,5 +34,10 @@ public class UserListServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher(LIST);
 
 		view.forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 }

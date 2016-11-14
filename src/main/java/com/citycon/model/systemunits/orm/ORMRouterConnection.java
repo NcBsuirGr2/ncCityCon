@@ -96,8 +96,14 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
-        DAO staticDAO = daoFactory.getRouterDAO();
+    public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, 
+    									String sortBy, boolean asc) throws ORMException {
+        DAO staticDAO;
+        try {
+			staticDAO = daoFactory.getRouterConnectionDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}
         RouterConnectionEntity[] routerConnections = null;
         try {
         	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);

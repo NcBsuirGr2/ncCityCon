@@ -114,8 +114,14 @@ public class ORMUser extends ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws ORMException if error occurs during delete operation
 	 */
-    public static UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws ORMException, DAOException {
-    	DAO staticDAO = daoFactory.getUserDAO();
+    public static UserEntity[] getPage(int page, int itemsPerPage, 
+    							String sortBy, boolean asc) throws ORMException {
+    	DAO staticDAO;
+        try {
+			staticDAO = daoFactory.getUserDAO();
+		} catch (DAOException cause) {
+			throw new ORMException("Cannot instantiate DAO object", cause);
+		}
         UserEntity[] users = null;
         try {
         	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
