@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by root on 13.11.16.
  */
-public class AuthorizationServlet extends HttpServlet {
+public class SignInServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {

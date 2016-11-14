@@ -14,7 +14,7 @@ import com.citycon.model.systemunits.orm.ORMException;
 
 public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String LIST = "/list.jsp";
+	private static String LIST = "/admin.jsp";
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

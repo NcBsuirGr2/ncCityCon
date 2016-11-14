@@ -23,7 +23,8 @@ public class LoginFilter implements Filter {
 		// init 
 	}
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws ServletException, IOException {
 		try { 
 
 			HttpServletResponse httpRes = (HttpServletResponse)res;
@@ -38,7 +39,7 @@ public class LoginFilter implements Filter {
 			
 		} catch (ClassCastException e) {
 			// nothing to do with no-http req
-			// TODO: log no-htpp reqest
+			// TODO: log no-http request
 			return;
 		}
 	}

@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 /**
  * Created by root on 13.11.16.
  */
-public class RegistrationServlet extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
