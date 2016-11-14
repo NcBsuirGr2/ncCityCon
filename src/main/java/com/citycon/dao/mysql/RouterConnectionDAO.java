@@ -1,30 +1,35 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
-import com.citycon.model.systemunits.entities.RouterEntity;
-import com.citycon.model.systemunits.entities.UserEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
 public class RouterConnectionDAO extends MySQLDAO {
-    private static volatile RouterConnectionDAO instance;
 
+    /**
+     * @throws DAOException
+     */
     private RouterConnectionDAO() throws DAOException {
         super();
         nameTable = " RouterConnection";
     }
 
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @return
+     * @throws DAOException
+     */
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         ArrayList<RouterConnectionEntity> routerConnections = new ArrayList();
         try {
@@ -51,6 +56,10 @@ public class RouterConnectionDAO extends MySQLDAO {
         return (RouterConnectionEntity[]) routerConnections.toArray();
     }
 
+    /**
+     * @param newElement
+     * @throws DAOException
+     */
     public void create(Entity newElement) throws DAOException {
         try{
             RouterConnectionEntity routerConnection = (RouterConnectionEntity) newElement;
@@ -71,28 +80,39 @@ public class RouterConnectionDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param readElement
+     * @throws DAOException
+     */
     public void read(Entity readElement) throws DAOException {
         RouterConnectionEntity  routerConnection  = (RouterConnectionEntity)readElement;
-        try {
-            String search = "select * from" + nameTable + "when id=?";
+        if(routerConnection.getId() != 0) {
+            try {
+                String search = "select * from" + nameTable + "when id=?";
 
-            PreparedStatement search_routerConnection = connection.prepareStatement(search);
-            search_routerConnection.setInt((int)1, readElement.getId());
+                PreparedStatement search_routerConnection = connection.prepareStatement(search);
+                search_routerConnection.setInt((int) 1, readElement.getId());
 
-            ResultSet resultSet =  search_routerConnection.executeQuery();
+                ResultSet resultSet = search_routerConnection.executeQuery();
 
-            while(resultSet.next()) {
-                routerConnection.setId(resultSet.getInt("id"));
-                routerConnection.setFirstRouterId(resultSet.getInt("ID_From"));
-                routerConnection.setSecondRouterId(resultSet.getInt("ID_To"));
+                while (resultSet.next()) {
+                    routerConnection.setId(resultSet.getInt("id"));
+                    routerConnection.setFirstRouterId(resultSet.getInt("ID_From"));
+                    routerConnection.setSecondRouterId(resultSet.getInt("ID_To"));
+                }
+                resultSet.close();
+                search_routerConnection.close();
+            } catch (SQLException e) {
+                throw new DAOException("Read routerConnection failed\n" + e.toString());
             }
-            resultSet.close();
-            search_routerConnection.close();
-        }catch (SQLException e){
-            throw new DAOException("Read routerConnection failed\n" + e.toString());
         }
+        else return;
     }
 
+    /**
+     * @param updateElement
+     * @throws DAOException
+     */
     public void update(Entity updateElement) throws DAOException {
         try {
             RouterConnectionEntity routerConnection = (RouterConnectionEntity) updateElement;
@@ -112,6 +132,10 @@ public class RouterConnectionDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param deleteElement
+     * @throws DAOException
+     */
     public void delete(Entity deleteElement) throws DAOException {
         try {
             RouterConnectionEntity routerConnection = (RouterConnectionEntity) deleteElement;
@@ -131,20 +155,4 @@ public class RouterConnectionDAO extends MySQLDAO {
     public static RouterConnectionDAO getInstance() throws DAOException {
         return new RouterConnectionDAO();
     }
-//    public static RouterConnectionDAO getInstance() throws DAOException {
-//        RouterConnectionDAO localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (RouterConnectionDAO.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    try {
-//                        instance = localInstance = new RouterConnectionDAO();
-//                    } catch (DAOException e) {
-//                        throw new DAOException("Dummy");
-//                    }
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
 }

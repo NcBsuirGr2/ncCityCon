@@ -1,7 +1,5 @@
 package com.citycon.dao;
-import com.citycon.model.systemunits.entities.*;
-
-import java.util.List;
+import com.citycon.model.systemunits.entities.Entity;
 
 /**
  * Created by Vojts on 09.11.2016.

@@ -8,6 +8,7 @@ import com.citycon.dao.DAOException;
  * Created by Vojts on 09.11.2016.
  */
 public class MySQLDAOFactory extends DAOAbstractFactory {
+
     /**
      * @return
      * @throws DAOException

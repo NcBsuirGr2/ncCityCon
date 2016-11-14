@@ -8,19 +8,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
 public class UserDAO extends MySQLDAO {
-    private static volatile UserDAO instance;
 
+    /**
+     * @throws DAOException
+     */
     private UserDAO() throws DAOException {
         super();
         nameTable = " User ";
     }
 
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @return
+     * @throws DAOException
+     */
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         ArrayList<UserEntity> users = new ArrayList();
         try {
@@ -51,6 +60,10 @@ public class UserDAO extends MySQLDAO {
         return (UserEntity[]) users.toArray();
     }
 
+    /**
+     * @param newElement
+     * @throws DAOException
+     */
     public void create(Entity newElement) throws DAOException {
         try{
             UserEntity user= (UserEntity) newElement;
@@ -75,13 +88,28 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param readElement
+     * @throws DAOException
+     */
     public void read(Entity readElement) throws DAOException {
         UserEntity user = (UserEntity)readElement;
         try {
             String search = "select * from" + nameTable + "when id=?";
 
             PreparedStatement search_user = connection.prepareStatement(search);
-            search_user.setInt((int)1, readElement.getId());
+            if(user.getId() != 0) {
+                search_user.setString(1, "id");
+                search_user.setInt(2, user.getId());
+            }
+            else if(user.getLogin() != null){
+                search_user.setString(1, "Login");
+                search_user.setString(2, user.getLogin());
+            }
+            else {
+                search_user.close();
+                return;
+            }
 
             ResultSet resultSet =  search_user.executeQuery();
 
@@ -101,6 +129,10 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param updateElement
+     * @throws DAOException
+     */
     public void update(Entity updateElement) throws DAOException {
         try {
             UserEntity user= (UserEntity) updateElement;
@@ -124,6 +156,10 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param deleteElement
+     * @throws DAOException
+     */
     public void delete(Entity deleteElement) throws DAOException {
         try {
             UserEntity user= (UserEntity) deleteElement;
@@ -143,20 +179,4 @@ public class UserDAO extends MySQLDAO {
     public static UserDAO getInstance() throws DAOException {
         return new UserDAO();
     }
-//    public static UserDAO getInstance() throws DAOException {
-//        UserDAO localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (UserDAO.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    try {
-//                        instance = localInstance = new UserDAO();
-//                    } catch (DAOException e) {
-//                        throw new DAOException("Dummy");
-//                    }
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
 }

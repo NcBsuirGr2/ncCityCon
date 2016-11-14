@@ -9,6 +9,7 @@ import java.sql.Connection;
  * Created by Vojts on 09.11.2016.
  */
 public abstract class MySQLDAO implements DAO {
+
     protected String nameTable;
     protected Connection connection;
 

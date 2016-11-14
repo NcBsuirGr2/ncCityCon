@@ -1,30 +1,36 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAO;
 import com.citycon.dao.DAOException;
-import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.UserEntity;
+import com.citycon.model.systemunits.entities.Entity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
 
 public class CityDAO extends MySQLDAO {
-    private static volatile CityDAO instance;
 
+    /**
+     * @throws DAOException
+     */
     private CityDAO() throws DAOException {
         super();
         nameTable = " City ";
     }
 
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @return
+     * @throws DAOException
+     */
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
         ArrayList<CityEntity> cities = new ArrayList();
         try {
@@ -51,6 +57,10 @@ public class CityDAO extends MySQLDAO {
         return (CityEntity[]) cities.toArray();
     }
 
+    /**
+     * @param newElement
+     * @throws DAOException
+     */
     public void create(Entity newElement) throws DAOException {
         try{
             CityEntity city = (CityEntity) newElement;
@@ -71,28 +81,38 @@ public class CityDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param readElement
+     * @throws DAOException
+     */
     public void read(Entity readElement) throws DAOException {
         CityEntity city = (CityEntity)readElement;
-        try {
-            String search = "select * from" + nameTable + "when id=?";
+        if (city.getId() != 0) {
+            try {
+                String search = "select * from" + nameTable + "when id=?";
 
-            PreparedStatement search_city = connection.prepareStatement(search);
-            search_city.setInt((int)1, readElement.getId());
+                PreparedStatement search_city = connection.prepareStatement(search);
+                search_city.setInt((int) 1, readElement.getId());
 
-            ResultSet resultSet =  search_city.executeQuery();
+                ResultSet resultSet = search_city.executeQuery();
 
-            while(resultSet.next()) {
-                city.setId(resultSet.getInt("id"));
-                city.setName(resultSet.getString("Name"));
-                city.setCountryName(resultSet.getString("Country"));
+                while (resultSet.next()) {
+                    city.setName(resultSet.getString("Name"));
+                    city.setCountryName(resultSet.getString("Country"));
+                }
+                resultSet.close();
+                search_city.close();
+            } catch (SQLException e) {
+                throw new DAOException("Read city failed\n" + e.toString());
             }
-            resultSet.close();
-            search_city.close();
-        }catch (SQLException e){
-            throw new DAOException("Read city failed\n" + e.toString());
         }
+        else return;
     }
 
+    /**
+     * @param updateElement
+     * @throws DAOException
+     */
     public void update(Entity updateElement) throws DAOException {
         try {
             CityEntity city = (CityEntity) updateElement;
@@ -112,6 +132,10 @@ public class CityDAO extends MySQLDAO {
         }
     }
 
+    /**
+     * @param deleteElement
+     * @throws DAOException
+     */
     public void delete(Entity deleteElement) throws DAOException {
         try {
             CityEntity city = (CityEntity) deleteElement;
@@ -131,21 +155,4 @@ public class CityDAO extends MySQLDAO {
     public static CityDAO getInstance() throws DAOException {
         return new CityDAO();
     }
-    
-//    public static CityDAO getInstance() throws DAOException {
-//        CityDAO localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (CityDAO.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    try {
-//                        instance = localInstance = new CityDAO();
-//                    } catch (DAOException e) {
-//                        throw new DAOException("Dummy");
-//                    }
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
 }
