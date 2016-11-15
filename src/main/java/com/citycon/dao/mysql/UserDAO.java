@@ -84,7 +84,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create user failed");
+            throw new DAOException("Create user failed",e);
         }
     }
 
@@ -103,7 +103,7 @@ public class UserDAO extends MySQLDAO {
             }
             else if(user.getLogin() != null){
                 field = "Login";
-                value = user.getLogin();
+                value = "'" + user.getLogin() + "'";
             }
             else {
                 throw new DAOException("For reading user incorrectly chosen field, try id or login");
@@ -128,7 +128,7 @@ public class UserDAO extends MySQLDAO {
             resultSet.close();
             search_user.close();
         }catch (SQLException e){
-            throw new DAOException("Read user failed\n" + e.toString());
+            throw new DAOException("Read user failed", e);
         }
     }
 
@@ -155,7 +155,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Update user failed");
+            throw new DAOException("Update user failed", e);
         }
     }
 
@@ -176,7 +176,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Delete user failed");
+            throw new DAOException("Delete user failed", e);
         }
     }
     public static UserDAO getInstance() throws DAOException {
