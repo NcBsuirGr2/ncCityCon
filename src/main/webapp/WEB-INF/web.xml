@@ -29,6 +29,7 @@
 		<url-pattern>/SignUp</url-pattern>
 	</servlet-mapping>
 
+
 	<!-- Users branch -->
     <servlet>
     	<servlet-name>UserListServlet</servlet-name>

@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@ include file="html/header.html" %>
 <!--%@ include file="html/header.html" %>-->
 <html>
 <head>
@@ -21,16 +21,7 @@
     <link href="css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="header header-logged-out width-full pt-5 pb-4" role="banner">
-        <div class="container clearfix width-full">
-            <a class="header-logo" href="index.jsp" aria-label="Homepage"
-               data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
-                <svg aria-hidden="true" class="octicon octicon-mark-github" height="48" version="1.1" viewBox="0 0 16 16" width="48">
-                    <a href="#"><img alt="logo" id="menu" src="img/logo.png"/></a>
-                </svg>
-            </a>
-        </div>
-    </div>
+
 
 
     <!--login modal-->
@@ -44,12 +35,12 @@
                 </div>
 
                 <div class="modal-body">
-                    <form class="form col-md-12 center-block " action="">
+                    <form class="form col-md-12 center-block " method="post" action="SignIn">
                         <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Login">
+                            <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password">
+                            <input type="password" class="form-control input-lg" placeholder="Password" name="password">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-lg btn-block">Sign In</button>
@@ -61,7 +52,7 @@
 
                 <div class="modal-footer">
                     <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/cityCon/index.jsp'">Cancel</button>
                     </div>
                 </div>
 
@@ -91,4 +82,5 @@
 </body>
 </html>
 <!--%@ include file="html/footer.html" %>-->
+<%@ include file="html/footer.html" %>
 

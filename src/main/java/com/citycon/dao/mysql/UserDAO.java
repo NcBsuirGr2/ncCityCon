@@ -36,8 +36,8 @@ public class UserDAO extends MySQLDAO {
             String search = "select * from" + nameTable + "limit ?,?";
 
             PreparedStatement search_users = connection.prepareStatement(search);
-            search_users.setInt((int)1, page*itemsPerPage);
-            search_users.setInt((int)2, itemsPerPage);
+            search_users.setInt(1, (page-1)*itemsPerPage);
+            search_users.setInt(2, itemsPerPage);
 
             ResultSet resultSet =  search_users.executeQuery();
 
@@ -57,7 +57,7 @@ public class UserDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("GetPage user failed\n" + e.toString());
         }
-        return (UserEntity[]) users.toArray();
+        return users.toArray(new UserEntity[users.size()]);
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create user failed");
+            throw new DAOException("Create user failed",e);
         }
     }
 
@@ -94,26 +94,28 @@ public class UserDAO extends MySQLDAO {
      */
     public void read(Entity readElement) throws DAOException {
         UserEntity user = (UserEntity)readElement;
+        String field = "";
+        String value = "";
         try {
-            String search = "select * from" + nameTable + "when id=?";
-
-            PreparedStatement search_user = connection.prepareStatement(search);
             if(user.getId() != 0) {
-                search_user.setString(1, "id");
-                search_user.setInt(2, user.getId());
+                field = "id";
+                value = String.valueOf(user.getId());
             }
             else if(user.getLogin() != null){
-                search_user.setString(1, "Login");
-                search_user.setString(2, user.getLogin());
+                field = "Login";
+                value = "'" + user.getLogin() + "'";
             }
             else {
-                search_user.close();
-                return;
+                throw new DAOException("For reading user incorrectly chosen field, try id or login");
             }
+
+            String search = "select * from" + nameTable + "where " + field + "=" + value;
+
+            PreparedStatement search_user = connection.prepareStatement(search);
 
             ResultSet resultSet =  search_user.executeQuery();
 
-            while(resultSet.next()) {
+            if(resultSet.first()) {
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("Login"));
                 user.setPassword(resultSet.getString("Pass"));
@@ -122,10 +124,11 @@ public class UserDAO extends MySQLDAO {
                 user.setGroup(resultSet.getString("Group"));
                 user.setCreateDate(resultSet.getDate("create_date"));
             }
+            else throw new DAOException("This user does not exist");
             resultSet.close();
             search_user.close();
         }catch (SQLException e){
-            throw new DAOException("Read user failed\n" + e.toString());
+            throw new DAOException("Read user failed", e);
         }
     }
 
@@ -152,7 +155,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Update user failed");
+            throw new DAOException("Update user failed", e);
         }
     }
 
@@ -173,7 +176,7 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Delete user failed");
+            throw new DAOException("Delete user failed", e);
         }
     }
     public static UserDAO getInstance() throws DAOException {

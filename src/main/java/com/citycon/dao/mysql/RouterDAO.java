@@ -19,7 +19,7 @@ public class RouterDAO extends MySQLDAO{
      */
     private RouterDAO() throws DAOException {
         super();
-        nameTable = " Router";
+        nameTable = " Router ";
     }
 
     /**
@@ -36,8 +36,8 @@ public class RouterDAO extends MySQLDAO{
             String search = "select * from" + nameTable + "limit ?,?";
 
             PreparedStatement search_routers = connection.prepareStatement(search);
-            search_routers.setInt((int)1, page*itemsPerPage);
-            search_routers.setInt((int)2, itemsPerPage);
+            search_routers.setInt(1, (page-1)*itemsPerPage);
+            search_routers.setInt(2, itemsPerPage);
 
             ResultSet resultSet =  search_routers.executeQuery();
 
@@ -56,7 +56,7 @@ public class RouterDAO extends MySQLDAO{
         }catch (SQLException e){
             throw new DAOException("GetPage router failed\n" + e.toString());
         }
-        return (RouterEntity[]) routers.toArray();
+        return routers.toArray(new RouterEntity[routers.size()]);
     }
 
     /**
@@ -93,7 +93,7 @@ public class RouterDAO extends MySQLDAO{
     public void read(Entity readElement) throws DAOException {
         RouterEntity router = (RouterEntity)readElement;
         try {
-            String search = "select * from" + nameTable + "when ?=?";
+            String search = "select * from" + nameTable + "where ?=?";
             PreparedStatement search_router = connection.prepareStatement(search);
             if(router.getId() != 0) {
                 search_router.setString(1, "id");
@@ -109,7 +109,7 @@ public class RouterDAO extends MySQLDAO{
             }
             ResultSet resultSet = search_router.executeQuery();
 
-            while (resultSet.next()) {
+            if(resultSet.first()) {
                 router.setId(resultSet.getInt("id"));
                 router.setName(resultSet.getString("Name"));
                 router.setSN(resultSet.getString("SN"));

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
@@ -15,23 +16,29 @@ import com.citycon.model.systemunits.orm.ORMException;
 public class UserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String LIST = "/admin.jsp";
+	private static String ERROR = "/error.jsp";
 
 	public void doGet(HttpServletRequest request, 
 		HttpServletResponse response) throws ServletException, IOException {
 		
 		UserEntity users[] = null;
+		RequestDispatcher view;
 		try {
-			users = ORMUser.getPage(1,3,"name",true);
+			users = ORMUser.getPage(1,20,"name",true);
+			request.setAttribute("entityClass", "users");
+			request.setAttribute("entityArray", users);
+
+			view = request.getRequestDispatcher(LIST);
 		} catch (ORMException e) {
 			//TODO: logging
+			HttpSession session = request.getSession(true);
+			session.setAttribute("error",e.getMessage());
+			view = request.getRequestDispatcher(ERROR);
 			e.printStackTrace();
 		}
 		/////delete me
 
-		request.setAttribute("entityClass", "users");
-		request.setAttribute("entityArray", users);
-		
-		RequestDispatcher view = request.getRequestDispatcher(LIST);
+
 
 		view.forward(request, response);
 	}

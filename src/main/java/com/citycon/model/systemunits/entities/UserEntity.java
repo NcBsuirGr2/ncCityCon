@@ -21,23 +21,6 @@ public class UserEntity extends Entity {
 	private String group;
 	private Date createDate;
 
-	public UserEntity() {
-		String names[] = {"Mike", "Alex", "Tim", "Dima", "Karin"};
-		String logins[] = {"ekiM", "xelA", "miT", "amiD", "niraK"};	
-		String passwords[] = {"Mikepass", "Alexpass", "Timpass", "Dimapass", "Karinpass"};	
-		String emails[] = {"mike@mi.ke", "alex@al.ex", "tim@ti.im", "dima@di.ma", "karin@kar.in"};	
-		int randomOne = (int)(Math.random()*names.length);
-
-		name = names[randomOne];
-		login = logins[randomOne];
-		password = passwords[randomOne];
-		email = emails[randomOne];
-		grant = new Grant();
-		
-		grant.setSystemUnitsBranchLevel((int)(Math.random()*3));
-		grant.setUsersBranchLevel((int)(Math.random()*3));
-	}
-
 	public String getName() {
 		return name;
 	}

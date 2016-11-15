@@ -87,7 +87,7 @@ public class ORMUser extends ORMEntity {
 		try {
 			dao.create(user);
 		} catch(DAOException cause) {
-			throw new ORMException("Cannot create user", cause);
+			throw new ORMException("User with that login is already exist", cause);
 		}
 	}
     public void read() throws ORMException {
