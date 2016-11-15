@@ -15,6 +15,7 @@
         <p><input name="login" type="text" placeholder="Enter your login"></p>
         <p><input name="password" type="text" placeholder="Enter your password"></p>
         <p><input name="E-mail" type="email" placeholder="Enter your email"></p>
+        <p><input name="name" type="text" placeholder="Enter your user name"></p>
         <p><input type="submit" value="Enter"></p>
     </form>
 

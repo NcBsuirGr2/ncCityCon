@@ -18,6 +18,7 @@ import java.io.IOException;
  * Created by root on 13.11.16.
  */
 public class SignInServlet extends HttpServlet {
+    private static String ERROR = "/error.jsp";
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +41,8 @@ public class SignInServlet extends HttpServlet {
             //перенаправление на страницу после аунтефикации(пока не созданы) (заменить /app и /error)
         } catch (ORMException e) {
             e.printStackTrace();
-            rd = getServletContext().getRequestDispatcher("/error.jsp");
+            request.getSession().setAttribute("error",e.getMessage());
+            rd = getServletContext().getRequestDispatcher(ERROR);
             //TODO: logging
             //TODO: error page
             //ываыва
