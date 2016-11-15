@@ -10,6 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.FilterChain;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Checks if user loggined into system. After login UserEntitiy object must be
  * created in sessionScope. If there is no such object, filter should not pass 
@@ -31,6 +34,9 @@ public class LoginFilter implements Filter {
 			HttpServletRequest httpReq = (HttpServletRequest)req;
 
 			if (httpReq.getSession().getAttribute("user") == null) {
+				Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
+				logger.info("Access to the secret page");
+
 				//TODO: pretty error page
 				httpRes.sendError(403, "You must be logged in to see this page.");
 			}else {
