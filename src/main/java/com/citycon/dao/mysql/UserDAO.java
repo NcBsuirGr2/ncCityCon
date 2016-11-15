@@ -36,8 +36,8 @@ public class UserDAO extends MySQLDAO {
             String search = "select * from" + nameTable + "limit ?,?";
 
             PreparedStatement search_users = connection.prepareStatement(search);
-            search_users.setInt((int)1, page*itemsPerPage);
-            search_users.setInt((int)2, itemsPerPage);
+            search_users.setInt(1, (page-1)*itemsPerPage);
+            search_users.setInt(2, itemsPerPage);
 
             ResultSet resultSet =  search_users.executeQuery();
 
@@ -57,7 +57,7 @@ public class UserDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("GetPage user failed\n" + e.toString());
         }
-        return (UserEntity[]) users.toArray();
+        return users.toArray(new UserEntity[users.size()]);
     }
 
     /**
@@ -95,7 +95,7 @@ public class UserDAO extends MySQLDAO {
     public void read(Entity readElement) throws DAOException {
         UserEntity user = (UserEntity)readElement;
         try {
-            String search = "select * from" + nameTable + "when id=?";
+            String search = "select * from" + nameTable + "where ?=?";
 
             PreparedStatement search_user = connection.prepareStatement(search);
             if(user.getId() != 0) {
@@ -113,7 +113,7 @@ public class UserDAO extends MySQLDAO {
 
             ResultSet resultSet =  search_user.executeQuery();
 
-            while(resultSet.next()) {
+            if(resultSet.first()) {
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(resultSet.getString("Login"));
                 user.setPassword(resultSet.getString("Pass"));
