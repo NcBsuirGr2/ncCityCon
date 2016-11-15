@@ -37,8 +37,8 @@ public class CityDAO extends MySQLDAO {
             String search = "select * from" + nameTable + "limit ?,?";
 
             PreparedStatement search_cities = connection.prepareStatement(search);
-            search_cities.setInt((int)1, page*itemsPerPage);
-            search_cities.setInt((int)2, itemsPerPage);
+            search_cities.setInt(1, (page-1)*itemsPerPage);
+            search_cities.setInt(2, itemsPerPage);
 
             ResultSet resultSet =  search_cities.executeQuery();
 
@@ -54,7 +54,7 @@ public class CityDAO extends MySQLDAO {
         }catch (SQLException e){
             throw new DAOException("GetPage city failed\n" + e.toString());
         }
-        return (CityEntity[]) cities.toArray();
+        return cities.toArray(new CityEntity[cities.size()]);
     }
 
     /**
@@ -89,14 +89,14 @@ public class CityDAO extends MySQLDAO {
         CityEntity city = (CityEntity)readElement;
         if (city.getId() != 0) {
             try {
-                String search = "select * from" + nameTable + "when id=?";
+                String search = "select * from" + nameTable + "where id=?";
 
                 PreparedStatement search_city = connection.prepareStatement(search);
-                search_city.setInt((int) 1, readElement.getId());
+                search_city.setInt(1, readElement.getId());
 
                 ResultSet resultSet = search_city.executeQuery();
 
-                while (resultSet.next()) {
+                if(resultSet.first()) {
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
                 }

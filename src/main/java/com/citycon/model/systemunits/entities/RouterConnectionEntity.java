@@ -12,11 +12,6 @@ public class RouterConnectionEntity extends Entity {
 	private int firstRouterId;
 	private int secondRouterId;
 
-	public RouterConnectionEntity() {
-		firstRouterId = (int)(Math.random()*100000);
-		secondRouterId = (int)(Math.random()*100000);
-	}
-
 	public int getFirstRouterId() {
 		return firstRouterId;
 	}

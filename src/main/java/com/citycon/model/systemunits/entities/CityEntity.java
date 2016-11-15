@@ -13,14 +13,6 @@ public class CityEntity extends Entity {
 	private String name;
 	private String countryName;
 
-	public CityEntity() {
-		String names[] = {"Minsk", "Moskow", "London", "Berlin", "Paris", "Tokio"};
-		String countryNames[] = {"Belarus", "Russia", "UK", "Germany", "France", "Japan"};	
-		int randomOne = (int)(Math.random()*names.length);
-		name = names[randomOne];
-		countryName = countryNames[randomOne];
-	}
-
 	public String getName() {
 		return name;
 	}
