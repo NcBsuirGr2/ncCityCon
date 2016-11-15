@@ -36,7 +36,7 @@
                         <input type="password" class="form-control input-lg" placeholder="Password" name="password">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control input-lg" placeholder="Email" name="email">
+                        <input type="email" class="form-control input-lg" placeholder="Email" name="E-mail">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-lg" placeholder="name" name="name">
