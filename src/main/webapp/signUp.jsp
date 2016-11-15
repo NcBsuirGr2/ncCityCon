@@ -4,25 +4,65 @@
 <%@ include file="html/header.html" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>CityCon Login</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>List</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-    <h1 align="center">Create your personal account</h1>
-    <form align="center" method="post" action="SignUp" >
-        <p><input name="login" type="text" placeholder="Enter your login"></p>
-        <p><input name="password" type="text" placeholder="Enter your password"></p>
-        <p><input name="E-mail" type="email" placeholder="Enter your email"></p>
-        <p><input name="name" type="text" placeholder="Enter your user name"></p>
-        <p><input type="submit" value="Enter"></p>
-    </form>
 
-    <div>
-        <p>Заполняем данные и попадаем на страницу city.jsp</p>
-        <p>т.к. аккаунт админа мы все равно создать не сможем</p>
+<div id="loginModal" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="text-center">input your data</h1>
+            </div>
+
+            <div class="modal-body">
+                <form class="form col-md-12 center-block " method="post" action="SignUp">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" placeholder="Login" name="login">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control input-lg" placeholder="Email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" placeholder="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg btn-block">Register</button>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/cityCon/index.jsp'">Cancel</button>
+                </div>
+            </div>
+
+
+        </div>
     </div>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 
 </body>
 </html>
