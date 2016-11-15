@@ -23,9 +23,13 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         ORMUser user = null;
+        RequestDispatcher rd;
+
         try {
             user = new ORMUser();
         } catch (ORMException e) {
+            request.getSession().setAttribute("error",e.getMessage());
+            rd = getServletContext().getRequestDispatcher(ERROR);
             e.printStackTrace();
         }   //TODO: logging
             //TODO: error page
@@ -33,11 +37,10 @@ public class SignInServlet extends HttpServlet {
         user.setLogin(request.getParameter("login"));
         user.setPassword(request.getParameter("password"));
 
-        RequestDispatcher rd;
         try {
             user.read();
             request.getSession().setAttribute("user",user.getEntity());
-            rd = getServletContext().getRequestDispatcher("/app");
+            rd = getServletContext().getRequestDispatcher("/app/users");
             //перенаправление на страницу после аунтефикации(пока не созданы) (заменить /app и /error)
         } catch (ORMException e) {
             e.printStackTrace();

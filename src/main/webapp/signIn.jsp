@@ -44,12 +44,12 @@
                 </div>
 
                 <div class="modal-body">
-                    <form class="form col-md-12 center-block " action="">
+                    <form class="form col-md-12 center-block " method="post" action="SignIn">
                         <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Login">
+                            <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password">
+                            <input type="password" class="form-control input-lg" placeholder="Password" name="password">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-lg btn-block">Sign In</button>

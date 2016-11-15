@@ -24,7 +24,7 @@ public class UserListServlet extends HttpServlet {
 		UserEntity users[] = null;
 		RequestDispatcher view;
 		try {
-			users = ORMUser.getPage(1,5,"name",true);
+			users = ORMUser.getPage(1,20,"name",true);
 			request.setAttribute("entityClass", "users");
 			request.setAttribute("entityArray", users);
 
