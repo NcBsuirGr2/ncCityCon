@@ -94,22 +94,24 @@ public class UserDAO extends MySQLDAO {
      */
     public void read(Entity readElement) throws DAOException {
         UserEntity user = (UserEntity)readElement;
+        String field = "";
+        String value = "";
         try {
-            String search = "select * from" + nameTable + "where ?=?";
-
-            PreparedStatement search_user = connection.prepareStatement(search);
             if(user.getId() != 0) {
-                search_user.setString(1, "id");
-                search_user.setInt(2, user.getId());
+                field = "id";
+                value = String.valueOf(user.getId());
             }
             else if(user.getLogin() != null){
-                search_user.setString(1, "Login");
-                search_user.setString(2, user.getLogin());
+                field = "Login";
+                value = user.getLogin();
             }
             else {
-                search_user.close();
-                return;
+                throw new DAOException("For reading user incorrectly chosen field, try id or login");
             }
+
+            String search = "select * from" + nameTable + "where " + field + "=" + value;
+
+            PreparedStatement search_user = connection.prepareStatement(search);
 
             ResultSet resultSet =  search_user.executeQuery();
 
@@ -122,6 +124,7 @@ public class UserDAO extends MySQLDAO {
                 user.setGroup(resultSet.getString("Group"));
                 user.setCreateDate(resultSet.getDate("create_date"));
             }
+            else throw new DAOException("This user does not exist");
             resultSet.close();
             search_user.close();
         }catch (SQLException e){
