@@ -29,3 +29,21 @@ img{
 	border: 0;
     box-shadow: 0 0 3px rgba(0,0,0,15);
 }
+.btn-primary{
+	background-color: #2980b9;
+	color: white;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:visited{
+	background-color: #52a3d8;
+	color: white;
+}
+.panel-default {
+        margin-top: 50px;
+        margin-left: 20%;
+        margin-right: 20%;
+}
+a{
+	margin-left: 20%;
+}

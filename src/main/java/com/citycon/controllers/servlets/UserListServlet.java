@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
-import com.citycon.model.systemunits.orm.ORMException;
 
 public class UserListServlet extends AbstractHttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +28,7 @@ public class UserListServlet extends AbstractHttpServlet {
 			request.setAttribute("entityArray", users);
 
 			view = request.getRequestDispatcher(LIST);
-		} catch (ORMException e) {
+		} catch (DAOException e) {
 			//TODO: logging
 			HttpSession session = request.getSession(true);
 			session.setAttribute("error",e.getMessage());

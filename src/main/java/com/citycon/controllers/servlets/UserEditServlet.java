@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import com.citycon.model.systemunits.orm.ORMUser;
-import com.citycon.model.systemunits.orm.ORMException;
+import com.citycon.dao.exceptions.DAOException;
 
 
 /**
@@ -36,7 +36,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 				user.setName(userName);
 				user.read();
 				req.setAttribute("user", user.getEntity());
-			} catch (ORMException cause) {
+			} catch (DAOException cause) {
 				//TODO: logging
 				forwardToErrorPage("Error occur during reading user", req, res);
 				return;
@@ -70,7 +70,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			newUser.setCreateDate(createDate);
 
 			newUser.create();
-		} catch(ORMException cause) {
+		} catch(DAOException cause) {
 			//TODO: logging
 			forwardToErrorPage("Cannot create new user", req, res);
 			return;
@@ -103,7 +103,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			updateUser.setGroup(group);
 
 			updateUser.update();
-		} catch (ORMException cause) {
+		} catch (DAOException cause) {
 			//TODO: logging
 			forwardToErrorPage("Cannot update user", req, res);
 			return;
@@ -129,7 +129,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			deleteUser.setLogin(login);
 
 			deleteUser.delete();
-		} catch (ORMException cause) {
+		} catch (DAOException cause) {
 			forwardToErrorPage("Cannot delete user", req, res);
 			return;
 		} catch (NumberFormatException cause) {

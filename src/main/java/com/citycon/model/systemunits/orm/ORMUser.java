@@ -20,12 +20,8 @@ public class ORMUser extends ORMEntity {
 	DAO dao;
 	UserEntity user = new UserEntity();
 
-	public ORMUser() throws ORMException {
-		try {
-			dao = daoFactory.getUserDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
+	public ORMUser() throws DAOException {
+		dao = daoFactory.getUserDAO();
 	}
 
 	//Get-set interface for incapsulated object
@@ -83,67 +79,35 @@ public class ORMUser extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public void create() throws ORMException {
-		try {
+	public void create() throws DAOException {
 			dao.create(user);
-		} catch(DAOException cause) {
-			throw new ORMException("User with that login is already exist", cause);
-		}
 	}
-    public void read() throws ORMException {
-    	try {
+    public void read() throws DAOException {
     		dao.read(user);
-    	} catch(DAOException cause) {
-    		throw new ORMException("Cannot read user", cause);
-    	}
     }
-    public void update() throws ORMException {
-    	try {
+    public void update() throws DAOException {
  		   	dao.update(user);
-    	} catch(DAOException cause) {
-    		throw new ORMException("Cannot update user", cause);
-    	}
+    }
+    public void delete() throws DAOException {
+    		dao.delete(user);
     }
 
-	public UserEntity getEntity()  {
+    public UserEntity getEntity()  {
 		return user;
 	}
 
-    public void delete() throws ORMException {
-    	try {
-    		dao.delete(user);
-    	} catch(DAOException cause) {
-    		throw new ORMException("Cannot delete user", cause);
-    	}
-    }
-
-     /**
+    /**
 	 * Get any page of users from DAO layer. 
 	 *
 	 * @param  page number of page to show
 	 * @param  itemsPerPage number of items to show on one page
 	 * @param  sortBy field to sort by
 	 * @param  asc sorting in asc order if true
-	 * @return id the id of deleted element.
-	 * @throws ORMException if error occurs during delete operation
+	 * @return cityEntity[] the array of users on demanded page.
 	 */
     public static UserEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws ORMException {
-    	DAO staticDAO;
-        try {
-			staticDAO = daoFactory.getUserDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
-        UserEntity[] users = null;
-        try {
-        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
-        	users = (UserEntity[])temp;
-        } catch (DAOException cause) {
-        	throw new ORMException("Cannot get users page", cause);
-        } catch (ClassCastException exception) {
-        	throw new ORMException("Cannot cast Entity[] from DAO to UserEntity[]", exception);
-        }
-        return users;
+    							String sortBy, boolean asc) throws DAOException {
+    	DAO staticDAO = daoFactory.getUserDAO();
+        return (UserEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
 }

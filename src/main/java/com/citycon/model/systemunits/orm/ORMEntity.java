@@ -2,7 +2,7 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.dao.DAOAbstractFactory;
 import com.citycon.dao.mysql.MySQLDAOFactory;
-import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.Entity;
 
 /**
@@ -24,7 +24,7 @@ public abstract class ORMEntity {
 	 * @return id the id of created element.
 	 * @throws ORMException if error occurs during create operation
 	 */
-	public abstract void create() throws ORMException;
+	public abstract void create() throws DAOException;
 
 	/**
 	 * Retrive new Entity from DAO layer. Updates the incapsulated Entity object. If 
@@ -33,7 +33,7 @@ public abstract class ORMEntity {
 	 * @return id the id of retrieved element.
 	 * @throws ORMException if error occurs during read operation
 	 */
-    public abstract void read() throws ORMException;
+    public abstract void read() throws DAOException;
 
     /**
 	 * Ask DAO layer to update entity with current values. Sends the incapsulated 
@@ -41,9 +41,9 @@ public abstract class ORMEntity {
 	 * concrete DAO class. Setting 'id' field is prefered.
 	 * 
 	 * @return id the id of updated element.
-	 * @throws ORMException if error occurs during update operation
+	 * @throws DAOException if error occurs during update operation
 	 */
-    public abstract void update() throws ORMException;
+    public abstract void update() throws DAOException;
 
     /**
 	 * Ask DAO layer to delete current entity. The incapsulated Entity must contain 
@@ -51,14 +51,14 @@ public abstract class ORMEntity {
 	 * concrete DAO class. Setting 'id' field is prefered.
 	 * 
 	 * @return id the id of deleted element.
-	 * @throws ORMException if error occurs during delete operation
+	 * @throws DAOException if error occurs during delete operation
 	 */
 
-	public abstract Entity getEntity() throws ORMException;
+	public abstract Entity getEntity() throws DAOException;
 
 	/**
 	 * @return simple entity from orm object
 	 */
 
-    public abstract void delete() throws ORMException;
+    public abstract void delete() throws DAOException;
 }
