@@ -19,15 +19,8 @@ public class CityListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        HttpServletResponse httpRes = (HttpServletResponse) res;
-        HttpServletRequest httpReq = (HttpServletRequest) req;
-        UserEntity user = (UserEntity)httpReq.getSession().getAttribute("user");
-        if (user.getGrant().getSystemUnitsBranchLevel() < Grant.READ) {
-            forwardToSecurityErrorPage(httpReq, httpRes);
-        }
-
+        checkRights(req, res, 0, 1);
         chain.doFilter(req, res);
-
 
     }
 
