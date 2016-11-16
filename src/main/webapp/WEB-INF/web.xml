@@ -13,7 +13,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SignInServlet</servlet-name>
-		<url-pattern>/SignIn</url-pattern>
+		<url-pattern>/signin</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -22,7 +22,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SignUpServlet</servlet-name>
-		<url-pattern>/SignUp</url-pattern>
+		<url-pattern>/signup</url-pattern>
 	</servlet-mapping>
 
     <servlet>

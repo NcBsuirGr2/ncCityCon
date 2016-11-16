@@ -51,18 +51,21 @@ public class SignUpServlet extends AbstractHttpServlet {
                 try {                    
                     user.read();
                     req.getSession().setAttribute("user", user.getEntity());
-                    res.sendRedirect("/");
+                    res.sendRedirect("/cityCon/");
                 } catch (DAOException exception) {    
-                    //неудачная запись            
+                    //неудачная запись      
+                    //res.sendRedirect("/cityCon/");
                     forwardToErrorPage(exception.getMessage(), req, res);      
                 }
             } catch(DAOException exception) {
                 // Здесь проблема создания пользователя. Redirect на ту же страницу с 
                 // атрибутом типа ошибки
+                //res.sendRedirect("/cityCon/");
                 forwardToErrorPage(exception.getMessage(), req, res);
             } 
         } catch (DAOException exception) {
             // Тут внутренняя ошибка
+            //res.sendRedirect("/cityCon/");
             forwardToErrorPage(exception.getMessage(), req, res);             
         }       
     }

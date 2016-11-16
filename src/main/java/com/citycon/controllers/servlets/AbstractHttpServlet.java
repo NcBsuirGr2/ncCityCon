@@ -17,7 +17,7 @@ import java.io.IOException;
  * 
  */
 public abstract class AbstractHttpServlet extends HttpServlet {
-    private static final String ERROR_PAGE = "/error.jsp";
+    private static final String ERROR_PAGE = "/jsp/errors/error.jsp";
 
     protected void forwardToErrorPage(String errorMessage, HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {

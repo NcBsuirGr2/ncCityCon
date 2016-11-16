@@ -28,7 +28,7 @@
             </div>
 
             <div class="modal-body">
-                <form class="form col-md-12 center-block " method="post" action="SignUp">
+                <form class="form col-md-12 center-block " method="post" action="/cityCon/signup">
                     <div class="form-group">
                         <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                     </div>
@@ -42,7 +42,7 @@
                         <input type="text" class="form-control input-lg" placeholder="name" name="name">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary btn-lg btn-block">Register</button>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign Up">
                     </div>
                 </form>
             </div>
@@ -50,7 +50,7 @@
 
             <div class="modal-footer">
                 <div class="col-md-12">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/cityCon/index.jsp'">Cancel</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/cityCon/'">Cancel</button>
                 </div>
             </div>
 

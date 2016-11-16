@@ -17,11 +17,11 @@
         </div>
 
 
-        <form class="form col-md-12 center-block" action="signIn.jsp">
+        <form class="form col-md-12 center-block" action="/cityCon/signin">
             <button class="btn btn-primary btn-lg btn-block">Sign In</button>
         </form>
 
-        <form class="form col-md-12 center-block" action="signUp.jsp">
+        <form class="form col-md-12 center-block" action="/cityCon/signup">
             <button class="btn btn-primary btn-lg btn-block">Sign Up</button>
         </form>
 

@@ -44,7 +44,7 @@ public class SignInServlet extends AbstractHttpServlet {
             try {                 
                 user.read();
                 req.getSession().setAttribute("user", user.getEntity());
-                res.sendRedirect("/");
+                res.sendRedirect("/cityCon/");
             } catch(DAOException exception) {
                 // Здесь проблема авторизации, либо невалидные данные, 
                 // либо пользователя не существет. Либо редирект на ту же страницу с атрибутом
