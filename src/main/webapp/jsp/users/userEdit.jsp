@@ -16,27 +16,27 @@
 <body>
 <div class="panel panel-default">
 	<div class="panel-heading">Edit</div>
-            	<form class="form-horizontal" role="form" method="post" action="#" >
+            	<form class="form-horizontal" role="form" method="post" action="UserEditServlet" >
                 	<div class="form-group">
                     	<label for="name" class="col-xs-3 control-label">Name</label>
                         	<div class="col-xs-9">
-                            	<input class="form-control" placeholder="Name" id="name" name="name" type="text" autofocus>
+                            	<input class="form-control" placeholder="Name" id="name" name="name" type="text" autofocus value="<c:out value="${user.name}"/> ">
                             </div>
                     </div>   
                     <div class="form-group">
                         <label for="login" class="col-xs-3 control-label">Login</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="Login" id="login" name="login" type="text" autofocus>
+                                 <input class="form-control" placeholder="Login" id="login" name="login" type="text" autofocus value="<c:out value="${user.login}"/> ">
                              </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-xs-3 control-label">E-mail</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text" autofocus>
+                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text" autofocus value="<c:out value="${user.email}"/> ">
                              </div>
                     </div>
                  </form>
-	<a><input class="btn btn-lg btn-primary btn-default" type="submit" value="Save" name="edit"></a>
+	<a><input class="btn btn-lg btn-primary btn-default" type="update" value="update" name="update"></a>
 </div>
              
 	

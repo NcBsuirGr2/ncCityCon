@@ -1,6 +1,8 @@
 package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
@@ -47,25 +49,17 @@ public class SignUpServlet extends AbstractHttpServlet {
             user.setCreateDate(timeNow);
 
             try {
-                user.create();
-                try {                    
-                    user.read();
-                    req.getSession().setAttribute("user", user.getEntity());
-                    res.sendRedirect("/cityCon/");
-                } catch (DAOException exception) {    
-                    //неудачная запись      
-                    //res.sendRedirect("/cityCon/");
-                    forwardToErrorPage(exception.getMessage(), req, res);      
-                }
-            } catch(DAOException exception) {
-                // Здесь проблема создания пользователя. Redirect на ту же страницу с 
-                // атрибутом типа ошибки
-                //res.sendRedirect("/cityCon/");
-                forwardToErrorPage(exception.getMessage(), req, res);
+                user.create();                  
+                user.read();
+                req.getSession().setAttribute("user", user.getEntity());
+                res.sendRedirect("/cityCon");
+            } catch(DublicateKeyDAOException exception) {
+                res.sendRedirect("/cityCon/signin?errorType=dublicate");
+            } catch(InvalidDataDAOException exception) {
+                res.sendRedirect("/cityCon/signin?errorType=invalidData");
             } 
         } catch (DAOException exception) {
-            // Тут внутренняя ошибка
-            //res.sendRedirect("/cityCon/");
+            // InternalDAOException
             forwardToErrorPage(exception.getMessage(), req, res);             
         }       
     }

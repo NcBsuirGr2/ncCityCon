@@ -1,6 +1,7 @@
 package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
@@ -43,16 +44,14 @@ public class SignInServlet extends AbstractHttpServlet {
 
             try {                 
                 user.read();
-                req.getSession().setAttribute("user", user.getEntity());
-                res.sendRedirect("/cityCon/");
-            } catch(DAOException exception) {
-                // Здесь проблема авторизации, либо невалидные данные, 
-                // либо пользователя не существет. Либо редирект на ту же страницу с атрибутом
-                // типа ошибки
-                res.sendRedirect("#");
+                    throw new InvalidDataDAOException();
+                //req.getSession().setAttribute("user", user.getEntity());
+                //res.sendRedirect("/cityCon/");
+            } catch(InvalidDataDAOException exception) {
+                res.sendRedirect("/cityCon/signin?errorType=invalidData");
             } 
         } catch (DAOException exception) {
-            // Тут внутренняя ошибка
+            // Internal DAOException
             forwardToErrorPage(exception.getMessage(), req, res);             
         }       
     }

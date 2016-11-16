@@ -21,10 +21,11 @@ public class UserListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        checkRights(req, res, 1, 0);
-        chain.doFilter(req, res);
-
-
+        if (checkRights(req, Grant.READ, Grant.NONE)) {
+            chain.doFilter(req, res);
+        } else {
+            forwardToSecurityErrorPage(req,res);
+        }
     }
 
     public void destroy() {

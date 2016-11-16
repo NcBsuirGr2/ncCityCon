@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by root on 16.11.16.
  */
-public class CityListFilter extends AbstractHttpFilter implements Filter {
+public class SystemListFilter extends AbstractHttpFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
         // init
     }
@@ -19,8 +19,11 @@ public class CityListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        checkRights(req, res, 0, 1);
-        chain.doFilter(req, res);
+         if (checkRights(req, Grant.NONE, Grant.READ)) {
+            chain.doFilter(req, res);
+        } else {
+            forwardToSecurityErrorPage(req,res);
+        }
 
     }
 

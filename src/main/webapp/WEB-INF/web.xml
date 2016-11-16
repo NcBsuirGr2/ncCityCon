@@ -87,6 +87,62 @@
  		<url-pattern>/loginfiltertest/*</url-pattern>
  	</filter-mapping>
 
+	<!-- User branch filters -->
+	 	<filter>
+	    	<filter-name>UserEditFilter</filter-name>
+	    	<filter-class>com.citycon.controllers.filters.UserEditFilter</filter-class>
+	    </filter>
+	 	<filter-mapping>
+	 		<filter-name>UserEditFilter</filter-name>
+	 		<url-pattern>/user</url-pattern>
+	 	</filter-mapping>
+
+	 	<filter>
+	    	<filter-name>UserListFilter</filter-name>
+	    	<filter-class>com.citycon.controllers.filters.UserListFilter</filter-class>
+	    </filter>
+	 	<filter-mapping>
+	 		<filter-name>UserListFilter</filter-name>
+	 		<url-pattern>/users</url-pattern>
+	 	</filter-mapping>
+
+	 <!-- System units branch filters -->
+	 	<filter>
+	    	<filter-name>SystemEditFilter</filter-name>
+	    	<filter-class>com.citycon.controllers.filters.SystemEditFilter</filter-class>
+	    </filter>
+	 	<filter-mapping>
+	 		<filter-name>SystemEditFilter</filter-name>
+	 		<url-pattern>/city</url-pattern>
+	 	</filter-mapping>
+	 	<filter-mapping>
+	 		<filter-name>SystemEditFilter</filter-name>
+	 		<url-pattern>/router</url-pattern>
+	 	</filter-mapping>
+	 	<filter-mapping>
+	 		<filter-name>SystemEditFilter</filter-name>
+	 		<url-pattern>/connection</url-pattern>
+	 	</filter-mapping>
+	 	
+	 	<filter>
+	    	<filter-name>SystemListFilter</filter-name>
+	    	<filter-class>com.citycon.controllers.filters.SystemListFilter</filter-class>
+	    </filter>
+	 	<filter-mapping>
+	 		<filter-name>SystemListFilter</filter-name>
+	 		<url-pattern>/cities</url-pattern>
+	 	</filter-mapping>
+	 	<filter-mapping>
+	 		<filter-name>SystemListFilter</filter-name>
+	 		<url-pattern>/routers</url-pattern>
+	 	</filter-mapping>
+	 	<filter-mapping>
+	 		<filter-name>SystemListFilter</filter-name>
+	 		<url-pattern>/connections</url-pattern>
+	 	</filter-mapping>
+
+ 	
+
 
 
 </web-app>
