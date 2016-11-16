@@ -19,9 +19,11 @@ public class CityEditFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        checkRights(req, res, 0, 2);
-        chain.doFilter(req, res);
-
+        if (checkRights(req, res, Grant.NONE, Grant.EDIT)) {
+            chain.doFilter(req, res);
+        } else {
+            forwardToSecurityErrorPage(req,res);
+        }
 
     }
 

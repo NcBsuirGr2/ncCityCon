@@ -19,9 +19,11 @@ public class UserEditFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        checkRights(req, res, 2, 0);
-        chain.doFilter(req, res);
-
+         if (checkRights(req, res, Grant.EDIT, Grant.NONE)) {
+            chain.doFilter(req, res);
+        } else {
+            forwardToSecurityErrorPage(req,res);
+        }
 
     }
 

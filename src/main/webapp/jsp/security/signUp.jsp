@@ -18,7 +18,7 @@
 </head>
 <body>
 
-
+${param.errorType}
 <div id="loginModal" >
     <div class="modal-dialog">
         <div class="modal-content">

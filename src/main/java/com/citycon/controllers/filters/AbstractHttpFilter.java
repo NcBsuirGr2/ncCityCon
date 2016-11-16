@@ -24,12 +24,8 @@ public abstract class AbstractHttpFilter {
         HttpServletResponse httpRes = (HttpServletResponse) res;
         HttpServletRequest httpReq = (HttpServletRequest) req;
         UserEntity user = (UserEntity)httpReq.getSession().getAttribute("user");
-        boolean acces =  ((user.getGrant().getSystemUnitsBranchLevel() >= systemUnitsRights)||
+        boolean acces =  ((user.getGrant().getSystemUnitsBranchLevel() >= systemUnitsRights) ||
                 (user.getGrant().getUsersBranchLevel()>=userRights));
-        if (!acces) {
-            forwardToSecurityErrorPage(req,res);
-        }
         return acces;
-
     }
 }
