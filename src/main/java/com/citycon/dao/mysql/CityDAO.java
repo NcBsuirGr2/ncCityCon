@@ -25,7 +25,6 @@ public class CityDAO extends MySQLDAO {
         nameTable = " City ";
     }
 
-
     /**
      * @param page
      * @param itemsPerPage
@@ -91,68 +90,104 @@ public class CityDAO extends MySQLDAO {
 
     /**
      * @param newElement
-     * @throws DublicateKeyDAOException,InternalDAOException
+     * @throws DublicateKeyDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
      */
     public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
-        if(false) {
-            throw new InvalidDataDAOException();
-        }
+        CityEntity city = null;
+
+        String insert = "insert into" + nameTable +
+                "(`Name`, `Country`)" +
+                " values (?, ?)";
+
+        PreparedStatement preparedStatement = null;
+
         try {
-            CityEntity city = (CityEntity) newElement;
+            city = (CityEntity) newElement;
+        }catch (ClassCastException e) {
+            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+        }
 
-            String insert = "insert into" + nameTable +
-                    "(`Name`, `Country`)" +
-                    " values (?, ?)";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(insert);
-
-            try{
-                preparedStatement.setString(1, city.getName());
-                preparedStatement.setString(2, city.getCountryName());
-
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-            }catch (SQLException e){
-                throw new DublicateKeyDAOException("Create city failed", e);
-            }
+        try {
+            preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
-            throw new InternalDAOException("Create city failed", e);
+            throw new InternalDAOException("Prepare statement in create city wasn't created", e);
+        }
+
+        try {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new DublicateKeyDAOException("Create city failed", e);
+        }
+        finally {
+            if(preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    throw new InternalDAOException(e);
+                }
+            }
         }
     }
 
     /**
      * @param readElement
-     * @throws  InternalDAOException, InvalidDataDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
      */
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
+        CityEntity city = null;
 
-        if(false) {
-            throw new InvalidDataDAOException();
+        PreparedStatement search_city = null;
+        ResultSet resultSet= null;
+        String search = "select * from" + nameTable + "where id=?";
+
+        try {
+            city = (CityEntity)readElement;
+        }catch (ClassCastException e) {
+            throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
-        CityEntity city = (CityEntity)readElement;
-
         if (city.getId() != 0) {
+            try{
+                search_city = connection.prepareStatement(search);
+            }catch (SQLException e) {
+                throw new InternalDAOException("Prepare statement in read user wasn't created", e);
+            }
             try {
-                String search = "select * from" + nameTable + "where id=?";
+                search_city.setInt(1, readElement.getId());
 
-                PreparedStatement search_city = connection.prepareStatement(search);
-                try {
-                    search_city.setInt(1, readElement.getId());
+                resultSet = search_city.executeQuery();
 
-                    ResultSet resultSet = search_city.executeQuery();
-
-                    if(resultSet.first()) {
-                        city.setName(resultSet.getString("Name"));
-                        city.setCountryName(resultSet.getString("Country"));
-                    }
-                    resultSet.close();
-                    search_city.close();
-                } catch (SQLException e) {
-                    throw new InvalidDataDAOException("Read city failed", e);
+                if(resultSet.first()) {
+                    city.setName(resultSet.getString("Name"));
+                    city.setCountryName(resultSet.getString("Country"));
+                }
+                else{
+                    throw new InvalidDataDAOException("City not found");
                 }
             } catch (SQLException e) {
-                throw new InternalDAOException("Read city failed", e);
+                throw new InvalidDataDAOException("Read city failed", e);
+            }
+            finally {
+                if (search_city!=null){
+                    try {
+                        search_city.close();
+                    } catch (SQLException e) {
+                        throw new InternalDAOException(e);
+                    }
+                }
+                if (resultSet!= null){
+                    try{
+                        resultSet.close();
+                    }catch (SQLException e){
+                        throw new InternalDAOException(e);
+                    }
+                }
             }
         }
         else{
@@ -162,57 +197,91 @@ public class CityDAO extends MySQLDAO {
 
     /**
      * @param updateElement
-     * @throws InvalidDataDAOException, InternalDAOException
+     * @throws DublicateKeyDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
      */
     public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
-        if (false) {
-            throw new DublicateKeyDAOException();
-        }
+        CityEntity city = null;
+
+        PreparedStatement preparedStatement = null;
+
+        String update = "update" + nameTable + "set `Name`=?, `Country`=? where `id`=?";
+
         try {
-            CityEntity city = (CityEntity) updateElement;
+            city = (CityEntity) updateElement;
+        }catch (ClassCastException e) {
+            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+        }
 
-            String update = "update" + nameTable + "set `Name`=?, `Country`=? where `id`=?";
+        try {
+            preparedStatement = connection.prepareStatement(update);
+        }catch (SQLException e) {
+            throw new InternalDAOException("Prepare statement in update city wasn't created", e);
+        }
 
-            PreparedStatement preparedStatement = connection.prepareStatement(update);
-            try {
-                preparedStatement.setString(1, city.getName());
-                preparedStatement.setString(2, city.getCountryName());
-                
-                preparedStatement.setInt(3, city.getId());
+        try {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());
 
-                preparedStatement.executeUpdate();
+            preparedStatement.setInt(3, city.getId());
 
-                preparedStatement.close();
-            } catch (SQLException e) {
-                throw new InvalidDataDAOException("Update city failed", e);
-            }
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new InternalDAOException("Update city failed", e);
+            throw new DublicateKeyDAOException("Update city failed", e);
+        }
+        finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    throw new InternalDAOException(e);
+                }
+            }
         }
     }
 
     /**
      * @param deleteElement
-     * @throws InvalidDataDAOException, InternalDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
      */
     public void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException {
+        CityEntity city = null;
+
+        PreparedStatement preparedStatement = null;
+
+        String delete = "delete from" + nameTable + "where `id`=?";
+
         try {
-            CityEntity city = (CityEntity) deleteElement;
+            city = (CityEntity) deleteElement;
+        }catch (ClassCastException e) {
+            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+        }
 
-            String delete = "delete from" + nameTable + "where `id`=?";
+        try {
+            preparedStatement = connection.prepareStatement(delete);
+        }catch (SQLException e) {
+            throw new InternalDAOException("Prepare statement in delete city wasn't created", e);
+        }
 
-            PreparedStatement preparedStatement = connection.prepareStatement(delete);
-            try {
-                preparedStatement.setInt(1, city.getId());
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                throw new InvalidDataDAOException("Delete city failed", e);
-            }
+        try {
+            preparedStatement.setInt(1, city.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new InternalDAOException("Delete city failed", e);
+            throw new InvalidDataDAOException("Delete city failed", e);
+        }
+        finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    throw new InternalDAOException(e);
+                }
+            }
         }
     }
+
     /**
      * @throws InternalDAOException
      */

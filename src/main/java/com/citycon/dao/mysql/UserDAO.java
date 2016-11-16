@@ -157,6 +157,7 @@ public class UserDAO extends MySQLDAO {
 
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
+
         String search = "select * from" + nameTable + "where Login=?";
 
         try {
@@ -252,6 +253,7 @@ public class UserDAO extends MySQLDAO {
         UserEntity user = null;
 
         PreparedStatement preparedStatement = null;
+
         String update = "update" + nameTable + "set `Login`=?, `Pass`=?, `E-mail`=?, `Name`=?, `Group`=?, `create_date`=? where `id`=?";
 
         try {
@@ -300,6 +302,7 @@ public class UserDAO extends MySQLDAO {
         UserEntity user = null;
 
         PreparedStatement preparedStatement = null;
+
         String delete = "delete from" + nameTable + "where `id`=?";
 
         try {
