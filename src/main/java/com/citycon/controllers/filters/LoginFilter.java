@@ -8,6 +8,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.FilterChain;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -33,7 +34,8 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 		Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
 
 		try {
-			if (httpReq.getSession().getAttribute("user") == null) {
+			HttpSession session= httpReq.getSession(false);
+			if ((session != null)||(httpReq.getSession().getAttribute("user") == null)) {
 				logger.info("Access to the secret page");
 				forwardToSecurityErrorPage(httpReq, httpRes);
 			}

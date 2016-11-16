@@ -21,12 +21,7 @@ public class UserListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        HttpServletResponse httpRes = (HttpServletResponse) res;
-        HttpServletRequest httpReq = (HttpServletRequest) req;
-        UserEntity user = (UserEntity)httpReq.getSession().getAttribute("user");
-        if (user.getGrant().getUsersBranchLevel() < Grant.READ) {
-            forwardToSecurityErrorPage(httpReq, httpRes);
-        }
+        checkRights(req, res, 1, 0);
         chain.doFilter(req, res);
 
 
