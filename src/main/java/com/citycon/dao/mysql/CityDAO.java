@@ -3,6 +3,8 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,10 +36,9 @@ public class CityDAO extends MySQLDAO {
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
                                             throws InvalidDataDAOException, InternalDAOException {
 
-        if(false) {
+        if(false ) {
             throw new InvalidDataDAOException();
         }
-
         ArrayList<CityEntity> cities = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -59,7 +60,6 @@ public class CityDAO extends MySQLDAO {
             search_cities.close();
         }catch (SQLException e){
             throw new InternalDAOException("GetPage city failed", e);
-
         }
         return cities.toArray(new CityEntity[cities.size()]);
     }
@@ -97,10 +97,10 @@ public class CityDAO extends MySQLDAO {
 
     /**
      * @param readElement
-     * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
+     * @throws  InternalDAOException, InvalidDataDAOException
      */
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
-        
+
         if(false) {
             throw new InvalidDataDAOException();
         }
