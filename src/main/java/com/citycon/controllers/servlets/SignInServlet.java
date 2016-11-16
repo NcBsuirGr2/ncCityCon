@@ -3,7 +3,6 @@ package com.citycon.controllers.servlets;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
-import com.citycon.model.systemunits.orm.ORMException;
 import com.citycon.model.systemunits.orm.ORMUser;
 
 import javax.servlet.RequestDispatcher;
@@ -27,7 +26,7 @@ public class SignInServlet extends AbstractHttpServlet {
 
         try {
             user = new ORMUser();
-        } catch (ORMException e) {
+        } catch (DAOException e) {
             request.getSession().setAttribute("error",e.getMessage());
             rd = getServletContext().getRequestDispatcher(ERROR);
             e.printStackTrace();
@@ -42,7 +41,7 @@ public class SignInServlet extends AbstractHttpServlet {
             request.getSession().setAttribute("user",user.getEntity());
             rd = getServletContext().getRequestDispatcher("/app/users");
             //перенаправление на страницу после аунтефикации(пока не созданы) (заменить /app и /error)
-        } catch (ORMException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
             request.getSession().setAttribute("error",e.getMessage());
             rd = getServletContext().getRequestDispatcher(ERROR);

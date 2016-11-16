@@ -17,12 +17,8 @@ public class ORMRouterConnection extends ORMEntity {
 	DAO dao;
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
 
-	public ORMRouterConnection() throws ORMException {
-		try {
-			dao = daoFactory.getRouterConnectionDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
+	public ORMRouterConnection() throws DAOException {
+		dao = daoFactory.getRouterConnectionDAO();
 	}
 
 
@@ -41,7 +37,6 @@ public class ORMRouterConnection extends ORMEntity {
 	public int getSecondRouterId() {
 		return routerConnection.getSecondRouterId();
 	}
-
 	public void setFirstRouterId(int firstRouterId) {
 		routerConnection.setFirstRouterId(firstRouterId);
 	}
@@ -52,67 +47,35 @@ public class ORMRouterConnection extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public void create() throws ORMException {
-		try {
-			dao.create(routerConnection);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot create connection", cause);
-		}
+	public void create() throws DAOException {
+		dao.create(routerConnection);
 	}
-    public void read() throws ORMException {
-		try {
-			dao.read(routerConnection);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot read connection", cause);
-		}
+    public void read() throws DAOException {
+		dao.read(routerConnection);
     }
-    public void update() throws ORMException {
-		try {
-			dao.update(routerConnection);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot update connection", cause);
-		}
+    public void update() throws DAOException {
+		dao.update(routerConnection);
+    }
+    public void delete() throws DAOException {
+		dao.delete(routerConnection);
     }
 
-	public RouterConnectionEntity getEntity()  {
+    public RouterConnectionEntity getEntity()  {
 		return routerConnection;
 	}
 
-    public void delete() throws ORMException {
-		try {
-			dao.delete(routerConnection);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot delete connection", cause);
-		}
-    }
-
-     /**
-	 * Get any page of routerConnections from DAO layer. 
+    /**
+	 * Get any page of connections from DAO layer. 
 	 *
 	 * @param  page number of page to show
 	 * @param  itemsPerPage number of items to show on one page
 	 * @param  sortBy field to sort by
 	 * @param  asc sorting in asc order if true
-	 * @return id the id of deleted element.
-	 * @throws ORMException if error occurs during delete operation
+	 * @return cityEntity[] the array of connecions on demanded page.
 	 */
     public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, 
-    									String sortBy, boolean asc) throws ORMException {
-        DAO staticDAO;
-        try {
-			staticDAO = daoFactory.getRouterConnectionDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
-        RouterConnectionEntity[] routerConnections = null;
-        try {
-        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
-        	routerConnections = (RouterConnectionEntity[])temp;
-        } catch (DAOException cause) {
-        	throw new ORMException("Cannot get routerConnections page", cause);
-        } catch (ClassCastException exception) {
-        	throw new ORMException("Cannot cast Entity[] from DAO to RouterConnectionEntity[]", exception);
-        }
-        return routerConnections;
+    							String sortBy, boolean asc) throws DAOException {
+        DAO staticDAO = daoFactory.getRouterConnectionDAO();
+        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
 }	

@@ -3,7 +3,6 @@ package com.citycon.controllers.servlets;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
-import com.citycon.model.systemunits.orm.ORMException;
 import com.citycon.model.systemunits.orm.ORMUser;
 
 import javax.servlet.RequestDispatcher;

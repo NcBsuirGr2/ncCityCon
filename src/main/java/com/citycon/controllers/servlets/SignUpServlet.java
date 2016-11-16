@@ -3,7 +3,6 @@ package com.citycon.controllers.servlets;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
-import com.citycon.model.systemunits.orm.ORMException;
 import com.citycon.model.systemunits.orm.ORMUser;
 
 import javax.servlet.RequestDispatcher;
@@ -55,17 +54,17 @@ public class SignUpServlet extends AbstractHttpServlet {
                     user.read();
                     req.getSession().setAttribute("user", user.getEntity());
                     res.sendRedirect("/");
-                } catch (ORMException exception) {
+                } catch (DAOException exception) {
                     Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
                     logger.error("Exception during reading user: {}", exception);
                     forwardToErrorPage(exception.getMessage(), req, res);      
                 }
-            } catch(ORMException exception) {
+            } catch(DAOException exception) {
                 Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
                 logger.error("Exception during creating user: {}", exception);
                 forwardToErrorPage(exception.getMessage(), req, res);
             } 
-        } catch (ORMException exception) {
+        } catch (DAOException exception) {
             Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
             logger.error("Exception during instantiating ORMUser: {}", exception);
             forwardToErrorPage(exception.getMessage(), req, res);             

@@ -17,12 +17,8 @@ public class ORMCity extends ORMEntity {
 	DAO dao;
 	CityEntity city = new CityEntity();
 
-	public ORMCity() throws ORMException {
-		try {
-			dao = daoFactory.getCityDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}		
+	public ORMCity() throws DAOException {
+		dao = daoFactory.getCityDAO();
 	}
 
 
@@ -52,33 +48,17 @@ public class ORMCity extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public void create() throws ORMException {
-		try {
-			dao.create(city);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot create city", cause);
-		}
+	public void create() throws DAOException {
+		dao.create(city);
 	}
-    public void read() throws ORMException {
-		try {
-			dao.read(city);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot read city", cause);
-		}
+    public void read() throws DAOException {
+		dao.read(city);
     }
-    public void update() throws ORMException {
-		try {
-			dao.update(city);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot update city", cause);
-		}
+    public void update() throws DAOException {
+		dao.update(city);
     }
-    public void delete() throws ORMException {
-		try {
-			dao.delete(city);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot delete city", cause);
-		}
+    public void delete() throws DAOException {
+		dao.delete(city);
     }
 
     public CityEntity getEntity()  {
@@ -92,26 +72,11 @@ public class ORMCity extends ORMEntity {
 	 * @param  itemsPerPage number of items to show on one page
 	 * @param  sortBy field to sort by
 	 * @param  asc sorting in asc order if true
-	 * @return id the id of deleted element.
-	 * @throws ORMException if error occurs during delete operation
+	 * @return cityEntity[] the array of cities on demanded page.
 	 */
     public static CityEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws ORMException {
-        DAO staticDAO;
-        try {
-			staticDAO = daoFactory.getCityDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
-        CityEntity[] cities = null;
-        try {
-        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
-        	cities = (CityEntity[])temp;
-        } catch (DAOException cause) {
-        	throw new ORMException("Cannot get cities page", cause);
-        } catch (ClassCastException exception) {
-        	throw new ORMException("Cannot cast Entity[] from DAO to CityEntity[]", exception);
-        }
-        return cities;
+    							String sortBy, boolean asc) throws DAOException {
+        DAO staticDAO = daoFactory.getCityDAO();
+        return (CityEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
 }

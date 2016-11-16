@@ -18,12 +18,8 @@ public class ORMRouter extends ORMEntity {
 	DAO dao;
 	RouterEntity router = new RouterEntity();
 
-	public ORMRouter() throws ORMException {
-		try {
-			dao = daoFactory.getRouterDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
+	public ORMRouter() throws DAOException {
+		dao = daoFactory.getRouterDAO();
 	}
 
 
@@ -63,38 +59,22 @@ public class ORMRouter extends ORMEntity {
 
 	//ORM interface for incapsulated object
 
-	public void create() throws ORMException {
-		try {
-			dao.create(router);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot create router", cause);
-		}
+	public void create() throws DAOException {
+		dao.create(router);
 	}
-    public void read() throws ORMException {
-		try {
-			dao.read(router);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot read router", cause);
-		}
+    public void read() throws DAOException {
+		dao.read(router);
     }
-    public void update() throws ORMException {
-		try {
-			dao.update(router);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot update router", cause);
-		}
+    public void update() throws DAOException {
+		dao.update(router);
     }
-	public RouterEntity getEntity()  {
+    public void delete() throws DAOException {
+		dao.update(router);
+    }
+    
+   	public RouterEntity getEntity()  {
 		return router;
 	}
-
-    public void delete() throws ORMException {
-		try {
-			dao.update(router);
-		} catch(DAOException cause) {
-			throw new ORMException("Cannot delete router", cause);
-		}
-    }
 
      /**
 	 * Get any page of routers from DAO layer. 
@@ -103,26 +83,11 @@ public class ORMRouter extends ORMEntity {
 	 * @param  itemsPerPage number of items to show on one page
 	 * @param  sortBy field to sort by
 	 * @param  asc sorting in asc order if true
-	 * @return id the id of deleted element.
-	 * @throws ORMException if error occurs during delete operation
+	 * @return cityEntity[] the array of routers on demanded page.
 	 */
     public static RouterEntity[] getPage(int page, int itemsPerPage, 
-    									String sortBy, boolean asc) throws ORMException {
-        DAO staticDAO;
-        try {
-			staticDAO = daoFactory.getRouterDAO();
-		} catch (DAOException cause) {
-			throw new ORMException("Cannot instantiate DAO object", cause);
-		}
-        RouterEntity[] routers = null;
-        try {
-        	Entity[] temp = staticDAO.getPage(page, itemsPerPage, sortBy, asc);
-        	routers = (RouterEntity[])temp;
-        } catch (DAOException cause) {
-        	throw new ORMException("Cannot get routers page", cause);
-        } catch (ClassCastException exception) {
-        	throw new ORMException("Cannot cast Entity[] from DAO to RouterEntity[]", exception);
-        }
-        return routers;
+    							String sortBy, boolean asc) throws DAOException {
+        DAO staticDAO = daoFactory.getRouterDAO();
+        return (RouterEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
 }
