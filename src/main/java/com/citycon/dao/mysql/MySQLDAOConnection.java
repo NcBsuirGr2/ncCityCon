@@ -1,6 +1,7 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.InternalDAOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,20 +21,23 @@ public class MySQLDAOConnection {
     private static final String PASSWORD = "nc_2groupDB";
 
     /**
-     * @throws DAOException
+     * @throws InternalDAOException
      */
-    private MySQLDAOConnection() throws DAOException {
+    private MySQLDAOConnection() throws InternalDAOException {
         try {
             Class.forName(MYSQL_CONNECTOR_CLASS);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException e) {
-            throw new DAOException("Driver for database failed");
+            throw new InternalDAOException("Driver for database failed");
         } catch (SQLException e) {
-            throw new DAOException("Connect to database failed");
+            throw new InternalDAOException("Connect to database failed");
         }
     }
 
-    public static MySQLDAOConnection getInstance() throws DAOException {
+    /**
+     * @throws InternalDAOException
+     */
+    public static MySQLDAOConnection getInstance() throws InternalDAOException {
         return new MySQLDAOConnection();
     }
 

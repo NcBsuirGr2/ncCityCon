@@ -16,7 +16,6 @@
             <p> и кнопка Sign Up (Зарегистрироваться)</p>
         </div>
 
-
         <form class="form col-md-12 center-block" action="/cityCon/signin">
             <button class="btn btn-primary btn-lg btn-block">Sign In</button>
         </form>

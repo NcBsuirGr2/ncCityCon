@@ -1,6 +1,6 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 
@@ -17,7 +17,7 @@ public class RouterDAO extends MySQLDAO{
     /**
      * @throws DAOException
      */
-    private RouterDAO() throws DAOException {
+    private RouterDAO() throws InternalDAOException {
         super();
         nameTable = " Router ";
     }
@@ -28,9 +28,9 @@ public class RouterDAO extends MySQLDAO{
      * @param sortBy
      * @param asc
      * @return
-     * @throws DAOException
+     * @throws InternalDAOException
      */
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws DAOException {
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException {
         ArrayList<RouterEntity> routers = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -54,16 +54,16 @@ public class RouterDAO extends MySQLDAO{
             resultSet.close();
             search_routers.close();
         }catch (SQLException e){
-            throw new DAOException("GetPage router failed", e);
+            throw new InternalDAOException("GetPage router failed", e);
         }
         return routers.toArray(new RouterEntity[routers.size()]);
     }
 
     /**
      * @param newElement
-     * @throws DAOException
+     * @throws DublicateKeyDAOException, InternalDAOException
      */
-    public void create(Entity newElement) throws DAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException {
         try{
             RouterEntity router = (RouterEntity) newElement;
 
@@ -72,25 +72,30 @@ public class RouterDAO extends MySQLDAO{
                     " values (?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(insert);
-            preparedStatement.setString(1, router.getName());
-            preparedStatement.setString(2, router.getSN());
-            preparedStatement.setInt(3, router.getPortsNum());
-            preparedStatement.setBoolean(4, router.isActive());
-            preparedStatement.setInt(5, router.getCityId());
+            try {
+                preparedStatement.setString(1, router.getName());
+                preparedStatement.setString(2, router.getSN());
+                preparedStatement.setInt(3, router.getPortsNum());
+                preparedStatement.setBoolean(4, router.isActive());
+                preparedStatement.setInt(5, router.getCityId());
 
-            preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
 
-            preparedStatement.close();
+                preparedStatement.close();
+            } catch (SQLException e){
+                throw new DublicateKeyDAOException("Create router failed", e);
+            }
+
         }catch (SQLException e){
-            throw new DAOException("Create router failed", e);
+            throw new InternalDAOException("Create router failed", e);
         }
     }
 
     /**
      * @param readElement
-     * @throws DAOException
+     * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
      */
-    public void read(Entity readElement) throws DAOException {
+    public void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException {
         RouterEntity router = (RouterEntity)readElement;
         String field = "";
         String value = "";
@@ -104,39 +109,44 @@ public class RouterDAO extends MySQLDAO{
                 value = "'" + router.getSN() + "'";
             }
             else {
-                throw new DAOException("For reading router incorrectly chosen field, try id or SN");
+                throw new NotFoundDAOException("For reading router incorrectly chosen field, try id or SN");
             }
 
             String search = "select * from" + nameTable + "where " + field + "=" + value;
             PreparedStatement search_router = connection.prepareStatement(search);
 
-            ResultSet resultSet = search_router.executeQuery();
+            try {
+                ResultSet resultSet = search_router.executeQuery();
 
-            if(resultSet.first()) {
-                router.setId(resultSet.getInt("id"));
-                router.setName(resultSet.getString("Name"));
-                router.setSN(resultSet.getString("SN"));
-                router.setPortsNum(resultSet.getInt("Port"));
-                router.setIsActive(resultSet.getBoolean("In_Service"));
-                router.setCityId(resultSet.getInt("City_id"));
-            }
-            else {
+                if(resultSet.first()) {
+                    router.setId(resultSet.getInt("id"));
+                    router.setName(resultSet.getString("Name"));
+                    router.setSN(resultSet.getString("SN"));
+                    router.setPortsNum(resultSet.getInt("Port"));
+                    router.setIsActive(resultSet.getBoolean("In_Service"));
+                    router.setCityId(resultSet.getInt("City_id"));
+                }
+                else {
+                    resultSet.close();
+                    search_router.close();
+                    throw new NotFoundDAOException("This router does not exist");
+                }
                 resultSet.close();
                 search_router.close();
-                throw new DAOException("This router does not exist");
+            }catch (SQLException e){
+                throw new InvalidDataDAOException("Read router failed", e);
             }
-                resultSet.close();
-                search_router.close();
+
         }catch (SQLException e){
-            throw new DAOException("Read router failed", e);
+            throw new InternalDAOException("Read router failed", e);
         }
     }
 
     /**
      * @param updateElement
-     * @throws DAOException
+     * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void update(Entity updateElement) throws DAOException {
+    public void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException {
         try {
             RouterEntity router = (RouterEntity) updateElement;
 
@@ -145,42 +155,53 @@ public class RouterDAO extends MySQLDAO{
                     "where `id`=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(update);
-            preparedStatement.setString(1, router.getName());
-            preparedStatement.setString(2, router.getSN());
-            preparedStatement.setInt(3, router.getPortsNum());
-            preparedStatement.setBoolean(4, router.isActive());
-            preparedStatement.setInt(5, router.getCityId());
-            preparedStatement.setInt(6, router.getId());
+            try {
+                preparedStatement.setString(1, router.getName());
+                preparedStatement.setString(2, router.getSN());
+                preparedStatement.setInt(3, router.getPortsNum());
+                preparedStatement.setBoolean(4, router.isActive());
+                preparedStatement.setInt(5, router.getCityId());
+                preparedStatement.setInt(6, router.getId());
 
-            preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
 
-            preparedStatement.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                throw new InvalidDataDAOException("Update router failed", e);
+            }
+
         } catch (SQLException e) {
-            throw new DAOException("Update router failed", e);
+            throw new InternalDAOException("Update router failed", e);
         }
     }
 
     /**
      * @param deleteElement
-     * @throws DAOException
+     * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void delete(Entity deleteElement) throws DAOException {
+    public void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException {
         try {
             RouterEntity router = (RouterEntity) deleteElement;
 
             String delete = "delete from" + nameTable + "where `id`=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(delete);
+            try {
+                preparedStatement.setInt(1, router.getId());
+                preparedStatement.executeUpdate();
 
-            preparedStatement.setInt(1, router.getId());
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                throw new InvalidDataDAOException("Delete router failed", e);
+            }
         } catch (SQLException e) {
-            throw new DAOException("Delete router failed", e);
+            throw new InternalDAOException("Delete router failed", e);
         }
     }
-    public static RouterDAO getInstance() throws DAOException {
+    /**
+     * @throws InternalDAOException
+     */
+    public static RouterDAO getInstance() throws InternalDAOException {
         return new RouterDAO();
     }
 }

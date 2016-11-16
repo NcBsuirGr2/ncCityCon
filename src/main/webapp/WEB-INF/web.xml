@@ -56,6 +56,26 @@
 
 
 
+	<!-- Cities branch -->
+	<servlet>
+		<servlet-name>CityListServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.CityListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CityListServlet</servlet-name>
+		<url-pattern>/app/cities</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CityEditServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.CityEditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CityEditServlet</servlet-name>
+		<url-pattern>/app/cities/edit</url-pattern>
+	</servlet-mapping>
+
+
 
     <!-- Filters -->
     <filter>
