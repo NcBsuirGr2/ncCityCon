@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/hltable.js"></script>
 <title>Admin</title>
 </head>
 <%@ include file="/html/header.html" %>
@@ -51,7 +52,7 @@
   			<li><a href="#">&raquo;</a></li>
 		</ul>
 	</center>
-	
+
 </body>
 <%@ include file="/html/footer.html" %>
 </html>
