@@ -97,8 +97,8 @@ public class ORMRouter extends ORMEntity {
     }
 
 	public static RouterEntity[] getPage(int page, int itemsPerPage,
-										 String sortBy, boolean asc, CityEntity city) throws DAOException {
+										 String sortBy, boolean asc, int cityId) throws DAOException {
 		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
-		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
+		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, cityId);
 	}
 }

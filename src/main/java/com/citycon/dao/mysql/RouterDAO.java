@@ -1,7 +1,8 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.exceptions.*;
-import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.dao.exceptions.DublicateKeyDAOException;
+import com.citycon.dao.exceptions.InternalDAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 
@@ -35,7 +36,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
      */
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
             throws InvalidDataDAOException, InternalDAOException {
-        return this.getPage(page, itemsPerPage, sortBy, asc, null);
+        return this.getPage(page, itemsPerPage, sortBy, asc, 0);
     }
 
     /**
@@ -43,12 +44,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
      * @param itemsPerPage
      * @param sortBy
      * @param asc
-     * @param city
+     * @param cityId
      * @return
      * @throws InvalidDataDAOException
      * @throws InternalDAOException
      */
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, int cityId)
                                                 throws InvalidDataDAOException, InternalDAOException {
 
         PreparedStatement search_routers = null;
@@ -57,8 +58,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         ArrayList<RouterEntity> routers = new ArrayList();
         String search = "";
 
-        if (city != null){
-            search = "select * from" + nameTable + "limit ?,? where City_id=" + String.valueOf(city.getId());
+        if (cityId != 0){
+            search = "select * from" + nameTable + "limit ?,? where City_id=" + String.valueOf(cityId);
         }
         else {
             search = "select * from" + nameTable + "limit ?,?";
