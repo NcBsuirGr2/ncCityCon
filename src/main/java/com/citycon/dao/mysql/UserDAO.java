@@ -88,6 +88,7 @@ public class UserDAO extends MySQLDAO {
                 }
             }
         }
+
         return users.toArray(new UserEntity[users.size()]);
     }
 
