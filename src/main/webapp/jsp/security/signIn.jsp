@@ -43,7 +43,7 @@ ${param.errorType}
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
-                            <span class="pull-right"><a href="/cityCon/signup">Sign Up</a></span>
+                            <span class="pull-right"><a href="/cityCon/signup">Sign In</a></span>
                         </div>
                     </form>
                 </div>

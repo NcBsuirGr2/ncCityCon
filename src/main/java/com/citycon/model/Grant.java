@@ -28,7 +28,7 @@ public class Grant {
 	 */
 	public void setSystemUnitsBranchLevel(int level) {
 		validateGrantLevel(level);
-		this.usersBranchLevel = level;
+		this.systemUnitsBranchLevel = level;
 	}
 	/**
 	 * @return level the level of actions that can be performed with the users entities

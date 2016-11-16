@@ -27,26 +27,29 @@ import org.slf4j.LoggerFactory;
  */
 public class RootServlet extends AbstractHttpServlet {
 
-    private static final String INDEX_PAGE = "/jsp/index.jsp";
-    private static final String ADMIN_PAGE = "/jsp/users/listUsers.jsp";
-    private static final String GUEST_OPERATOR_PAGE = "/jsp/cities/listCities.jsp";
+    private static final String INDEX_PAGE = "/index.jsp";
+    private static final String ADMIN_HOME = "/cityCon/users";
+    private static final String GUEST_OPERATOR_HOME = "/cityCon/cities";
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
+
+
+        HttpSession session = req.getSession(false);      
+
         if(session == null || session.getAttribute("user") == null) {
-            RequestDispatcher index = req.getRequestDispatcher(INDEX_PAGE);
-            index.forward(req, res);
+            req.getRequestDispatcher(INDEX_PAGE).forward(req, res);
+            return;
         } else {
             try {
                 UserEntity user = (UserEntity)session.getAttribute("user");
-                if (user.getGroup().equals("amdin")) {
-                   req.getRequestDispatcher(ADMIN_PAGE).forward(req, res);
+                if (user.getGroup().equals("Admin")) {
+                    res.sendRedirect(ADMIN_HOME);
                 } else {
-                    req.getRequestDispatcher(GUEST_OPERATOR_PAGE).forward(req, res);
+                    res.sendRedirect(GUEST_OPERATOR_HOME);
                 }
-            } catch (NullPointerException | ClassCastException e) {                
-                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
+            } catch (NullPointerException | ClassCastException e) {          
+                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");      
                 logger.warn("Error during getting user from session ", e);
                 forwardToErrorPage("Internal server error", req, res);
             }

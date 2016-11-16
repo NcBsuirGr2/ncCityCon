@@ -2,6 +2,7 @@ package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.Entity;
+import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 
 import java.sql.Date;
@@ -10,7 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Created by Vojts on 09.11.2016.
  */
@@ -145,6 +147,33 @@ public class UserDAO extends MySQLDAO {
                     user.setName(resultSet.getString("Name"));
                     user.setGroup(resultSet.getString("Group"));
                     user.setCreateDate(resultSet.getDate("create_date"));
+
+                    //Заглушка инициализации прав
+                    Grant grant = new Grant();
+                    switch (user.getGroup()) {
+                        case "Admin" : {
+                            grant.setUsersBranchLevel(Grant.EDIT);
+                            grant.setSystemUnitsBranchLevel(Grant.EDIT);
+
+                            break;
+                        }
+                        case "Operator" : {
+                            grant.setUsersBranchLevel(Grant.NONE);
+                            grant.setSystemUnitsBranchLevel(Grant.EDIT);
+                            break;
+                        }
+                        case "Guest" : {
+                            grant.setUsersBranchLevel(Grant.NONE);
+                            grant.setSystemUnitsBranchLevel(Grant.READ);
+                            break;
+                        }
+                        default : {
+                            grant.setUsersBranchLevel(Grant.NONE);
+                            grant.setSystemUnitsBranchLevel(Grant.READ);
+                            break;
+                        }
+                    }
+                    user.setGrant(grant);
                 }
               
                 resultSet.close();

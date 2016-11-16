@@ -21,15 +21,18 @@
 				<tr>
 					<th>Name</th>
 			   		<th>Login</th>
-			        <th>E-mail</th>
-					
+			   		<th>Password</th>
+			        <th>Group</th>
+			        <th>E-mail</th>					
         		</tr>
         	</thead>
         	<tbody>
-				<c:forEach items="${entityArray}" var="users">
+				<c:forEach items="${entityArray}" var="user">
 					<tr>
 						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.login}" /></td>
+						<td><c:out value="${user.login}" /></td>						
+						<td><c:out value="${user.password}" /></td>
+						<td><c:out value="${user.group}" /></td>
 						<td><c:out value="${user.email}" /></td>
 					</tr>
 				</c:forEach>

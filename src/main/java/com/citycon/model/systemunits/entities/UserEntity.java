@@ -36,6 +36,9 @@ public class UserEntity extends Entity {
 	public Grant getGrant() {
 		return grant;
 	}
+	public String getGroup() {
+		return group;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -56,10 +59,6 @@ public class UserEntity extends Entity {
     public void setGroup(String group) {
         this.group = group;
     }
-
-	public String getGroup() {
-		return group;
-	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;

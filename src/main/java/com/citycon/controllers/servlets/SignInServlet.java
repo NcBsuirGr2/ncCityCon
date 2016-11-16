@@ -44,9 +44,8 @@ public class SignInServlet extends AbstractHttpServlet {
 
             try {                 
                 user.read();
-                    throw new InvalidDataDAOException();
-                //req.getSession().setAttribute("user", user.getEntity());
-                //res.sendRedirect("/cityCon/");
+                req.getSession().setAttribute("user", user.getEntity());
+                res.sendRedirect("/cityCon/");
             } catch(InvalidDataDAOException exception) {
                 res.sendRedirect("/cityCon/signin?errorType=invalidData");
             } 

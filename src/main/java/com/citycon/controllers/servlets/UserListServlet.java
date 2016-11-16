@@ -9,41 +9,54 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 
+
 public class UserListServlet extends AbstractHttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static String LIST = "/admin.jsp";
-	private static String ERROR = "/error.jsp";
+	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
+	private static String ERROR_PAGE = "/jsp/errors/error.jsp";
 
-	protected void doGet(HttpServletRequest request, 
-		HttpServletResponse response) throws ServletException, IOException {
-		
-		UserEntity users[] = null;
-		RequestDispatcher view;
+	protected void doGet(HttpServletRequest req, 
+		HttpServletResponse res) throws ServletException, IOException {
+
+		String pageString = req.getParameter("page");
+		String itemsPerPageString = req.getParameter("itemsPerPage");
+		String sortByString = req.getParameter("sortBy");
+		String ascString = req.getParameter("asc");
+
+		int page = 1;
+		int itemsPerPage = 15;
+		String sortBy = "name";
+		boolean asc = true;
+
+		if(pageString != null) {
+			page = Integer.parseInt(pageString);
+		}
+		if(itemsPerPageString != null) {
+			itemsPerPage = Integer.parseInt(itemsPerPageString);
+		}
+		if(sortByString != null) {
+			sortBy = sortByString;
+		}
+		if(ascString != null) {
+			asc = ascString.equals("true");
+		}
 		try {
-			users = ORMUser.getPage(1,20,"name",true);
-			request.setAttribute("entityClass", "users");
-			request.setAttribute("entityArray", users);
-
-			view = request.getRequestDispatcher(LIST);
+			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
+			req.setAttribute("entityArray", users);
+			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
+		} catch (InvalidDataDAOException exception) {
+			res.sendRedirect("/cityCon/users?errorType=invalidData");
 		} catch (DAOException e) {
 			//TODO: logging
-			HttpSession session = request.getSession(true);
-			session.setAttribute("error",e.getMessage());
-			view = request.getRequestDispatcher(ERROR);
-			e.printStackTrace();
+			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
 		}
-		/////delete me
-
-
-
-		view.forward(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+	protected void doPost(HttpServletRequest req,
+			HttpServletResponse res) throws ServletException, IOException {
+		doGet(req, res);
 	}
 }

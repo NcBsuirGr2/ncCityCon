@@ -23,7 +23,7 @@ public class CityListServlet extends AbstractHttpServlet {
     private static String ERROR_PAGE = "/error.jsp";
 
 
-    protected void doGet(HttpServletRequest request,
+    public void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
 
         //Writer wr = response.getWriter();

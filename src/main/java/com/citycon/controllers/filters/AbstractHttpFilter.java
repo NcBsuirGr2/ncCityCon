@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *  Common abstract filter.
  * 
  * @author Tim, Mike
- * @version 1.1
+ * @version 1.2
  */
 public abstract class AbstractHttpFilter {
     private static final String ERROR_PAGE = "/jsp/errors/securityError.jsp";
@@ -28,9 +28,7 @@ public abstract class AbstractHttpFilter {
 
     protected boolean checkRights(ServletRequest req, 
             int requiredUserRights, int requiredSystemUnitsRights) throws ServletException, IOException {
-
         boolean access = false;
-
         HttpServletRequest httpReq = (HttpServletRequest) req;
         HttpSession session =httpReq.getSession(false);
         if(session == null || session.getAttribute("user") == null) {
@@ -40,7 +38,7 @@ public abstract class AbstractHttpFilter {
                 UserEntity user = (UserEntity)session.getAttribute("user");
                 int userRights = user.getGrant().getUsersBranchLevel();
                 int systemUnitsRights = user.getGrant().getSystemUnitsBranchLevel();
-                access =  (userRights >= requiredUserRights && systemUnitsRights >= requiredSystemUnitsRights);
+                access =  ((userRights >= requiredUserRights) && (systemUnitsRights >= requiredSystemUnitsRights));
             } catch (ClassCastException exception) {
                 access = false;
                 Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
