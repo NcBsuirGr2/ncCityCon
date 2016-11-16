@@ -80,6 +80,24 @@
 		<url-pattern>/city</url-pattern>
 	</servlet-mapping>
 
+	<!-- Routers branch -->
+	<servlet>
+		<servlet-name>RouterListServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.RouterListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RouterListServlet</servlet-name>
+		<url-pattern>/app/routers</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RouterEditServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.RouterEditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RouterEditServlet</servlet-name>
+		<url-pattern>/app/routers/edit</url-pattern>
+	</servlet-mapping>
 
 
     <!-- Filters -->

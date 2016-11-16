@@ -41,6 +41,9 @@ public class ORMRouter extends ORMEntity {
 	public int getPortsNum() {
 		return router.getPortsNum();
 	}
+	public int getCityId() {
+		return router.getCityId();
+	}
 	public boolean isActive() {
 		return router.isActive();
 	}
@@ -54,8 +57,9 @@ public class ORMRouter extends ORMEntity {
 		router.setPortsNum(portsNum);
 	}
 	public void setIsActive(boolean isActive) {
-		router.setIsActive(isActive);
+		router.isActive(isActive);
 	}
+	public void setCityId(Integer sityId) {router.setCityId(sityId);}
 
 	//ORM interface for incapsulated object
 

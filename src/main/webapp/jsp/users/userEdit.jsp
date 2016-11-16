@@ -36,7 +36,7 @@
                              </div>
                     </div>
                  </form>
-	<a><input class="btn btn-lg btn-primary btn-default" type="update" value="update" name="update"></a>
+	<a><input class="btn btn-lg btn-primary btn-default" type="edit" value="edit" name="edit"></a>
 </div>
              
 	

@@ -38,7 +38,7 @@ public class RouterEntity extends Entity {
 	public void setPortsNum(int portsNum) {
 		this.portsNum = portsNum;
 	}
-	public void setIsActive(boolean isActive) {
+	public void isActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 

@@ -1,6 +1,7 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.*;
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 
@@ -12,10 +13,11 @@ import java.util.ArrayList;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterDAO extends MySQLDAO{
+public class RouterDAO extends MySQLDAO implements RoutersOfCity{
+
 
     /**
-     * @throws DAOException
+     * @throws InternalDAOException
      */
     private RouterDAO() throws InternalDAOException {
         super();
@@ -28,39 +30,86 @@ public class RouterDAO extends MySQLDAO{
      * @param sortBy
      * @param asc
      * @return
+     * @throws InvalidDataDAOException
      * @throws InternalDAOException
      */
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
+            throws InvalidDataDAOException, InternalDAOException {
+        return this.getPage(page, itemsPerPage, sortBy, asc, null);
+    }
+
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
                                                 throws InvalidDataDAOException, InternalDAOException {
 
-        if(false) {
-            throw new InvalidDataDAOException();
-        }
-        ArrayList<RouterEntity> routers = new ArrayList();
-        try {
-            String search = "select * from" + nameTable + "limit ?,?";
+        PreparedStatement search_routers = null;
+        ResultSet resultSet = null;
 
-            PreparedStatement search_routers = connection.prepareStatement(search);
+        ArrayList<RouterEntity> routers = new ArrayList();
+        String search = "";
+
+        if (city != null){
+            search = "select * from" + nameTable + "limit ?,? where City_id=" + String.valueOf(city.getId());
+        }
+        else {
+            search = "select * from" + nameTable + "limit ?,?";
+        }
+
+        try {
+            search_routers = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            throw new InternalDAOException("Prepare statement in get routerPage wasn't created", e);
+        }
+
+        try{
             search_routers.setInt(1, (page-1)*itemsPerPage);
             search_routers.setInt(2, itemsPerPage);
 
-            ResultSet resultSet =  search_routers.executeQuery();
+            resultSet =  search_routers.executeQuery();
 
-            while(resultSet.next()) {
-                RouterEntity router = new RouterEntity();
-                router.setId(resultSet.getInt("id"));
-                router.setName(resultSet.getString("Name"));
-                router.setSN(resultSet.getString("SN"));
-                router.setPortsNum(resultSet.getInt("Port"));
-                router.setIsActive(resultSet.getBoolean("In_Service"));
-                router.setCityId(resultSet.getInt("City_id"));
-                routers.add(router);
+            try {
+                while (resultSet.next()) {
+                    RouterEntity router = new RouterEntity();
+                    router.setId(resultSet.getInt("id"));
+                    router.setName(resultSet.getString("Name"));
+                    router.setSN(resultSet.getString("SN"));
+                    router.setPortsNum(resultSet.getInt("Port"));
+                    router.isActive(resultSet.getBoolean("In_Service"));
+                    router.setCityId(resultSet.getInt("City_id"));
+                    routers.add(router);
+                }
+            }catch (SQLException e){
+                throw new InvalidDataDAOException("GetPage router failed", e);
             }
-            resultSet.close();
-            search_routers.close();
         }catch (SQLException e){
             throw new InternalDAOException("GetPage router failed", e);
         }
+        finally {
+            if (search_routers!=null){
+                try {
+                    search_routers.close();
+                } catch (SQLException e) {
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
         return routers.toArray(new RouterEntity[routers.size()]);
     }
 
@@ -101,7 +150,7 @@ public class RouterDAO extends MySQLDAO{
 
     /**
      * @param readElement
-     * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
+     * @throws  InternalDAOException, InvalidDataDAOException
      */
     public void read(Entity readElement)throws InternalDAOException, InvalidDataDAOException {
         
@@ -132,7 +181,7 @@ public class RouterDAO extends MySQLDAO{
                     router.setName(resultSet.getString("Name"));
                     router.setSN(resultSet.getString("SN"));
                     router.setPortsNum(resultSet.getInt("Port"));
-                    router.setIsActive(resultSet.getBoolean("In_Service"));
+                    router.isActive(resultSet.getBoolean("In_Service"));
                     router.setCityId(resultSet.getInt("City_id"));
                 }
                 resultSet.close();
