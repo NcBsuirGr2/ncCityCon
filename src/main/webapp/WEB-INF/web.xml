@@ -87,7 +87,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RouterListServlet</servlet-name>
-		<url-pattern>/app/routers</url-pattern>
+		<url-pattern>/routers</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -96,7 +96,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RouterEditServlet</servlet-name>
-		<url-pattern>/app/routers/edit</url-pattern>
+		<url-pattern>/router</url-pattern>
 	</servlet-mapping>
 
 

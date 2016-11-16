@@ -24,8 +24,8 @@
     <tbody>
     <c:forEach items="${entityArray}" var="city">
         <tr>
-            <td><c:out value="${city.Name}" /></td>
-            <td><c:out value="${city.Country}" /></td>
+            <td><c:out value="${city.name}" /></td>
+            <td><c:out value="${city.countryName}" /></td>
         </tr>
     </c:forEach>
     </tbody>

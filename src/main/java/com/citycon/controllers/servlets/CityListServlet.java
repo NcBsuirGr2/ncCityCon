@@ -19,8 +19,8 @@ import java.io.Writer;
 // Created by dima.
 public class CityListServlet extends AbstractHttpServlet {
     private static final long serialVersionUID = 1L;
-    private static String CITY_LIST_PAGE = "/jsp/cities/listCities.jsp";
-    private static String ERROR_PAGE = "/error.jsp";
+    private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
+    private static String ERROR_PAGE = "/jsp/error/error.jsp";
 
 
     public void doGet(HttpServletRequest request,
