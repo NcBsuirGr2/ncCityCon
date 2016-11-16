@@ -38,11 +38,11 @@
 </div>
 	
 	<center> 
-		<p href="UserEditServlet?action=newUser&name=<c:out value="${user.name}"/>">
+		<p href="UserEditServlet?action=add&name=<c:out value="${user.name}"/>">
 			<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add">
 		</p>
-		<p href="UserEditServlet?action=update&name=<c:out value="${user.name}"/>">
-			<input class="btn btn-lg btn-primary btn-default" type="update" value="Update" name="update">
+		<p href="UserEditServlet?action=edit&name=<c:out value="${user.name}"/>">
+			<input class="btn btn-lg btn-primary btn-default" type="update" value="Edit" name="edit">
 		</p>
 		<p href="UserEditServlet?action=delete&name=<c:out value="${user.name}"/>">
 			<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete">
