@@ -4,10 +4,12 @@ import com.citycon.dao.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Vojts on 09.11.2016.
@@ -55,7 +57,7 @@ public class UserDAO extends MySQLDAO {
             resultSet.close();
             search_users.close();
         }catch (SQLException e){
-            throw new DAOException("GetPage user failed\n" + e.toString());
+            throw new DAOException("GetPage user failed", e);
         }
         return users.toArray(new UserEntity[users.size()]);
     }
@@ -67,6 +69,8 @@ public class UserDAO extends MySQLDAO {
     public void create(Entity newElement) throws DAOException {
         try{
             UserEntity user= (UserEntity) newElement;
+            Calendar calendar = Calendar.getInstance();
+            Date startDate = new Date(calendar.getTime().getTime());
 
             String insert = "insert into" + nameTable +
                     "(`Login`, `Pass`, `E-mail`, `Name`, `Group`, `create_date`)" +
@@ -78,13 +82,13 @@ public class UserDAO extends MySQLDAO {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getName());
             preparedStatement.setString(5, user.getGroup());
-            preparedStatement.setDate(6,  user.getCreateDate());
+            preparedStatement.setDate(6,  startDate);
 
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create user failed",e);
+            throw new DAOException("Create user failed", e);
         }
     }
 
@@ -124,7 +128,11 @@ public class UserDAO extends MySQLDAO {
                 user.setGroup(resultSet.getString("Group"));
                 user.setCreateDate(resultSet.getDate("create_date"));
             }
-            else throw new DAOException("This user does not exist");
+            else{
+                resultSet.close();
+                search_user.close();
+                throw new DAOException("This user does not exist");
+            }
             resultSet.close();
             search_user.close();
         }catch (SQLException e){

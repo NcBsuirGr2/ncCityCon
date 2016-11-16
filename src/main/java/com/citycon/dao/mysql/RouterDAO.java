@@ -54,7 +54,7 @@ public class RouterDAO extends MySQLDAO{
             resultSet.close();
             search_routers.close();
         }catch (SQLException e){
-            throw new DAOException("GetPage router failed\n" + e.toString());
+            throw new DAOException("GetPage router failed", e);
         }
         return routers.toArray(new RouterEntity[routers.size()]);
     }
@@ -82,7 +82,7 @@ public class RouterDAO extends MySQLDAO{
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create router failed");
+            throw new DAOException("Create router failed", e);
         }
     }
 
@@ -92,21 +92,24 @@ public class RouterDAO extends MySQLDAO{
      */
     public void read(Entity readElement) throws DAOException {
         RouterEntity router = (RouterEntity)readElement;
+        String field = "";
+        String value = "";
         try {
-            String search = "select * from" + nameTable + "where ?=?";
-            PreparedStatement search_router = connection.prepareStatement(search);
             if(router.getId() != 0) {
-                search_router.setString(1, "id");
-                search_router.setInt(2, router.getId());
+                field = "id";
+                value = String.valueOf(router.getId());
             }
             else if(router.getSN() != null){
-                search_router.setString(1, "SN");
-                search_router.setString(2, router.getSN());
+                field = "SN";
+                value = "'" + router.getSN() + "'";
             }
             else {
-                search_router.close();
-                return;
+                throw new DAOException("For reading router incorrectly chosen field, try id or SN");
             }
+
+            String search = "select * from" + nameTable + "where " + field + "=" + value;
+            PreparedStatement search_router = connection.prepareStatement(search);
+
             ResultSet resultSet = search_router.executeQuery();
 
             if(resultSet.first()) {
@@ -117,10 +120,15 @@ public class RouterDAO extends MySQLDAO{
                 router.setIsActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
             }
+            else {
+                resultSet.close();
+                search_router.close();
+                throw new DAOException("This router does not exist");
+            }
                 resultSet.close();
                 search_router.close();
         }catch (SQLException e){
-            throw new DAOException("Read router failed\n" + e.toString());
+            throw new DAOException("Read router failed", e);
         }
     }
 
@@ -148,7 +156,7 @@ public class RouterDAO extends MySQLDAO{
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Update router failed");
+            throw new DAOException("Update router failed", e);
         }
     }
 
@@ -169,7 +177,7 @@ public class RouterDAO extends MySQLDAO{
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Delete router failed");
+            throw new DAOException("Delete router failed", e);
         }
     }
     public static RouterDAO getInstance() throws DAOException {

@@ -51,7 +51,7 @@ public class RouterConnectionDAO extends MySQLDAO {
             resultSet.close();
             search_users.close();
         }catch (SQLException e){
-            throw new DAOException("GetPage routerConnection failed\n" + e.toString());
+            throw new DAOException("GetPage routerConnection failed", e);
         }
         return routerConnections.toArray(new RouterConnectionEntity[routerConnections.size()]);
     }
@@ -76,7 +76,7 @@ public class RouterConnectionDAO extends MySQLDAO {
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create routerConnection failed");
+            throw new DAOException("Create routerConnection failed", e);
         }
     }
 
@@ -88,7 +88,7 @@ public class RouterConnectionDAO extends MySQLDAO {
         RouterConnectionEntity  routerConnection  = (RouterConnectionEntity)readElement;
         if(routerConnection.getId() != 0) {
             try {
-                String search = "select * from" + nameTable + "when id=?";
+                String search = "select * from" + nameTable + "where id=?";
 
                 PreparedStatement search_routerConnection = connection.prepareStatement(search);
                 search_routerConnection.setInt(1, readElement.getId());
@@ -100,13 +100,20 @@ public class RouterConnectionDAO extends MySQLDAO {
                     routerConnection.setFirstRouterId(resultSet.getInt("ID_From"));
                     routerConnection.setSecondRouterId(resultSet.getInt("ID_To"));
                 }
+                else {
+                    resultSet.close();
+                    search_routerConnection.close();
+                    throw new DAOException("This router connection does not exist");
+                }
                 resultSet.close();
                 search_routerConnection.close();
             } catch (SQLException e) {
-                throw new DAOException("Read routerConnection failed\n" + e.toString());
+                throw new DAOException("Read router connection failed", e);
             }
         }
-        else return;
+        else{
+            throw new DAOException("For reading router connection incorrectly chosen field, try id");
+        }
     }
 
     /**
@@ -128,7 +135,7 @@ public class RouterConnectionDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Update routerConnection failed");
+            throw new DAOException("Update routerConnection failed", e);
         }
     }
 
@@ -149,7 +156,7 @@ public class RouterConnectionDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Delete routerConnection failed");
+            throw new DAOException("Delete routerConnection failed", e);
         }
     }
     public static RouterConnectionDAO getInstance() throws DAOException {

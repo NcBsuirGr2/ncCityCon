@@ -42,7 +42,7 @@ public class CityDAO extends MySQLDAO {
 
             ResultSet resultSet =  search_cities.executeQuery();
 
-            while(resultSet.next()) {
+            while (resultSet.next()){
                 CityEntity city = new CityEntity();
                 city.setId(resultSet.getInt("id"));
                 city.setName(resultSet.getString("Name"));
@@ -52,7 +52,7 @@ public class CityDAO extends MySQLDAO {
             resultSet.close();
             search_cities.close();
         }catch (SQLException e){
-            throw new DAOException("GetPage city failed\n" + e.toString());
+            throw new DAOException("GetPage city failed", e);
         }
         return cities.toArray(new CityEntity[cities.size()]);
     }
@@ -77,7 +77,7 @@ public class CityDAO extends MySQLDAO {
 
             preparedStatement.close();
         }catch (SQLException e){
-            throw new DAOException("Create city failed");
+            throw new DAOException("Create city failed", e);
         }
     }
 
@@ -100,13 +100,20 @@ public class CityDAO extends MySQLDAO {
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
                 }
+                else{
+                    resultSet.close();
+                    search_city.close();
+                    throw new DAOException("This city does not exist");
+                }
                 resultSet.close();
                 search_city.close();
             } catch (SQLException e) {
-                throw new DAOException("Read city failed\n" + e.toString());
+                throw new DAOException("Read city failed", e);
             }
         }
-        else return;
+        else{
+            throw new DAOException("For reading city incorrectly chosen field, try id");
+        }
     }
 
     /**
@@ -128,7 +135,7 @@ public class CityDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Update city failed");
+            throw new DAOException("Update city failed", e);
         }
     }
 
@@ -149,7 +156,7 @@ public class CityDAO extends MySQLDAO {
 
             preparedStatement.close();
         } catch (SQLException e) {
-            throw new DAOException("Delete city failed");
+            throw new DAOException("Delete city failed", e);
         }
     }
     public static CityDAO getInstance() throws DAOException {
