@@ -6,11 +6,11 @@
     <title>Error</title>
 </head>
 <body>
-    <%@ include file="html/header.html" %>
+    <%@ include file="/html/header.html" %>
     <h1 align="center">Error</h1>
     <h3 align="center">
         Sorry, error has occured.
     </h3>>
-    <%@ include file="html/footer.html" %>
+    <%@ include file="/html/footer.html" %>
 </body>
 </html>

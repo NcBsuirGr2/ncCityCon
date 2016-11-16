@@ -9,10 +9,11 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <title>Admin</title>
 </head>
+<%@ include file="/html/header.html" %>
 <body>
-<%@ include file="html/header.html" %>
-	<table class="table table-bordered table-hover table-striped" style="table-layout: fixed">
-
+<div class="container">
+	<div class="login-panel panel panel-success">
+		<table class="table table-bordered table-hover table-striped" style="table-layout: fixed">
      		<thead>
 				<tr>
 					<th>Name</th>
@@ -31,9 +32,27 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-
 	</table>
-<%@ include file="html/footer.html" %>
+	</div>
+	</div>
+	<center>
+    	<a href="userEdit"><button class="btn btn-info btn-lg">Add</button></a>
+    	<a href="userEdit"><button class="btn btn-info btn-lg">Edit</button></a>
+    	<a href="#"><button class="btn btn-info btn-lg">Delete</button></a>
+    </center>
+    <center>
+		<ul class="pagination">
+			<li><a href="#">&laquo;</a></li>
+  			<li><a href="#">1</a></li>
+  			<li><a href="#">2</a></li>
+  			<li><a href="#">3</a></li>
+  			<li><a href="#">4</a></li>
+  			<li><a href="#">5</a></li>
+  			<li><a href="#">&raquo;</a></li>
+		</ul>
+	</center>
+	
 </body>
+<%@ include file="/html/footer.html" %>
 </html>
 
