@@ -30,12 +30,17 @@
     </c:forEach>
     </tbody>
 </table>
-
 </div>
 <center>
-    <button type="button" class="btn btn-primary" value="Add" name="add" ></button>
-    <button type="button" class="btn btn-primary" value="Edit" name="edit" ></button>
-    <button type="button" class="btn btn-primary" value="Delete" name="delete" ></button>
+    <p href="CityEditServlet?action=add">
+        <button type="button" class="btn btn-primary" value="Add" name="add">Add</button>
+    </p>
+    <p href="CityEditServlet?action=edit&name=<c:out value="${city.name}"/>">
+        <button type="button" class="btn btn-primary" value="Edit" name="edit">Edit</button>
+    </p>
+    <p href="CityEditServlet?action=delete&name=<c:out value="${city.name}"/>">
+        <button type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
+    </p>
 </center>
 
 
