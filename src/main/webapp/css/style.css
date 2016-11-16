@@ -40,10 +40,19 @@ img{
 	color: white;
 }
 .panel-default {
-        margin-top: 50px;
-        margin-left: 20%;
-        margin-right: 20%;
+	margin-top: 50px;
+	margin-left: 20%;
+	margin-right: 20%;
 }
 a{
 	margin-left: 20%;
+}
+b{
+	font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #bd243f;
+}
+.dropdown{
+	margin-top: 20px;
+	margin-left: 25%;
 }
