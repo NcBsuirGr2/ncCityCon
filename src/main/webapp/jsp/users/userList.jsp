@@ -8,11 +8,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
 <title>List</title>
-
 </head>
 <body>
 <%@ include file="/html/header.html" %>
@@ -24,11 +22,11 @@
 					<th>Name</th>
 			   		<th>Login</th>
 			        <th>E-mail</th>
-
+					
         		</tr>
         	</thead>
         	<tbody>
-				<c:forEach items="${entityArray}" var="user">
+				<c:forEach items="${entityArray}" var="users">
 					<tr>
 						<td><c:out value="${user.name}" /></td>
 						<td><c:out value="${user.login}" /></td>
@@ -37,15 +35,20 @@
 				</c:forEach>
 			</tbody>
 	</table>
-
-	
 </div>
+	
 	<center> 
-		<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add" >
-		<input class="btn btn-lg btn-primary btn-default" type="edit" value="Edit" name="edit" >
-		<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete" >
+		<p href="UserEditServlet?action=newUser&name=<c:out value="${user.name}"/>">
+			<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add">
+		</p>
+		<p href="UserEditServlet?action=update&name=<c:out value="${user.name}"/>">
+			<input class="btn btn-lg btn-primary btn-default" type="update" value="Update" name="update">
+		</p>
+		<p href="UserEditServlet?action=delete&name=<c:out value="${user.name}"/>">
+			<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete">
+		</p>
+	
 	</center>
-
 <%@ include file="/html/footer.html" %>
 </body>
 </html>
