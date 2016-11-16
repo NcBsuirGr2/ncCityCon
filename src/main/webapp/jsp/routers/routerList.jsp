@@ -53,13 +53,13 @@
 			</div>
 			<center> 
 			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add" >
+				<button type="button" class="btn btn-primary" value="Add" name="add" ></button>
 			</p>
 			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<input class="btn btn-lg btn-primary btn-default" type="edit" value="Edit" name="edit" >
+				<button type="button" class="btn btn-primary" value="Edit" name="edit" ></button>
 			</p>
 			<p href="UserEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete" >
+				<button type="button" class="btn btn-primary" value="Delete" name="delete" ></button>
 			</p>
 			</center>
 <%@ include file="/html/footer.html" %>

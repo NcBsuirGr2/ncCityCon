@@ -3,6 +3,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="/html/header.html" %>
 <!--%@ include file="html/header.html" %>-->
@@ -14,15 +15,21 @@
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/cityCon/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="css/style_loginForm.css" rel="stylesheet" type="text/css">
+    <link href="/cityCon/css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-${param.errorType}
+<!--
+<c:if test="${param.errorType}">
+  <b>Incorrect information</b>
+</c:if>
+<form action="SignInServlet" method="get" id="signIn">
+-->
+
     <!--login modal-->
     <div id="loginModal" > <!--class="modalshow"  tabindex="-1" role="dialog" aria-hidden="true"-->
         <div class="modal-dialog">
@@ -43,7 +50,7 @@ ${param.errorType}
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
-                            <span class="pull-right"><a href="/cityCon/signup">Sign In</a></span>
+                            <span class="pull-right"><a href="/cityCon/jsp/security/signUp.jsp">Sign Up</a></span>
                         </div>
                     </form>
                 </div>

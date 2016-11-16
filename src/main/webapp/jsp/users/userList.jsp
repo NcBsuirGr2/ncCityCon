@@ -21,18 +21,15 @@
 				<tr>
 					<th>Name</th>
 			   		<th>Login</th>
-			   		<th>Password</th>
-			        <th>Group</th>
-			        <th>E-mail</th>					
+			        <th>E-mail</th>
+					
         		</tr>
         	</thead>
         	<tbody>
-				<c:forEach items="${entityArray}" var="user">
+				<c:forEach items="${entityArray}" var="users">
 					<tr>
 						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.login}" /></td>						
-						<td><c:out value="${user.password}" /></td>
-						<td><c:out value="${user.group}" /></td>
+						<td><c:out value="${user.login}" /></td>
 						<td><c:out value="${user.email}" /></td>
 					</tr>
 				</c:forEach>
@@ -42,13 +39,13 @@
 	
 	<center> 
 		<p href="UserEditServlet?action=add&name=<c:out value="${user.name}"/>">
-			<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add">
+			<button type="button" class="btn btn-primary" value="Add" name="add">Add</button>
 		</p>
 		<p href="UserEditServlet?action=edit&name=<c:out value="${user.name}"/>">
-			<input class="btn btn-lg btn-primary btn-default" type="update" value="Edit" name="edit">
+			<button type="button" class="btn btn-primary" value="Edit" name="edit">Edit</button>
 		</p>
 		<p href="UserEditServlet?action=delete&name=<c:out value="${user.name}"/>">
-			<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete">
+			<button type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
 		</p>
 	
 	</center>

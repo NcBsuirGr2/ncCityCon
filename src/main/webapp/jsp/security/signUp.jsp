@@ -10,15 +10,26 @@
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/cityCon/cssbootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="css/style_loginForm.css" rel="stylesheet" type="text/css">
+    <link href="/cityCon/css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-${param.errorType}
+<!--
+<c:if test="${param.errorType=dublicate}">
+  <b></b>
+  	<c:if test="${param.errorType=invalidData}">
+  		<b>Incorrect information</b>
+	</c:if>
+</c:if>
+-->
+
+<form action="SignInServlet" method="get" id="signIn">
+
+
 <div id="loginModal" >
     <div class="modal-dialog">
         <div class="modal-content">

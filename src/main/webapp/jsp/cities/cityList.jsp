@@ -33,9 +33,9 @@
 
 </div>
 <center>
-    <input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add" >
-    <input class="btn btn-lg btn-primary btn-default" type="edit" value="Edit" name="edit" >
-    <input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete" >
+    <button type="button" class="btn btn-primary" value="Add" name="add" ></button>
+    <button type="button" class="btn btn-primary" value="Edit" name="edit" ></button>
+    <button type="button" class="btn btn-primary" value="Delete" name="delete" ></button>
 </center>
 
 
