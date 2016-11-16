@@ -23,7 +23,7 @@ import java.util.Calendar;
  * @author Tim, Mike
  * @version  1.1
  */
-public class SignUpServlet extends AbstractHttpServlet {
+public class SignInServlet extends AbstractHttpServlet {
 
     private static final String SIGN_IN_PAGE = "/jsp/security/signIn.jsp";
 
