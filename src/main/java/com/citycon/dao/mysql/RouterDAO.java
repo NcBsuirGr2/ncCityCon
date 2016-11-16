@@ -52,7 +52,7 @@ public class RouterDAO extends MySQLDAO{
                 router.setName(resultSet.getString("Name"));
                 router.setSN(resultSet.getString("SN"));
                 router.setPortsNum(resultSet.getInt("Port"));
-                router.setIsActive(resultSet.getBoolean("In_Service"));
+                router.isActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
                 routers.add(router);
             }
@@ -101,7 +101,7 @@ public class RouterDAO extends MySQLDAO{
 
     /**
      * @param readElement
-     * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
+     * @throws  InternalDAOException, InvalidDataDAOException
      */
     public void read(Entity readElement)throws InternalDAOException, InvalidDataDAOException {
         
@@ -132,7 +132,7 @@ public class RouterDAO extends MySQLDAO{
                     router.setName(resultSet.getString("Name"));
                     router.setSN(resultSet.getString("SN"));
                     router.setPortsNum(resultSet.getInt("Port"));
-                    router.setIsActive(resultSet.getBoolean("In_Service"));
+                    router.isActive(resultSet.getBoolean("In_Service"));
                     router.setCityId(resultSet.getInt("City_id"));
                 }
                 resultSet.close();

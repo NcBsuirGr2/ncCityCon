@@ -53,6 +53,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
         String SN = req.getParameter("SN");
         Integer portsNum = Integer.getInteger(req.getParameter("portsNum"));
         boolean isActive = Boolean.getBoolean(req.getParameter("isActive"));
+        Integer cityId = Integer.getInteger(req.getParameter("cityId"));
 
         if (name == null || SN == null || portsNum == null) {
             forwardToErrorPage("Not enough info to create new router", req, res);
@@ -65,6 +66,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             newRouter.setSN(SN);
             newRouter.setPortsNum(portsNum);
             newRouter.setIsActive(isActive);
+            newRouter.setCityId(cityId);
 
             newRouter.create();
         } catch(DublicateKeyDAOException cause) {
@@ -86,6 +88,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
         String SN = req.getParameter("SN");
         Integer portsNum = Integer.getInteger(req.getParameter("portsNum"));
         boolean isActive = Boolean.getBoolean(req.getParameter("isActive"));
+        Integer cityId = Integer.getInteger(req.getParameter("cityId"));
 
         if (SN == null) {
             forwardToErrorPage("Cannot update router, serial number field is empty", req, res);
@@ -98,6 +101,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             newRouter.setSN(SN);
             newRouter.setPortsNum(portsNum);
             newRouter.setIsActive(isActive);
+            newRouter.setCityId(cityId);
 
             newRouter.update();
         } catch (DublicateKeyDAOException cause) {

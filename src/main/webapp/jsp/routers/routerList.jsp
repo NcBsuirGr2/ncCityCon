@@ -44,7 +44,7 @@
 									<td><c:out value="${router.name}" /></td>
 									<td><c:out value="${router.SN}" /></td>
 									<td><c:out value="${router.portsNum}" /></td>
-									<td><c:out value="${router.isActive}" /></td>
+									<td><c:out value="${router.active}" /></td>
 									<td><c:out value="${router.cityId}" /></td>
 								</tr>
 							</c:forEach>
@@ -52,13 +52,13 @@
 					</table>
 			</div>
 			<center> 
-			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.name}"/>">
+			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
 				<input class="btn btn-lg btn-primary btn-default" type="add" value="Add" name="add" >
 			</p>
-			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.name}"/>">
+			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
 				<input class="btn btn-lg btn-primary btn-default" type="edit" value="Edit" name="edit" >
 			</p>
-			<p href="UserEditServlet?action=newRouter&name=<c:out value="${router.name}"/>">
+			<p href="UserEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
 				<input class="btn btn-lg btn-primary btn-default" type="delete" value="Delete" name="delete" >
 			</p>
 			</center>

@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created by root on 16.11.16.
  */
 public class RouterListServlet  extends AbstractHttpServlet {
-    private static String RUTERS_LIST_PAGE = "/jsp/routers/RouterList.jsp";
+    private static String RUTERS_LIST_PAGE = "/jsp/routers/routerList.jsp";
 
     private String ROUTER_IS_EXIST = "Router with that SN is already exist";
     private String SERVER_ERROR = "Server error";
