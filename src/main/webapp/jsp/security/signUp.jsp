@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ include file="html/header.html" %>
+<%@ include file="/html/header.html" %>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -66,5 +66,5 @@
 
 </body>
 </html>
-<%@ include file="html/footer.html" %>
+<%@ include file="/html/footer.html" %>
 
