@@ -12,23 +12,24 @@
 <title>Connection</title>
 </head>
 <body>
-<table class="table table-striped" style="table-layout: auto">
-    <thead>
-    <tr>
-        <th>NameCity</th>
-        <th>Country</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${entityArray}" var="city">
+<div class="panel panel-default">
+    <table class="table table-striped" style="table-layout: auto">
+        <thead>
         <tr>
-            <td><c:out value="${city.name}" /></td>
-            <td><c:out value="${city.countryName}" /></td>
+            <th>NameCity</th>
+            <th>Country</th>
+
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach items="${entityArray}" var="city">
+            <tr>
+                <td><c:out value="${city.name}" /></td>
+                <td><c:out value="${city.countryName}" /></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <center>
     <a href="CityEditServlet?action=add">
