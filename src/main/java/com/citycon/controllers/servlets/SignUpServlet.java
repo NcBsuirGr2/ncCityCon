@@ -11,12 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.Calendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Allows users to signup into the system. On GET returns html page to sign up,
@@ -28,12 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SignUpServlet extends AbstractHttpServlet {
 
-    private static final String SIGN_IN_PAGE = "/jsp/security/signIn.jsp";
+    private static final String SIGN_UP_PAGE = "/jsp/security/signUp.jsp";
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
-        RequestDispatcher loginPage = req.getRequestDispatcher(SIGN_IN_PAGE);
-        loginPage.forward(req, res);
+        RequestDispatcher signUpPage = req.getRequestDispatcher(SIGN_UP_PAGE);
+        signUpPage.forward(req, res);
     }
 
     protected void doPost(HttpServletRequest req,
@@ -48,25 +45,24 @@ public class SignUpServlet extends AbstractHttpServlet {
             user.setGroup("guest");
             java.sql.Date timeNow = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
             user.setCreateDate(timeNow);
+
             try {
                 user.create();
                 try {                    
                     user.read();
                     req.getSession().setAttribute("user", user.getEntity());
                     res.sendRedirect("/");
-                } catch (DAOException exception) {
-                    Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
-                    logger.error("Exception during reading user: {}", exception);
+                } catch (DAOException exception) {    
+                    //неудачная запись            
                     forwardToErrorPage(exception.getMessage(), req, res);      
                 }
             } catch(DAOException exception) {
-                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
-                logger.error("Exception during creating user: {}", exception);
+                // Здесь проблема создания пользователя. Redirect на ту же страницу с 
+                // атрибутом типа ошибки
                 forwardToErrorPage(exception.getMessage(), req, res);
             } 
         } catch (DAOException exception) {
-            Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
-            logger.error("Exception during instantiating ORMUser: {}", exception);
+            // Тут внутренняя ошибка
             forwardToErrorPage(exception.getMessage(), req, res);             
         }       
     }
