@@ -12,7 +12,6 @@
 <title>Connection</title>
 </head>
 <body>
-<div class="panel-heading">List Users</div>
 <table class="table table-striped" style="table-layout: auto">
     <thead>
     <tr>
