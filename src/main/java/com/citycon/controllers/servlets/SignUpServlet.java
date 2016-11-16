@@ -1,6 +1,6 @@
 package com.citycon.controllers.servlets;
 
-import com.citycon.dao.DAOException;
+import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMException;
@@ -16,6 +16,9 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.Calendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Allows users to signup into the system. On GET returns html page to sign up,
  * on POST try to create new user. On error shows sign up page again with attribute
@@ -26,7 +29,7 @@ import java.util.Calendar;
  */
 public class SignUpServlet extends AbstractHttpServlet {
 
-    private static final String SIGN_IN_PAGE = "/signIn.jsp";
+    private static final String SIGN_IN_PAGE = "/jsp/security/signIn.jsp";
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
@@ -36,31 +39,36 @@ public class SignUpServlet extends AbstractHttpServlet {
 
     protected void doPost(HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
-        ORMUser user = null;
         try {
-            user = new ORMUser();   //TODO: logging
-                                    //TODO: error page
-        } catch (ORMException e) {
-            forwardToErrorPage(e.getMessage(), req, res);
-        }
-        Grant grant = new Grant();
-        grant.setUsersBranchLevel(1); //может что-то напутано с правами
-        java.sql.Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+            ORMUser user = new ORMUser();             
 
-        user.setLogin(req.getParameter("login"));
-        user.setPassword(req.getParameter("password"));
-        user.setEmail(req.getParameter("E-mail"));
-        user.setName(req.getParameter("name"));
-        user.setGroup("user");
-        user.setCreateDate(timeNow);
-        user.setGrant(grant);
-        try {
-            user.create();
-            req.getSession().setAttribute("user", user.getEntity());
-            res.sendRedirect("/");
-        } catch(ORMException e) {
-            forwardToErrorPage(e.getMessage(), req, res);
-        }  
-        
+            user.setLogin(req.getParameter("login"));
+            user.setPassword(req.getParameter("password"));
+            user.setEmail(req.getParameter("E-mail"));
+            user.setName(req.getParameter("name"));
+            user.setGroup("guest");
+            java.sql.Date timeNow = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+            user.setCreateDate(timeNow);
+            try {
+                user.create();
+                try {                    
+                    user.read();
+                    req.getSession().setAttribute("user", user.getEntity());
+                    res.sendRedirect("/");
+                } catch (ORMException exception) {
+                    Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
+                    logger.error("Exception during reading user: {}", exception);
+                    forwardToErrorPage(exception.getMessage(), req, res);      
+                }
+            } catch(ORMException exception) {
+                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
+                logger.error("Exception during creating user: {}", exception);
+                forwardToErrorPage(exception.getMessage(), req, res);
+            } 
+        } catch (ORMException exception) {
+            Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
+            logger.error("Exception during instantiating ORMUser: {}", exception);
+            forwardToErrorPage(exception.getMessage(), req, res);             
+        }       
     }
 }

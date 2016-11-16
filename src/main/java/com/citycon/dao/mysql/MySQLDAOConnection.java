@@ -1,6 +1,6 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAOException;
+import com.citycon.dao.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -2,7 +2,7 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.dao.DAOAbstractFactory;
 import com.citycon.dao.mysql.MySQLDAOFactory;
-import com.citycon.dao.DAOException;
+import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.systemunits.entities.Entity;
 
 /**

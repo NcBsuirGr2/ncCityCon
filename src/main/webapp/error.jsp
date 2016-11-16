@@ -3,13 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Error</title>
 </head>
 <body>
     <%@ include file="html/header.html" %>
     <h1 align="center">Error</h1>
     <h3 align="center">
-        <%=((String)request.getSession().getAttribute("errorMessage"))%>
+        Sorry, error has occured.
     </h3>>
     <%@ include file="html/footer.html" %>
 </body>

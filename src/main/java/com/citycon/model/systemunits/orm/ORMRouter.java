@@ -4,7 +4,7 @@ import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.dao.DAO;
-import com.citycon.dao.DAOException;
+import com.citycon.dao.exceptions.DAOException;
 
 /**
  * ORM wrapper for the <code>RouterEntity</code>. This class must be used in servlets to

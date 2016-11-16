@@ -3,7 +3,7 @@ package com.citycon.model.systemunits.orm;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.dao.DAO;
-import com.citycon.dao.DAOException;
+import com.citycon.dao.exceptions.DAOException;
 
 /**
  * ORM wrapper for the <code>CityEntity</code>. This class must be used in servlets to

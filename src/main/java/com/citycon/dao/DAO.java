@@ -1,6 +1,7 @@
 package com.citycon.dao;
 import com.citycon.model.systemunits.entities.Entity;
 
+import com.citycon.dao.exceptions.DAOException;
 /**
  * Created by Vojts on 09.11.2016.
  */
