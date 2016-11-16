@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.dao.mysql.RoutersOfCity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
@@ -94,4 +95,10 @@ public class ORMRouter extends ORMEntity {
         DAO staticDAO = daoFactory.getRouterDAO();
         return (RouterEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
+
+	public static RouterEntity[] getPage(int page, int itemsPerPage,
+										 String sortBy, boolean asc, CityEntity city) throws DAOException {
+		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
+		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
+	}
 }
