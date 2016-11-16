@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by root on 13.11.16.
  */
-public class SignInServlet extends HttpServlet {
+public class SignInServlet extends AbstractHttpServlet {
     private static String ERROR = "/error.jsp";
 
     protected void doPost(HttpServletRequest request,

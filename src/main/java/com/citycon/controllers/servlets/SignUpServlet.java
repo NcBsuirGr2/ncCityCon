@@ -17,48 +17,50 @@ import java.sql.Date;
 import java.util.Calendar;
 
 /**
- * Created by root on 13.11.16.
+ * Allows users to signup into the system. On GET returns html page to sign up,
+ * on POST try to create new user. On error shows sign up page again with attribute
+ * errorType. 
+ *
+ * @author Tim, Mike
+ * @version  1.1
  */
-public class SignUpServlet extends HttpServlet {
+public class SignUpServlet extends AbstractHttpServlet {
 
-    private static String ERROR = "/error.jsp";
+    private static final String SIGN_IN_PAGE = "/signIn.jsp";
 
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) 
+                                        throws ServletException, IOException {
+        RequestDispatcher loginPage = req.getRequestDispatcher(SIGN_IN_PAGE);
+        loginPage.forward(req, res);
+    }
+
+    protected void doPost(HttpServletRequest req,
+                          HttpServletResponse res) throws ServletException, IOException {
         ORMUser user = null;
         try {
             user = new ORMUser();   //TODO: logging
                                     //TODO: error page
         } catch (ORMException e) {
-            e.printStackTrace();
+            forwardToErrorPage(e.getMessage(), req, res);
         }
         Grant grant = new Grant();
         grant.setUsersBranchLevel(1); //может что-то напутано с правами
         java.sql.Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 
-        user.setLogin(request.getParameter("login"));
-        user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("E-mail"));
-        user.setName(request.getParameter("name"));
+        user.setLogin(req.getParameter("login"));
+        user.setPassword(req.getParameter("password"));
+        user.setEmail(req.getParameter("E-mail"));
+        user.setName(req.getParameter("name"));
         user.setGroup("user");
         user.setCreateDate(timeNow);
         user.setGrant(grant);
-
-        RequestDispatcher rd;
-
         try {
             user.create();
-            rd = getServletContext().getRequestDispatcher("/app/users");
-            //перенаправление на страницу после регистрации(пока не созданы) (заменить /index.html и /error)
-        } catch (ORMException e) {
-            e.printStackTrace();
-            request.getSession().setAttribute("error",e.getMessage());
-            rd = getServletContext().getRequestDispatcher(ERROR);
-            //TODO: logging
-        }
-
-
-        rd.forward(request,response);
-
+            req.getSession().setAttribute("user", user.getEntity());
+            res.sendRedirect("/");
+        } catch(ORMException e) {
+            forwardToErrorPage(e.getMessage(), req, res);
+        }  
+        
     }
 }

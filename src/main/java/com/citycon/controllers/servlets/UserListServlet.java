@@ -13,12 +13,12 @@ import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import com.citycon.model.systemunits.orm.ORMException;
 
-public class UserListServlet extends HttpServlet {
+public class UserListServlet extends AbstractHttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String LIST = "/admin.jsp";
 	private static String ERROR = "/error.jsp";
 
-	public void doGet(HttpServletRequest request, 
+	protected void doGet(HttpServletRequest request, 
 		HttpServletResponse response) throws ServletException, IOException {
 		
 		UserEntity users[] = null;
