@@ -41,7 +41,7 @@ public class MySQLDAOConnection {
         return new MySQLDAOConnection();
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() throws InternalDAOException {
         return connection;
     }
 }

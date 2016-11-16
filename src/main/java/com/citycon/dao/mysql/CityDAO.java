@@ -18,12 +18,13 @@ import java.util.ArrayList;
 public class CityDAO extends MySQLDAO {
 
     /**
-     * @throws DAOException
+     * @throws InternalDAOException
      */
     private CityDAO() throws InternalDAOException {
         super();
         nameTable = " City ";
     }
+
 
     /**
      * @param page
@@ -31,36 +32,60 @@ public class CityDAO extends MySQLDAO {
      * @param sortBy
      * @param asc
      * @return
+     * @throws InvalidDataDAOException
      * @throws InternalDAOException
      */
-    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
                                             throws InvalidDataDAOException, InternalDAOException {
+        PreparedStatement search_cities = null;
+        ResultSet resultSet = null;
 
-        if(false ) {
-            throw new InvalidDataDAOException();
-        }
         ArrayList<CityEntity> cities = new ArrayList();
-        try {
-            String search = "select * from" + nameTable + "limit ?,?";
+        String search = "select * from" + nameTable + "limit ?,?";
 
-            PreparedStatement search_cities = connection.prepareStatement(search);
-            search_cities.setInt(1, (page-1)*itemsPerPage);
+        try {
+            search_cities = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            throw new InternalDAOException("Prepare statement in cityPage wasn't created", e);
+        }
+
+        try {
+            search_cities.setInt(1, (page - 1) * itemsPerPage);
             search_cities.setInt(2, itemsPerPage);
 
-            ResultSet resultSet =  search_cities.executeQuery();
+            resultSet = search_cities.executeQuery();
 
-            while (resultSet.next()){
-                CityEntity city = new CityEntity();
-                city.setId(resultSet.getInt("id"));
-                city.setName(resultSet.getString("Name"));
-                city.setCountryName(resultSet.getString("Country"));
-                cities.add(city);
+            try {
+                while (resultSet.next()){
+                    CityEntity city = new CityEntity();
+                    city.setId(resultSet.getInt("id"));
+                    city.setName(resultSet.getString("Name"));
+                    city.setCountryName(resultSet.getString("Country"));
+                    cities.add(city);
+                }
+            }catch (SQLException e){
+                throw new InvalidDataDAOException("GetPage city failed", e);
             }
-            resultSet.close();
-            search_cities.close();
-        }catch (SQLException e){
-            throw new InternalDAOException("GetPage city failed", e);
+        }catch (SQLException e) {
+            throw new InvalidDataDAOException("Put data to prepare statement in city invalid",e);
         }
+        finally {
+            if (search_cities!=null){
+                try {
+                    search_cities.close();
+                } catch (SQLException e) {
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
         return cities.toArray(new CityEntity[cities.size()]);
     }
 
