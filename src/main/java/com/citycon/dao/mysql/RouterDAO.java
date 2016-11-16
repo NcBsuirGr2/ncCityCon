@@ -30,7 +30,12 @@ public class RouterDAO extends MySQLDAO{
      * @return
      * @throws InternalDAOException
      */
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException {
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+                                                throws InvalidDataDAOException, InternalDAOException {
+
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         ArrayList<RouterEntity> routers = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -63,7 +68,10 @@ public class RouterDAO extends MySQLDAO{
      * @param newElement
      * @throws DublicateKeyDAOException, InternalDAOException
      */
-    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         try{
             RouterEntity router = (RouterEntity) newElement;
 
@@ -95,7 +103,11 @@ public class RouterDAO extends MySQLDAO{
      * @param readElement
      * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
      */
-    public void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException {
+    public void read(Entity readElement)throws InternalDAOException, InvalidDataDAOException {
+        
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         RouterEntity router = (RouterEntity)readElement;
         String field = "";
         String value = "";
@@ -107,9 +119,6 @@ public class RouterDAO extends MySQLDAO{
             else if(router.getSN() != null){
                 field = "SN";
                 value = "'" + router.getSN() + "'";
-            }
-            else {
-                throw new NotFoundDAOException("For reading router incorrectly chosen field, try id or SN");
             }
 
             String search = "select * from" + nameTable + "where " + field + "=" + value;
@@ -126,11 +135,6 @@ public class RouterDAO extends MySQLDAO{
                     router.setIsActive(resultSet.getBoolean("In_Service"));
                     router.setCityId(resultSet.getInt("City_id"));
                 }
-                else {
-                    resultSet.close();
-                    search_router.close();
-                    throw new NotFoundDAOException("This router does not exist");
-                }
                 resultSet.close();
                 search_router.close();
             }catch (SQLException e){
@@ -146,7 +150,10 @@ public class RouterDAO extends MySQLDAO{
      * @param updateElement
      * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException {
+    public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+        if (false) {
+            throw new DublicateKeyDAOException();
+        }
         try {
             RouterEntity router = (RouterEntity) updateElement;
 

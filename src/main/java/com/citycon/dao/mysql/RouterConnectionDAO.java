@@ -30,7 +30,12 @@ public class RouterConnectionDAO extends MySQLDAO {
      * @return
      * @throws InternalDAOException
      */
-    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException {
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+                                                        throws InvalidDataDAOException, InternalDAOException {
+
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         ArrayList<RouterConnectionEntity> routerConnections = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -60,7 +65,10 @@ public class RouterConnectionDAO extends MySQLDAO {
      * @param newElement
      * @throws DublicateKeyDAOException,InternalDAOException
      */
-    public void create(Entity newElement) throws DublicateKeyDAOException,InternalDAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         try{
             RouterConnectionEntity routerConnection = (RouterConnectionEntity) newElement;
 
@@ -89,7 +97,11 @@ public class RouterConnectionDAO extends MySQLDAO {
      * @param readElement
      * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
      */
-    public void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException {
+    public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
+        
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         RouterConnectionEntity  routerConnection  = (RouterConnectionEntity)readElement;
         if(routerConnection.getId() != 0) {
             try {
@@ -105,11 +117,6 @@ public class RouterConnectionDAO extends MySQLDAO {
                         routerConnection.setId(resultSet.getInt("id"));
                         routerConnection.setFirstRouterId(resultSet.getInt("ID_From"));
                         routerConnection.setSecondRouterId(resultSet.getInt("ID_To"));
-                    }
-                    else {
-                        resultSet.close();
-                        search_routerConnection.close();
-                        throw new NotFoundDAOException("This router connection does not exist");
                     }
                     resultSet.close();
                     search_routerConnection.close();
@@ -130,7 +137,10 @@ public class RouterConnectionDAO extends MySQLDAO {
      * @param updateElement
      * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException {
+    public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+        if (false) {
+            throw new DublicateKeyDAOException();
+        }
         try {
             RouterConnectionEntity routerConnection = (RouterConnectionEntity) updateElement;
 

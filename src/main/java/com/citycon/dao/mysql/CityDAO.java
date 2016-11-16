@@ -31,7 +31,13 @@ public class CityDAO extends MySQLDAO {
      * @return
      * @throws InternalDAOException
      */
-    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException {
+    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+                                            throws InvalidDataDAOException, InternalDAOException {
+
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
+
         ArrayList<CityEntity> cities = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -62,7 +68,10 @@ public class CityDAO extends MySQLDAO {
      * @param newElement
      * @throws DublicateKeyDAOException,InternalDAOException
      */
-    public void create(Entity newElement) throws DublicateKeyDAOException,InternalDAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         try {
             CityEntity city = (CityEntity) newElement;
 
@@ -90,8 +99,14 @@ public class CityDAO extends MySQLDAO {
      * @param readElement
      * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
      */
-    public void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException {
+    public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
+        
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
+
         CityEntity city = (CityEntity)readElement;
+
         if (city.getId() != 0) {
             try {
                 String search = "select * from" + nameTable + "where id=?";
@@ -105,11 +120,6 @@ public class CityDAO extends MySQLDAO {
                     if(resultSet.first()) {
                         city.setName(resultSet.getString("Name"));
                         city.setCountryName(resultSet.getString("Country"));
-                    }
-                    else{
-                        resultSet.close();
-                        search_city.close();
-                        throw new NotFoundDAOException("This city does not exist");
                     }
                     resultSet.close();
                     search_city.close();
@@ -129,7 +139,10 @@ public class CityDAO extends MySQLDAO {
      * @param updateElement
      * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException {
+    public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+        if (false) {
+            throw new DublicateKeyDAOException();
+        }
         try {
             CityEntity city = (CityEntity) updateElement;
 
@@ -139,7 +152,7 @@ public class CityDAO extends MySQLDAO {
             try {
                 preparedStatement.setString(1, city.getName());
                 preparedStatement.setString(2, city.getCountryName());
-                ;
+                
                 preparedStatement.setInt(3, city.getId());
 
                 preparedStatement.executeUpdate();

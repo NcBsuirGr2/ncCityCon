@@ -8,9 +8,16 @@ import java.util.DuplicateFormatFlagsException;
  * Created by Vojts on 09.11.2016.
  */
 public interface DAO {
-    void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException;
-    void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException;
-    void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException;
+    void create(Entity newElement) throws DublicateKeyDAOException, 
+    							InvalidDataDAOException, InternalDAOException;
+
+    void read(Entity readElement) throws InvalidDataDAOException, InternalDAOException;
+
+    void update(Entity updateElement) throws DublicateKeyDAOException, 
+    							InvalidDataDAOException, InternalDAOException;
+
     void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException;
-    Entity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException;
+
+    Entity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+		throws InvalidDataDAOException, InternalDAOException;
 }

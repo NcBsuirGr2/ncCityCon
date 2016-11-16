@@ -32,7 +32,13 @@ public class UserDAO extends MySQLDAO {
      * @return
      * @throws InternalDAOException
      */
-    public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) throws InternalDAOException {
+    public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
+                                            throws InvalidDataDAOException, InternalDAOException {
+
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
+
         ArrayList<UserEntity> users = new ArrayList();
         try {
             String search = "select * from" + nameTable + "limit ?,?";
@@ -66,7 +72,10 @@ public class UserDAO extends MySQLDAO {
      * @param newElement
      * @throws InternalDAOException, DublicateKeyDAOException
      */
-    public void create(Entity newElement) throws InternalDAOException, DublicateKeyDAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         try{
             UserEntity user= (UserEntity) newElement;
             Calendar calendar = Calendar.getInstance();
@@ -101,7 +110,11 @@ public class UserDAO extends MySQLDAO {
      * @param readElement
      * @throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException
      */
-    public void read(Entity readElement) throws NotFoundDAOException, InternalDAOException, InvalidDataDAOException {
+    public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
+        
+        if(false) {
+            throw new InvalidDataDAOException();
+        }
         UserEntity user = (UserEntity)readElement;
         String field = "";
         String value = "";
@@ -133,11 +146,7 @@ public class UserDAO extends MySQLDAO {
                     user.setGroup(resultSet.getString("Group"));
                     user.setCreateDate(resultSet.getDate("create_date"));
                 }
-                else{
-                    resultSet.close();
-                    search_user.close();
-                    throw new NullPointerException("This user does not exist");
-                }
+              
                 resultSet.close();
                 search_user.close();
             } catch (SQLException e){
@@ -154,7 +163,10 @@ public class UserDAO extends MySQLDAO {
      * @param updateElement
      * @throws InvalidDataDAOException, InternalDAOException
      */
-    public void update(Entity updateElement) throws InvalidDataDAOException, InternalDAOException {
+    public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+        if (false) {
+            throw new DublicateKeyDAOException();
+        }
         try {
             UserEntity user= (UserEntity) updateElement;
 
