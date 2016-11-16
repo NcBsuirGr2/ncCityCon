@@ -21,31 +21,29 @@ import org.slf4j.LoggerFactory;
  * @author Mike
  * @version 0.1
  */
-public class LoginFilter implements Filter {
+public class LoginFilter extends AbstractHttpFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 		// init 
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws ServletException, IOException {
-		try { 
+		HttpServletResponse httpRes = (HttpServletResponse)res;
+		HttpServletRequest httpReq=(HttpServletRequest)req;
+		Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
 
-			HttpServletResponse httpRes = (HttpServletResponse)res;
-			HttpServletRequest httpReq = (HttpServletRequest)req;
-
+		try {
 			if (httpReq.getSession().getAttribute("user") == null) {
-				Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
 				logger.info("Access to the secret page");
-
-				//TODO: pretty error page
-				httpRes.sendError(403, "You must be logged in to see this page.");
-			}else {
-				chain.doFilter(req, res);
+				forwardToSecurityErrorPage(httpReq, httpRes);
 			}
+			chain.doFilter(req, res);
+
 			
 		} catch (ClassCastException e) {
-			// nothing to do with no-http req
-			// TODO: log no-http request
+			logger.info("Access to the secret page");
+			forwardToSecurityErrorPage(httpReq, httpRes);
+			chain.doFilter(req, res);
 			return;
 		}
 	}
