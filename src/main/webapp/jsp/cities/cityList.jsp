@@ -24,7 +24,7 @@
         <tbody>
         <c:forEach items="${entityArray}" var="city">
             <tr>
-                <td><c:out value="${city.name}" /></td>
+                <td><a href=""><c:out value="${city.name}" /></a></td>
                 <td><c:out value="${city.countryName}" /></td>
             </tr>
         </c:forEach>
@@ -44,21 +44,22 @@
 </center>
 
 
-<form action="city" method="GET">
-    <input type=hidden name="action" value="add">
-    <input type=submit value="add">
-</form>
 
-<form action="city" method="GET">
-    <input type=hidden name="action" value="edit">
-    <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
-    <input type=submit value="edit">
-</form>
+    <form action="city" method="GET">
+        <input type=hidden name="action" value="add">
+        <input type=submit value="add">
+    </form>
 
-<form action="city" method="DELETE">
-    <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
-    <input type=submit value="delete">
-</form>
+    <form action="city" method="GET">
+        <input type=hidden name="action" value="edit">
+        <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
+        <input type=submit value="edit">
+    </form>
+    <form action="city" method="DELETE">
+        <input type=hidden name="action" value="delete">
+        <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
+        <input type=submit value="delete">
+    </form>
 
 <button  type="button" class="btn btn-primary"  name="delete2" value="Delete2" onclick="www.vk.com" method="GET">testButton</button>
 
