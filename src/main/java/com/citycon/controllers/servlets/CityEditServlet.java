@@ -20,9 +20,10 @@ import java.util.Calendar;
 public class CityEditServlet extends AbstractHttpServlet {
 
     private String ERROR_PAGE = "/error.jsp";
-    private String LIST_CITIES_PAGE = "/userEdit.jsp";
+    private String LIST_CITIES_PAGE = "/jsp/cities/cityEdit.jsp";
     private String LIST_CITIES_URL = "/cityCon/app/users";
 
+    /*
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
@@ -51,14 +52,26 @@ public class CityEditServlet extends AbstractHttpServlet {
         Writer wr = res.getWriter();
         wr.write("doPut");
     }
+    */
 
 
 
 
 
-    /*
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+
+        //TODO: вызов запросов doDelete и doPut не работает
+        //TODO: надо уточнить по поводу методов doPut и doDelete - ведь их задача - это работа с файлами!
+        String Action = req.getParameter("action");
+        if(Action == "add")
+            doPost(req, res);
+        if(Action == "edit")
+            doPut(req, res);
+        if(Action == "delete")
+            doDelete(req, res);
+
+
         String cityName = req.getParameter("Name");
         if (cityName != null) {
             try {
@@ -156,6 +169,6 @@ public class CityEditServlet extends AbstractHttpServlet {
         }
         res.sendRedirect(LIST_CITIES_URL);
     }
-    */
+
 
 }

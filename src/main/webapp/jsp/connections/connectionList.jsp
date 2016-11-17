@@ -27,7 +27,7 @@
                     <!--TODO: указать точные поля -->
                     <td><c:out value="${connection}" /></td>
                     <td><c:out value="${connection}" /></td>
- g                   <td><c:out value="${connection}" /></td>
+                    <td><c:out value="${connection}" /></td>
                     <td><c:out value="${connection}" /></td>
                 </tr>
             </c:forEach>
