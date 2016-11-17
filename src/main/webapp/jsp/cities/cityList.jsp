@@ -39,9 +39,28 @@
         <button type="button" class="btn btn-primary" value="Edit" name="edit">Edit</button>
     </a>
     <a href="CityEditServlet?action=delete&name=<c:out value="${city.name}"/>">
-        <button type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
+        <button  type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
     </a>
 </center>
+
+
+<form action="city" method="GET">
+    <input type=hidden name="action" value="add">
+    <input type=submit value="add">
+</form>
+
+<form action="city" method="GET">
+    <input type=hidden name="action" value="edit">
+    <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
+    <input type=submit value="edit">
+</form>
+
+<form action="city" method="DELETE">
+    <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
+    <input type=submit value="delete">
+</form>
+
+<button  type="button" class="btn btn-primary"  name="delete2" value="Delete2" onclick="www.vk.com" method="GET">testButton</button>
 
 
 </body>

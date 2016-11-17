@@ -38,7 +38,7 @@
 </div>
 	
 	<center> 
-		<p href="UserEditServlet?action=add&name=<c:out value="${user.name}"/>">
+		<p href="UserEditServlet?action=add">
 			<button type="button" class="btn btn-primary" value="Add" name="add">Add</button>
 		</p>
 		<p href="UserEditServlet?action=edit&name=<c:out value="${user.name}"/>">
