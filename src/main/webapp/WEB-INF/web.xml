@@ -8,6 +8,10 @@
     <welcome-file-list>
    		<welcome-file>default</welcome-file>
   	</welcome-file-list>
+  	<error-page>
+  		<error-code>404</error-code>
+  		<location>/jsp/errors/notFound.jsp</location>
+  	</error-page>
 
     <servlet>
         <servlet-name>RootServlet</servlet-name>
