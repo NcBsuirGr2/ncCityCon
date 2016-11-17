@@ -50,32 +50,29 @@
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
-                            <span class="pull-right"><a href="/cityCon/jsp/security/signUp.jsp">Sign Up</a></span>
                         </div>
                     </form>
                 </div>
 
 
+                <!--TODO: без этого вся форма рушится -->
                 <div class="modal-footer">
-                    <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/cityCon/'">Cancel</button>
-                    </div>
-                </div>
 
+                </div>
 
             </div>
         </div>
     </div>
 
-    <div>
-        <p> Чтобы попасть на admin.jsp введите логин admin</p>
-        <p> Чтобы попасть на city.jsp введите логин operator</p>
-        <p> Чтобы попасть на страницу регистрации нажать кнопку registration</p>
-        <p> Чтобы вернутся на главную страницу нажмите на иконку сверху</p>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-footer">
+                <h4 class="pull-left" align="left">New to CityCon?</h4>
+                <h4><a class="pull-right" href="/cityCon/jsp/security/signUp.jsp">Create an account.</a></h4>
+            </div>
+        </div>
     </div>
-
-
-
 
 
 
