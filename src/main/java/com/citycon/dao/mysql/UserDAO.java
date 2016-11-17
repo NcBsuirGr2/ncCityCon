@@ -71,9 +71,9 @@ public class UserDAO extends MySQLDAO {
                     users.add(user);
                 }
 
-                logger.info(String.format("getPage user on %d page", page));
+                logger.trace(String.format("getPage user on %d page", page));
             }catch (SQLException e){
-                logger.warn("GetPage user failed", e);
+                logger.info("GetPage user failed", e);
                 throw new InvalidDataDAOException("GetPage user failed", e);
             }
         }catch (SQLException e){
@@ -172,7 +172,7 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=?";
+        String search = "select * from" + nameTable + "where Login=? and Password=?";
 
         try {
             user = (UserEntity) readElement;
@@ -181,7 +181,7 @@ public class UserDAO extends MySQLDAO {
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
-        if(user.getLogin() != null) {
+        if(user.getLogin() != null || user.getPassword() != null) {
             try{
                 search_user = connection.prepareStatement(search);
             }catch (SQLException e) {
@@ -191,6 +191,7 @@ public class UserDAO extends MySQLDAO {
 
             try {
                 search_user.setString(1, user.getLogin());
+                search_user.setString(2, user.getPassword());
 
                 resultSet =  search_user.executeQuery();
 
@@ -261,8 +262,8 @@ public class UserDAO extends MySQLDAO {
             }
         }
         else{
-            logger.warn("For reading user incorrectly chosen field, try Login");
-            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login");
+            logger.warn("For reading user incorrectly chosen field, try Login with Password");
+            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login with Password");
         }
     }
 
