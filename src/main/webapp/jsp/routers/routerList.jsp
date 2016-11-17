@@ -59,6 +59,24 @@
 				<button type="button" class="btn btn-primary" value="Delete" name="delete" >Delete</button>
 			</p>
 			</center>
+			
+	<form action="router" method="GET">
+        <input type=hidden name="action" value="add">
+        <input type=submit value="add">
+    </form>
+
+    <form action="router" method="GET">
+        <input type=hidden name="action" value="edit">
+        <input type=hidden name="RouterName" value="Mike">   <!-- value="$(router.name}"> -->
+        <input type=submit value="edit">
+    </form>
+    <form action="router" method="DELETE">
+        <input type=hidden name="action" value="delete">
+        <input type=hidden name="RouterName" value="Mike">   <!-- value="$(router.name}"> -->
+        <input type=submit value="delete">
+    </form>
+			
+			
 <%@ include file="/html/footer.html" %>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/cityCon/js/bootstrap.min.js"></script>
