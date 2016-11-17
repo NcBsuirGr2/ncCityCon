@@ -64,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-footer">
                 <h4 class="pull-left" align="left">New to CityCon?</h4>
-                <h4><a class="pull-right" href="/jsp/security/signUp.jsp">Create an account.</a></h4>
+                <h4><a class="pull-right" href="/signup">Create an account.</a></h4>
             </div>
         </div>
     </div>

@@ -5,8 +5,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
 		<title>Router List</title>
     	<meta name="generator" content="Bootply" />
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,7 +38,7 @@
         				<tbody>
 							<c:forEach items="${entityArray}" var="router">
 								<tr>
-									<td><a href="/cityCon/connections"><c:out value="${router.name}" /></a></td>
+									<td><a href="/connections"><c:out value="${router.name}" /></a></td>
 									<td><c:out value="${router.SN}" /></td>
 									<td><c:out value="${router.portsNum}" /></td>
 									<td><c:out value="${router.active}" /></td>
@@ -79,7 +79,7 @@
 			
 <%@ include file="/html/footer.html" %>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/cityCon/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
 
