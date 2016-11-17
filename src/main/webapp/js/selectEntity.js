@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var selected;
-	$( ".selectable tbody tr" ).on( "click", function( event ) {
+	$(".selectable tbody tr" ).on("click", function( event ) {
  		if(selected != null) {
  			selected.removeClass("info");
  		}

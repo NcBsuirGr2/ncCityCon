@@ -39,7 +39,6 @@ public class RootServlet extends AbstractHttpServlet {
 
         if(session == null || session.getAttribute("user") == null) {
             req.getRequestDispatcher(INDEX_PAGE).forward(req, res);
-            return;
         } else {
             try {
                 UserEntity user = (UserEntity)session.getAttribute("user");

@@ -224,7 +224,7 @@ public class UserDAO extends MySQLDAO {
                         }
                         default : {
                             grant.setUsersBranchLevel(Grant.NONE);
-                            grant.setSystemUnitsBranchLevel(Grant.READ);
+                            grant.setSystemUnitsBranchLevel(Grant.NONE);
                             break;
                         }
                     }
