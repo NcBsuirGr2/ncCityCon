@@ -99,6 +99,25 @@
 		<url-pattern>/router</url-pattern>
 	</servlet-mapping>
 
+	<!-- Connections branch -->
+	<servlet>
+		<servlet-name>ConnectionListServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.ConnectionListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConnectionListServlet</servlet-name>
+		<url-pattern>/connections</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ConnectionEditServlet</servlet-name>
+		<servlet-class>com.citycon.controllers.servlets.ConnectionEditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConnectionEditServlet</servlet-name>
+		<url-pattern>/connection</url-pattern>
+	</servlet-mapping>
+
 
     <!-- Filters -->
     <filter>

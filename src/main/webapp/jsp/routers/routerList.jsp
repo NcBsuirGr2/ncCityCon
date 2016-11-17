@@ -38,7 +38,8 @@
         				<tbody>
 							<c:forEach items="${entityArray}" var="router">
 								<tr>
-									<td><c:out value="${router.name}" /></td>
+									<td><a href="/cityCon/routers"><c:out value="${city.name}" /></a></td>
+									<td><a href="/cityCon/connections"><c:out value="${router.name}" /></a></td>
 									<td><c:out value="${router.SN}" /></td>
 									<td><c:out value="${router.portsNum}" /></td>
 									<td><c:out value="${router.active}" /></td>
