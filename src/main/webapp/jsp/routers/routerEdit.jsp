@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
+<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 <title>Edit</title>
 </head>
 <%@ include file="/html/header.html" %>

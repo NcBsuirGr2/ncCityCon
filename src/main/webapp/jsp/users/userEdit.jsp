@@ -3,8 +3,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
         <title>Edit user</title>
     </head>
 
@@ -13,7 +13,7 @@
     <body>
         <div class="panel panel-default">
         	<div class="panel-heading">Edit user</div>
-            	<form class="form-horizontal" role="form" method="post" action="/cityCon/user" >
+            	<form class="form-horizontal" role="form" method="post" action="/user" >
                 	<div class="form-group">
                     	<label for="name" class="col-xs-3 control-label">Name</label>
                         	<div class="col-xs-9">

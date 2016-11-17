@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
 public class RootServlet extends AbstractHttpServlet {
 
     private static final String INDEX_PAGE = "/index.jsp";
-    private static final String ADMIN_HOME = "/cityCon/users";
-    private static final String GUEST_OPERATOR_HOME = "/cityCon/cities";
+    private static final String ADMIN_HOME = "/users";
+    private static final String GUEST_OPERATOR_HOME = "/cities";
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {

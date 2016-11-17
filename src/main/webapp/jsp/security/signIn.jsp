@@ -14,9 +14,9 @@
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link href="/cityCon/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <link href="/cityCon/css/style_loginForm.css" rel="stylesheet" type="text/css">
+    <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form class="form col-md-12 center-block " method="post" action="/cityCon/signin">
+                    <form class="form col-md-12 center-block " method="post" action="/signin">
                         <div class="form-group">
                             <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                         </div>
@@ -64,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-footer">
                 <h4 class="pull-left" align="left">New to CityCon?</h4>
-                <h4><a class="pull-right" href="/cityCon/jsp/security/signUp.jsp">Create an account.</a></h4>
+                <h4><a class="pull-right" href="/jsp/security/signUp.jsp">Create an account.</a></h4>
             </div>
         </div>
     </div>

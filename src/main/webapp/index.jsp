@@ -5,8 +5,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<title>CityCon</title>
 </head>
 <body>
@@ -25,12 +25,12 @@
 						<div class="panel-body">
 						<fieldset>
 							<div class="form-group">
-							<form action="/cityCon/signin">
+							<form action="/signin">
 								<button class="btn btn-primary btn-lg btn-block">Sign In</button>
 							</form>
 							</div>
 							<div class="form-group">
-							<form action="/cityCon/signup">
+							<form action="/signup">
 								<button class="btn btn-primary btn-lg btn-block">Sign Up</button>
 							</form>
 							</div>

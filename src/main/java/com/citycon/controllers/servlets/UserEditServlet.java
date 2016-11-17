@@ -24,7 +24,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 	private String ERROR_PAGE = "/error.jsp";
 	private String LIST_USERS_PAGE = "/userEdit.jsp";
-	private String LIST_USERS_URL = "/cityCon/app/users";
+	private String LIST_USERS_URL = "users";
 
 	public UserEditServlet(){
 		super();

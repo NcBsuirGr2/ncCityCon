@@ -7,11 +7,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="/cityCon/js/selectEntity.js"></script>
-	<script type="text/javascript" src="/cityCon/js/userList.js"></script>
+	<script type="text/javascript" src="/js/selectEntity.js"></script>
+	<script type="text/javascript" src="/js/userList.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/cityCon/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/cityCon/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 
 	<title>List</title>
 </head>
@@ -42,7 +42,7 @@
 		<div class="row">
 
 			<div class="col-sm-4">
-				<a href="/cityCon/user?action=add">
+				<a href="/user?action=add">
 					<button class="btn btn-primary">Add</button>
 				</a>
 			</div>
@@ -54,7 +54,7 @@
 			</div>
 
 			<div class="col-sm-4">
-				<form action="/cityCon/user" method="DELETE">
+				<form action="/user" method="DELETE">
 					<input type="hidden" class="deleteButton" name="login" value="">
 					<input type=submit class="btn btn-primary" value="Delete"></input>
 		    	</form>		

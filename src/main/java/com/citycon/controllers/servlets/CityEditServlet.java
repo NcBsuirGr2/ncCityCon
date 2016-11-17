@@ -21,7 +21,7 @@ public class CityEditServlet extends AbstractHttpServlet {
 
     private String ERROR_PAGE = "/jsp/errors/error.jsp";
     private String LIST_CITIES_PAGE = "/jsp/cities/cityEdit.jsp";
-    private String LIST_CITIES_URL = "/cityCon/app/cities";
+    private String LIST_CITIES_URL = "/cities";
 
 /*
     protected void doGet(HttpServletRequest req, HttpServletResponse res)

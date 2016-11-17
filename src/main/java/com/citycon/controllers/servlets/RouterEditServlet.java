@@ -18,7 +18,7 @@ import java.io.IOException;
 public class RouterEditServlet extends AbstractHttpServlet {
 
     private String LIST_ROUTERS_PAGE = "/jsp/routers/RouterList.jsp";
-    private String LIST_ROUTERS_URL = "/cityCon/app/routers";
+    private String LIST_ROUTERS_URL = "/app/routers";
 
     private String ROUTER_IS_EXIST = "Router with that SN is already exist";
     private String SERVER_ERROR = "Server error";

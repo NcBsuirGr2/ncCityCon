@@ -17,7 +17,7 @@
 <h1 align="center">Security error</h1>
 <h3 align="center">
     <p>You can't watch this page.</p>
-    <p><a href="/cityCon/">go to main page</a></p>
+    <p><a href="/">go to main page</a></p>
 </h3>>
 <%@ include file="/html/footer.html" %>
 </body>

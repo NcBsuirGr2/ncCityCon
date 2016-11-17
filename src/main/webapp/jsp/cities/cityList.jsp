@@ -24,7 +24,7 @@
         <tbody>
         <c:forEach items="${entityArray}" var="city">
             <tr>
-                <td><a href="/cityCon/routers"><c:out value="${city.name}" /></a></td>
+                <td><a href="/routers"><c:out value="${city.name}" /></a></td>
                 <td><c:out value="${city.countryName}" /></td>
             </tr>
         </c:forEach>

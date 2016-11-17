@@ -60,7 +60,7 @@ public class UserListServlet extends AbstractHttpServlet {
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException exception) {
-			res.sendRedirect("/cityCon/users?errorType=invalidData");
+			res.sendRedirect("/users?errorType=invalidData");
 		} catch (DAOException e) {
 			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
 		}

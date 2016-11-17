@@ -8,7 +8,7 @@
 <h1 align="center">Not found</h1>
 <h3 align="center">
     Sorry, the requested page is not found</br>
-    <a href="/cityCon/">go to main page</a>
+    <a href="/">go to main page</a>
 </h3>
 <%@ include file="/html/footer.html" %>
 </body>
