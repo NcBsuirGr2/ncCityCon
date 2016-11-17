@@ -1,17 +1,16 @@
 package com.citycon.controllers.servlets;
 
-import javax.servlet.http.HttpServlet;
+import com.citycon.dao.exceptions.DAOException;
+import com.citycon.model.systemunits.orm.ORMUser;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import javax.servlet.RequestDispatcher;
-
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
-
-import com.citycon.model.systemunits.orm.ORMUser;
-import com.citycon.dao.exceptions.DAOException;
 
 
 /**
@@ -27,6 +26,11 @@ public class UserEditServlet extends AbstractHttpServlet {
 	private String LIST_USERS_PAGE = "/userEdit.jsp";
 	private String LIST_USERS_URL = "/cityCon/app/users";
 
+	public UserEditServlet(){
+		super();
+		logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.UserEditServlet");
+	}
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 											throws ServletException, IOException {
 		String userName = req.getParameter("name");
@@ -37,7 +41,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 				user.read();
 				req.setAttribute("user", user.getEntity());
 			} catch (DAOException cause) {
-				//TODO: logging
+				logger.warn("Error occur during reading user", cause);
 				forwardToErrorPage("Error occur during reading user", req, res);
 				return;
 			}
@@ -71,7 +75,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 			newUser.create();
 		} catch(DAOException cause) {
-			//TODO: logging
+			logger.warn("Cannot create new user", cause);
 			forwardToErrorPage("Cannot create new user", req, res);
 			return;
 		}
@@ -104,7 +108,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 			updateUser.update();
 		} catch (DAOException cause) {
-			//TODO: logging
+			logger.warn("Cannot update user", cause);
 			forwardToErrorPage("Cannot update user", req, res);
 			return;
 		} catch (NumberFormatException cause) {
@@ -130,13 +134,14 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 			deleteUser.delete();
 		} catch (DAOException cause) {
+			logger.warn("Cannot delete user");
 			forwardToErrorPage("Cannot delete user", req, res);
 			return;
 		} catch (NumberFormatException cause) {
-			forwardToErrorPage("Infalid id string", req, res);
+			logger.warn("Invalid id string");
+			forwardToErrorPage("Invalid id string", req, res);
 			return;
 		}
 		res.sendRedirect(LIST_USERS_URL);
 	}
-
 }
