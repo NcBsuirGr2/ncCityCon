@@ -1,7 +1,8 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,12 +25,16 @@ public class MySQLDAOConnection {
      * @throws InternalDAOException
      */
     private MySQLDAOConnection() throws InternalDAOException {
+        Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
         try {
             Class.forName(MYSQL_CONNECTOR_CLASS);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            logger.info("Connection create");
         } catch (ClassNotFoundException e) {
+            logger.warn("Driver for database failed");
             throw new InternalDAOException("Driver for database failed");
         } catch (SQLException e) {
+            logger.warn("Connect to database failed");
             throw new InternalDAOException("Connect to database failed");
         }
     }

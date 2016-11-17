@@ -12,6 +12,7 @@ import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used to show the list of users. Support pagination. Redirects to the
@@ -24,6 +25,11 @@ import com.citycon.model.systemunits.orm.ORMUser;
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
 	private static String ERROR_PAGE = "/jsp/errors/error.jsp";
+
+	public UserListServlet(){
+		super();
+		logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.UserListServlet");
+	}
 
 	protected void doGet(HttpServletRequest req, 
 		HttpServletResponse res) throws ServletException, IOException {
@@ -55,9 +61,10 @@ public class UserListServlet extends AbstractHttpServlet {
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException exception) {
+			logger.warn("Invalid data in doGet", exception);
 			res.sendRedirect("/cityCon/users?errorType=invalidData");
 		} catch (DAOException e) {
-			//TODO: logging
+			logger.warn("Exception in database", e);
 			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
 		}
 	}

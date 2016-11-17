@@ -31,37 +31,26 @@
         </tbody>
     </table>
 </div>
+
 <center>
-    <a href="CityEditServlet?action=add">
-        <button type="button" class="btn btn-primary" value="Add" name="add">Add</button>
-    </a>
-    <a href="CityEditServlet?action=edit&name=<c:out value="${city.name}"/>">
-        <button type="button" class="btn btn-primary" value="Edit" name="edit">Edit</button>
-    </a>
-    <a href="CityEditServlet?action=delete&name=<c:out value="${city.name}"/>">
-        <button  type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
-    </a>
-</center>
-
-
-
     <form action="city" method="GET">
         <input type=hidden name="action" value="add">
-        <input type=submit value="add">
+        <button type=submit class="btn btn-primary" value="add">Add</button>
     </form>
 
     <form action="city" method="GET">
         <input type=hidden name="action" value="edit">
-        <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
-        <input type=submit value="edit">
-    </form>
-    <form action="city" method="DELETE">
-        <input type=hidden name="action" value="delete">
-        <input type=hidden name="CityName" value="Mike">   <!-- value="$(city.name}"> -->
-        <input type=submit value="delete">
+        <input type=hidden name="CityName" value="Brest">   <!-- value="$(city.name}"> -->
+        <button type=submit class="btn btn-primary" value="edit">Edit</button>
     </form>
 
-<button  type="button" class="btn btn-primary"  name="delete2" value="Delete2" onclick="www.vk.com" method="GET">testButton</button>
+    <form action="city" method="DELETE">
+        <input type=hidden name="action" value="delete">
+        <input type=hidden name="CityName" value="Brest">   <!-- value="$(city.name}"> -->
+        <button type=submit class="btn btn-primary" value="delete">Delete</button>
+    </form>
+
+</center>
 
 
 </body>
