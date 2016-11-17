@@ -1,6 +1,3 @@
-<%--
- * @author  Karina
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -28,9 +25,9 @@
         	<tbody>
 				<c:forEach items="${entityArray}" var="users">
 					<tr>
-						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.login}" /></td>
-						<td><c:out value="${user.email}" /></td>
+						<td><c:out value="${users.name}" /></td>
+						<td><c:out value="${users.login}" /></td>
+						<td><c:out value="${users.email}" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -38,17 +35,26 @@
 </div>
 	
 	<center> 
-		<p href="UserEditServlet?action=add">
-			<button type="button" class="btn btn-primary" value="Add" name="add">Add</button>
-		</p>
-		<p href="UserEditServlet?action=edit&name=<c:out value="${user.name}"/>">
-			<button type="button" class="btn btn-primary" value="Edit" name="edit">Edit</button>
-		</p>
-		<p href="UserEditServlet?action=delete&name=<c:out value="${user.name}"/>">
-			<button type="button" class="btn btn-primary" value="Delete" name="delete">Delete</button>
-		</p>
-	
+		<form action="users" method="GET">
+			<p href="UserEditServlet?action=add">
+				<button type=submit class="btn btn-primary" value="add" name="add">Add</button>
+			</p>
+		</form>
+		 
+		<form action="city" method="GET"> 
+			<p href="UserEditServlet?action=edit&name=<c:out value="${users.name}"/>">
+				<button type=submit class="btn btn-primary" value="edit" name="edit">Edit</button>
+			</p>
+    	</form>		
+		
+		<form action="city" method="DELETE">
+			<p href="UserEditServlet?action=delete&name=<c:out value="${users.name}"/>">
+				<button type=submit class="btn btn-primary" value="delete" name="delete">Delete</button>
+			</p>
+    	</form>		
+		
 	</center>
+		
 <%@ include file="/html/footer.html" %>
 </body>
 </html>

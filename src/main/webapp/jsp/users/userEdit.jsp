@@ -1,6 +1,3 @@
-<%--
- * @author  Karina
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -20,19 +17,19 @@
                 	<div class="form-group">
                     	<label for="name" class="col-xs-3 control-label">Name</label>
                         	<div class="col-xs-9">
-                            	<input class="form-control" placeholder="Name" id="name" name="name" type="text" autofocus value="<c:out value="${user.name}"/> ">
+                            	<input class="form-control" placeholder="Name" id="name" name="name" type="text" autofocus value="<c:out value="${users.name}"/> ">
                             </div>
                     </div>   
                     <div class="form-group">
                         <label for="login" class="col-xs-3 control-label">Login</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="Login" id="login" name="login" type="text" autofocus value="<c:out value="${user.login}"/> ">
+                                 <input class="form-control" placeholder="Login" id="login" name="login" type="text" autofocus value="<c:out value="${users.login}"/> ">
                              </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-xs-3 control-label">E-mail</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text" autofocus value="<c:out value="${user.email}"/> ">
+                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text" autofocus value="<c:out value="${users.email}"/> ">
                              </div>
                     </div>
                  </form>
