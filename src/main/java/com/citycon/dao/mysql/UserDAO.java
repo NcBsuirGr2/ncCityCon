@@ -77,7 +77,7 @@ public class UserDAO extends MySQLDAO {
                 throw new InvalidDataDAOException("GetPage user failed", e);
             }
         }catch (SQLException e){
-            logger.warn("Put data to prepare statement in user invalid",e);
+            logger.info("Put data to prepare statement in user invalid",e);
             throw new InvalidDataDAOException("Put data to prepare statement in user invalid",e);
         }
         finally {
@@ -123,7 +123,7 @@ public class UserDAO extends MySQLDAO {
         try {
             user = (UserEntity) newElement;
         }catch (ClassCastException e) {
-            logger.warn("Enter parameters in create are invalid", e);
+            logger.info("Enter parameters in create are invalid", e);
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
@@ -144,9 +144,9 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.executeUpdate();
 
-            logger.info(String.format("create user %s", user.getLogin()));
+            logger.trace(String.format("create user %s", user.getLogin()));
         } catch (SQLException e){
-            logger.warn("Create user failed", e);
+            logger.info("Create user failed", e);
             throw new DublicateKeyDAOException("Create user failed", e);
         }
         finally {
@@ -172,12 +172,12 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=? and Password=?";
+        String search = "select * from" + nameTable + "where Login=? and Pass=?";
 
         try {
             user = (UserEntity) readElement;
         }catch (ClassCastException e) {
-            logger.warn("Enter parameters in read are invalid", e);
+            logger.info("Enter parameters in read are invalid", e);
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
@@ -232,14 +232,14 @@ public class UserDAO extends MySQLDAO {
 
                     user.setGrant(grant);
 
-                    logger.info(String.format("read user %s", user.getLogin()));
+                    logger.trace(String.format("read user %s", user.getLogin()));
                 }
                 else{
-                    logger.warn("User not found");
+                    logger.info("User not found");
                     throw new InvalidDataDAOException("User not found");
                 }
             }catch (SQLException e){
-                logger.warn("Read user failed", e);
+                logger.info("Read user failed", e);
                 throw new InternalDAOException("Read user failed", e);
             }
             finally {
@@ -262,7 +262,7 @@ public class UserDAO extends MySQLDAO {
             }
         }
         else{
-            logger.warn("For reading user incorrectly chosen field, try Login with Password");
+            logger.info("For reading user incorrectly chosen field, try Login with Password");
             throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login with Password");
         }
     }
@@ -284,7 +284,7 @@ public class UserDAO extends MySQLDAO {
         try {
             user = (UserEntity) updateElement;
         }catch (ClassCastException e) {
-            logger.warn("Enter parameters in update are invalid", e);
+            logger.info("Enter parameters in update are invalid", e);
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
@@ -306,9 +306,9 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.executeUpdate();
 
-            logger.info(String.format("update user %s", user.getLogin()));
+            logger.trace(String.format("update user %s", user.getLogin()));
         } catch (SQLException e) {
-            logger.warn("Update user failed", e);
+            logger.info("Update user failed", e);
             throw new DublicateKeyDAOException("Update user failed", e);
         }
         finally {
@@ -339,7 +339,7 @@ public class UserDAO extends MySQLDAO {
         try {
             user= (UserEntity) deleteElement;
         }catch (ClassCastException e) {
-            logger.warn("Enter parameters in delete are invalid", e);
+            logger.info("Enter parameters in delete are invalid", e);
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
@@ -355,9 +355,9 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.executeUpdate();
 
-            logger.info(String.format("delete user %s", user.getLogin()));
+            logger.trace(String.format("delete user %s", user.getLogin()));
         } catch (SQLException e) {
-            logger.warn("Delete user failed", e);
+            logger.info("Delete user failed", e);
             throw new InvalidDataDAOException("Delete user failed", e);
         }
         finally {
