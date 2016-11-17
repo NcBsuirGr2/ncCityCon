@@ -19,11 +19,11 @@ import java.util.Calendar;
 
 public class CityEditServlet extends AbstractHttpServlet {
 
-    private String ERROR_PAGE = "/error.jsp";
+    private String ERROR_PAGE = "/jsp/errors/error.jsp";
     private String LIST_CITIES_PAGE = "/jsp/cities/cityEdit.jsp";
-    private String LIST_CITIES_URL = "/cityCon/app/users";
+    private String LIST_CITIES_URL = "/cityCon/app/cities";
 
-    /*
+/*
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
@@ -52,26 +52,31 @@ public class CityEditServlet extends AbstractHttpServlet {
         Writer wr = res.getWriter();
         wr.write("doPut");
     }
-    */
+*/
 
 
 
 
-
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         //TODO: вызов запросов doDelete и doPut не работает
         //TODO: надо уточнить по поводу методов doPut и doDelete - ведь их задача - это работа с файлами!
         String Action = req.getParameter("action");
+
+        Writer wr = res.getWriter();
+        wr.write(Action);
+
         if(Action == "add")
-            doPost(req, res);
+            Add(req, res);
         if(Action == "edit")
-            doPut(req, res);
+            Edit(req, res);
         if(Action == "delete")
-            doDelete(req, res);
+            Delete(req, res);
 
 
+        /*
         String cityName = req.getParameter("Name");
         if (cityName != null) {
             try {
@@ -87,40 +92,33 @@ public class CityEditServlet extends AbstractHttpServlet {
         }
         RequestDispatcher editView = req.getRequestDispatcher(LIST_CITIES_PAGE);
         editView.forward(req, res);
+        */
     }
 
+    //Add
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String Name = req.getParameter("Name");
-        String countryName = req.getParameter("countryName");
-        String group = req.getParameter("name");
-        Date createDate = new Date(Calendar.getInstance().getTimeInMillis());
 
-        if (Name == null || group == null) {
-            forwardToErrorPage("Not enough info to create new city", req, res);
-            return;
-        }
+        //Writer wr = res.getWriter();
+        //wr.write("ADD");
 
-        try {
-            ORMCity newCity = new ORMCity();
-            newCity.setName(Name);
-            newCity.setCountryName(countryName);
 
-            newCity.create();
-        } catch(DAOException cause) {
-            //TODO: logging
-            forwardToErrorPage("Cannot create new user", req, res);
-            return;
-        }
 
-        res.sendRedirect(LIST_CITIES_URL);
+
     }
 
+    //Edit
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+        Writer wr = res.getWriter();
+        wr.write("EDIT");
+
+        /*
         String idString = req.getParameter("id");
-        String Name = req.getParameter("name");
-        String countryName = req.getParameter("login");
+        String Name = req.getParameter("Name");
+        String countryName = req.getParameter("Country");
         String group = req.getParameter("name");
 
         if (idString == null) {
@@ -144,10 +142,18 @@ public class CityEditServlet extends AbstractHttpServlet {
         }
 
         res.sendRedirect(LIST_CITIES_URL);
+        */
     }
 
+    //Delete
+    @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("DELETE");
+
+        /*
         String idString = req.getParameter("id");
         String Name = req.getParameter("Name");
         if (idString == null && Name == null) {
@@ -168,7 +174,50 @@ public class CityEditServlet extends AbstractHttpServlet {
             return;
         }
         res.sendRedirect(LIST_CITIES_URL);
+        */
     }
+
+
+    private void Add(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("ADD2");
+
+        String Name = req.getParameter("Name");
+        String countryName = req.getParameter("countryName");
+        String group = req.getParameter("name");
+        Date createDate = new Date(Calendar.getInstance().getTimeInMillis());
+
+        if (Name == null || group == null) {
+            forwardToErrorPage("Not enough info to create new city", req, res);
+            return;
+        }
+
+        try {
+            ORMCity newCity = new ORMCity();
+            newCity.setName(Name);
+            newCity.setCountryName(countryName);
+
+            newCity.create();
+        } catch(DAOException cause) {
+            //TODO: logging
+            forwardToErrorPage("Cannot create new user", req, res);
+            return;
+        }
+
+        res.sendRedirect(LIST_CITIES_URL);
+
+    }
+    private void Edit(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+    }
+    private void Delete(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+    }
+
 
 
 }
