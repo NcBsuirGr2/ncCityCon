@@ -13,7 +13,14 @@ import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 
-
+/**
+ * Used to show the list of users. Support pagination. Redirects to the
+ * same page if some pagination data is invlaid and redirects to the error
+ * page if DAOException occurs.
+ * 	
+ * @author Mike
+ * @version 0.2
+ */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
 	private static String ERROR_PAGE = "/jsp/errors/error.jsp";
