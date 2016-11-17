@@ -67,6 +67,7 @@ public class UserDAO extends MySQLDAO {
                     user.setEmail(resultSet.getString("E-mail"));
                     user.setName(resultSet.getString("Name"));
                     user.setGroup(resultSet.getString("Group"));
+                    user.setGrant(this.getGrantFromDB(user.getGroup()));
                     user.setCreateDate(resultSet.getDate("create_date"));
                     users.add(user);
                 }
@@ -204,33 +205,7 @@ public class UserDAO extends MySQLDAO {
                     user.setGroup(resultSet.getString("Group"));
                     user.setCreateDate(resultSet.getDate("create_date"));
 
-                    //Заглушка инициализации прав
-                    Grant grant = new Grant();
-                    switch (user.getGroup()) {
-                        case "Admin" : {
-                            grant.setUsersBranchLevel(Grant.EDIT);
-                            grant.setSystemUnitsBranchLevel(Grant.EDIT);
-
-                            break;
-                        }
-                        case "Operator" : {
-                            grant.setUsersBranchLevel(Grant.NONE);
-                            grant.setSystemUnitsBranchLevel(Grant.EDIT);
-                            break;
-                        }
-                        case "Guest" : {
-                            grant.setUsersBranchLevel(Grant.NONE);
-                            grant.setSystemUnitsBranchLevel(Grant.READ);
-                            break;
-                        }
-                        default : {
-                            grant.setUsersBranchLevel(Grant.NONE);
-                            grant.setSystemUnitsBranchLevel(Grant.NONE);
-                            break;
-                        }
-                    }
-
-                    user.setGrant(grant);
+                    user.setGrant(this.getGrantFromDB(user.getGroup()));
 
                     logger.trace(String.format("read user %s", user.getLogin()));
                 }
@@ -377,5 +352,61 @@ public class UserDAO extends MySQLDAO {
      */
     public static UserDAO getInstance() throws InternalDAOException {
         return new UserDAO();
+    }
+
+    private Grant getGrantFromDB(String group) throws InternalDAOException, InvalidDataDAOException {
+        PreparedStatement search_grant = null;
+        ResultSet resultSet = null;
+
+        Grant grant = new Grant();
+
+        String search = "select * from `Grant` where idGrant=?";
+
+        try {
+            search_grant = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            logger.warn("Prepare statement in get Grant wasn't created", e);
+            throw new InternalDAOException("Prepare statement in get Grant wasn't created", e);
+        }
+
+        try {
+            search_grant.setString(1, group);
+
+            resultSet =  search_grant.executeQuery();
+
+            if(resultSet.first()) {
+                grant.setSystemUnitsBranchLevel(resultSet.getInt("systemUnitBranch"));
+                grant.setUsersBranchLevel(resultSet.getInt("userBranch"));
+
+                logger.trace(String.format("get grant for %s", group));
+            }
+            else{
+                logger.info("Grant not found");
+                throw new InvalidDataDAOException("Grant not found");
+            }
+        }catch (SQLException e){
+            logger.info("Read grant failed", e);
+            throw new InternalDAOException("Read grant failed", e);
+        }
+        finally {
+            if (search_grant!=null){
+                try {
+                    search_grant.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get Grant false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in in get Grant false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return grant;
     }
 }
