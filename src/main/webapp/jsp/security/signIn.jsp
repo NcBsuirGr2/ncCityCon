@@ -6,7 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="/html/header.html" %>
-<!--%@ include file="html/header.html" %>-->
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -16,9 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link href="/cityCon/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <link href="/cityCon/css/style_loginForm.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -30,13 +27,11 @@
 <form action="SignInServlet" method="get" id="signIn">
 -->
 
-    <!--login modal-->
-    <div id="loginModal" > <!--class="modalshow"  tabindex="-1" role="dialog" aria-hidden="true"-->
+    <div id="loginModal" >
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
                     <h1 class="text-center">Sign in to CityCon</h1>
                 </div>
 
@@ -77,13 +72,15 @@
 
 
 
-    <!-- script references -->
+
+
+
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
 
 </body>
 </html>
-<!--%@ include file="/html/footer.html" %>-->
 <%@ include file="/html/footer.html" %>
 
