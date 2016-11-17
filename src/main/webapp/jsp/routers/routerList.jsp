@@ -1,6 +1,3 @@
-<%--
- * @author  Karina
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -53,13 +50,13 @@
 			</div>
 			<center> 
 			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<button type="button" class="btn btn-primary" value="Add" name="add" ></button>
+				<button type="button" class="btn btn-primary" value="Add" name="add" >Add</button>
 			</p>
 			<p href="RouterEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<button type="button" class="btn btn-primary" value="Edit" name="edit" ></button>
+				<button type="button" class="btn btn-primary" value="Edit" name="edit" >Edit</button>
 			</p>
 			<p href="UserEditServlet?action=newRouter&name=<c:out value="${router.SN}"/>">
-				<button type="button" class="btn btn-primary" value="Delete" name="delete" ></button>
+				<button type="button" class="btn btn-primary" value="Delete" name="delete" >Delete</button>
 			</p>
 			</center>
 <%@ include file="/html/footer.html" %>
