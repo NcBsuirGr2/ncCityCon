@@ -3,6 +3,7 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAO;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
+import org.slf4j.Logger;
 
 import java.sql.Connection;
 
@@ -13,6 +14,7 @@ public abstract class MySQLDAO implements DAO {
 
     protected String nameTable;
     protected Connection connection;
+    protected Logger logger;
 
     /**
      * @throws InternalDAOException
