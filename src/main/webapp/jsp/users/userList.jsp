@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 
-	<title>List</title>
+	<title>Users</title>
 </head>
 <body>
 <%@ include file="/html/header.html" %>

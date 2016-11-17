@@ -42,7 +42,7 @@ public class RootServlet extends AbstractHttpServlet {
         } else {
             try {
                 UserEntity user = (UserEntity)session.getAttribute("user");
-                if (user.getGroup().equals("Admin")) {
+                if (user.getGroup().equals("admin")) {
                     res.sendRedirect(ADMIN_HOME);
                 } else {
                     res.sendRedirect(GUEST_OPERATOR_HOME);

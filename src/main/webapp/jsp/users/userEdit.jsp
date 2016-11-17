@@ -12,8 +12,11 @@
 
     <body>
         <div class="panel panel-default">
-        	<div class="panel-heading">Edit user</div>
-            	<form class="form-horizontal" role="form" method="post" action="/user" >
+        	<div class="panel-heading">
+                Edit user
+            </div>
+            <div class="panel-body">
+            	<form class="form-horizontal" role="form" method="put" action="/user" >
                 	<div class="form-group">
                     	<label for="name" class="col-xs-3 control-label">Name</label>
                         	<div class="col-xs-9">
@@ -27,13 +30,25 @@
                              </div>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="col-xs-3 control-label">E-mail</label>
+                        <label for="email" class="col-xs-3 control-label">e-mail</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="E-mail" id="email" name="email" type="text" autofocus value="<c:out value="${users.email}"/> ">
+                                 <input class="form-control" placeholder="e-mail" id="email" name="email" type="text" autofocus value="<c:out value="${users.email}"/> ">
                              </div>
                     </div>
                  </form>
-        	<a><button type="button" class="btn btn-primary" value="edit" name="edit">Edit</button></a>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block center-block">Save</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                    </div>
+                </div>
+            </div>    
+
         </div>
      </body>
 

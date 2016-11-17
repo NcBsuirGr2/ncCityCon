@@ -22,9 +22,9 @@ import java.util.Calendar;
  */
 public class UserEditServlet extends AbstractHttpServlet {
 
-	private String ERROR_PAGE = "/error.jsp";
-	private String LIST_USERS_PAGE = "/userEdit.jsp";
-	private String LIST_USERS_URL = "users";
+	private String ERROR_PAGE = "/jsp/error.jsp";
+	private String LIST_USERS_PAGE = "/jsp/users/userEdit.jsp";
+	private String LIST_USERS_URL = "/users";
 
 	public UserEditServlet(){
 		super();
