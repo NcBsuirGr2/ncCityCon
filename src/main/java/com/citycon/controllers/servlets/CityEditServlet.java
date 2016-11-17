@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -22,6 +23,40 @@ public class CityEditServlet extends AbstractHttpServlet {
     private String LIST_CITIES_PAGE = "/userEdit.jsp";
     private String LIST_CITIES_URL = "/cityCon/app/users";
 
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("doGet");
+
+    }
+
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("doDelete");
+    }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("doPost");
+    }
+
+    protected void doPut(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Writer wr = res.getWriter();
+        wr.write("doPut");
+    }
+
+
+
+
+
+    /*
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         String cityName = req.getParameter("Name");
@@ -121,5 +156,6 @@ public class CityEditServlet extends AbstractHttpServlet {
         }
         res.sendRedirect(LIST_CITIES_URL);
     }
+    */
 
 }
