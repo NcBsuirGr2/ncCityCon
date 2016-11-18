@@ -48,8 +48,7 @@ public abstract class AbstractHttpFilter {
             }
         } catch (ClassCastException e) {
             Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.AbstractHttpFilter");
-            logger.log("No-http request", e);
-            return;
+            logger.info("No-http request", e);
         }
         return access;
     }

@@ -41,7 +41,7 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 			chain.doFilter(req, res);			
 		} catch (ClassCastException e) {
 			Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.LoginFilter");
-			logger.log("No-http request");
+			logger.info("No-http request");
 			return;
 		}
 	}
