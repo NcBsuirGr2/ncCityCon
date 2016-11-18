@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * not singed in and to the user working page if user has already singed in.
  *
  * @author Mike
- * @version  1.0
+ * @version  1.1
  */
 public class RootServlet extends AbstractHttpServlet {
 
@@ -34,12 +34,11 @@ public class RootServlet extends AbstractHttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
 
-
         HttpSession session = req.getSession(false);      
 
         if(session == null || session.getAttribute("user") == null) {
             req.getRequestDispatcher(INDEX_PAGE).forward(req, res);
-        } else {
+        } else {          
             try {
                 UserEntity user = (UserEntity)session.getAttribute("user");
                 if (user.getGroup().equals("admin")) {
@@ -48,7 +47,7 @@ public class RootServlet extends AbstractHttpServlet {
                     res.sendRedirect(GUEST_OPERATOR_HOME);
                 }
             } catch (NullPointerException | ClassCastException e) {          
-                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");      
+                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.RootServlet");      
                 logger.warn("Error during getting user from session ", e);
                 forwardToErrorPage("Internal server error", req, res);
             }

@@ -28,24 +28,20 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws ServletException, IOException {
-		HttpServletResponse httpRes = (HttpServletResponse)res;
-		HttpServletRequest httpReq=(HttpServletRequest)req;
-		Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
+			throws ServletException, IOException {		
 
 		try {
-			HttpSession session= httpReq.getSession(false);
-			if ((session != null)||(httpReq.getSession().getAttribute("user") == null)) {
-				logger.info("Access to the secret page");
+			HttpServletResponse httpRes = (HttpServletResponse)res;
+			HttpServletRequest httpReq=(HttpServletRequest)req;
+
+			HttpSession session = httpReq.getSession(false);
+			if ((session == null) || (session.getAttribute("user") == null)) {
 				forwardToSecurityErrorPage(httpReq, httpRes);
 			}
-			chain.doFilter(req, res);
-
-			
+			chain.doFilter(req, res);			
 		} catch (ClassCastException e) {
-			logger.info("Access to the secret page");
-			forwardToSecurityErrorPage(httpReq, httpRes);
-			chain.doFilter(req, res);
+			Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.LoginFilter");
+			logger.log("No-http request");
 			return;
 		}
 	}
