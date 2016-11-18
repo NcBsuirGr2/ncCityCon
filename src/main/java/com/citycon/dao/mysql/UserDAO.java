@@ -277,7 +277,7 @@ public class UserDAO extends MySQLDAO {
 
         PreparedStatement preparedStatement = null;
 
-        String update = "update" + nameTable + "set `Login`=?, `Pass`=?, `E-mail`=?, `Name`=?, `Group`=?, `create_date`=? where `id`=?";
+        String update = "update" + nameTable + "set `Login`=?, `Pass`=?, `E-mail`=?, `Name`=?, `Group`=? where `id`=?";
 
         try {
             user = (UserEntity) updateElement;
@@ -299,7 +299,6 @@ public class UserDAO extends MySQLDAO {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getName());
             preparedStatement.setString(5, user.getGroup());
-            preparedStatement.setDate(6, user.getCreateDate());
             preparedStatement.setInt(7, user.getId());
 
             preparedStatement.executeUpdate();
