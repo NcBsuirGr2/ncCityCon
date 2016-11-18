@@ -106,7 +106,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 		String login = req.getParameter("login");
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
-		String group = req.getParameter("name");
+		String group = req.getParameter("group");
 
 		if (idString == null) {
 			forwardToErrorPage("Cannot update user cause id field is empty", req, res);
@@ -122,7 +122,9 @@ public class UserEditServlet extends AbstractHttpServlet {
 			updateUser.setPassword(password);
 			updateUser.setEmail(email);
 			updateUser.setGroup(group);
-
+			logger.debug("Updating user with id:{} loging:{} password:{} name:{} email:{} group:{}", 
+				updateUser.getId(), updateUser.getName(), updateUser.getLogin(), updateUser.getPassword(),
+				updateUser.getEmail(), updateUser.getGroup());
 			updateUser.update();
 		} catch (DAOException cause) {
 			logger.warn("Cannot update user", cause);

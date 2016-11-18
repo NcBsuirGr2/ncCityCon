@@ -13,18 +13,8 @@
 </head>
 <body>
 <%@ include file="/html/header.jsp" %>
-
-<!--TODO
-< c:if test="$ {param.errorType=dublicate}">
-  <b></b>
-  	< c:if test="$ {param.errorType=invalidData}">
-  		<b>Incorrect information</b>
-	< /c:if>
-< /c:if>
--->
 <div class="content-wrapper">
     <div class="before-footer">
-        <form action="SignUpServlet" method="get" id="signUp">
 
             <div id="loginModal2" >
                 <div class="modal-dialog">
@@ -35,7 +25,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="form col-md-12 center-block " method="post" action="/signup">
+                            <form class="form col-md-12 center-block " method="POST" action="/signup">
                                 <div class="form-group">
                                     <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                                 </div>
@@ -65,8 +55,6 @@
                     </div>
                 </div>
             </div>
-
-        </form>
     </div>
     <%@ include file="/html/footer.html" %>
 </div>
