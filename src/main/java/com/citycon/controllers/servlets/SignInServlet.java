@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Allows users to signup into the system. On GET returns html page to sign up,
  * on POST try to create new user. On error shows sign up page again with attribute
@@ -36,12 +37,13 @@ public class SignInServlet extends AbstractHttpServlet {
 
     protected void doPost(HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
+        Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.SignInServlet");
         try {
             ORMUser user = new ORMUser();             
-
+            
             user.setLogin(req.getParameter("login"));
-            user.setPassword(req.getParameter("password"));
-
+            user.setPassword(req.getParameter("password"));            
+            logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
             try {                 
                 user.read();
                 req.getSession().setAttribute("user", user.getEntity());

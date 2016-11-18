@@ -39,7 +39,7 @@ public class UserListServlet extends AbstractHttpServlet {
 		String ascString = req.getParameter("asc");
 
 		int page = 1;
-		int itemsPerPage = 15;
+		int itemsPerPage = 100;
 		String sortBy = "name";
 		boolean asc = true;
 

@@ -39,52 +39,68 @@ public class UserEditServlet extends AbstractHttpServlet {
 				ORMUser user = new ORMUser();
 				user.setLogin(userLogin);
 				user.read();
-				req.setAttribute("user", user.getEntity());
+				req.setAttribute("editUser", user.getEntity());
 			} catch (DAOException cause) {
 				logger.warn("Error occur during reading user", cause);
 				forwardToErrorPage("Error occur during reading user", req, res);
 				return;
 			}
 		}
+		res.setHeader("Allow", "GET, POST, PUT, DELETE");
 		RequestDispatcher editView = req.getRequestDispatcher(LIST_USERS_PAGE);
 		editView.forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
-											throws ServletException, IOException {
-		String name = req.getParameter("name");
-		String login = req.getParameter("login");
-		String password = req.getParameter("password");
-		String email = req.getParameter("email");
-		String group = req.getParameter("name");
-		Date createDate = new Date(Calendar.getInstance().getTimeInMillis());
+														throws ServletException, IOException {
+		String type = req.getParameter("type");
+		switch (type) {
+			case "edit" : {
+				doPut(req, res);
+				return;
+			}
+			case "delete" : {
+				doDelete(req, res);
+				return;
+			}
+			default : {
+				String name = req.getParameter("name");
+				String login = req.getParameter("login");
+				String password = req.getParameter("password");
+				String email = req.getParameter("email");
+				String group = req.getParameter("group");
+				Date createDate = new Date(Calendar.getInstance().getTimeInMillis());
+				logger.info("New user {}", login);
+				if (name == null || login == null || password == null || group == null) {
+					logger.info("Something is null {},{},{},{},{}", name, login, password, email, group);
+					forwardToErrorPage("Not enough info to create new user", req, res);
+					return;
+				}
 
-		if (name == null || login == null || password == null || group == null) {
-			forwardToErrorPage("Not enough info to create new user", req, res);
-			return;
+				try {
+					ORMUser newUser = new ORMUser();
+					newUser.setName(name);
+					newUser.setLogin(login);
+					newUser.setPassword(password);
+					newUser.setEmail(email);
+					newUser.setGroup(group);
+					newUser.setCreateDate(createDate);
+
+					newUser.create();
+				} catch(DAOException cause) {
+					logger.warn("Cannot create new user", cause);
+					forwardToErrorPage("Cannot create new user", req, res);
+					return;
+				}
+
+				res.sendRedirect(LIST_USERS_URL);
+			}
 		}
-
-		try {
-			ORMUser newUser = new ORMUser();
-			newUser.setName(name);
-			newUser.setLogin(login);
-			newUser.setPassword(password);
-			newUser.setEmail(email);
-			newUser.setGroup(group);
-			newUser.setCreateDate(createDate);
-
-			newUser.create();
-		} catch(DAOException cause) {
-			logger.warn("Cannot create new user", cause);
-			forwardToErrorPage("Cannot create new user", req, res);
-			return;
-		}
-
-		res.sendRedirect(LIST_USERS_URL);
+		
 	}
 
-	protected void doPut(HttpServletRequest req, HttpServletResponse res) 
-											throws ServletException, IOException {
+	protected void doPut(HttpServletRequest req, HttpServletResponse res)
+            									throws ServletException, IOException {
 		String idString = req.getParameter("id");
 		String name = req.getParameter("name");
 		String login = req.getParameter("login");
@@ -94,6 +110,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 		if (idString == null) {
 			forwardToErrorPage("Cannot update user cause id field is empty", req, res);
+			logger.warn("Cannot update user cause id field is empty");
 			return;
 		}
 
@@ -125,6 +142,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 		String login = req.getParameter("login");
 		if (idString == null && login == null) {
 			forwardToErrorPage("Cannot delete user cause the id & login fields are empty", req, res);
+			logger.warn("Attempt to delete user without login or password");
 			return;
 		}
 		try {
@@ -134,11 +152,11 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 			deleteUser.delete();
 		} catch (DAOException cause) {
-			logger.warn("Cannot delete user");
+			logger.warn("Cannot delete user", cause);
 			forwardToErrorPage("Cannot delete user", req, res);
 			return;
 		} catch (NumberFormatException cause) {
-			logger.warn("Invalid id string");
+			logger.warn("Invalid id string", cause);
 			forwardToErrorPage("Invalid id string", req, res);
 			return;
 		}

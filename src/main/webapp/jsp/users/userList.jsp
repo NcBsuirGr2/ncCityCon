@@ -6,7 +6,7 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="/js/selectEntity.js"></script>
-	<script type="text/javascript" src="/js/userList.js"></script>
+	<script type="text/javascript" src="/js/userPages/userList.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -26,15 +26,18 @@
 								<th>Name</th>
 						   		<th>Login</th>
 						        <th>E-mail</th>
-								
+						        <th>E-mail</th>
+						        <th class="hidden">id</th>								
 			        		</tr>
 			        	</thead>
 			        	<tbody>
 							<c:forEach items="${entityArray}" var="users">
 								<tr>
-									<td><c:out value="${users.name}" /></td>
-									<td class="unique"><c:out value="${users.login}" /></td>
-									<td><c:out value="${users.email}" /></td>
+									<td>${users.name}</td>
+									<td class="unique">${users.login}</td>
+									<td>${users.group}</td>
+									<td>${users.email}</td>
+									<td class="hidden idField">${users.id}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -55,8 +58,9 @@
 						</div>
 
 						<div class="col-sm-4">
-							<form action="/user" method="DELETE">
-								<input type="hidden" class="deleteButton" name="login" value="">
+							<form action="/user" id="deleteForm" method="POST">
+								<input type="hidden" id="deleteId" name="id" value="-1">
+								<input type="hidden" name="type" value="delete">
 								<input type=submit class="btn btn-primary" value="Delete"></input>
 					    	</form>		
 						</div>

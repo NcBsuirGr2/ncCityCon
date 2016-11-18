@@ -14,6 +14,7 @@
     <h1 align="center">Error</h1>
     <h3 align="center">
         Sorry, error has occured.
+        Error message was: ${errorMessage}
     </h3>
     </div>
     <%@ include file="/html/footer.html" %>
