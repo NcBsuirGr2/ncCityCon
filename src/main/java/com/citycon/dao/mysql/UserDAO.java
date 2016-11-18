@@ -173,7 +173,7 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=? and Pass=?";
+        String search = "select * from" + nameTable + "where Login=?";
 
         try {
             user = (UserEntity) readElement;
@@ -182,7 +182,11 @@ public class UserDAO extends MySQLDAO {
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
-        if(user.getLogin() != null || user.getPassword() != null) {
+        if (user.getPassword() != null){
+            search += " and Pass=?";
+        }
+
+        if(user.getLogin() != null) {
             try{
                 search_user = connection.prepareStatement(search);
             }catch (SQLException e) {
@@ -192,7 +196,10 @@ public class UserDAO extends MySQLDAO {
 
             try {
                 search_user.setString(1, user.getLogin());
-                search_user.setString(2, user.getPassword());
+
+                if(user.getPassword() != null) {
+                    search_user.setString(2, user.getPassword());
+                }
 
                 resultSet =  search_user.executeQuery();
 
@@ -377,8 +384,6 @@ public class UserDAO extends MySQLDAO {
             if(resultSet.first()) {
                 grant.setSystemUnitsBranchLevel(resultSet.getInt("systemUnitBranch"));
                 grant.setUsersBranchLevel(resultSet.getInt("userBranch"));
-
-                logger.trace(String.format("get grant for %s", group));
             }
             else{
                 logger.info("Grant not found");
