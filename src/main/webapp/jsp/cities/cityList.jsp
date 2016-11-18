@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ include file="/html/header.html" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,6 +11,9 @@
 <title>Connection</title>
 </head>
 <body>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+    <div class="before-footer">
 <div class="panel panel-default">
     <table class="table table-striped" style="table-layout: auto">
         <thead>
@@ -51,9 +53,10 @@
     </form>
 
 </center>
-
-
+</div>
+<%@ include file="/html/footer.html" %>
+</div>
 </body>
 </html>
-<%@ include file="/html/footer.html" %>
+
 

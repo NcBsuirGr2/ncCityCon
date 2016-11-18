@@ -12,7 +12,9 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	</head>
 <body>
-<%@ include file="/html/header.html" %>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+	<div class="before-footer">
 	<div class="dropdown">
 		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
 			<span class="caret"></span></button>
@@ -75,9 +77,11 @@
         <input type=hidden name="RouterName" value="Mike">   <!-- value="$(router.name}"> -->
         <input type=submit value="delete">
     </form>
+    </div>
 			
 			
 <%@ include file="/html/footer.html" %>
+</div
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </body>

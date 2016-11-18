@@ -9,8 +9,11 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <title>Edit</title>
 </head>
-<%@ include file="/html/header.html" %>
+
 <body>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+    <div class="before-footer">
 <div class="panel panel-default">
 	<div class="panel-heading">Edit</div>
             	<form class="form-horizontal" role="form" method="post" action="ConnectionEditServlet" >
@@ -35,8 +38,9 @@
                  </form>
 	<a><button type="button" class="btn btn-primary" value="edit">Edit</button></a>
 </div>
-             
-	
+</div> 
+<%@ include file="/html/footer.html" %>          
+</div>
  </body>
-<%@ include file="/html/footer.html" %>
+
 </html>

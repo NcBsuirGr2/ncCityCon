@@ -8,9 +8,12 @@
         <title>Edit user</title>
     </head>
 
-    <%@ include file="/html/header.html" %>
+    
 
     <body>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+    <div class="before-footer">
         <div class="panel panel-default">
         	<div class="panel-heading text-center">
                 <h4>Edit user</h4>
@@ -50,7 +53,10 @@
             </div>    
 
         </div>
+        </div>
+        <%@ include file="/html/footer.html" %>
+        </div>
      </body>
 
-    <%@ include file="/html/footer.html" %>
+    
 </html>

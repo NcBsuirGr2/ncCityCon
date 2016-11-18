@@ -16,57 +16,62 @@
 	<title>Users</title>
 </head>
 <body>
-<%@ include file="/html/header.html" %>
-<div class="panel panel-default">
-<div class="panel-heading">List Users</div>
-    <table class="selectable table table-striped" style="table-layout: auto">
-     		<thead>
-				<tr>
-					<th>Name</th>
-			   		<th>Login</th>
-			        <th>E-mail</th>
-					
-        		</tr>
-        	</thead>
-        	<tbody>
-				<c:forEach items="${entityArray}" var="users">
-					<tr>
-						<td><c:out value="${users.name}" /></td>
-						<td class="unique"><c:out value="${users.login}" /></td>
-						<td><c:out value="${users.email}" /></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-	</table>
-	<div class="panel-footer">
-		<div class="row">
 
-			<div class="col-sm-4">
-				<a href="/user?action=add">
-					<button class="btn btn-primary">Add</button>
-				</a>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+	<div class="before-footer">
+		<div class="panel panel-default">
+			<div class="panel-heading">List Users</div>
+			    <table class="selectable table table-striped" style="table-layout: auto">
+			     		<thead>
+							<tr>
+								<th>Name</th>
+						   		<th>Login</th>
+						        <th>E-mail</th>
+								
+			        		</tr>
+			        	</thead>
+			        	<tbody>
+							<c:forEach items="${entityArray}" var="users">
+								<tr>
+									<td><c:out value="${users.name}" /></td>
+									<td class="unique"><c:out value="${users.login}" /></td>
+									<td><c:out value="${users.email}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+				</table>
+				<div class="panel-footer">
+					<div class="row">
+
+						<div class="col-sm-4">
+							<a href="/user?action=add">
+								<button class="btn btn-primary">Add</button>
+							</a>
+						</div>
+
+						<div class="col-sm-4"> 
+							<a class="editHref" href="#"> 
+								<button class="btn btn-primary">Edit</button>
+							</a>
+						</div>
+
+						<div class="col-sm-4">
+							<form action="/user" method="DELETE">
+								<input type="hidden" class="deleteButton" name="login" value="">
+								<input type=submit class="btn btn-primary" value="Delete"></input>
+					    	</form>		
+						</div>
+
+					</div>
+				</div>
 			</div>
-
-			<div class="col-sm-4"> 
-				<a class="editHref" href="#"> 
-					<button class="btn btn-primary">Edit</button>
-				</a>
-			</div>
-
-			<div class="col-sm-4">
-				<form action="/user" method="DELETE">
-					<input type="hidden" class="deleteButton" name="login" value="">
-					<input type=submit class="btn btn-primary" value="Delete"></input>
-		    	</form>		
-			</div>
-
 		</div>
-	</div>
-</div>
-	
-		
-		
 <%@ include file="/html/footer.html" %>
+</div>
+		
+		
+
 </body>
 </html>
 
