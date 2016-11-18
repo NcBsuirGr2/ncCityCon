@@ -32,10 +32,10 @@ public class MySQLDAOConnection {
             logger.info("Connection create");
         } catch (ClassNotFoundException e) {
             logger.warn("Driver for database failed");
-            throw new InternalDAOException("Driver for database failed");
+            throw new InternalDAOException("Driver for database failed", e);
         } catch (SQLException e) {
             logger.warn("Connect to database failed");
-            throw new InternalDAOException("Connect to database failed");
+            throw new InternalDAOException("Connect to database failed", e);
         }
     }
 

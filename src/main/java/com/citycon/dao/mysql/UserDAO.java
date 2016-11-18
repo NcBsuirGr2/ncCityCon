@@ -32,7 +32,7 @@ public class UserDAO extends MySQLDAO {
         hashMap.put("email", "E-mail");
         hashMap.put("name", "Name");
         hashMap.put("group", "Group");
-        hashMap.put("create date", "create_date");
+        hashMap.put("createDate", "create_date");
     }
 
     /**
@@ -56,7 +56,7 @@ public class UserDAO extends MySQLDAO {
         String search = "";
 
         if(sorter != null) {
-            search = "select * from" + nameTable + "order by" + sorter + " limit ?,?";
+            search = "select * from " + nameTable + " order by " + sorter + " limit ?,?";
         }
         else {
             logger.info("Enter parameter to sort in read are invalid");
@@ -190,7 +190,7 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=? and Pass=?";
+        String search = "select * from" + nameTable + "where Login=?";
 
         try {
             user = (UserEntity) readElement;
