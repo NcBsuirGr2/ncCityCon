@@ -11,14 +11,21 @@
 <html>
 <head>
     <title>Title</title>
+   	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-<%@ include file="/html/header.html" %>
+<div class="content-wrapper">
+<%@ include file="/html/header.jsp" %>
+	<div class="before-footer">
 <h1 align="center">Security error</h1>
 <h3 align="center">
     <p>You can't watch this page.</p>
     <p><a href="/">go to main page</a></p>
-</h3>>
+</h3>
+</div>
 <%@ include file="/html/footer.html" %>
+</div>
+
 </body>
 </html>

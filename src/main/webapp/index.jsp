@@ -1,48 +1,47 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file="html/header.html" %>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="icon" href="/img/favicon.ico" />
 	<title>CityCon</title>
 </head>
 <body>
-	<div>
-		<p> Здесь должна быть ознакомительная информация:</p>
-		<p> О чем этот сайт? Зачем он нужен? и т.д...</p>
-	</div>
+	<div class="content-wrapper">
+	<%@ include file="html/header.jsp" %>
+		<div class="before-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+						<div class="login-panel panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Login</h3>
+							</div>
+								<div class="panel-body">
+								<fieldset>
+									<div class="form-group">
+									<form action="/signin">
+										<button class="btn btn-primary btn-lg btn-block">Sign In</button>
+									</form>
+									</div>
+									<div class="form-group">
+									<form action="/signup">
+										<button class="btn btn-primary btn-lg btn-block">Sign Up</button>
+									</form>
+									</div>
+								</fieldset>
+								</div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<div class="login-panel panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Login</h3>
-					</div>
-						<div class="panel-body">
-						<fieldset>
-							<div class="form-group">
-							<form action="/signin">
-								<button class="btn btn-primary btn-lg btn-block">Sign In</button>
-							</form>
-							</div>
-							<div class="form-group">
-							<form action="/signup">
-								<button class="btn btn-primary btn-lg btn-block">Sign Up</button>
-							</form>
-							</div>
-						</fieldset>
 						</div>
-
+					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Footer -->
+		<%@ include file="html/footer.html" %>
 	</div>
-
 
 </body>
 </html>
-<%@ include file="html/footer.html" %>
+

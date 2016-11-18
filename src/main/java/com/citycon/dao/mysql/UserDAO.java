@@ -228,7 +228,6 @@ public class UserDAO extends MySQLDAO {
                     user.setName(resultSet.getString("Name"));
                     user.setGroup(resultSet.getString("Group"));
                     user.setCreateDate(resultSet.getDate("create_date"));
-
                     user.setGrant(this.getGrantFromDB(user.getGroup()));
 
                     logger.trace(String.format("read user %s", user.getLogin()));

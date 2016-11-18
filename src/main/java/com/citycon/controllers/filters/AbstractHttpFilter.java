@@ -29,21 +29,26 @@ public abstract class AbstractHttpFilter {
     protected boolean checkRights(ServletRequest req, 
             int requiredUserRights, int requiredSystemUnitsRights) throws ServletException, IOException {
         boolean access = false;
-        HttpServletRequest httpReq = (HttpServletRequest) req;
-        HttpSession session =httpReq.getSession(false);
-        if(session == null || session.getAttribute("user") == null) {
-            access = false;
-        } else {
-            try {
-                UserEntity user = (UserEntity)session.getAttribute("user");
-                int userRights = user.getGrant().getUsersBranchLevel();
-                int systemUnitsRights = user.getGrant().getSystemUnitsBranchLevel();
-                access =  ((userRights >= requiredUserRights) && (systemUnitsRights >= requiredSystemUnitsRights));
-            } catch (ClassCastException exception) {
+        try {
+            HttpServletRequest httpReq = (HttpServletRequest) req;
+            HttpSession session = httpReq.getSession(false);
+            if(session == null || session.getAttribute("user") == null) {
                 access = false;
-                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters");
-                logger.warn("Cannot cast user object to UserEntity", exception);
+            } else {
+                try {
+                    UserEntity user = (UserEntity)session.getAttribute("user");
+                    int userRights = user.getGrant().getUsersBranchLevel();
+                    int systemUnitsRights = user.getGrant().getSystemUnitsBranchLevel();
+                    access =  ((userRights >= requiredUserRights) && (systemUnitsRights >= requiredSystemUnitsRights));
+                } catch (ClassCastException exception) {
+                    access = false;
+                    Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.AbstractHttpFilter");
+                    logger.warn("Cannot cast user object to UserEntity", exception);
+                }
             }
+        } catch (ClassCastException e) {
+            Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.AbstractHttpFilter");
+            logger.info("No-http request", e);
         }
         return access;
     }
