@@ -207,18 +207,18 @@ public class UserDAO extends MySQLDAO {
                     //Заглушка инициализации прав
                     Grant grant = new Grant();
                     switch (user.getGroup()) {
-                        case "Admin" : {
+                        case "admin" : {
                             grant.setUsersBranchLevel(Grant.EDIT);
                             grant.setSystemUnitsBranchLevel(Grant.EDIT);
 
                             break;
                         }
-                        case "Operator" : {
+                        case "operator" : {
                             grant.setUsersBranchLevel(Grant.NONE);
                             grant.setSystemUnitsBranchLevel(Grant.EDIT);
                             break;
                         }
-                        case "Guest" : {
+                        case "guest" : {
                             grant.setUsersBranchLevel(Grant.NONE);
                             grant.setSystemUnitsBranchLevel(Grant.READ);
                             break;

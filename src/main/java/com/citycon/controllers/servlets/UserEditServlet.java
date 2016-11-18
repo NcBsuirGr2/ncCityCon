@@ -33,11 +33,11 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 											throws ServletException, IOException {
-		String userName = req.getParameter("name");
-		if (userName != null) {
+		String userLogin = req.getParameter("login");
+		if (userLogin != null) {
 			try {
 				ORMUser user = new ORMUser();
-				user.setName(userName);
+				user.setLogin(userLogin);
 				user.read();
 				req.setAttribute("user", user.getEntity());
 			} catch (DAOException cause) {
