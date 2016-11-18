@@ -6,6 +6,7 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import org.slf4j.Logger;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ public abstract class MySQLDAO implements DAO {
     protected Connection connection;
     protected Logger logger;
 
-    protected Map<String, String> hashMap;
+    protected Map<String, String> hashMap = new HashMap<>();
 
     /**
      * @throws InternalDAOException
