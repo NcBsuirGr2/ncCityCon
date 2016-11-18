@@ -26,6 +26,13 @@ public class UserDAO extends MySQLDAO {
         super();
         nameTable = " User ";
         logger = LoggerFactory.getLogger("com.citycon.dao.mysql.UserDAO");
+
+        hashMap.put("id", "ID");
+        hashMap.put("login", "Login");
+        hashMap.put("email", "E-mail");
+        hashMap.put("name", "Name");
+        hashMap.put("group", "Group");
+        hashMap.put("create date", "create_date");
     }
 
     /**
@@ -43,7 +50,18 @@ public class UserDAO extends MySQLDAO {
         ResultSet resultSet = null;
 
         ArrayList<UserEntity> users = new ArrayList();
-        String search = "select * from" + nameTable + "limit ?,?";
+
+        String sorter = hashMap.get(sortBy);
+
+        String search = "";
+
+        if(sorter != null) {
+            search = "select * from" + nameTable + "order by" + sorter + " limit ?,?";
+        }
+        else {
+            logger.info("Enter parameter to sort in read are invalid");
+            throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
+        }
 
         try {
             search_users = connection.prepareStatement(search);
@@ -67,7 +85,6 @@ public class UserDAO extends MySQLDAO {
                     user.setEmail(resultSet.getString("E-mail"));
                     user.setName(resultSet.getString("Name"));
                     user.setGroup(resultSet.getString("Group"));
-                    user.setGrant(this.getGrantFromDB(user.getGroup()));
                     user.setCreateDate(resultSet.getDate("create_date"));
                     users.add(user);
                 }
@@ -173,7 +190,7 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=?";
+        String search = "select * from" + nameTable + "where Login=? and Pass=?";
 
         try {
             user = (UserEntity) readElement;

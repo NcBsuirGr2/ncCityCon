@@ -2,3 +2,4 @@ target/
 .idea/
 cityCon.iml
 src/main/java/com/citycon/dao/mysql/SqlTest.java
+src/main/java/com/citycon/dao/mysql/Testcode.java

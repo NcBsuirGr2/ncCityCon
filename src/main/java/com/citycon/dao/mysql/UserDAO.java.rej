@@ -1,0 +1,9 @@
+diff a/src/main/java/com/citycon/dao/mysql/UserDAO.java b/src/main/java/com/citycon/dao/mysql/UserDAO.java	(rejected hunks)
+@@ -67,6 +67,7 @@
+                     user.setEmail(resultSet.getString("E-mail"));
+                     user.setName(resultSet.getString("Name"));
+                     user.setGroup(resultSet.getString("Group"));
++                    user.setGrant(this.getGrantFromDB(user.getGroup()));
+                     user.setCreateDate(resultSet.getDate("create_date"));
+                     users.add(user);
+                 }
