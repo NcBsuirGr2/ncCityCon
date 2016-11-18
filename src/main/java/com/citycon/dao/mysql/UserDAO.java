@@ -299,7 +299,7 @@ public class UserDAO extends MySQLDAO {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getName());
             preparedStatement.setString(5, user.getGroup());
-            preparedStatement.setInt(7, user.getId());
+            preparedStatement.setInt(6, user.getId());
 
             preparedStatement.executeUpdate();
 
