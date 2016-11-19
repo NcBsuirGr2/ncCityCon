@@ -28,6 +28,7 @@ public class UserListServlet extends AbstractHttpServlet {
 
 	public UserListServlet(){
 		super();
+		logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.UserListServlet");
 	}
 
 	protected void doGet(HttpServletRequest req, 
@@ -61,6 +62,7 @@ public class UserListServlet extends AbstractHttpServlet {
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException exception) {
 			res.sendRedirect("/users?errorType=invalidData");
+			logger.debug("Invalid getPage data", e);
 		} catch (DAOException e) {
 			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
 		}
