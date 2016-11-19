@@ -51,50 +51,58 @@
 				     		<thead>
 								<tr>
 									<th>
-										<c:set var="newAsc" value="false"/>
-										<c:if test="${not empty param.asc and param.asc == false and param.sortBy == 'name'}">
-											<c:set var="newAsc" value="true"/>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${empty param.asc or (param.asc == false and param.sortBy == 'name')}">
+											<c:set var="newAsc" value="false"/>
 										</c:if>
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=name&asc=${newAsc}">
 											Name 
-											<c:if test="${newAsc == false}">&#9660;</c:if>
-											<c:if test="${newAsc == true}">&#9650;</c:if>
+											<c:if test="${empty param.sortBy || param.sortBy == 'name'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
 										</a>
 									</th>
 									<th>
-										<c:set var="newAsc" value="false"/>
+										<c:set var="newAsc" value="true"/>
 										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'login'}">
-											<c:set var="newAsc" value="true"/>
+											<c:set var="newAsc" value="false"/>
 										</c:if>
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
 											Login 
-											<c:if test="${newAsc == false}">&#9660;</c:if>
-											<c:if test="${newAsc == true}">&#9650;</c:if>
+											<c:if test="${param.sortBy == 'login'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>
 										</a>
 									</th>
 									<th>
-										<c:set var="newAsc" value="false"/>
+										<c:set var="newAsc" value="true"/>
 										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'group'}">
-											<c:set var="newAsc" value="true"/>
+											<c:set var="newAsc" value="false"/>
 										</c:if>
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=group&asc=${newAsc}">
 											Group 
-											<c:if test="${newAsc == false}">&#9660;</c:if>
-											<c:if test="${newAsc == true}">&#9650;</c:if>
+											<c:if test="${param.sortBy == 'group'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>
 										</a>
 									</th>
 									<th>
-										<c:set var="newAsc" value="false"/>
+										<c:set var="newAsc" value="true"/>
 										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'email'}">
-											<c:set var="newAsc" value="true"/>
+											<c:set var="newAsc" value="false"/>
 										</c:if>
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=email&asc=${newAsc}">
 											E-main 
-											<c:if test="${newAsc == false}">&#9660;</c:if>
-											<c:if test="${newAsc == true}">&#9650;</c:if>
+											<c:if test="${param.sortBy == 'email'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>
 										</a>
 									</th>
 									<th>
@@ -105,8 +113,10 @@
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=createDate&asc=${newAsc}">
 											Join date 
-											<c:if test="${newAsc == false}">&#9660;</c:if>
-											<c:if test="${newAsc == true}">&#9650;</c:if>
+											<c:if test="${param.sortBy == 'createDate'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>
 										</a>
 									</th>
 							        <th class="hidden">id</th>								
@@ -170,7 +180,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<!-- Select user modal -->
 							<div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-sm">
