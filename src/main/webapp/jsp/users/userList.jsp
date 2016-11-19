@@ -52,7 +52,7 @@
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == false and param.sortBy == 'name')}">
+										<c:if test="${empty param.asc or (param.asc == true and param.sortBy == 'name')}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
@@ -66,7 +66,7 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'login'}">
+										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'login'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
@@ -79,7 +79,7 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'group'}">
+										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'group'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
@@ -93,7 +93,7 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'email'}">
+										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'email'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
@@ -107,7 +107,7 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="false"/>
-										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'createDate'}">
+										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'createDate'}">
 											<c:set var="newAsc" value="true"/>
 										</c:if>
 

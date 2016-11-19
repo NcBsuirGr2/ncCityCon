@@ -64,8 +64,10 @@ public class MySQLDAOConnection {
     public static void close() throws InternalDAOException {
         Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
 
-        if (instance != null) {
-            synchronized (MySQLDAOConnection.class) {
+        
+        synchronized (MySQLDAOConnection.class) {
+            logger.trace("Trying to close connection");
+            if (instance != null) {
                 try {
                     instance.connection.close();
                     instance = null;
