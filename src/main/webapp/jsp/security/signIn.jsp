@@ -18,21 +18,22 @@
     </head>
 
     <body>
-    <%@ include file="/html/header.jsp" %>
+   
     
         <div class="content-wrapper">
+
+         <%@ include file="/html/header.jsp" %>
             <div class="before-footer">
 
-                <div id="loginModal" >
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h1 class="text-center">Sign in to CityCon</h1>
+                                <h2 class="text-center">Sign in to CityCon</h2>
                             </div>
 
                             <div class="modal-body">
-                                <form class="form col-md-12 center-block " method="post" action="/signin">
+                                <form class="form" method="post" action="/signin">
                                     <div class="form-group">
                                         <input type="text" class="form-control input-lg" placeholder="Login" name="login">
                                     </div>
@@ -44,23 +45,15 @@
                                     </div>
                                 </form>
                             </div>
-
-
-                            <!--TODO: без этого вся форма рушится -->
-                            <div class="modal-footer">
-
-                            </div>
-
                         </div>
                     </div>
-                </div>
 
 
-                <div class="modal-dialog">
+                <div class="modal-dialog" style="margin-bottom: 10px">
                     <div class="modal-content">
                         <div class="modal-footer">
                             <h4 class="pull-left" align="left">New to CityCon?</h4>
-                            <h4><a class="pull-right" href="/signup">Create an account.</a></h4>
+                            <h4><a class="pull-right" href="/signup">Create an account</a></h4>
                         </div>
                     </div>
                 </div>

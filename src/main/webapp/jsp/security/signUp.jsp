@@ -16,50 +16,49 @@
     </head>
 
     <body>
-        <%@ include file="/html/header.jsp" %>
-
         <div class="content-wrapper">
+            <%@ include file="/html/header.jsp" %>
+
             <div class="before-footer">
 
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                <div class="modal-dialog" style="margin-bottom: 10px">
+                    <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h1 class="text-center">Create your personal account</h1>
-                            </div>
+                        <div class="modal-header">
+                            <h2 class="text-center">Create your personal account</h2>
+                        </div>
 
-                            <div class="modal-body">
-                                <form class="form col-md-12 center-block " method="POST" action="/signup">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-lg" placeholder="Login" name="login">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control input-lg" placeholder="Password" name="password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control input-lg" placeholder="e-mail" name="e-mail">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-lg" placeholder="name" name="name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create an account">
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="modal-body">
+                            <form class="form" method="POST" action="/signup">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="Login" name="login">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control input-lg" placeholder="e-mail" name="e-mail">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="name" name="name">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 5px">
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create an account">
+                                </div>
+                            </form>
+                        </div>
 
-                            <!--TODO: надо убрать, просто так удалить - вся форма ломается-->
-                            <div class="modal-footer">
-                                <!--<div class="col-md-12">
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="location.href='/'">Cancel</button>
-                                </div> -->
-                            </div>
-
-
+                    </div>
+                </div>
+                <div class="modal-dialog" style="margin-bottom: 10px">
+                    <div class="modal-content">
+                        <div class="modal-footer">
+                            <h4 class="pull-left" align="left">Already have account?</h4>
+                            <h4><a class="pull-right" href="/signin">Sign in</a></h4>
                         </div>
                     </div>
                 </div>
-
+            </div>
             <%@ include file="/html/footer.html" %>
         </div>
 
