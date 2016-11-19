@@ -43,29 +43,48 @@ public class UserListServlet extends AbstractHttpServlet {
 		int itemsPerPage = 10;
 		String sortBy = "name";
 		boolean asc = true;
-
-		if(pageString != null && !pageString.equals("")) {
+		try {
+			if(pageString != null && !pageString.equals("")) {
 			page = Integer.parseInt(pageString);
+			}
+			if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
+				itemsPerPage = Integer.parseInt(itemsPerPageString);
+			}
+			if(sortByString != null && !sortByString.equals("")) {
+				sortBy = sortByString;
+			}
+		} catch(NumberFormatException exception) {
+			forwardToErrorPage("Invalid search input", req, res);
 		}
-		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
-			itemsPerPage = Integer.parseInt(itemsPerPageString);
-		}
-		if(sortByString != null && !sortByString.equals("")) {
-			sortBy = sortByString;
-		}
+		
 		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
 		}
+
 		logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}", 
 																page, itemsPerPage, sortBy, asc);
 		try {
 			int usersNum = ORMUser.getCount();
 			int pagesNum = (int)Math.ceil((double)usersNum / (double)itemsPerPage);	
 				
-			if (usersNum < page*itemsPerPage) {
+			if (usersNum <= (page-1)*itemsPerPage) {
 				page = usersNum/itemsPerPage;
+				if(usersNum != page*itemsPerPage) {
+					page += 1;
+				}
+				StringBuilder redirect = new StringBuilder();
+				redirect.append("/users?page=");
+				redirect.append(page);
+				redirect.append("&itemsPerPage=");
+				redirect.append(itemsPerPage);
+				redirect.append("&sortBy=");
+				redirect.append(sortBy);
+				redirect.append("&asc=");
+				redirect.append(asc);
+				logger.debug("Redirect to the "+redirect.toString());
+				res.sendRedirect(redirect.toString());
+				return;
 			}
-
 			// Pagination variables
 			int currentPage = page;
 			int beginPage = (page/10)*10;
@@ -84,15 +103,14 @@ public class UserListServlet extends AbstractHttpServlet {
 			req.setAttribute("previousPage", previousPage);
 			req.setAttribute("nextPage", nextPage);		
 			// -------------
-			
 			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException exception) {
-			res.sendRedirect("#");
+			forwardToErrorPage("Invalid search input", req, res);
 			logger.debug("Invalid getPage data", exception);
 		} catch (DAOException exception) {
-			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
+			forwardToErrorPage("Internal DAO exception", req, res);
 		}
 	}
 	
