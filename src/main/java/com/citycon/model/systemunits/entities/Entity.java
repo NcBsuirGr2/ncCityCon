@@ -16,4 +16,11 @@ public abstract class Entity {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public String toString() {
+		StringBuilder entityString = new StringBuilder();
+		entityString.append("Entity: id(");
+		entityString.append(id);
+		entityString.append(")");
+		return entityString.toString();
+	}
 }

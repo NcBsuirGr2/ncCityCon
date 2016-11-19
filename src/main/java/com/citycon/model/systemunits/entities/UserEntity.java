@@ -67,4 +67,25 @@ public class UserEntity extends Entity {
 	public Date getCreateDate() {
 		return createDate;
 	}
+	public String toString() {
+		StringBuilder userString = new StringBuilder();
+		userString.append("User: id(");
+		userString.append(id);
+		userString.append("), name(");
+		userString.append(name);
+		userString.append("), login(");
+		userString.append(login);
+		userString.append("), password(");
+		userString.append(password);
+		userString.append("), email(");
+		userString.append(email);
+		userString.append("), grant(");
+		userString.append(grant);
+		userString.append("), group(");
+		userString.append(group);
+		userString.append("), createDate(");
+		userString.append(createDate);
+		userString.append(")");
+		return userString.toString();
+	}
 }

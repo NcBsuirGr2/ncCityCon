@@ -56,4 +56,23 @@ public class RouterEntity extends Entity {
 	public int getCityId() {
 		return cityId;
 	}
+	public String toString() {
+		StringBuilder routerString = new StringBuilder();
+		routerString.append("Router: id(");
+		routerString.append(id);
+		routerString.append("), name(");
+		routerString.append(name);
+		routerString.append("), SN(");
+		routerString.append(SN);
+		routerString.append("), portsNum(");
+		routerString.append(portsNum);
+		routerString.append("), isActive(");
+		routerString.append(isActive);
+		routerString.append("), cityId(");
+		routerString.append(cityId);
+		routerString.append("), cityName(");
+		routerString.append(cityName);
+		routerString.append(")");
+		return routerString.toString();
+	}
 }

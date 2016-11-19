@@ -39,4 +39,20 @@ public class RouterConnectionEntity extends Entity {
 	public void setSecondRouterSN(String secondRouterSN) {
 		this.secondRouterSN = secondRouterSN;
 	}
+
+	public String toString() {
+		StringBuilder routerConnectionString = new StringBuilder();
+		routerConnectionString.append("RouterConnection: id(");
+		routerConnectionString.append(id);
+		routerConnectionString.append("), firstRouterId(");
+		routerConnectionString.append(firstRouterId);
+		routerConnectionString.append("), firstRouterSN(");
+		routerConnectionString.append(firstRouterSN);
+		routerConnectionString.append("), secondRouterId(");
+		routerConnectionString.append(secondRouterId);
+		routerConnectionString.append("), secondRouterSN(");
+		routerConnectionString.append(secondRouterSN);
+		routerConnectionString.append(")");
+		return routerConnectionString.toString();
+	}
 }

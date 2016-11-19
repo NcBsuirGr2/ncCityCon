@@ -33,4 +33,18 @@ public class CityEntity extends Entity {
 	public void setRoutersNum(int routersNum) {
 		this.routersNum = routersNum;
 	}
+
+	public String toString() {
+		StringBuilder cityString = new StringBuilder();
+		cityString.append("City: id(");
+		cityString.append(id);
+		cityString.append("), name(");
+		cityString.append(name);
+		cityString.append("), countryName(");
+		cityString.append(countryName);
+		cityString.append("), routersNum(");
+		cityString.append(routersNum);
+		cityString.append(")");
+		return cityString.toString();
+	}
 }
