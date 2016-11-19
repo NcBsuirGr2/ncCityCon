@@ -33,9 +33,8 @@ public abstract class MySQLDAO implements DAO {
     /**
      * @return
      * @throws InternalDAOException
-     * @throws InvalidDataDAOException
      */
-    public int count_element() throws InternalDAOException, InvalidDataDAOException {
+    public int count_element() throws InternalDAOException {
         int count = 0;
 
         String search = String.format("select count(`id`) from %s", nameTable);
@@ -58,9 +57,6 @@ public abstract class MySQLDAO implements DAO {
                 count = resultSet.getInt(1);
 
                 logger.trace("Get count elements");
-            } else {
-                logger.info("This table is empty");
-                throw new InternalDAOException("This table is empty");
             }
 
         } catch (SQLException e) {

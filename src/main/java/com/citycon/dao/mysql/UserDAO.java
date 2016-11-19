@@ -48,6 +48,7 @@ public class UserDAO extends MySQLDAO {
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
                                             throws InvalidDataDAOException, InternalDAOException {
 
+
         PreparedStatement search_users = null;
         ResultSet resultSet = null;
 
@@ -56,6 +57,9 @@ public class UserDAO extends MySQLDAO {
         String sorter = hashMap.get(sortBy);
 
         String search = "";
+
+        String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
+                + "), sortBy(" + sortBy + "), asc(" + asc + ")";
 
         if(sorter != null) {
             String sorting_direction = "";
@@ -70,22 +74,20 @@ public class UserDAO extends MySQLDAO {
             search = "select * from " + nameTable + " order by " + sorter + sorting_direction + " limit ?,?";
         }
         else {
-            logger.info("Enter parameter to sort in read are invalid");
+            logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
             throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
         }
 
         try {
             search_users = connection.prepareStatement(search);
         }catch (SQLException e) {
-            logger.warn("Prepare statement in get userPage wasn't created", e);
-            throw new InternalDAOException("Prepare statement in get userPage wasn't created", e);
+            logger.warn("PrepareStatement in getPage wasn't created");
+            throw new InternalDAOException("PrepareStatement in getPage wasn't created", e);
         }
 
         try {
             search_users.setInt(1, (page-1)*itemsPerPage);
             search_users.setInt(2, itemsPerPage);
-
-            logger.trace("getPage query:{}", search_users);
 
             resultSet =  search_users.executeQuery();
 
@@ -102,21 +104,21 @@ public class UserDAO extends MySQLDAO {
                     users.add(user);
                 }
 
-                logger.trace(String.format("getPage user on %d page", page));
+                logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
             }catch (SQLException e){
-                logger.info("GetPage user failed", e);
-                throw new InvalidDataDAOException("GetPage user failed", e);
+                logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
+                throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);
             }
         }catch (SQLException e){
-            logger.info("Put data to prepare statement in user invalid",e);
-            throw new InvalidDataDAOException("Put data to prepare statement in user invalid",e);
+            logger.info("Put data to PrepareStatement in {} invalid. \n {}", nameTable, log_parameters, e);
+            throw new InvalidDataDAOException(String.format("Put data to PrepareStatement in {} invalid", nameTable), e);
         }
         finally {
             if (search_users!=null){
                 try {
                     search_users.close();
                 } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in getPage user false",e);
+                    logger.warn("Close PrepareStatement in getPage {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -124,7 +126,7 @@ public class UserDAO extends MySQLDAO {
                 try{
                     resultSet.close();
                 }catch (SQLException e){
-                    logger.warn("Close ResultSet in getPage user false",e);
+                    logger.warn("Close ResultSet in getPage {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -155,16 +157,20 @@ public class UserDAO extends MySQLDAO {
         try {
             user = (UserEntity) newElement;
         }catch (ClassCastException e) {
-            logger.info("Enter parameters in create are invalid", e);
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+            logger.info("Cast Entity in create failed.", e);
+            throw new InvalidDataDAOException("Cast Entity in create are failed", e);
         }
 
         try {
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
-            logger.warn("Prepare statement in create user wasn't created", e);
-            throw new InternalDAOException("Prepare statement in create user wasn't created", e);
+            logger.warn("PrepareStatement in create wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in create wasn't created", e);
         }
+
+        String log_parameters = "With parameters: Login("+ user.getLogin() + "), Password(" + user.getPassword()
+                + "), E-Mail(" + user.getEmail() + "), Name(" + user.getEmail() + "), Group(" + user.getGroup()
+                + ")";
 
         try {
             preparedStatement.setString(1, user.getLogin());
@@ -176,17 +182,17 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.executeUpdate();
 
-            logger.trace(String.format("create user %s", user.getLogin()));
+            logger.trace("Create {}.\n {}", nameTable, log_parameters);
         } catch (SQLException e){
-            logger.info("Create user failed", e);
-            throw new DublicateKeyDAOException("Create user failed", e);
+            logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
+            throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
         }
         finally {
             if(preparedStatement != null){
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in create user false", e);
+                    logger.warn("Close PrepareStatement in create {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -209,20 +215,23 @@ public class UserDAO extends MySQLDAO {
         try {
             user = (UserEntity) readElement;
         }catch (ClassCastException e) {
-            logger.info("Enter parameters in read are invalid", e);
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+            logger.info("Cast Entity in read failed.", e);
+            throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
+
+        String log_parameters = "With parameters: Login("+ user.getLogin() + ")";
 
         if (user.getPassword() != null){
             search += " and `Pass`=?";
+            log_parameters += ", Password("+ user.getPassword()+")";
         }
 
         if(user.getLogin() != null) {
             try{
                 search_user = connection.prepareStatement(search);
             }catch (SQLException e) {
-                logger.warn("Prepare statement in read user wasn't created", e);
-                throw new InternalDAOException("Prepare statement in read user wasn't created", e);
+                logger.warn("PreparedStatement in read wasn't created", e);
+                throw new InternalDAOException("PreparedStatement in read wasn't created", e);
             }
 
             try {
@@ -244,22 +253,22 @@ public class UserDAO extends MySQLDAO {
                     user.setCreateDate(resultSet.getDate("create_date"));
                     user.setGrant(this.getGrantFromDB(user.getGroup()));
 
-                    logger.trace(String.format("read user %s", user.getLogin()));
+                    logger.trace("Read {}.\n {}", nameTable, log_parameters);
                 }
                 else{
-                    logger.info("User not found");
-                    throw new InvalidDataDAOException("User not found");
+                    logger.info("{} in read not found.\n {}", nameTable, log_parameters);
+                    throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
                 }
             }catch (SQLException e){
-                logger.info("Read user failed", e);
-                throw new InternalDAOException("Read user failed", e);
+                logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
+                throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
             }
             finally {
                 if (search_user!=null){
                     try {
                         search_user.close();
                     } catch (SQLException e) {
-                        logger.warn("Close PrepareStatement in read false", e);
+                        logger.warn("Close PrepareStatement in read {} failed", nameTable, e);
                         throw new InternalDAOException(e);
                     }
                 }
@@ -267,15 +276,15 @@ public class UserDAO extends MySQLDAO {
                     try{
                         resultSet.close();
                     }catch (SQLException e){
-                        logger.warn("Close ResultSet in read false",e);
+                        logger.warn("Close ResultSet in read {} failed", nameTable,e);
                         throw new InternalDAOException(e);
                     }
                 }
             }
         }
         else{
-            logger.info("For reading user incorrectly chosen field, try Login with Password");
-            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login with Password");
+            logger.info("For reading user incorrectly chosen field, try Login with Password or only Login");
+            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login with Password or only Login");
         }
     }
 
@@ -296,16 +305,18 @@ public class UserDAO extends MySQLDAO {
         try {
             user = (UserEntity) updateElement;
         }catch (ClassCastException e) {
-            logger.info("Enter parameters in update are invalid", e);
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
+            logger.info("Cast Entity in update failed.", e);
+            throw new InvalidDataDAOException("Cast Entity in update failed.", e);
         }
 
         try {
             preparedStatement = connection.prepareStatement(update);
         }catch (SQLException e) {
-            logger.warn("Prepare statement in update user wasn't created", e);
-            throw new InternalDAOException("Prepare statement in update user wasn't created", e);
+            logger.warn("PreparedStatement in update wasn't created", e);
+            throw new InternalDAOException("PreparedStatement in update wasn't created", e);
         }
+
+        String log_parameters = "With parameters: id(" + user.getId() + ")";
 
         try {
             preparedStatement.setString(1, user.getLogin());
@@ -317,17 +328,17 @@ public class UserDAO extends MySQLDAO {
 
             preparedStatement.executeUpdate();
 
-            logger.trace(String.format("update user %s", user.getLogin()));
+            logger.trace("Update {}.\n {}", nameTable, log_parameters);
         } catch (SQLException e) {
-            logger.info("Update user failed", e);
-            throw new DublicateKeyDAOException("Update user failed", e);
+            logger.info("Update {} failed.\n {}", nameTable, log_parameters, e);
+            throw new DublicateKeyDAOException((String.format("Update %s failed", nameTable)), e);
         }
         finally {
             if (preparedStatement != null){
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in update false", e);
+                    logger.warn("Close PrepareStatement in update {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }

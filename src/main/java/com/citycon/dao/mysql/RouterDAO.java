@@ -5,6 +5,8 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
+import com.citycon.model.systemunits.entities.UserEntity;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +24,16 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
      */
     private RouterDAO() throws InternalDAOException {
         super();
-        nameTable = " Router ";
+        nameTable = " `Router` ";
+        logger = LoggerFactory.getLogger("com.citycon.dao.mysql.RouterDAO");
+
+        hashMap.put("", "`ID`");
+        hashMap.put("id", "`ID`");
+        hashMap.put("name", "`Name`");
+        hashMap.put("sn", "`SN`");
+        hashMap.put("ports num", "`Port`");
+        hashMap.put("isActive", "`In_Service`");
+        hashMap.put("city id", "`City_id`");
     }
 
     /**
@@ -56,19 +67,43 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         ResultSet resultSet = null;
 
         ArrayList<RouterEntity> routers = new ArrayList();
+
+        String sorter = hashMap.get(sortBy);
+
         String search = "";
 
-        if (cityId != 0){
-            search = "select * from" + nameTable + "limit ?,? where City_id=" + String.valueOf(cityId);
+        String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
+                + "), sortBy(" + sortBy + "), asc(" + asc + "), cityId(" + cityId + ")";
+
+        if(sorter != null) {
+            String sorting_direction = "";
+
+            if(asc){
+                sorting_direction = " asc ";
+            }
+            else {
+                sorting_direction = " desc ";
+            }
+
+            if (cityId != 0){
+                search = "select * from" + nameTable + " order by " + sorter + sorting_direction
+                        + "limit ?,? where `City_id`=" + cityId;
+            }
+            else {
+                search = "select * from" + nameTable + " order by " + sorter + sorting_direction
+                        + "limit ?,?";
+            }
         }
         else {
-            search = "select * from" + nameTable + "limit ?,?";
+            logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
+            throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
         }
 
         try {
             search_routers = connection.prepareStatement(search);
         }catch (SQLException e) {
-            throw new InternalDAOException("Prepare statement in get routerPage wasn't created", e);
+            logger.warn("PrepareStatement in getPage wasn't created");
+            throw new InternalDAOException("PrepareStatement in getPage wasn't created", e);
         }
 
         try{
@@ -88,17 +123,22 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                     router.setCityId(resultSet.getInt("City_id"));
                     routers.add(router);
                 }
+
+                logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
             }catch (SQLException e){
-                throw new InvalidDataDAOException("GetPage router failed", e);
+                logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
+                throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);
             }
         }catch (SQLException e){
-            throw new InternalDAOException("GetPage router failed", e);
+            logger.info("Put data to PrepareStatement in {} invalid. \n {}", nameTable, log_parameters, e);
+            throw new InvalidDataDAOException(String.format("Put data to PrepareStatement in {} invalid", nameTable), e);
         }
         finally {
             if (search_routers!=null){
                 try {
                     search_routers.close();
                 } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in getPage {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -106,6 +146,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                 try{
                     resultSet.close();
                 }catch (SQLException e){
+                    logger.warn("Close ResultSet in getPage {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -186,11 +227,11 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         String value = "";
 
         if(router.getId() != 0) {
-            field = "id";
+            field = "`id`";
             value = String.valueOf(router.getId());
         }
         else if(router.getSN() != null){
-            field = "SN";
+            field = "`SN`";
             value = "'" + router.getSN() + "'";
         }
         else{
