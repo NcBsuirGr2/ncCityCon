@@ -334,55 +334,6 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
-
-    /**
-     * @param deleteElement
-     * @throws InternalDAOException
-     * @throws InvalidDataDAOException
-     */
-    public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
-        UserEntity user = null;
-
-        PreparedStatement preparedStatement = null;
-
-        String delete = "delete from" + nameTable + "where `id`=?";
-
-        try {
-            user= (UserEntity) deleteElement;
-        }catch (ClassCastException e) {
-            logger.info("Enter parameters in delete are invalid", e);
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
-        }
-
-        try {
-            preparedStatement = connection.prepareStatement(delete);
-        }catch (SQLException e) {
-            logger.warn("Prepare statement in delete user wasn't created", e);
-            throw new InternalDAOException("Prepare statement in delete user wasn't created", e);
-        }
-
-        try {
-            preparedStatement.setInt(1, user.getId());
-
-            preparedStatement.executeUpdate();
-
-            logger.trace(String.format("delete user %s", user.getLogin()));
-        } catch (SQLException e) {
-            logger.info("Delete user failed", e);
-            throw new InvalidDataDAOException("Delete user failed", e);
-        }
-        finally {
-            if (preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in delete false", e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-    }
-
     /**
      * @throws InternalDAOException
      */

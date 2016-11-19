@@ -288,48 +288,6 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         }
     }
 
-
-    /**
-     * @param deleteElement
-     * @throws InvalidDataDAOException
-     * @throws InternalDAOException
-     */
-    public void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException {
-        RouterEntity router = null;
-
-        PreparedStatement preparedStatement = null;
-
-        String delete = "delete from" + nameTable + "where `id`=?";
-
-        try {
-            router = (RouterEntity) deleteElement;
-        }catch (ClassCastException e) {
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
-        }
-
-
-        try {
-            preparedStatement = connection.prepareStatement(delete);
-        }catch (SQLException e) {
-            throw new InternalDAOException("Prepare statement in delete router wasn't created", e);
-        }
-
-        try {
-            preparedStatement.setInt(1, router.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new InvalidDataDAOException("Delete router failed", e);
-        }
-        finally {
-            if (preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-    }
     /**
      * @throws InternalDAOException
      */

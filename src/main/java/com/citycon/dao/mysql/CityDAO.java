@@ -118,7 +118,8 @@ public class CityDAO extends MySQLDAO {
      * @throws InternalDAOException
      * @throws InvalidDataDAOException
      */
-    public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+    public void create(Entity newElement) throws DublicateKeyDAOException,
+            InternalDAOException, InvalidDataDAOException {
         CityEntity city = null;
 
         String insert = "insert into" + nameTable +
@@ -231,7 +232,8 @@ public class CityDAO extends MySQLDAO {
      * @throws InvalidDataDAOException
      * @throws InternalDAOException
      */
-    public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+    public void update(Entity updateElement) throws DublicateKeyDAOException,
+            InvalidDataDAOException, InternalDAOException {
         CityEntity city = null;
 
         PreparedStatement preparedStatement = null;
@@ -259,47 +261,6 @@ public class CityDAO extends MySQLDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DublicateKeyDAOException("Update city failed", e);
-        }
-        finally {
-            if (preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param deleteElement
-     * @throws InvalidDataDAOException
-     * @throws InternalDAOException
-     */
-    public void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException {
-        CityEntity city = null;
-
-        PreparedStatement preparedStatement = null;
-
-        String delete = "delete from" + nameTable + "where `id`=?";
-
-        try {
-            city = (CityEntity) deleteElement;
-        }catch (ClassCastException e) {
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
-        }
-
-        try {
-            preparedStatement = connection.prepareStatement(delete);
-        }catch (SQLException e) {
-            throw new InternalDAOException("Prepare statement in delete city wasn't created", e);
-        }
-
-        try {
-            preparedStatement.setInt(1, city.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new InvalidDataDAOException("Delete city failed", e);
         }
         finally {
             if (preparedStatement != null){
