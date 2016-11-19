@@ -41,14 +41,6 @@ public class MySQLDAOConnection {
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        if (!connection.isClosed()) {
-            connection.close();
-        }
-        super.finalize();
-    }
-
     /**
      * @throws InternalDAOException
      */
@@ -72,11 +64,12 @@ public class MySQLDAOConnection {
     public static void close() throws InternalDAOException {
         Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
 
-        if (instance != null) {
-            synchronized (MySQLDAOConnection.class) {
+        
+        synchronized (MySQLDAOConnection.class) {
+            logger.trace("Trying to close connection");
+            if (instance != null) {
                 try {
                     instance.connection.close();
-                    instance.finalize();
                     instance = null;
                     logger.trace("Connection close");
                 } catch (SQLException e) {
