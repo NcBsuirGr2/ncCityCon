@@ -93,7 +93,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 					return;
 				}
 
-				res.sendRedirect(LIST_USERS_URL);
+				res.sendRedirect(LIST_USERS_URL+"?success=add");
 			}
 		}
 		
@@ -135,7 +135,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			return;
 		}
 		
-		res.sendRedirect(LIST_USERS_URL);
+		res.sendRedirect(LIST_USERS_URL+"?success=edit");
 	}
 
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
@@ -162,6 +162,6 @@ public class UserEditServlet extends AbstractHttpServlet {
 			forwardToErrorPage("Invalid id string", req, res);
 			return;
 		}
-		res.sendRedirect(LIST_USERS_URL);
+		res.sendRedirect(LIST_USERS_URL+"?success=delete");
 	}
 }

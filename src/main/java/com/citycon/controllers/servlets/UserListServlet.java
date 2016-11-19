@@ -64,8 +64,6 @@ public class UserListServlet extends AbstractHttpServlet {
 				
 			if (usersNum < page*itemsPerPage) {
 				page = usersNum/itemsPerPage;
-				//res.sendRedirect("#");
-				//return;
 			}
 
 			// Pagination variables

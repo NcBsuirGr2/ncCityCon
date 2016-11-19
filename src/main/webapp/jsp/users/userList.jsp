@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, maximum-scale=1">
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/selectEntity.js"></script>
 		<script type="text/javascript" src="/js/userPages/userList.js"></script>
 
@@ -21,6 +22,23 @@
 	<body>
 		<div class="content-wrapper">
 			<%@ include file="/html/header.jsp" %>
+			<c:if test="${not empty param.success}">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Success!</strong> 
+					<c:choose>
+					    <c:when test="${param.success == 'add'}">
+					       	New user has been created.
+					    </c:when>
+					    <c:when test="${param.success == 'delete'}">
+					        User has been deleted.
+					    </c:when>
+					    <c:when test="${param.success == 'edit'}">
+					        User has been modified.
+					    </c:when>
+					</c:choose>
+				</div>
+			</c:if>		
 			<div class="row">
 			<div class="col-sm-1">
 			</div>
