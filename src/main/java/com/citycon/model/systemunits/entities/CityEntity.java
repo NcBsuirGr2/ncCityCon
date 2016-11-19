@@ -12,6 +12,7 @@ import com.citycon.model.Grant;
 public class CityEntity extends Entity {	
 	private String name;
 	private String countryName;
+	private int routersNum;
 
 	public String getName() {
 		return name;
@@ -19,11 +20,17 @@ public class CityEntity extends Entity {
 	public String getCountryName() {
 		return countryName;
 	}
+	public int getRoutersNum() {
+		return routersNum;
+	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
+	}
+	public void setRoutersNum(int routersNum) {
+		this.routersNum = routersNum;
 	}
 }

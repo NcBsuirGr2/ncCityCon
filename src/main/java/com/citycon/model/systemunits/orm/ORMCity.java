@@ -37,12 +37,18 @@ public class ORMCity extends ORMEntity {
 	public String getCountryName() {
 		return city.getCountryName();
 	}
+	public int getRoutersNum() {
+		return city.getRoutersNum();
+	}
 
 	public void setName(String name) {
 		city.setName(name);
 	}
 	public void setCountryName(String countryName) {
 		city.setCountryName(countryName);
+	}
+	public void setRoutersNum(int routersNum) {
+		city.setRoutersNum(routersNum);
 	}
 
 
