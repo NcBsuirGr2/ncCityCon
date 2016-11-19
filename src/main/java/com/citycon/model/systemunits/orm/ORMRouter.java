@@ -48,6 +48,11 @@ public class ORMRouter extends ORMEntity {
 	public boolean isActive() {
 		return router.isActive();
 	}
+	public String getCityName() {
+		return router.getCityName();
+	}
+
+
 	public void setName(String name) {
 		router.setName(name);
 	}
@@ -60,7 +65,12 @@ public class ORMRouter extends ORMEntity {
 	public void setIsActive(boolean isActive) {
 		router.isActive(isActive);
 	}
-	public void setCityId(Integer sityId) {router.setCityId(sityId);}
+	public void setCityId(Integer sityId) {
+		router.setCityId(sityId);
+	}
+	public void setCityName(String cityName) {
+		router.setCityName(cityName);
+	}
 
 	//ORM interface for incapsulated object
 
