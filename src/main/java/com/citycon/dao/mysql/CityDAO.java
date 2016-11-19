@@ -23,6 +23,12 @@ public class CityDAO extends MySQLDAO {
     private CityDAO() throws InternalDAOException {
         super();
         nameTable = " City ";
+        logger = LoggerFactory.getLogger("com.citycon.dao.mysql.CityDAO");
+
+        hashMap.put("", "ID");
+        hashMap.put("id", "ID");
+        hashMap.put("name", "Name");
+        hashMap.put("countryName", "Country");
     }
 
     /**
@@ -40,11 +46,23 @@ public class CityDAO extends MySQLDAO {
         ResultSet resultSet = null;
 
         ArrayList<CityEntity> cities = new ArrayList();
-        String search = "select * from" + nameTable + "limit ?,?";
+
+        String sorter = hashMap.get(sortBy);
+
+        String search = "";
+
+        if(sorter != null) {
+            search = "select * from " + nameTable + " order by " + sorter + " limit ?,?";
+        }
+        else {
+            logger.info("Enter parameter to sort in read are invalid");
+            throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
+        }
 
         try {
             search_cities = connection.prepareStatement(search);
         }catch (SQLException e) {
+            logger.warn("Prepare statement in get cityPage wasn't created", e);
             throw new InternalDAOException("Prepare statement in cityPage wasn't created", e);
         }
 
@@ -62,10 +80,14 @@ public class CityDAO extends MySQLDAO {
                     city.setCountryName(resultSet.getString("Country"));
                     cities.add(city);
                 }
+
+                logger.trace(String.format("getPage city on %d page", page));
             }catch (SQLException e){
+                logger.info("GetPage city failed", e);
                 throw new InvalidDataDAOException("GetPage city failed", e);
             }
         }catch (SQLException e) {
+            logger.info("Put data to prepare statement in city invalid",e);
             throw new InvalidDataDAOException("Put data to prepare statement in city invalid",e);
         }
         finally {
@@ -73,6 +95,7 @@ public class CityDAO extends MySQLDAO {
                 try {
                     search_cities.close();
                 } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in getPage city false",e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -80,6 +103,7 @@ public class CityDAO extends MySQLDAO {
                 try{
                     resultSet.close();
                 }catch (SQLException e){
+                    logger.warn("Close ResultSet in getPage city false",e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -106,12 +130,14 @@ public class CityDAO extends MySQLDAO {
         try {
             city = (CityEntity) newElement;
         }catch (ClassCastException e) {
+            logger.info("Enter parameters in create are invalid", e);
             throw new InvalidDataDAOException("Enter parameters are invalid", e);
         }
 
         try {
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
+            logger.warn("Prepare statement in create city wasn't created", e);
             throw new InternalDAOException("Prepare statement in create city wasn't created", e);
         }
 
@@ -120,7 +146,10 @@ public class CityDAO extends MySQLDAO {
             preparedStatement.setString(2, city.getCountryName());
 
             preparedStatement.executeUpdate();
+
+            logger.trace(String.format("create city %s", city.getName()));
         } catch (SQLException e){
+            logger.info("Create city failed", e);
             throw new DublicateKeyDAOException("Create city failed", e);
         }
         finally {
@@ -128,6 +157,7 @@ public class CityDAO extends MySQLDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in create city false", e);
                     throw new InternalDAOException(e);
                 }
             }
