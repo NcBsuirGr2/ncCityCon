@@ -41,14 +41,6 @@ public class MySQLDAOConnection {
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        if (!connection.isClosed()) {
-            connection.close();
-        }
-        super.finalize();
-    }
-
     /**
      * @throws InternalDAOException
      */
@@ -76,7 +68,6 @@ public class MySQLDAOConnection {
             synchronized (MySQLDAOConnection.class) {
                 try {
                     instance.connection.close();
-                    instance.finalize();
                     instance = null;
                     logger.trace("Connection close");
                 } catch (SQLException e) {
