@@ -10,7 +10,9 @@ package com.citycon.model.systemunits.entities;
  */
 public class RouterConnectionEntity extends Entity {
 	private int firstRouterId;
+	private String firstRouterSN;
 	private int secondRouterId;
+	private String secondRouterSN;
 
 	public int getFirstRouterId() {
 		return firstRouterId;
@@ -18,11 +20,23 @@ public class RouterConnectionEntity extends Entity {
 	public int getSecondRouterId() {
 		return secondRouterId;
 	}
+	public String getFirstRouterSN() {
+		return firstRouterSN;
+	}
+	public String getSecondRouterSN() {
+		return secondRouterSN;
+	}
 
 	public void setFirstRouterId(int firstRouterId) {
 		this.firstRouterId = firstRouterId;
 	}
 	public void setSecondRouterId(int secondRouterId) {
 		this.secondRouterId = secondRouterId;
+	}
+	public void setFirstRouterSN(String firstRouterSN) {
+		this.firstRouterSN = firstRouterSN;
+	}
+	public void setSecondRouterSN(String secondRouterSN) {
+		this.secondRouterSN = secondRouterSN;
 	}
 }
