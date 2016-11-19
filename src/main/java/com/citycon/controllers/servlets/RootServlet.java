@@ -31,9 +31,15 @@ public class RootServlet extends AbstractHttpServlet {
     private static final String ADMIN_HOME = "/users";
     private static final String GUEST_OPERATOR_HOME = "/cities";
 
+    public RootServlet() {
+        super();
+        logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.RootServlet");      
+    }
+
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
-
+       
+        logger.trace("Root access");
         HttpSession session = req.getSession(false);      
 
         if(session == null || session.getAttribute("user") == null) {
@@ -47,7 +53,7 @@ public class RootServlet extends AbstractHttpServlet {
                     res.sendRedirect(GUEST_OPERATOR_HOME);
                 }
             } catch (NullPointerException | ClassCastException e) {          
-                Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.RootServlet");      
+                
                 logger.warn("Error during getting user from session ", e);
                 forwardToErrorPage("Internal server error", req, res);
             }
