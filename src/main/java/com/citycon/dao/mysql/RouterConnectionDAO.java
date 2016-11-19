@@ -22,7 +22,6 @@ public class RouterConnectionDAO extends MySQLDAO {
         nameTable = " RouterConnection ";
     }
 
-
     /**
      * @param page
      * @param itemsPerPage
@@ -231,47 +230,6 @@ public class RouterConnectionDAO extends MySQLDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DublicateKeyDAOException("Update router connection failed", e);
-        }
-        finally {
-            if (preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param deleteElement
-     * @throws InvalidDataDAOException
-     * @throws InternalDAOException
-     */
-    public void delete(Entity deleteElement) throws InvalidDataDAOException, InternalDAOException {
-        RouterConnectionEntity routerConnection = null;
-
-        PreparedStatement preparedStatement = null;
-
-        String delete = "delete from" + nameTable + "where `id`=?";
-
-        try {
-            routerConnection = (RouterConnectionEntity) deleteElement;
-        }catch (ClassCastException e) {
-            throw new InvalidDataDAOException("Enter parameters are invalid", e);
-        }
-
-        try {
-            preparedStatement = connection.prepareStatement(delete);
-        }catch (SQLException e) {
-            throw new InternalDAOException("Prepare statement in routerConnection user wasn't created", e);
-        }
-
-        try {
-            preparedStatement.setInt(1, routerConnection.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new InvalidDataDAOException("Delete routerConnection failed", e);
         }
         finally {
             if (preparedStatement != null){

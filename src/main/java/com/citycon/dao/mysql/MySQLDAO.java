@@ -4,12 +4,11 @@ import com.citycon.dao.DAO;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.Entity;
 import org.slf4j.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,10 +30,15 @@ public abstract class MySQLDAO implements DAO {
         connection = MySQLDAOConnection.getInstance().getConnection();
     }
 
+    /**
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     public int count_element() throws InternalDAOException, InvalidDataDAOException {
         int count = 0;
 
-        String search = "select count(`id`) from" + nameTable;
+        String search = String.format("select count(`id`) from %s", nameTable);
 
         Statement statement = null;
         ResultSet resultSet = null;
@@ -84,4 +88,45 @@ public abstract class MySQLDAO implements DAO {
 
         return count;
     }
+
+    /**
+     * @param deleteElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
+
+        PreparedStatement preparedStatement = null;
+
+        String delete = "delete from" + nameTable + "where `id`=?";
+
+        try {
+            preparedStatement = connection.prepareStatement(delete);
+        }catch (SQLException e) {
+            logger.warn("Prepare statement in delete wasn't created", e);
+            throw new InternalDAOException("Prepare statement in delete wasn't created", e);
+        }
+
+        try {
+            preparedStatement.setInt(1, deleteElement.getId());
+
+            preparedStatement.executeUpdate();
+
+            logger.trace("Delete was successful");
+        } catch (SQLException e) {
+            logger.info("Delete failed", e);
+            throw new InvalidDataDAOException("Delete failed", e);
+        }
+        finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in delete false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+    }
+
 }
