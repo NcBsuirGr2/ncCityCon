@@ -16,6 +16,7 @@
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="icon" href="favicon.ico" />
 </head>
 <body>
 <%@ include file="/html/header.jsp" %>

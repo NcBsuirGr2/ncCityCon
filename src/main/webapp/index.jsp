@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<link rel="icon" href="/img/favicon.ico" />
+	<link rel="icon" href="favicon.ico" />
 	<title>CityCon</title>
 </head>
 <body>

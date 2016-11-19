@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="/css/style.css">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="/js/userPages/userEdit.js"></script>
+        <link rel="icon" href="favicon.ico" />
         <title>Edit user</title>
     </head>
 <body>
