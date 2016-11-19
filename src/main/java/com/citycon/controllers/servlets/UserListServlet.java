@@ -40,7 +40,7 @@ public class UserListServlet extends AbstractHttpServlet {
 		String ascString = req.getParameter("asc");
 
 		int page = 1;
-		int itemsPerPage = 100;
+		int itemsPerPage = 10;
 		String sortBy = "name";
 		boolean asc = true;
 
@@ -56,16 +56,18 @@ public class UserListServlet extends AbstractHttpServlet {
 		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
 		}
-		logger.debug("getPage query with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}", 
+		logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}", 
 																page, itemsPerPage, sortBy, asc);
 		try {
-			//TODO: fix this dirty hack and use special DAO method when it will be accomplished.
-			UserEntity[] allUsers = ORMUser.getPage(1, 9999, "name", true);
-			int usersNum = allUsers.length;
-			int pagesNum = (int)Math.ceil((double)usersNum / (double)itemsPerPage);			
-			logger.debug("Items:{} pages:{}", usersNum, pagesNum);
-			// -------------
-			
+			int usersNum = ORMUser.getCount();
+			int pagesNum = (int)Math.ceil((double)usersNum / (double)itemsPerPage);	
+				
+			if (usersNum < page*itemsPerPage) {
+				page = usersNum/itemsPerPage;
+				//res.sendRedirect("#");
+				//return;
+			}
+
 			// Pagination variables
 			int currentPage = page;
 			int beginPage = (page/10)*10;

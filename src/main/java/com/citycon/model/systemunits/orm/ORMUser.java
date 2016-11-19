@@ -104,10 +104,21 @@ public class ORMUser extends ORMEntity {
 	 * @param  sortBy field to sort by
 	 * @param  asc sorting in asc order if true
 	 * @return cityEntity[] the array of users on demanded page.
+	 * @throws DAOException if parameters are invalid or DAO layer has internal problems
 	 */
     public static UserEntity[] getPage(int page, int itemsPerPage, 
     							String sortBy, boolean asc) throws DAOException {
     	DAO staticDAO = daoFactory.getUserDAO();
         return (UserEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+    }
+    /**
+     *	Retrieves total nuber of Users from DAO layer.
+     * 
+     * @return int nuber of Users
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount() throws DAOException {
+    	DAO staticDAO = daoFactory.getUserDAO();
+        return staticDAO.count_element();
     }
 }
