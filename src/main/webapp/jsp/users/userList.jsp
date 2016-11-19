@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,7 +21,10 @@
 	<body>
 		<div class="content-wrapper">
 			<%@ include file="/html/header.jsp" %>
-			<div class="before-footer">
+			<div class="row">
+			<div class="col-sm-1">
+			</div>
+			<div class="col-sm-10">
 				<div class="panel panel-default">
 					<center class="panel-heading">
 						List Users
@@ -28,10 +32,65 @@
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
 								<tr>
-									<th>Name</th>
-							   		<th>Login</th>
-							        <th>Group</th>
-							        <th>E-mail</th>
+									<th>
+										<c:set var="newAsc" value="false"/>
+										<c:if test="${not empty param.asc and param.asc == false and param.sortBy == 'name'}">
+											<c:set var="newAsc" value="true"/>
+										</c:if>
+
+										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=name&asc=${newAsc}">
+											Name 
+											<c:if test="${newAsc == false}">&#9660;</c:if>
+											<c:if test="${newAsc == true}">&#9650;</c:if>
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="false"/>
+										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'login'}">
+											<c:set var="newAsc" value="true"/>
+										</c:if>
+										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
+											Login 
+											<c:if test="${newAsc == false}">&#9660;</c:if>
+											<c:if test="${newAsc == true}">&#9650;</c:if>
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="false"/>
+										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'group'}">
+											<c:set var="newAsc" value="true"/>
+										</c:if>
+
+										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=group&asc=${newAsc}">
+											Group 
+											<c:if test="${newAsc == false}">&#9660;</c:if>
+											<c:if test="${newAsc == true}">&#9650;</c:if>
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="false"/>
+										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'email'}">
+											<c:set var="newAsc" value="true"/>
+										</c:if>
+
+										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=email&asc=${newAsc}">
+											E-main 
+											<c:if test="${newAsc == false}">&#9660;</c:if>
+											<c:if test="${newAsc == true}">&#9650;</c:if>
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="false"/>
+										<c:if test="${not empty param.asc && param.asc == false && param.sortBy == 'createDate'}">
+											<c:set var="newAsc" value="true"/>
+										</c:if>
+
+										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=createDate&asc=${newAsc}">
+											Join date 
+											<c:if test="${newAsc == false}">&#9660;</c:if>
+											<c:if test="${newAsc == true}">&#9650;</c:if>
+										</a>
+									</th>
 							        <th class="hidden">id</th>								
 				        		</tr>
 				        	</thead>
@@ -42,6 +101,7 @@
 										<td class="unique">${users.login}</td>
 										<td>${users.group}</td>
 										<td>${users.email}</td>
+										<td>${users.createDate}</td>
 										<td class="hidden idField">${users.id}</td>
 									</tr>
 								</c:forEach>
@@ -73,8 +133,70 @@
 
 						</div>
 					</div>
+					</div>
+					<div class="col-sm-1">
+					</div>
 				</div>
 			</div>
+
+			<center class="before-footer">				
+		    	<c:if test="${endPage > 1}">
+					<ul class="pagination">
+						<c:if test="${beginPage > previousPage}">
+							<li class="page-item">
+								<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${previousPage}&sortBy=${param.sortBy}&asc=${param.asc}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+						</c:if>
+
+						
+						
+						<c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
+							<c:if test="${i.index == currentPage}">
+									<c:set var="isActive" value="active"/>
+							</c:if>
+							<c:if test="${i.index != currentPage}">
+									<c:set var="isActive" value=""/>
+							</c:if>
+							<li class="page-item ${isActive}">
+								<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${i.index}&sortBy=${param.sortBy}&asc=${param.asc}">
+									${i.index}
+								</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${endPage < nextPage}">
+							<li class="page-item">
+								<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${nextPage}&sortBy=${param.sortBy}&asc=${param.asc}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+				</c:if>	
+				<div class="row">
+					<div class="col-sm-3">
+					</div>
+
+					<div class="col-sm-3">
+						<label class="pull-right control-label">Users per page:</label>
+					</div>
+
+					<div class="col-sm-2">
+						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
+				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="?itemsPerPage=5&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">5</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="?itemsPerPage=10&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">10</option>
+				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="?itemsPerPage=15&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">15</option>
+				        </select>
+			        </div>
+
+			        <div class="col-sm-4">
+					</div>
+		        </div>
+			</center>
 
 			<%@ include file="/html/footer.html" %>
 		</div>

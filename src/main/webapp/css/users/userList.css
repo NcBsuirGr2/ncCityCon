@@ -1,3 +1,9 @@
 .panel-heading {
 	font-size: 24px;
 }
+.panel {
+	margin: 20px 10px 0px;
+}
+#itemsPerPageSelect {
+	width: 80px;
+}

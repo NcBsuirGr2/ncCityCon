@@ -44,26 +44,54 @@ public class UserListServlet extends AbstractHttpServlet {
 		String sortBy = "name";
 		boolean asc = true;
 
-		if(pageString != null) {
+		if(pageString != null && !pageString.equals("")) {
 			page = Integer.parseInt(pageString);
 		}
-		if(itemsPerPageString != null) {
+		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
 			itemsPerPage = Integer.parseInt(itemsPerPageString);
 		}
-		if(sortByString != null) {
+		if(sortByString != null && !sortByString.equals("")) {
 			sortBy = sortByString;
 		}
-		if(ascString != null) {
+		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
 		}
+		logger.debug("getPage query with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}", 
+																page, itemsPerPage, sortBy, asc);
 		try {
+			//TODO: fix this dirty hack and use special DAO method when it will be accomplished.
+			UserEntity[] allUsers = ORMUser.getPage(1, 9999, "name", true);
+			int usersNum = allUsers.length;
+			int pagesNum = (int)Math.ceil((double)usersNum / (double)itemsPerPage);			
+			logger.debug("Items:{} pages:{}", usersNum, pagesNum);
+			// -------------
+			
+			// Pagination variables
+			int currentPage = page;
+			int beginPage = (page/10)*10;
+			int endPage = beginPage+9;
+			if(beginPage < 1) beginPage = 1;
+			if(endPage > pagesNum) endPage = pagesNum;
+
+			int previousPage = currentPage-10;
+			int nextPage = currentPage+10;
+			if(previousPage < 1) previousPage = 1;
+			if(nextPage > pagesNum) nextPage = pagesNum;
+
+			req.setAttribute("currentPage", currentPage);
+			req.setAttribute("beginPage", beginPage);
+			req.setAttribute("endPage", endPage);
+			req.setAttribute("previousPage", previousPage);
+			req.setAttribute("nextPage", nextPage);		
+			// -------------
+			
 			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException exception) {
-			res.sendRedirect("/users?errorType=invalidData");
-			logger.debug("Invalid getPage data", e);
-		} catch (DAOException e) {
+			res.sendRedirect("#");
+			logger.debug("Invalid getPage data", exception);
+		} catch (DAOException exception) {
 			req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
 		}
 	}

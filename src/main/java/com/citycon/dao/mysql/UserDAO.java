@@ -46,6 +46,7 @@ public class UserDAO extends MySQLDAO {
      */
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
                                             throws InvalidDataDAOException, InternalDAOException {
+
         PreparedStatement search_users = null;
         ResultSet resultSet = null;
 
@@ -73,6 +74,8 @@ public class UserDAO extends MySQLDAO {
         try {
             search_users.setInt(1, (page-1)*itemsPerPage);
             search_users.setInt(2, itemsPerPage);
+
+            logger.trace("getPage query:{}", search_users);
 
             resultSet =  search_users.executeQuery();
 
