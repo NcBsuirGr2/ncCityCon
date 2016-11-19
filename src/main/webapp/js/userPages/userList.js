@@ -4,11 +4,13 @@ $(document).ready(function() {
 		$("#deleteId").val(document.selectedId);
 		console.log(document.selectedId);
     });
-    $("#deleteForm").submit(function(event) {
-    	console.log($("#deleteId").val());
-		if($("#deleteId").val() <= 0) {
-			event.preventDefault();
-			alert("Select user");	
-		} 
-	});
+    $(".deleteDialog").on("show.bs.modal", function(e) {
+    	console.log("Delete dialog");
+    	console.log(document.selectedId);
+    	if (!document.selectedId) {
+    		e.preventDefault();
+    		$(".selectUserModal").modal('show');
+    		//alert("Select user");
+    	}
+    });
 });

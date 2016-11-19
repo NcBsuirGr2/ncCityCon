@@ -145,10 +145,46 @@
 								<form action="/user" id="deleteForm" method="POST">
 									<input type="hidden" id="deleteId" name="id" value="-1">
 									<input type="hidden" name="type" value="delete">
-									<input type=submit class="btn btn-primary center-block" value="Delete"></input>
+									<button type="button" class="btn btn-primary deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 						    	</form>		
 							</div>
+							<!-- Delete dialog modal -->
+							<div class="modal fade deleteDialog">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<h4 class="modal-title">Confirm deletion</h4>
+										</div>
 
+										<div class="modal-body">
+											<p>Are you sure you want to delete selected user?</p>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+											<input type=submit class="btn btn-primary" form="deleteForm" value="Delete"></input>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Select user modal -->
+							<div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-body">
+											<h4 class="modal-title">No user selected</h4>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					</div>
