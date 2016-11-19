@@ -24,15 +24,16 @@ public class UserDAO extends MySQLDAO {
      */
     private UserDAO() throws InternalDAOException {
         super();
-        nameTable = " User ";
+        nameTable = " `User` ";
         logger = LoggerFactory.getLogger("com.citycon.dao.mysql.UserDAO");
 
-        hashMap.put("id", "ID");
-        hashMap.put("login", "Login");
-        hashMap.put("email", "E-mail");
-        hashMap.put("name", "Name");
-        hashMap.put("group", "Group");
-        hashMap.put("createDate", "create_date");
+        hashMap.put("", "`ID`");
+        hashMap.put("id", "`ID`");
+        hashMap.put("login", "`Login`");
+        hashMap.put("email", "`E-mail`");
+        hashMap.put("name", "`Name`");
+        hashMap.put("group", "`Group`");
+        hashMap.put("createDate", "`create_date`");
     }
 
     /**
@@ -56,7 +57,16 @@ public class UserDAO extends MySQLDAO {
         String search = "";
 
         if(sorter != null) {
-            search = "select * from " + nameTable + " order by " + sorter + " limit ?,?";
+            String sorting_direction = "";
+
+            if(asc){
+                sorting_direction = " asc ";
+            }
+            else {
+                sorting_direction = " desc ";
+            }
+
+            search = "select * from " + nameTable + " order by " + sorter + sorting_direction + " limit ?,?";
         }
         else {
             logger.info("Enter parameter to sort in read are invalid");
@@ -103,7 +113,7 @@ public class UserDAO extends MySQLDAO {
                 try {
                     search_users.close();
                 } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in getPage false",e);
+                    logger.warn("Close PrepareStatement in getPage user false",e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -111,7 +121,7 @@ public class UserDAO extends MySQLDAO {
                 try{
                     resultSet.close();
                 }catch (SQLException e){
-                    logger.warn("Close ResultSet in getPage false",e);
+                    logger.warn("Close ResultSet in getPage user false",e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -119,6 +129,7 @@ public class UserDAO extends MySQLDAO {
 
         return users.toArray(new UserEntity[users.size()]);
     }
+
 
     /**
      * @param newElement
@@ -172,7 +183,7 @@ public class UserDAO extends MySQLDAO {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in create false", e);
+                    logger.warn("Close PrepareStatement in create user false", e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -190,7 +201,7 @@ public class UserDAO extends MySQLDAO {
         PreparedStatement search_user = null;
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where Login=?";
+        String search = "select * from" + nameTable + "where `Login`=?";
 
         try {
             user = (UserEntity) readElement;
@@ -200,7 +211,7 @@ public class UserDAO extends MySQLDAO {
         }
 
         if (user.getPassword() != null){
-            search += " and Pass=?";
+            search += " and `Pass`=?";
         }
 
         if(user.getLogin() != null) {
@@ -382,7 +393,7 @@ public class UserDAO extends MySQLDAO {
 
         Grant grant = new Grant();
 
-        String search = "select * from `Grant` where idGrant=?";
+        String search = "select * from `Grant` where `idGrant`=?";
 
         try {
             search_grant = connection.prepareStatement(search);

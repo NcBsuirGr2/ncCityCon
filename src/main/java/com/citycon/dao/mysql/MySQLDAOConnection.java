@@ -29,7 +29,7 @@ public class MySQLDAOConnection {
         try {
             Class.forName(MYSQL_CONNECTOR_CLASS);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            logger.info("Connection create");
+            logger.trace("Connection create");
         } catch (ClassNotFoundException e) {
             logger.warn("Driver for database failed");
             throw new InternalDAOException("Driver for database failed", e);
