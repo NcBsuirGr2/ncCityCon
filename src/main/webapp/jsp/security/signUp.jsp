@@ -48,13 +48,13 @@
                         <div class="modal-body">
                             <form class="form" method="POST" action="/signup">
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-lg" placeholder="Login" name="login">
+                                    <input type="text" class="form-control input-lg" required placeholder="Login" name="login">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control input-lg" placeholder="Password" name="password">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control input-lg" placeholder="e-mail" name="e-mail">
+                                    <input type="email" class="form-control input-lg" required placeholder="e-mail" name="e-mail">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control input-lg" placeholder="name" name="name">

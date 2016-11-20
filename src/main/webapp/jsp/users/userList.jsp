@@ -98,7 +98,7 @@
 										</c:if>
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=email&asc=${newAsc}">
-											E-main 
+											E-mail 
 											<c:if test="${param.sortBy == 'email'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
