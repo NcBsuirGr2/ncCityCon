@@ -11,8 +11,11 @@ package com.citycon.model.systemunits.entities;
 public class RouterConnectionEntity extends Entity {
 	private int firstRouterId;
 	private String firstRouterSN;
+	private String firstRouterCityName;
+
 	private int secondRouterId;
 	private String secondRouterSN;
+	private String secondRouterCityName;
 
 	public int getFirstRouterId() {
 		return firstRouterId;
@@ -25,6 +28,12 @@ public class RouterConnectionEntity extends Entity {
 	}
 	public String getSecondRouterSN() {
 		return secondRouterSN;
+	}
+	public String getFirstRouterCityName() {
+		return firstRouterCityName;
+	}
+	public String getSecondRouterCityName() {
+		return secondRouterCityName;
 	}
 
 	public void setFirstRouterId(int firstRouterId) {
@@ -39,6 +48,12 @@ public class RouterConnectionEntity extends Entity {
 	public void setSecondRouterSN(String secondRouterSN) {
 		this.secondRouterSN = secondRouterSN;
 	}
+	public void setFirstRouterCityName(String firstRouterCityName) {
+		this.firstRouterCityName = firstRouterCityName;
+	}
+	public void setSecondRouterCityName(String secondRouterCityName) {
+		this.secondRouterCityName = secondRouterCityName;
+	}
 
 	public String toString() {
 		StringBuilder routerConnectionString = new StringBuilder();
@@ -48,10 +63,14 @@ public class RouterConnectionEntity extends Entity {
 		routerConnectionString.append(firstRouterId);
 		routerConnectionString.append("), firstRouterSN(");
 		routerConnectionString.append(firstRouterSN);
+		routerConnectionString.append("), firstRouterCityName(");
+		routerConnectionString.append(firstRouterCityName);
 		routerConnectionString.append("), secondRouterId(");
 		routerConnectionString.append(secondRouterId);
 		routerConnectionString.append("), secondRouterSN(");
 		routerConnectionString.append(secondRouterSN);
+		routerConnectionString.append("), secondRouterCityName(");
+		routerConnectionString.append(secondRouterCityName);
 		routerConnectionString.append(")");
 		return routerConnectionString.toString();
 	}
