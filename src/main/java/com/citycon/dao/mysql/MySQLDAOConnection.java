@@ -15,7 +15,7 @@ public class MySQLDAOConnection {
 
     private static volatile MySQLDAOConnection instance;
 
-    private Connection connection;
+    private ConnectionPool connectionPool;
 
     private final String MYSQL_CONNECTOR_CLASS = "com.mysql.jdbc.Driver";
 
@@ -23,21 +23,20 @@ public class MySQLDAOConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "nc_2groupDB";
 
+    private Logger logger;
+
     /**
      * @throws InternalDAOException
      */
     private MySQLDAOConnection() throws InternalDAOException {
-        Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
+        logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
         try {
             Class.forName(MYSQL_CONNECTOR_CLASS);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            logger.trace("Connection create");
+            connectionPool = new ConnectionPool(URL, USERNAME, PASSWORD);
+            logger.trace("ConnectionPool create");
         } catch (ClassNotFoundException e) {
             logger.error("Driver for database failed");
             throw new InternalDAOException("Driver for database failed", e);
-        } catch (SQLException e) {
-            logger.error("Connect to database failed");
-            throw new InternalDAOException("Connect to database failed", e);
         }
     }
 
@@ -58,28 +57,11 @@ public class MySQLDAOConnection {
     }
 
     public Connection getConnection() throws InternalDAOException {
-        return connection;
-    }
-
-    public static void close() throws InternalDAOException {
-        Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.MySQLDAOConnection");
-
-        
-        synchronized (MySQLDAOConnection.class) {
-            logger.trace("Trying to close connection");
-            if (instance != null) {
-                try {
-                    instance.connection.close();
-                    instance = null;
-                    logger.trace("Connection close");
-                } catch (SQLException e) {
-                    logger.error("Connection close failed", e);
-                    throw new InternalDAOException("Connection close failed", e);
-                } catch (Throwable throwable) {
-                    logger.error("Destroy MySQLConnection failed", throwable);
-                    throw new InternalDAOException("Destroy MySQLConnection failed", throwable);
-                }
-            }
+        try {
+            return connectionPool.getConnection();
+        } catch (SQLException e) {
+            logger.error("Get connection failed", e);
+            throw new InternalDAOException("Get connection failed", e);
         }
     }
 

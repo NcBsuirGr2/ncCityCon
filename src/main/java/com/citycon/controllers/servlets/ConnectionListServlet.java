@@ -36,7 +36,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         RequestDispatcher view = null;
         try {
 
-            connections = ORMRouterConnection.getPage(1,20,"Name",true);
+            connections = ORMRouterConnection.getPage(1,20,"id",true);
             request.setAttribute("entityArray", connections);
 
             view = request.getRequestDispatcher(RUTERS_LIST_PAGE);

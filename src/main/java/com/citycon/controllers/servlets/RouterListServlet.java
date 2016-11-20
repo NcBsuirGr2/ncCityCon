@@ -32,7 +32,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
         RequestDispatcher view = null;
         try {
 
-            routers = ORMRouter.getPage(1,20,"Name",true);
+            routers = ORMRouter.getPage(1,20,"name",true);
             request.setAttribute("entityArray", routers);
 
             view = request.getRequestDispatcher(RUTERS_LIST_PAGE);
