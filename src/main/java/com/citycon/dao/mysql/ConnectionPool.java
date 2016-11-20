@@ -1,14 +1,5 @@
 package com.citycon.dao.mysql;
 
-/**
- * Created by Vojts on 20.11.2016.
- */
-/*
- * Copyright Aduna (http://www.aduna-software.com/) (c) 1997-2006.
- *
- * Licensed under the Aduna BSD-style license.
- */
-
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;

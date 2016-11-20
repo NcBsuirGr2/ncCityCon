@@ -1,19 +1,22 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.*;
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
+import com.citycon.model.systemunits.entities.RouterEntity;
 import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterConnectionDAO extends MySQLDAO {
+public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter{
 
     /**
      * @throws InternalDAOException
@@ -305,6 +308,185 @@ public class RouterConnectionDAO extends MySQLDAO {
                 }
             }
         }
+    }
+
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city) throws InvalidDataDAOException, InternalDAOException {
+        return new RouterConnectionEntity[0];
+    }
+
+    /**
+     * @param city
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    public int count_element(CityEntity city) throws InternalDAOException, InvalidDataDAOException {
+
+        int count = 0;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String search = "";
+
+        if (city.getName() != null && city.getCountryName() != null){
+            search = "select count(`RouterConnection`.`ID`) from `RouterConnection` inner join " +
+                        "(select `Router`.`ID` " +
+                            "from `Router` inner join `City` " +
+                            "on (`Router`.`City_id`=`City`.`ID`) " +
+                            "where (`City`.`Name` = ? and `City`.`Country` = ?) " +
+                        ") `routers`" +
+                    "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
+                    " or `RouterConnection`.`ID_To` = `routers`.`ID`) ";
+        }
+        else{
+            logger.info("For reading router connection incorrectly chosen field, try name and country");
+            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
+                    " try name and country");
+        }
+
+        try {
+            preparedStatement = connection.prepareStatement(search);
+        } catch (SQLException e) {
+            logger.warn("PrepareStatement in get count wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
+        }
+
+        String log_parameters = "With parameters: City(" + city.getName() + "), Country(" +
+                city.getCountryName() + ")";
+
+        try {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements. {}", log_parameters);
+            }
+        } catch (SQLException e) {
+            logger.info("Get count elements failed. {}", log_parameters, e);
+            throw new InternalDAOException("Get count elements failed.", e);
+        }
+        finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param router
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
+        return new RouterConnectionEntity[0];
+    }
+
+    /**
+     * @param router
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    public int count_element(RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
+        int count = 0;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String search = "";
+
+        if (router.getSN() != null){
+            search = "select count(`RouterConnection`.`ID`) from RouterConnection inner join `Router` " +
+                     "on (`RouterConnection`.`ID_From` = `Router`.`ID` " +
+                     "or `RouterConnection`.`ID_To` = `Router`.`ID`) " +
+                     "where `Router`.`SN` = ?";
+        }
+        else{
+            logger.info("For reading router connection incorrectly chosen field, try SN");
+            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
+                    " try SN");
+        }
+
+        try {
+            preparedStatement = connection.prepareStatement(search);
+        } catch (SQLException e) {
+            logger.warn("PrepareStatement in get count wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
+        }
+
+        String log_parameters = "With parameters: SN(" + router.getSN() + ")";
+
+        try {
+            preparedStatement.setString(1, router.getSN());
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements. {}", log_parameters);
+            }
+        } catch (SQLException e) {
+            logger.info("Get count elements failed. {}", log_parameters, e);
+            throw new InternalDAOException("Get count elements failed.", e);
+        }
+        finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
     }
 
     /**
