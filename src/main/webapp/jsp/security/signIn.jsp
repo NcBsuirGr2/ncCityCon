@@ -10,7 +10,7 @@
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
-        <link href="/css/security/common.css" rel="stylesheet" type="text/css">
+        <link href="/css/securityPages/common.css" rel="stylesheet" type="text/css">
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -32,7 +32,7 @@
                     <strong>Error</strong> 
                     <c:choose>
                         <c:when test="${param.errorType == 'invalidData'}">
-                            Wrong login login or password.
+                            Wrong login or password.
                         </c:when>
                     </c:choose>
                 </div>

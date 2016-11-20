@@ -13,7 +13,7 @@
 
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
-		<link rel="stylesheet" type="text/css" href="/css/users/userList.css">
+		<link rel="stylesheet" type="text/css" href="/css/userPages/userList.css">
 		<link rel="icon" href="favicon.ico" />
 		
 		<title>Users</title>
@@ -45,7 +45,7 @@
 			<div class="col-sm-10">
 				<div class="panel panel-default">
 					<center class="panel-heading">
-						List Users
+						CityCon Users
 					</center>
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
@@ -123,14 +123,14 @@
 				        		</tr>
 				        	</thead>
 				        	<tbody>
-								<c:forEach items="${entityArray}" var="users">
+								<c:forEach items="${entityArray}" var="user">
 									<tr>
-										<td>${users.name}</td>
-										<td class="unique">${users.login}</td>
-										<td>${users.group}</td>
-										<td>${users.email}</td>
-										<td>${users.createDate}</td>
-										<td class="hidden idField">${users.id}</td>
+										<td>${user.name}</td>
+										<td class="unique">${user.login}</td>
+										<td>${user.group}</td>
+										<td>${user.email}</td>
+										<td>${user.createDate}</td>
+										<td class="hidden idField">${user.id}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -246,7 +246,7 @@
 					</div>
 
 					<div class="col-sm-3">
-						<label class="pull-right control-label">Users per page:</label>
+						<label class="pull-right control-label">Items per page:</label>
 					</div>
 
 					<div class="col-sm-2">

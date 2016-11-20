@@ -15,9 +15,8 @@ import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
 /**
- * Used to show the list of users. Support pagination. Redirects to the
- * same page if some pagination data is invlaid and redirects to the error
- * page if DAOException occurs.
+ * Used to show the list of users. Support pagination. Redirects to the last available
+ * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  * 	
  * @author Mike
  * @version 0.2
@@ -34,83 +33,49 @@ public class UserListServlet extends AbstractHttpServlet {
 	protected void doGet(HttpServletRequest req, 
 		HttpServletResponse res) throws ServletException, IOException {
 
-		String pageString = req.getParameter("page");
-		String itemsPerPageString = req.getParameter("itemsPerPage");
-		String sortByString = req.getParameter("sortBy");
-		String ascString = req.getParameter("asc");
-
-		int page = 1;
-		int itemsPerPage = 10;
-		String sortBy = "name";
-		boolean asc = true;
 		try {
-			if(pageString != null && !pageString.equals("")) {
-			page = Integer.parseInt(pageString);
-			}
-			if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
-				itemsPerPage = Integer.parseInt(itemsPerPageString);
-			}
-			if(sortByString != null && !sortByString.equals("")) {
-				sortBy = sortByString;
-			}
-		} catch(NumberFormatException exception) {
-			forwardToErrorPage("Invalid search input", req, res);
-		}
-		
-		if(ascString != null && !ascString.equals("")) {
-			asc = ascString.equals("true");
-		}
-
-		logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}", 
-																page, itemsPerPage, sortBy, asc);
-		try {
-			int usersNum = ORMUser.getCount();
-			int pagesNum = (int)Math.ceil((double)usersNum / (double)itemsPerPage);	
-				
-			if (usersNum <= (page-1)*itemsPerPage) {
-				page = usersNum/itemsPerPage;
-				if(usersNum != page*itemsPerPage) {
-					page += 1;
-				}
+			//If page must be normalized (negative or too large)
+			if (!setPaginationVariables(ORMUser.getCount(), req, res)) {
 				StringBuilder redirect = new StringBuilder();
-				redirect.append("/users?page=");
-				redirect.append(page);
-				redirect.append("&itemsPerPage=");
-				redirect.append(itemsPerPage);
-				redirect.append("&sortBy=");
-				redirect.append(sortBy);
-				redirect.append("&asc=");
-				redirect.append(asc);
-				logger.debug("Redirect to the "+redirect.toString());
-				res.sendRedirect(redirect.toString());
-				return;
+					redirect.append("/users?page=");
+					redirect.append(req.getAttribute("currentPage")); // normalized page
+					redirect.append("&itemsPerPage=");
+					redirect.append(req.getParameter("itemsPerPage"));
+					redirect.append("&sortBy=");
+					redirect.append(req.getParameter("sortBy"));
+					redirect.append("&asc=");
+					redirect.append(req.getParameter("asc"));
+					logger.debug("Incorrect page, redirect to the "+redirect.toString());
+					res.sendRedirect(redirect.toString());
+					return;
 			}
-			// Pagination variables
-			int currentPage = page;
-			int beginPage = (page/10)*10;
-			int endPage = beginPage+9;
-			if(beginPage < 1) beginPage = 1;
-			if(endPage > pagesNum) endPage = pagesNum;
 
-			int previousPage = currentPage-10;
-			int nextPage = currentPage+10;
-			if(previousPage < 1) previousPage = 1;
-			if(nextPage > pagesNum) nextPage = pagesNum;
+			
 
-			req.setAttribute("currentPage", currentPage);
-			req.setAttribute("beginPage", beginPage);
-			req.setAttribute("endPage", endPage);
-			req.setAttribute("previousPage", previousPage);
-			req.setAttribute("nextPage", nextPage);		
-			// -------------
+			String sortByReq = req.getParameter("sortBy");
+			String sortBy = "name";
+			if(sortByReq != null && !sortByReq.equals("")) {
+				sortBy = sortByReq;
+			}
+
+			int page = (int)req.getAttribute("currentPage");
+			int itemsPerPage = (int)req.getAttribute("itemsPerPage");
+			boolean asc = (boolean)req.getAttribute("asc");
+
+			logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+																page, itemsPerPage, sortBy, asc);
+
 			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
-		} catch (InvalidDataDAOException exception) {
+		} catch (InvalidDataDAOException | NumberFormatException exception) {
 			forwardToErrorPage("Invalid search input", req, res);
 			logger.debug("Invalid getPage data", exception);
 		} catch (DAOException exception) {
 			forwardToErrorPage("Internal DAO exception", req, res);
+		} catch (ClassCastException exception) {
+			logger.warn("Cannot cast", exception);
+			forwardToErrorPage("Internal server error", req, res);
 		}
 	}
 	

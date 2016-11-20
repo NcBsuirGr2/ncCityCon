@@ -12,7 +12,7 @@
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
-        <link href="/css/security/common.css" rel="stylesheet" type="text/css">
+        <link href="/css/securityPages/common.css" rel="stylesheet" type="text/css">
 
         <link rel="icon" href="favicon.ico" />
     </head>
@@ -29,7 +29,7 @@
                         <strong>Error</strong> 
                         <c:choose>
                             <c:when test="${param.errorType == 'invalidData'}">
-                                Wrong login login or password.
+                                Wrong login or password.
                             </c:when>
                             <c:when test="${param.errorType == 'dublicate'}">
                                 User with such login or e-mail already exists.

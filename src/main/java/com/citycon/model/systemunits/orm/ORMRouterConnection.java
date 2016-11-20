@@ -103,4 +103,14 @@ public class ORMRouterConnection extends ORMEntity {
         DAO staticDAO = daoFactory.getRouterConnectionDAO();
         return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
+    /**
+     *	Retrieves total nuber of connetions from DAO layer.
+     * 
+     * @return int nuber of connections
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount() throws DAOException {
+    	DAO staticDAO = daoFactory.getRouterConnectionDAO();
+        return staticDAO.count_element();
+    }
 }	
