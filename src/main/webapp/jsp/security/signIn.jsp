@@ -10,6 +10,7 @@
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
+        <link href="/css/security/common.css" rel="stylesheet" type="text/css">
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -25,28 +26,40 @@
          <%@ include file="/html/header.jsp" %>
             <div class="before-footer">
 
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+            <c:if test="${not empty param.errorType}">
+                <div class="alert alert-warning alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error</strong> 
+                    <c:choose>
+                        <c:when test="${param.errorType == 'invalidData'}">
+                            Wrong login login or password.
+                        </c:when>
+                    </c:choose>
+                </div>
+            </c:if> 
 
-                            <div class="modal-header">
-                                <h2 class="text-center">Sign in to CityCon</h2>
-                            </div>
+                <div class="modal-dialog">
+                    <div class="modal-content">
 
-                            <div class="modal-body">
-                                <form class="form" method="post" action="/signin">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-lg" placeholder="Login" name="login">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control input-lg" placeholder="Password" name="password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="modal-header">
+                            <h2 class="text-center">Sign in to CityCon</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <form class="form" method="post" action="/signin">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="Login" name="login">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
 
 
                 <div class="modal-dialog" style="margin-bottom: 10px">

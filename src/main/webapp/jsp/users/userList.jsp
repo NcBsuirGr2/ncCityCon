@@ -106,9 +106,9 @@
 										</a>
 									</th>
 									<th>
-										<c:set var="newAsc" value="false"/>
+										<c:set var="newAsc" value="true"/>
 										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'createDate'}">
-											<c:set var="newAsc" value="true"/>
+											<c:set var="newAsc" value="false"/>
 										</c:if>
 
 										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=createDate&asc=${newAsc}">

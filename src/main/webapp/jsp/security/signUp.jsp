@@ -12,6 +12,8 @@
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link href="/css/security/common.css" rel="stylesheet" type="text/css">
+
         <link rel="icon" href="favicon.ico" />
     </head>
 
@@ -20,6 +22,21 @@
             <%@ include file="/html/header.jsp" %>
 
             <div class="before-footer">
+
+                <c:if test="${not empty param.errorType}">
+                    <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error</strong> 
+                        <c:choose>
+                            <c:when test="${param.errorType == 'invalidData'}">
+                                Wrong login login or password.
+                            </c:when>
+                            <c:when test="${param.errorType == 'dublicate'}">
+                                User with such login or e-mail already exists.
+                            </c:when>
+                        </c:choose>
+                    </div>
+                </c:if> 
 
                 <div class="modal-dialog" style="margin-bottom: 10px">
                     <div class="modal-content">

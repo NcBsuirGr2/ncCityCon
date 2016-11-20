@@ -228,7 +228,11 @@ public class UserDAO extends MySQLDAO {
 
         if(user.getLogin() != null) {
             try{
+                logger.debug("Before preparedStatement");
+                logger.debug("Connection: {}", connection.isClosed());
                 search_user = connection.prepareStatement(search);
+                logger.debug("After preparedStatement");
+                logger.debug("Connection: {}", connection.isClosed());
             }catch (SQLException e) {
                 logger.warn("PreparedStatement in read wasn't created", e);
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
@@ -240,9 +244,11 @@ public class UserDAO extends MySQLDAO {
                 if(user.getPassword() != null) {
                     search_user.setString(2, user.getPassword());
                 }
-
+                logger.debug("Before resultSet");
+                logger.debug("Connection: {}", connection.isClosed());
                 resultSet =  search_user.executeQuery();
-
+                logger.debug("After resultSet");
+                logger.debug("Connection: {}", connection.isClosed());
                 if(resultSet.first()) {
                     user.setId(resultSet.getInt("id"));
                     user.setLogin(resultSet.getString("Login"));
