@@ -139,23 +139,29 @@
 						<div class="row">
 
 							<div class="col-sm-4">
-								<a href="/user?action=add">
-									<button class="btn btn-primary center-block">Add</button>
-								</a>
+								<c:if test="${showUsersOperationBtns}">
+									<a href="/user?action=add">
+										<button class="btn btn-primary center-block">Add</button>
+									</a>
+								</c:if>
 							</div>
 
 							<div class="col-sm-4"> 
-								<a class="editHref" href="#"> 
-									<button class="btn btn-primary center-block">Edit</button>
-								</a>
+								<c:if test="${showUsersOperationBtns}">
+									<a class="editHref" href="#"> 
+										<button class="btn btn-primary center-block">Edit</button>
+									</a>
+								</c:if>
 							</div>
 
 							<div class="col-sm-4">
+							<c:if test="${showUsersOperationBtns}">
 								<form action="/user" id="deleteForm" method="POST">
 									<input type="hidden" id="deleteId" name="id" value="-1">
 									<input type="hidden" name="type" value="delete">
 									<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-						    	</form>		
+						    	</form>	
+					    	</c:if>	
 							</div>
 							<!-- Delete dialog modal -->
 							<div class="modal fade deleteDialog">

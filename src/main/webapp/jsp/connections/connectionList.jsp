@@ -65,7 +65,7 @@
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == 'true' and (param.sortBy == 'SN1' or empty param.sortBy))}">
+										<c:if test="${empty param.asc or (param.asc == 'true' and (param.sortBy == 'SN1' or (empty param.sortBy)))}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
@@ -139,23 +139,29 @@
 						<div class="row">
 
 							<div class="col-sm-4">
-								<a href="/connection?action=add">
-									<button class="btn btn-primary center-block">Add</button>
-								</a>
+								<c:if test="${showSystemUnitsOperationBtns}">
+									<a href="/connection?action=add">
+										<button class="btn btn-primary center-block">Add</button>
+									</a>
+								</c:if>
 							</div>
 
 							<div class="col-sm-4"> 
-								<a class="editHref" href="#"> 
-									<button class="btn btn-primary editBtn center-block">Edit</button>
-								</a>
+								<c:if test="${showSystemUnitsOperationBtns}">
+									<a class="editHref" href="#"> 
+										<button class="btn btn-primary editBtn center-block">Edit</button>
+									</a>
+								</c:if>
 							</div>
 
 							<div class="col-sm-4">
-								<form action="/connection" id="deleteForm" method="POST">
-									<input type="hidden" id="deleteId" name="id" value="-1">
-									<input type="hidden" name="type" value="delete">
-									<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-						    	</form>		
+								<c:if test="${showSystemUnitsOperationBtns}">
+									<form action="/connection" id="deleteForm" method="POST">
+										<input type="hidden" id="deleteId" name="id" value="-1">
+										<input type="hidden" name="type" value="delete">
+										<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+							    	</form>		
+							    </c:if>
 							</div>
 							<!-- Delete dialog modal -->
 							<div class="modal fade deleteDialog">
@@ -203,7 +209,74 @@
 			</div>
 			
 			<center class="before-footer">				
-		    	<%@ include file="/include/pagination.jsp" %>
+		    	<!-- Pagination block -->	
+		    	<c:choose>
+		    		<c:when test="${not empty param.SN}">
+		    			<c:set var="paginationPath" value="?SN=${param.SN}&itemsPerPage=${param.itemsPerPage}&sortBy=${param.sortBy}&asc=${param.asc}"/>
+		    		</c:when>
+		    		<c:otherwise>
+		    			<c:set var="paginationPath" value="?country=${param.country}&city=${param.city}&itemsPerPage=${param.itemsPerPage}&sortBy=${param.sortBy}&asc=${param.asc}"/>
+		    		</c:otherwise>
+		    	</c:choose>
+		    			
+				<c:if test="${endPage > 1}">
+					<ul class="pagination">
+						<c:if test="${beginPage > previousPage}">
+							<li class="page-item">
+								<a class="page-link" href="${paginationPath}&page=${previousPage}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+						</c:if>
+
+						
+						
+						<c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
+							<c:if test="${i.index == currentPage}">
+									<c:set var="isActive" value="active"/>
+							</c:if>
+							<c:if test="${i.index != currentPage}">
+									<c:set var="isActive" value=""/>
+							</c:if>
+							<li class="page-item ${isActive}">
+								<a class="page-link" href="${paginationPath}&page=${i.index}">
+									${i.index}
+								</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${endPage < nextPage}">
+							<li class="page-item">
+								<a class="page-link" href="${paginationPath}&page=${nextPage}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+				</c:if>	
+
+				<div class="row">
+					<div class="col-sm-3">
+					</div>
+
+					<div class="col-sm-3">
+						<label class="pull-right control-label">Items per page:</label>
+					</div>
+
+					<div class="col-sm-2">
+						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
+				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="?itemsPerPage=5&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">5</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="?itemsPerPage=10&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">10</option>
+				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="?itemsPerPage=15&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">15</option>
+				        </select>
+				    </div>
+
+				    <div class="col-sm-4">
+					</div>
+				</div>
+				<!-- Pagination -->
 			</center>
 
 			<%@ include file="/include/footer.html" %>
