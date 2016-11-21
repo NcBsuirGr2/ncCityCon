@@ -5,8 +5,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
+
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="/js/userPages/userEdit.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="icon" href="favicon.ico" />
         <title>Edit user</title>
     </head>
 <body>
@@ -63,14 +66,35 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-6">
-                            <input type="submit" class="btn btn-primary btn-block center-block" form="form" value="Save"/>
-                            
+                            <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
                             <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    
+                <!-- Save dialog modal -->
+                <div class="modal fade changesDialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Confirm changes</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>Are you sure you want to apply changes?</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <input type="submit" class="btn btn-primary" form="form" value="Yes"/> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

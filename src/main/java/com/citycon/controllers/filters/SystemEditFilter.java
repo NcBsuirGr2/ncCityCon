@@ -12,10 +12,6 @@ import java.io.IOException;
  * Created by root on 16.11.16.
  */
 public class SystemEditFilter extends AbstractHttpFilter implements Filter {
-    public void init(FilterConfig config) throws ServletException {
-        // init
-    }
-
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
@@ -25,9 +21,5 @@ public class SystemEditFilter extends AbstractHttpFilter implements Filter {
             forwardToSecurityErrorPage(req,res);
         }
 
-    }
-
-    public void destroy() {
-        // clean up
     }
 }

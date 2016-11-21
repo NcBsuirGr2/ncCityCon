@@ -15,6 +15,7 @@ public class RouterEntity extends Entity {
 	private int portsNum;
 	private boolean isActive;
 	private int cityId;
+	private String cityName;
 
 	public String getName() {
 		return name;
@@ -27,6 +28,9 @@ public class RouterEntity extends Entity {
 	}
 	public boolean isActive() {
 		return isActive;
+	}
+	public String getCityName() {
+		return cityName;
 	}
 
 	public void setName(String name) {
@@ -41,6 +45,9 @@ public class RouterEntity extends Entity {
 	public void isActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
@@ -48,5 +55,24 @@ public class RouterEntity extends Entity {
 
 	public int getCityId() {
 		return cityId;
+	}
+	public String toString() {
+		StringBuilder routerString = new StringBuilder();
+		routerString.append("Router: id(");
+		routerString.append(id);
+		routerString.append("), name(");
+		routerString.append(name);
+		routerString.append("), SN(");
+		routerString.append(SN);
+		routerString.append("), portsNum(");
+		routerString.append(portsNum);
+		routerString.append("), isActive(");
+		routerString.append(isActive);
+		routerString.append("), cityId(");
+		routerString.append(cityId);
+		routerString.append("), cityName(");
+		routerString.append(cityName);
+		routerString.append(")");
+		return routerString.toString();
 	}
 }

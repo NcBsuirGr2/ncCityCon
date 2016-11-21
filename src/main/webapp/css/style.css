@@ -47,3 +47,7 @@ footer{
 .hidden {
 	display: none;
 }
+
+h2 {
+	margin: 10px 0px;
+}

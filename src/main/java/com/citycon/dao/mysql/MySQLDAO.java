@@ -3,9 +3,12 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.DAO;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.Entity;
 import org.slf4j.Logger;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,4 +29,100 @@ public abstract class MySQLDAO implements DAO {
     protected MySQLDAO() throws InternalDAOException {
         connection = MySQLDAOConnection.getInstance().getConnection();
     }
+
+    /**
+     * @return
+     * @throws InternalDAOException
+     */
+    public int count_element() throws InternalDAOException {
+        int count = 0;
+
+        String search = String.format("select count(`id`) from %s", nameTable);
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in get count wasn't created", e);
+            throw new InternalDAOException("Statement in get count wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("Get count elements failed", e);
+            throw new InternalDAOException("Get count elements failed", e);
+        }
+        finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * @param deleteElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
+
+        PreparedStatement preparedStatement = null;
+
+        String delete = "delete from" + nameTable + "where `id`=?";
+
+        try {
+            preparedStatement = connection.prepareStatement(delete);
+        }catch (SQLException e) {
+            logger.warn("Prepare statement in delete wasn't created", e);
+            throw new InternalDAOException("Prepare statement in delete wasn't created", e);
+        }
+
+        try {
+            preparedStatement.setInt(1, deleteElement.getId());
+
+            preparedStatement.executeUpdate();
+
+            logger.trace("Delete was successful");
+        } catch (SQLException e) {
+            logger.info("Delete failed", e);
+            throw new InvalidDataDAOException("Delete failed", e);
+        }
+        finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in delete false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+    }
+
 }

@@ -21,4 +21,6 @@ public interface DAO {
     Entity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc) 
 		throws InvalidDataDAOException, InternalDAOException;
 
+    int count_element() throws InternalDAOException;
+
 }

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$( ".selectable tbody tr" ).on( "click", function() {
-		$(".editHref").attr("href", "/user?action=edit&login="+document.selectedUnique);
+		$(".editHref").attr("href", "/connection?action=edit&id="+document.selectedUnique);
 		$("#deleteId").val(document.selectedId);
 		console.log(document.selectedId);
     });

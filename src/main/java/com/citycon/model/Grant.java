@@ -48,4 +48,13 @@ public class Grant {
 			throw new IllegalArgumentException("The grant level must be in range +" + NONE +".."+ EDIT +", got "+level);
 		}
 	}
+	public String toString() {
+		StringBuilder grantString = new StringBuilder();
+		grantString.append("Grant: usersBranchLevel(");
+		grantString.append(usersBranchLevel);
+		grantString.append("), systemUnitsBranchLevel(");
+		grantString.append(systemUnitsBranchLevel);
+		grantString.append(")");
+		return grantString.toString();
+	}
 }

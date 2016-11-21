@@ -54,9 +54,9 @@ public class SignUpServlet extends AbstractHttpServlet {
                 req.getSession().setAttribute("user", user.getEntity());
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
-                res.sendRedirect("/signin?errorType=dublicate");
+                res.sendRedirect("/signup?errorType=dublicate");
             } catch(InvalidDataDAOException exception) {
-                res.sendRedirect("/signin?errorType=invalidData");
+                res.sendRedirect("/signup?errorType=invalidData");
             } 
         } catch (DAOException exception) {
             // InternalDAOException

@@ -34,7 +34,7 @@ public class CityListServlet extends AbstractHttpServlet {
         try {
 
             //получение данных из БД
-            cities = ORMCity.getPage(1,20,"Name",true);
+            cities = ORMCity.getPage(1,20,"name",true);
             request.setAttribute("entityClass", "cities");
             request.setAttribute("entityArray", cities);
 

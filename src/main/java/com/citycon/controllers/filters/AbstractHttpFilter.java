@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractHttpFilter {
     private static final String ERROR_PAGE = "/jsp/errors/securityError.jsp";
 
+    public void init(FilterConfig config) throws ServletException {
+        // init
+    }
+
     protected void forwardToSecurityErrorPage(ServletRequest req, ServletResponse res) throws ServletException, IOException {
         RequestDispatcher errorPage =req.getRequestDispatcher(ERROR_PAGE);
         errorPage.forward(req, res);
@@ -51,5 +55,9 @@ public abstract class AbstractHttpFilter {
             logger.info("No-http request", e);
         }
         return access;
+    }
+
+    public void destroy() {
+        // clean up
     }
 }
