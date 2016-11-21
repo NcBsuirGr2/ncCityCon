@@ -50,12 +50,12 @@
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
 								<tr>
-									<th>City1</th>
-									<th>SN1</th>
-									<th>id1[temp]></th>
-									<th>City2</th>
-									<th>SN2</th>
-									<th>id2[temp]></th>									
+									<th>City-1</th>
+									<th>SN-1</th>
+									<th>id-1[temp]></th>
+									<th>City-2</th>
+									<th>SN-2</th>
+									<th>id-2[temp]></th>									
 							        <th class="hidden">id</th>								
 				        		</tr>
 				        	</thead>
@@ -85,7 +85,7 @@
 
 							<div class="col-sm-4"> 
 								<a class="editHref" href="#"> 
-									<button class="btn btn-primary center-block">Edit</button>
+									<button class="btn btn-primary editBtn center-block">Edit</button>
 								</a>
 							</div>
 
@@ -93,7 +93,7 @@
 								<form action="/connection" id="deleteForm" method="POST">
 									<input type="hidden" id="deleteId" name="id" value="-1">
 									<input type="hidden" name="type" value="delete">
-									<button type="button" class="btn btn-primary deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+									<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 						    	</form>		
 							</div>
 							<!-- Delete dialog modal -->
@@ -119,8 +119,8 @@
 								</div>
 							</div>
 
-							<!-- Select user modal -->
-							<div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+							<!-- Select connection modal -->
+							<div class="modal fade selectConnectionModal" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog modal-sm">
 									<div class="modal-content">
 										<div class="modal-body">

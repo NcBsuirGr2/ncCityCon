@@ -154,7 +154,7 @@
 								<form action="/user" id="deleteForm" method="POST">
 									<input type="hidden" id="deleteId" name="id" value="-1">
 									<input type="hidden" name="type" value="delete">
-									<button type="button" class="btn btn-primary deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+									<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 						    	</form>		
 							</div>
 							<!-- Delete dialog modal -->
@@ -181,7 +181,7 @@
 							</div>
 
 							<!-- Select user modal -->
-							<div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+							<div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog modal-sm">
 									<div class="modal-content">
 										<div class="modal-body">

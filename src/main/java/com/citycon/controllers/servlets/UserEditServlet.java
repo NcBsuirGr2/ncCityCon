@@ -45,7 +45,6 @@ public class UserEditServlet extends AbstractHttpServlet {
 				return;
 			}
 		}
-		res.setHeader("Allow", "GET, POST, PUT, DELETE");
 		RequestDispatcher editView = req.getRequestDispatcher(USER_EDIT_PAGE);
 		editView.forward(req, res);
 	}

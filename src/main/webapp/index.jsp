@@ -10,7 +10,7 @@
 <body>
 	<div class="content-wrapper">
 		<!-- Header -->
-		<%@ include file="html/header.jsp" %>
+		<%@ include file="include/header.jsp" %>
 
 		<div class="container before-footer">
 			<div class="row">
@@ -30,7 +30,7 @@
 		</div>
 
 		<!-- Footer -->
-		<%@ include file="html/footer.html" %>
+		<%@ include file="include/footer.html" %>
 	</div>
 
 </body>

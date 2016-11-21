@@ -4,13 +4,18 @@ $(document).ready(function() {
 		$("#deleteId").val(document.selectedId);
 		console.log(document.selectedId);
     });
-    $(".deleteDialog").on("show.bs.modal", function(e) {
+    $(".editBtn").on("click", function(event) {
+        if(!document.selectedId) {
+            event.preventDefault();
+            $(".selectConnectionModal").modal('show');
+        }
+    })
+    $(".deleteDialog").on("show.bs.modal", function(event) {
     	console.log("Delete dialog");
     	console.log(document.selectedId);
     	if (!document.selectedId) {
-    		e.preventDefault();
-    		$(".selectUserModal").modal('show');
-    		//alert("Select user");
+    		event.preventDefault();
+    		$(".selectConnectionModal").modal('show');
     	}
     });
 });
