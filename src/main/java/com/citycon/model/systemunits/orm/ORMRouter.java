@@ -57,7 +57,7 @@ public class ORMRouter extends ORMEntity {
 	public void setPortsNum(int portsNum) {
 		router.setPortsNum(portsNum);
 	}
-	public void setIsActive(boolean isActive) {
+	public void IsActive(boolean isActive) {
 		router.isActive(isActive);
 	}
 	public void setCityId(Integer sityId) {
