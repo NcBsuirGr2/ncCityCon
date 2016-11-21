@@ -44,13 +44,23 @@
                         	<div class="form-group row">
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
                                 	<div class="col-xs-7">
-                                    	<input class="form-control" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
+                                        <c:if test="${not empty connection.firstRouterSN}">
+                                    	   <input class="form-control" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
+                                        </c:if>
+                                        <c:if test="${empty connection.firstRouterSN}">
+                                           <input class="form-control" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
+                                        </c:if>
                                     </div>
                             </div>   
                             <div class="form-group row">
                                 <label for="city" class="col-xs-3 control-label">SN-2:</label>
-                                     <div class="col-xs-7">
-                                         <input class="form-control" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
+                                     <div class="col-xs-7">                                         
+                                        <c:if test="${not empty connection.firstRouterSN}">
+                                            <input class="form-control" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
+                                        </c:if>
+                                        <c:if test="${empty connection.firstRouterSN}">
+                                           <input class="form-control" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
+                                        </c:if>
                                      </div>
                             </div>
                             <input type="hidden" name="type" value="${param.action}"/>

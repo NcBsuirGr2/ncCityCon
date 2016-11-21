@@ -115,7 +115,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    				router2.read();
 	    			} catch (InvalidDataDAOException exception) {
 	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidSN");
+	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
 	    				return;
 	    			} 
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
@@ -124,7 +124,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			try {
 	    				newConnection.create();
 	    			} catch (DublicateKeyDAOException exception) {
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=noFreePorts");
+	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
 	    				return;
 	    			}
 	    		} catch (DAOException exception) {

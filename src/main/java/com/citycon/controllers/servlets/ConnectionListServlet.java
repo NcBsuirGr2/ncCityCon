@@ -33,21 +33,21 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, 
         HttpServletResponse res) throws ServletException, IOException {
-            try {
+        try {
             //If page must be normalized (negative or too large)
             if (!setPaginationVariables(ORMRouterConnection.getCount(), req, res)) {
                 StringBuilder redirect = new StringBuilder();
-                    redirect.append("/connecitons?page=");
-                    redirect.append(req.getAttribute("currentPage")); // normalized page
-                    redirect.append("&itemsPerPage=");
-                    redirect.append(req.getParameter("itemsPerPage"));
-                    redirect.append("&sortBy=");
-                    redirect.append(req.getParameter("sortBy"));
-                    redirect.append("&asc=");
-                    redirect.append(req.getParameter("asc"));
-                    logger.debug("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
+                redirect.append("/connecitons?page=");
+                redirect.append(req.getAttribute("currentPage")); // normalized page
+                redirect.append("&itemsPerPage=");
+                redirect.append(req.getParameter("itemsPerPage"));
+                redirect.append("&sortBy=");
+                redirect.append(req.getParameter("sortBy"));
+                redirect.append("&asc=");
+                redirect.append(req.getParameter("asc"));
+                logger.debug("Incorrect page, redirect to the "+redirect.toString());
+                res.sendRedirect(redirect.toString());
+                return;
             }
 
             String sortByReq = req.getParameter("sortBy");
@@ -65,6 +65,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                                                                 page, itemsPerPage, sortBy, asc);
 
             RouterConnectionEntity[] connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc);
+            
             req.setAttribute("entityArray", connections);
             req.getRequestDispatcher(CONNECTION_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | NumberFormatException exception) {
