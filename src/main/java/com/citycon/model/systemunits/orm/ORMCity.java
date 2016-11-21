@@ -17,10 +17,6 @@ public class ORMCity extends ORMEntity {
 	DAO dao;
 	CityEntity city = new CityEntity();
 
-	public ORMCity() throws DAOException {
-		dao = daoFactory.getCityDAO();
-	}
-
 
 	//Get-set interface for incapsulated object
 	
@@ -55,15 +51,27 @@ public class ORMCity extends ORMEntity {
 	//ORM interface for incapsulated object
 
 	public void create() throws DAOException {
+		if (dao == null) {
+			dao = daoFactory.getCityDAO();
+		}
 		dao.create(city);
 	}
     public void read() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getCityDAO();
+		}
 		dao.read(city);
     }
     public void update() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getCityDAO();
+		}
 		dao.update(city);
     }
     public void delete() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getCityDAO();
+		}
 		dao.delete(city);
     }
 

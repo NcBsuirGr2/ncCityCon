@@ -21,7 +21,7 @@
 
 	<body>
 		<div class="content-wrapper">
-			<%@ include file="/html/header.jsp" %>
+			<%@ include file="/include/header.jsp" %>
 			<c:if test="${not empty param.success}">
 				<div class="alert alert-success alert-dismissible">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -145,7 +145,7 @@
 		    	<%@ include file="/include/pagination.jsp" %>
 			</center>
 
-			<%@ include file="/html/footer.html" %>
+			<%@ include file="/include/footer.html" %>
 		</div>
 	</body>
 </html>

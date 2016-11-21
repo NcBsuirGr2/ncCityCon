@@ -19,7 +19,7 @@
 
     <body>
         <div class="content-wrapper">
-            <%@ include file="/html/header.jsp" %>
+            <%@ include file="/include/header.jsp" %>
 
             <div class="before-footer">
 
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <%@ include file="/html/footer.html" %>
+            <%@ include file="/include/footer.html" %>
         </div>
 
     </body>

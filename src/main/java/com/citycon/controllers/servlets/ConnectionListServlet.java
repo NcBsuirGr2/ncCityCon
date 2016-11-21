@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
-    private static String ERROR_PAGE = "/jsp/errors/error.jsp";
 
     public ConnectionListServlet(){
         super();

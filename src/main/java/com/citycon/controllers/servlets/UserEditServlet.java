@@ -22,9 +22,8 @@ import java.util.Calendar;
  */
 public class UserEditServlet extends AbstractHttpServlet {
 
-	private String ERROR_PAGE = "/jsp/error.jsp";
-	private String LIST_USERS_PAGE = "/jsp/users/userEdit.jsp";
-	private String LIST_USERS_URL = "/users";
+	private String USER_EDIT_PAGE = "/jsp/users/userEdit.jsp";
+	private String USER_LIST_URL = "/users";
 
 	public UserEditServlet(){
 		super();
@@ -47,13 +46,16 @@ public class UserEditServlet extends AbstractHttpServlet {
 			}
 		}
 		res.setHeader("Allow", "GET, POST, PUT, DELETE");
-		RequestDispatcher editView = req.getRequestDispatcher(LIST_USERS_PAGE);
+		RequestDispatcher editView = req.getRequestDispatcher(USER_EDIT_PAGE);
 		editView.forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 														throws ServletException, IOException {
 		String type = req.getParameter("type");
+		if (type == null) {
+			forwardToErrorPage("type parameter is null", req, res);
+		}
 		switch (type) {
 			case "edit" : {
 				doPut(req, res);
@@ -93,7 +95,8 @@ public class UserEditServlet extends AbstractHttpServlet {
 					return;
 				}
 
-				res.sendRedirect(LIST_USERS_URL+"?success=add");
+				res.sendRedirect(USER_LIST_URL+"?success=add");
+				return;
 			}
 		}
 		
@@ -135,7 +138,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			return;
 		}
 		
-		res.sendRedirect(LIST_USERS_URL+"?success=edit");
+		res.sendRedirect(USER_LIST_URL+"?success=edit");
 	}
 
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
@@ -162,6 +165,6 @@ public class UserEditServlet extends AbstractHttpServlet {
 			forwardToErrorPage("Invalid id string", req, res);
 			return;
 		}
-		res.sendRedirect(LIST_USERS_URL+"?success=delete");
+		res.sendRedirect(USER_LIST_URL+"?success=delete");
 	}
 }

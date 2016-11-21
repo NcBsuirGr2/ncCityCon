@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
-	private static String ERROR_PAGE = "/jsp/errors/error.jsp";
 
 	public UserListServlet(){
 		super();

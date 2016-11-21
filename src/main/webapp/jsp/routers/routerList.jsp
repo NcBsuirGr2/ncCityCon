@@ -13,7 +13,7 @@
 	</head>
 <body>
 <div class="content-wrapper">
-<%@ include file="/html/header.jsp" %>
+<%@ include file="/include/header.jsp" %>
 	<div class="before-footer">
 	<div class="dropdown">
 		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">City
@@ -80,7 +80,7 @@
     </div>
 			
 			
-<%@ include file="/html/footer.html" %>
+<%@ include file="/include/footer.html" %>
 </div
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>

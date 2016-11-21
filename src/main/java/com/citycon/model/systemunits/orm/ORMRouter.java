@@ -19,11 +19,6 @@ public class ORMRouter extends ORMEntity {
 	DAO dao;
 	RouterEntity router = new RouterEntity();
 
-	public ORMRouter() throws DAOException {
-		dao = daoFactory.getRouterDAO();
-	}
-
-
 	//Get-set interface for incapsulated object
 	
 	public int getId() {
@@ -75,15 +70,27 @@ public class ORMRouter extends ORMEntity {
 	//ORM interface for incapsulated object
 
 	public void create() throws DAOException {
+		if (dao == null) {
+			dao = daoFactory.getRouterDAO();
+		}
 		dao.create(router);
 	}
     public void read() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterDAO();
+		}
 		dao.read(router);
     }
     public void update() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterDAO();
+		}
 		dao.update(router);
     }
     public void delete() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterDAO();
+		}
 		dao.update(router);
     }
     

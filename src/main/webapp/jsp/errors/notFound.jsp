@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="content-wrapper">
-<%@ include file="/html/header.jsp" %>
+<%@ include file="/include/header.jsp" %>
 	<div class="before-footer">
 <h1 align="center">Not found</h1>
 <h3 align="center">
@@ -15,7 +15,7 @@
     <a href="/">go to main page</a>
 </h3>
 </div>
-<%@ include file="/html/footer.html" %>
+<%@ include file="/include/footer.html" %>
 </div>
 </body>
 </html>

@@ -16,12 +16,7 @@ import com.citycon.dao.exceptions.DAOException;
 public class ORMRouterConnection extends ORMEntity {
 	DAO dao;
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
-
-	public ORMRouterConnection() throws DAOException {
-		dao = daoFactory.getRouterConnectionDAO();
-	}
-
-
+	
 	//Get-set interface for incapsulated object
 	
 	public int getId() {
@@ -73,15 +68,27 @@ public class ORMRouterConnection extends ORMEntity {
 	//ORM interface for incapsulated object
 
 	public void create() throws DAOException {
+		if (dao == null) {
+			dao = daoFactory.getRouterConnectionDAO();
+		}
 		dao.create(routerConnection);
 	}
     public void read() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterConnectionDAO();
+		}
 		dao.read(routerConnection);
     }
     public void update() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterConnectionDAO();
+		}
 		dao.update(routerConnection);
     }
     public void delete() throws DAOException {
+    	if (dao == null) {
+			dao = daoFactory.getRouterConnectionDAO();
+		}
 		dao.delete(routerConnection);
     }
 

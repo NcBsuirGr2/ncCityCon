@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="content-wrapper">
-<%@ include file="/html/header.jsp" %>
+<%@ include file="/include/header.jsp" %>
 	<div class="before-footer">
     <h1 align="center">Error</h1>
     <h3 align="center">
@@ -17,7 +17,7 @@
         Error message was: ${errorMessage}
     </h3>
     </div>
-    <%@ include file="/html/footer.html" %>
+    <%@ include file="/include/footer.html" %>
     </div>
 </body>
 </html>

@@ -20,10 +20,6 @@ public class ORMUser extends ORMEntity {
 	DAO dao;
 	UserEntity user = new UserEntity();
 
-	public ORMUser() throws DAOException {
-		dao = daoFactory.getUserDAO();
-	}
-
 	//Get-set interface for incapsulated object
 	
 	public int getId() {
@@ -80,16 +76,28 @@ public class ORMUser extends ORMEntity {
 	//ORM interface for incapsulated object
 
 	public void create() throws DAOException {
-			dao.create(user);
+		if (dao == null) {
+			dao = daoFactory.getUserDAO();
+		}
+		dao.create(user);
 	}
     public void read() throws DAOException {
-    		dao.read(user);
+    	if (dao == null) {
+			dao = daoFactory.getUserDAO();
+		}
+		dao.read(user);
     }
     public void update() throws DAOException {
- 		   	dao.update(user);
+    	if (dao == null) {
+			dao = daoFactory.getUserDAO();
+		}
+	   	dao.update(user);
     }
     public void delete() throws DAOException {
-    		dao.delete(user);
+    	if (dao == null) {
+			dao = daoFactory.getUserDAO();
+		}
+		dao.delete(user);
     }
 
     public UserEntity getEntity()  {
