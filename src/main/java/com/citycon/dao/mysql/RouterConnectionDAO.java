@@ -138,7 +138,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         RouterConnectionEntity routerConnection = null;
 
         String insert = "insert into" + nameTable +
-                "`ID_From`, `ID_To`" +
+                "(`ID_From`, `ID_To`)" +
                 " values (?, ?)";
 
         PreparedStatement preparedStatement = null;
