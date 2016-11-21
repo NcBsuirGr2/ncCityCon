@@ -19,14 +19,14 @@
 </head>
 <body>
 <%@ include file="/html/header.jsp" %>
-<!--
+<%--
 <c:if test="${param.errorType}">
   <b>Incorrect information</b>
 </c:if>
 <form action="SignInServlet" method="get" id="signIn">
--->
+--%>
     <div class="content-wrapper">
-        <div class="before-footer">
+        <div class="before-foo
 
     <div id="loginModal" >
         <div class="modal-dialog">
