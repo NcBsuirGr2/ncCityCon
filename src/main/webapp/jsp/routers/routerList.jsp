@@ -70,12 +70,14 @@
 					</div>
 
 					<div class="col-sm-4">
-						<form action="router" id="deleteForm" method="POST">
+						<form action="/router" id="deleteForm" method="POST">
 							<input type="hidden" id="deleteId" name="id" value="-1">
 							<input type="hidden" name="type" value="delete">
 							<input type=submit class="btn btn-primary" value="Delete"></input>
 						</form>
 					</div>
+
+
 
 				</div>
 			</div>

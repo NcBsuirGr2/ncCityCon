@@ -16,36 +16,37 @@
     <div class="before-footer">
 <div class="panel panel-default">
 	<div class="panel-heading">Edit</div>
-            	<form class="form-horizontal" role="form" method="get" action="router" >
+            	<form class="form-horizontal" role="form" method="post" action="/router" role="form" id="form">
                 	<div class="form-group">
                     	<label for="name" class="col-xs-3 control-label">Name</label>
                         	<div class="col-xs-9">
-                            	<input class="form-control" placeholder="Name" id="name" type="text" autofocus value="<c:out value="${router.name}"/> ">
+                            	<input class="form-control" placeholder="Name" id="name" name= "name" type="text" autofocus value="<c:out value="${router.name}"/> ">
                             </div>
                     </div>
                     <div class="form-group">
                         <label for="SN" class="col-xs-3 control-label">SN</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="SN" id="SN" type="text" autofocus value="<c:out value="${router.SN}"/> ">
+                                 <input class="form-control" placeholder="SN" id="SN" name= "SN" type="text" autofocus value="<c:out value="${router.SN}"/> ">
                              </div>
                     </div>
                     <div class="form-group">
                         <label for="portsNum" class="col-xs-3 control-label">Port number</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="Port number" id="portsNum" type="text" autofocus value="<c:out value="${router.portsNum}"/> ">
+                                 <input class="form-control" placeholder="Port number" id="portsNum" name= "portsNum" pattern="[1-4]" type="text" autofocus value="<c:out value="${router.portsNum}"/> ">
                              </div>
                     </div>
                     <div class="form-group">
                         <label for="cityId" class="col-xs-3 control-label">City Id</label>
                              <div class="col-xs-9">
-                                 <input class="form-control" placeholder="cityId" id="cityId" type="text" autofocus value="<c:out value="${router.cityId}"/> ">
+                                 <input class="form-control" placeholder="cityId" id="cityId" name= "cityId" type="text" autofocus value="<c:out value="${router.cityId}"/> ">
                              </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-9">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Save">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Yes">
                         </div>
                     </div>
+                    <input type="hidden" name="type" value="${param.action}"/>
                  </form>
 </div>
  </div>
