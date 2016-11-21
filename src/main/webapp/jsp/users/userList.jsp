@@ -51,7 +51,7 @@
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == true and param.sortBy == 'name')}">
+										<c:if test="${empty param.asc or (param.asc == true and (param.sortBy == 'name' or empty param.sortBy))}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 

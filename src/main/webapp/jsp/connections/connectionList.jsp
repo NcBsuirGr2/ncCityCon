@@ -65,15 +65,15 @@
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == true and param.sortBy == 'SN1')}">
+										<c:if test="${empty param.asc or (param.asc == 'true' and (param.sortBy == 'SN1' or empty param.sortBy))}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=SN1&asc=${newAsc}">											
 											SN-1 
 											<c:if test="${empty param.sortBy || param.sortBy == 'SN1'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
+												<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
+												<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
 											</c:if>											
 										</a>
 									</th>
