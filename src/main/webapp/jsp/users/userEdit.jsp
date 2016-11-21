@@ -17,6 +17,18 @@
     <%@ include file="/include/header.jsp" %>
 
         <div class="before-footer">
+            <c:if test="${not empty param.errorType}">
+                <div class="alert alert-warning alert-dismissible" style="margin-top: 20px">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error!</strong> 
+                    <c:choose>
+                        <c:when test="${param.errorType == 'dublicate'}">
+                            User with such login or e-mail already exists.
+                        </c:when>
+                    </c:choose>
+                </div>
+            </c:if> 
+
             <div class="panel panel-default">
             	<div class="panel-heading text-center">
                     <h4>Edit user</h4>
@@ -26,13 +38,23 @@
                     	<div class="form-group">
                         	<label for="name" class="col-xs-3 control-label">Name:</label>
                         	<div class="col-xs-9">
+                            <c:if test="${not empty editUser}">
                             	<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${editUser.name}">
+                            </c:if>
+                            <c:if test="${empty editUser}">
+                                <input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
+                            </c:if>
                             </div>
                         </div>   
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Login:</label>
-                             <div class="col-xs-9">
-                                 <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${editUser.login}">
+                             <div class="col-xs-9">                                 
+                                <c:if test="${not empty editUser}">
+                                    <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${editUser.login}">
+                                </c:if>
+                                <c:if test="${empty editUser}">
+                                    <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${param.editLogin}">
+                                </c:if>
                              </div>
                         </div>
                         <div class="form-group">
@@ -43,17 +65,22 @@
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
-                             <div class="col-xs-9">
-                                 <input class="form-control" pattern=".+@.+\..+" required placeholder="E-mail" id="email" name="email" type="email" value="${editUser.email}">
+                             <div class="col-xs-9">                                 
+                                <c:if test="${not empty editUser}">
+                                   <input class="form-control" required placeholder="E-mail" id="email" name="email" type="email" value="${editUser.email}">
+                                </c:if>
+                                <c:if test="${empty editUser}">
+                                    <input class="form-control" required placeholder="E-mail" id="email" name="email" type="email" value="${param.editEmail}">
+                                </c:if>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Group:</label>
                             <div class="col-xs-9">
                                 <select class="form-control" id="group" name="group" form="form">
-                                    <option value="admin" <c:if test="${editUser.group == 'admin'}">selected</c:if>>Admin</option>
-                                    <option value="operator" <c:if test="${editUser.group == 'operator'}">selected</c:if>>Operator</option>
-                                    <option value="guest" <c:if test="${editUser.group == 'guest'}">selected</c:if>>Guest</option>
+                                    <option value="admin" <c:if test="${editUser.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
+                                    <option value="operator" <c:if test="${editUser.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
+                                    <option value="guest" <c:if test="${editUser.group == 'guest' || param.editGroup == 'guest'}">selected</c:if>>Guest</option>
                                 </select>
                             </div>
                         </div>

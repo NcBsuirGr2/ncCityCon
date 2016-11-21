@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * POST.
  * 
  * @author Mike
- * @version 0.1
+ * @version 0.2
  */
 public class ConnectionEditServlet extends AbstractHttpServlet {
 	 private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";	 
@@ -106,7 +106,6 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
     			// Temporary hack
     			ORMRouter router1 = new ORMRouter();
     			ORMRouter router2 = new ORMRouter();
-    			logger.debug(SN1+"-----"+SN2);
     			router1.setSN(SN1);
     			router2.setSN(SN2);
     			try {
@@ -146,14 +145,14 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			ORMRouter router2 = new ORMRouter();
 
 			router1.setSN(SN1);
-			router1.setSN(SN2);
+			router2.setSN(SN2);
 			try {
 				try {
 					router1.read();
 					router2.read();
 				} catch (InvalidDataDAOException exception) {
 					// No routers with such SN, redirect to add/edit page
-					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN");
+					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
 					return;
 				}
 
@@ -165,7 +164,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				try {
 					updateConnection.update();
 				} catch (DublicateKeyDAOException exception) {
-					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts");
+					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
 					return;
 				}
 			}catch (DAOException cause) {

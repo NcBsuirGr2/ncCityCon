@@ -32,43 +32,59 @@ public abstract class AbstractHttpServlet extends HttpServlet {
      * @param  itemsNum number of itmes from DAO
      * @param  req request object to get pagination variables
      * @param  res response object to set correct pagination variables
-     * @return validParametes if page number can be normalized 
+     * @return redirectPath if page number must be normalized
      * @throws InternalDAOException if any internal DAO error occurs
      */
-    protected boolean setPaginationVariables(int itemsNum, HttpServletRequest req,
+    protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, HttpServletRequest req,
      									 HttpServletResponse res) throws NumberFormatException {
+    	if (itemsNum <= 0) throw new NumberFormatException("No elements");
     	// Req parametes
     	String pageString = req.getParameter("page");
 		String itemsPerPageString = req.getParameter("itemsPerPage");
 		String ascString = req.getParameter("asc");
+		String sortByReq = req.getParameter("sortBy");
 
+        
 		// Default parametes
 		int page = 1;
 		int itemsPerPage = 10;
 		boolean asc = true;
+		String sortBy = defaultSorting;
 
+        
 		// Parsing req parameters, NumberFormatException can be thrown
-	
+		
 		if(pageString != null && !pageString.equals("")) {
 		page = Integer.parseInt(pageString);
 		}
 		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
 			itemsPerPage = Integer.parseInt(itemsPerPageString);
-		}		
-
-
+		}
 		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
-		}
+		}		
+		if(sortByReq != null && !sortByReq.equals("")) {
+            sortBy = sortByReq;
+        }
 
 		// Default values
 		req.setAttribute("itemsPerPage", itemsPerPage);
 		req.setAttribute("asc", asc);
+		req.setAttribute("sortBy", sortBy);
 
 		// Asc redirect to the first page if req page is negative
 		if(page < 1) {
 			req.setAttribute("currentPage", 1);
-			return false;
+			StringBuilder redirect = new StringBuilder();
+	        redirect.append("/connections?page=");
+	        redirect.append(page); // normalized page
+	        redirect.append("&itemsPerPage=");
+	        redirect.append(req.getParameter("itemsPerPage"));
+	        redirect.append("&sortBy=");
+	        redirect.append(req.getParameter("sortBy"));
+	        redirect.append("&asc=");
+	        redirect.append(req.getParameter("asc"));
+			return redirect;
 		}
 
 		int pagesNum = (int)Math.ceil((double)itemsNum / (double)itemsPerPage);	
@@ -79,7 +95,16 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				page += 1;
 			}
 			req.setAttribute("currentPage", page);
-			return false;
+			StringBuilder redirect = new StringBuilder();
+	        redirect.append("/connections?page=");
+	        redirect.append(page); // normalized page
+	        redirect.append("&itemsPerPage=");
+	        redirect.append(req.getParameter("itemsPerPage"));
+	        redirect.append("&sortBy=");
+	        redirect.append(req.getParameter("sortBy"));
+	        redirect.append("&asc=");
+	        redirect.append(req.getParameter("asc"));
+			return redirect;
 		}
 
 		// Pagination variables
@@ -100,7 +125,8 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		req.setAttribute("beginPage", beginPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("previousPage", previousPage);
-		req.setAttribute("nextPage", nextPage);		
-		return true;
+		req.setAttribute("nextPage", nextPage);	
+
+		return null;
     }
 }

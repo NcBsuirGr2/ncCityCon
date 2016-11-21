@@ -1,6 +1,7 @@
 package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,13 @@ import java.util.Calendar;
  * that user has successfully logged into system.
  * 
  * @author  Mike
- * @version  0.1
+ * @version  0.2
  */
 public class UserEditServlet extends AbstractHttpServlet {
 
 	private String USER_EDIT_PAGE = "/jsp/users/userEdit.jsp";
 	private String USER_LIST_URL = "/users";
+	private String USER_EDIT_URL = "/user";
 
 	public UserEditServlet(){
 		super();
@@ -77,9 +79,8 @@ public class UserEditServlet extends AbstractHttpServlet {
 					forwardToErrorPage("Not enough info to create new user", req, res);
 					return;
 				}
-
-				try {
-					ORMUser newUser = new ORMUser();
+				ORMUser newUser = new ORMUser();
+				try {					
 					newUser.setName(name);
 					newUser.setLogin(login);
 					newUser.setPassword(password);
@@ -88,6 +89,19 @@ public class UserEditServlet extends AbstractHttpServlet {
 					newUser.setCreateDate(createDate);
 
 					newUser.create();
+				} catch(DublicateKeyDAOException cause) {
+					StringBuilder redirect = new StringBuilder();
+					redirect.append(USER_EDIT_URL);
+					redirect.append("?errorType=dublicate&editName=");
+					redirect.append(newUser.getName());
+					redirect.append("&editLogin=");
+					redirect.append(newUser.getLogin());
+					redirect.append("&editEmail=");
+					redirect.append(newUser.getEmail());
+					redirect.append("&editGroup=");
+					redirect.append(newUser.getGroup());
+					res.sendRedirect(redirect.toString());
+					return;
 				} catch(DAOException cause) {
 					logger.warn("Cannot create new user", cause);
 					forwardToErrorPage("Cannot create new user", req, res);
@@ -115,9 +129,9 @@ public class UserEditServlet extends AbstractHttpServlet {
 			logger.warn("Cannot update user cause id field is empty");
 			return;
 		}
-
+		ORMUser updateUser = new ORMUser();
 		try {
-			ORMUser updateUser = new ORMUser();
+			
 			updateUser.setId(Integer.parseInt(idString));
 			updateUser.setName(name);
 			updateUser.setLogin(login);
@@ -128,6 +142,19 @@ public class UserEditServlet extends AbstractHttpServlet {
 				updateUser.getId(), updateUser.getName(), updateUser.getLogin(), updateUser.getPassword(),
 				updateUser.getEmail(), updateUser.getGroup());
 			updateUser.update();
+		} catch(DublicateKeyDAOException cause) {
+			StringBuilder redirect = new StringBuilder();
+			redirect.append(USER_EDIT_URL);
+			redirect.append("?errorType=dublicate&editName=");
+			redirect.append(updateUser.getName());
+			redirect.append("&editLogin=");
+			redirect.append(updateUser.getLogin());
+			redirect.append("&editEmail=");
+			redirect.append(updateUser.getEmail());
+			redirect.append("&editGroup=");
+			redirect.append(updateUser.getGroup());
+			res.sendRedirect(redirect.toString());
+			return;
 		} catch (DAOException cause) {
 			logger.warn("Cannot update user", cause);
 			forwardToErrorPage("Cannot update user", req, res);

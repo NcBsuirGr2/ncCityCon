@@ -5,6 +5,7 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.orm.ORMRouterConnection;
 
 import javax.servlet.RequestDispatcher;
@@ -33,39 +34,58 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, 
         HttpServletResponse res) throws ServletException, IOException {
+        RouterConnectionEntity[] connections;
         try {
-            //If page must be normalized (negative or too large)
-            if (!setPaginationVariables(ORMRouterConnection.getCount(), req, res)) {
-                StringBuilder redirect = new StringBuilder();
-                redirect.append("/connecitons?page=");
-                redirect.append(req.getAttribute("currentPage")); // normalized page
-                redirect.append("&itemsPerPage=");
-                redirect.append(req.getParameter("itemsPerPage"));
-                redirect.append("&sortBy=");
-                redirect.append(req.getParameter("sortBy"));
-                redirect.append("&asc=");
-                redirect.append(req.getParameter("asc"));
-                logger.debug("Incorrect page, redirect to the "+redirect.toString());
-                res.sendRedirect(redirect.toString());
-                return;
-            }
+            // Getting page for concrete router
+            if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
+                RouterEntity router = new RouterEntity();
+                router.setSN(req.getParameter("SN"));
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), "SN1", req, res);
+                if (redirect != null) {
+                    redirect.append("&SN=");
+                    redirect.append(req.getParameter("SN"));
+                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
+                    res.sendRedirect(redirect.toString());
+                    return;
+                }
+                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
+                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
+                                (boolean)req.getAttribute("asc"), router);
+                
+            // Getting page for concrete city
+            } else if (req.getParameter("country") != null && req.getParameter("city") != null 
+                     && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
+                
+                CityEntity city = new CityEntity();
+                city.setCountryName(req.getParameter("country"));
+                city.setName(req.getParameter("city"));
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), "SN1", req, res);
+                if (redirect != null) {
+                    redirect.append("&country=");
+                    redirect.append(req.getParameter("country"));
+                    redirect.append("&city=");
+                    redirect.append(req.getParameter("city"));
+                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
+                    res.sendRedirect(redirect.toString());
+                    return;
+                }
+                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
+                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
+                                (boolean)req.getAttribute("asc"), city);
 
-            String sortByReq = req.getParameter("sortBy");
-            // TODO: FIX when DAO will completed
-            String sortBy = "";
-            if(sortByReq != null && !sortByReq.equals("")) {
-                sortBy = sortByReq;
-            }
+            // Getting all connections
+            } else {
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(), "SN1", req, res);
+                if (redirect != null) {
+                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
+                    res.sendRedirect(redirect.toString());
+                    return;
+                }
+                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
+                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
+                                (boolean)req.getAttribute("asc"));
+            }   
 
-            int page = (int)req.getAttribute("currentPage");
-            int itemsPerPage = (int)req.getAttribute("itemsPerPage");
-            boolean asc = (boolean)req.getAttribute("asc");
-
-            logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
-                                                                page, itemsPerPage, sortBy, asc);
-
-            RouterConnectionEntity[] connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc);
-            
             req.setAttribute("entityArray", connections);
             req.getRequestDispatcher(CONNECTION_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | NumberFormatException exception) {
@@ -73,8 +93,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
             logger.debug("Invalid getPage data", exception);
         } catch (DAOException exception) {
             forwardToErrorPage("Internal DAO exception", req, res);
-        } catch (ClassCastException exception) {
-            logger.warn("Cannot cast", exception);
+        } catch (Exception exception) {
+            logger.warn("Exception", exception);
             forwardToErrorPage("Internal server error", req, res);
         }
     }

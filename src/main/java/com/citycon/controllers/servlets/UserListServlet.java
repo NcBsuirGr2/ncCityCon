@@ -34,7 +34,7 @@ public class UserListServlet extends AbstractHttpServlet {
 
 		try {
 			//If page must be normalized (negative or too large)
-			if (!setPaginationVariables(ORMUser.getCount(), req, res)) {
+			if (setPaginationVariables(ORMUser.getCount(), "name", req, res) != null) {
 				StringBuilder redirect = new StringBuilder();
 					redirect.append("/users?page=");
 					redirect.append(req.getAttribute("currentPage")); // normalized page
@@ -49,17 +49,11 @@ public class UserListServlet extends AbstractHttpServlet {
 					return;
 			}
 
-			
-
-			String sortByReq = req.getParameter("sortBy");
-			String sortBy = "name";
-			if(sortByReq != null && !sortByReq.equals("")) {
-				sortBy = sortByReq;
-			}
 
 			int page = (int)req.getAttribute("currentPage");
 			int itemsPerPage = (int)req.getAttribute("itemsPerPage");
 			boolean asc = (boolean)req.getAttribute("asc");
+			String sortBy = (String)req.getAttribute("sortBy");
 
 			logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
 																page, itemsPerPage, sortBy, asc);

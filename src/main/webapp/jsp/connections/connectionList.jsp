@@ -49,13 +49,76 @@
 					</center>
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
+		     					<c:choose>
+									<c:when test="${not empty param.SN}">
+										<c:set var="selectFrom" value="?SN=${param.SN}"/>
+									</c:when>
+
+									<c:otherwise>
+										<c:set var="selectFrom" value="?country=${param.country}&city=${param.city}"/>
+									</c:otherwise>
+								</c:choose>
+
+								<c:set var="samePath" value="${selectFrom}&itemsPerPage=${param.itemsPerPage}&page=${param.page}"/>
+
+
 								<tr>
-									<th>City-1</th>
-									<th>SN-1</th>
-									<th>id-1[temp]></th>
-									<th>City-2</th>
-									<th>SN-2</th>
-									<th>id-2[temp]></th>									
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${empty param.asc or (param.asc == true and param.sortBy == 'SN1')}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>
+										
+											<a href="${samePath}&sortBy=SN1&asc=${newAsc}">											
+											SN-1 
+											<c:if test="${empty param.sortBy || param.sortBy == 'SN1'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${param.asc == true and param.sortBy == 'City1'}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>
+										
+											<a href="${samePath}&sortBy=City1&asc=${newAsc}">											
+											City-1 
+											<c:if test="${param.sortBy == 'City1'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>									
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${param.asc == true and param.sortBy == 'SN2'}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>
+										
+											<a href="${samePath}&sortBy=SN2&asc=${newAsc}">											
+											SN-2 
+											<c:if test="${param.sortBy == 'SN2'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${param.asc == true and param.sortBy == 'City2'}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>
+										
+											<a href="${samePath}&sortBy=City2&asc=${newAsc}">											
+											City-2 
+											<c:if test="${param.sortBy == 'City2'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>								
 							        <th class="hidden">id</th>								
 				        		</tr>
 				        	</thead>
@@ -64,10 +127,8 @@
 									<tr>
 										<td>${connection.firstRouterSN}</td>
 										<td>${connection.firstRouterCityName}</td>
-										<td>${connection.firstRouterId}</td>
 										<td>${connection.secondRouterSN}</td>
 										<td>${connection.secondRouterCityName}</td>
-										<td>${connection.secondRouterId}</td>
 										<td class="hidden unique idField">${connection.id}</td>
 									</tr>
 								</c:forEach>
