@@ -309,8 +309,10 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                         "' order by " + sorter + sorting_direction + " limit ?, ?";
             }
             else {
-                search = "select * from" + nameTable + " order by " + sorter + sorting_direction
-                        + "limit ?,?";
+                search = "select Distinct R.ID as ID, R.SN as SN, R.`Name`, R.`Port`, R.In_Service, R.City_id, " +
+                        "C.`Name` as CityName " +
+                        "from Router R join City C on R.City_id=C.ID " +
+                        "order by " + sorter + sorting_direction + " limit ?, ?";
             }
         }
         else {
