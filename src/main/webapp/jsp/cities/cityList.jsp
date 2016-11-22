@@ -106,7 +106,7 @@
                     <tbody>
                     <c:forEach items="${entityArray}" var="city">
                         <tr>
-                            <td>${city.name}</td>
+                            <td><a href="/routers">${city.name}</a></td>
                             <td>${city.countryName}</td>
                             <td>${city.routersNum}</td>
                             <td class="hidden idField">${city.id}</td>
