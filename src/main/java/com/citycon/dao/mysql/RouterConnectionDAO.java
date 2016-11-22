@@ -48,124 +48,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
                                                         throws InvalidDataDAOException, InternalDAOException {
 
-        Statement statement = null;
-        PreparedStatement get_data_routerConnections = null;
-        ResultSet resultSet = null;
-
-        ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
-
-        ArrayList<RouterConnectionEntity> routerConnections = new ArrayList();
-
-        String sorter = hashMap.get(sortBy);
-
-        String get_data = "";
-
-        String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
-                + "), sortBy(" + sortBy + "), asc(" + asc + ")";
-
-        if(sorter != null) {
-            String sorting_direction = "";
-
-            if(asc){
-                sorting_direction = " asc ";
-            }
-            else {
-                sorting_direction = " desc ";
-            }
-
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C on T.ID_From = C.ID");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C on T.ID_To = C.ID");
-
-
-            get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
-                    "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
-                    "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID " +
-                    "order by " + sorter + sorting_direction + " limit ?, ?";
-
-        }
-        else {
-            logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
-            throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
-        }
-
-        try {
-            statement = connection.createStatement();
-            get_data_routerConnections = connection.prepareStatement(get_data);
-        }catch (SQLException e) {
-            logger.warn("PrepareStatement or Statement in getPage wasn't created");
-            throw new InternalDAOException("PrepareStatement or Statement in getPage wasn't created", e);
-        }
-
-        try {
-            for(String SQLCommand : SQLCommandForGetTableOfRouters){
-                statement.executeUpdate(SQLCommand);
-            }
-
-            get_data_routerConnections.setInt(1, (page-1)*itemsPerPage);
-            get_data_routerConnections.setInt(2, itemsPerPage);
-
-            resultSet = get_data_routerConnections.executeQuery();
-
-            try {
-                while (resultSet.next()) {
-                    RouterConnectionEntity routerConnection = new RouterConnectionEntity();
-
-                    routerConnection.setId(resultSet.getInt("ID"));
-                    routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
-                    routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
-                    routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
-                    routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
-                    routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
-                    routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
-
-                    routerConnections.add(routerConnection);
-                }
-
-                logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
-            }catch (SQLException e){
-                logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
-                throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);
-            }
-        }catch (SQLException e){
-            logger.info("Put data to PrepareStatement in {} invalid. \n {}", nameTable, log_parameters, e);
-            throw new InvalidDataDAOException(
-                    String.format("Put data to PrepareStatement in %s invalid", nameTable), e);
-        }
-        finally {
-            if (statement != null){
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close Statement in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-
-            if (get_data_routerConnections!=null){
-                try {
-                    get_data_routerConnections.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-            if (resultSet!= null){
-                try{
-                    resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-
-        return routerConnections.toArray(new RouterConnectionEntity[routerConnections.size()]);
+        return getPage(page, itemsPerPage, sortBy, asc, null, null);
     }
 
 
@@ -395,149 +278,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
 
-        Statement statement = null;
-        PreparedStatement get_data_routerConnections = null;
-        ResultSet resultSet = null;
-
-        ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
-
-        ArrayList<RouterConnectionEntity> routerConnections = new ArrayList();
-
-        String sorter = hashMap.get(sortBy);
-
-        String get_data = "";
-
-        String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
-                + "), sortBy(" + sortBy + "), asc(" + asc + "), City(" + city.getName() +
-                "), Country(" + city.getCountryName() + ")";
-
-        if (city.getName() == null || city.getCountryName() == null){
-            logger.info("For GetPage connection of City connection incorrectly" +
-                    " chosen field, try Name and CountryName");
-            throw new InvalidDataDAOException("For GetPage connection of City connection incorrectly" +
-                    " chosen field, try Name and CountryName");
-        }
-
-        if(sorter != null) {
-            String sorting_direction = "";
-
-            if(asc){
-                sorting_direction = " asc ";
-            }
-            else {
-                sorting_direction = " desc ";
-            }
-
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS RoutersOfCity");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS ConnectionsOfRouters");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS CitySNFrom");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS CitySNTo");
-
-            SQLCommandForGetTableOfRouters.add("set @id_City = (select id from City" +
-                    " where `Name` = '" + city.getName() +
-                    "' and `Country` = '" + city.getCountryName() + "')");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table RoutersOfCity " +
-                    "select ID from Router where City_id = @id_City");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table ConnectionsOfRouters " +
-                    "select R.ID as ID, R.ID_From, R.ID_To " +
-                    "from RouterConnection R join RoutersOfCity C " +
-                    "on  R.ID_From = C.ID or R.ID_To = C.ID " +
-                    "Group by ID");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_From from ConnectionsOfRouters T " +
-                    "join CitySN C on T.ID_From = C.ID");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
-                    "join CitySN C on T.ID_To = C.ID");
-
-
-            get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
-                    "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
-                    "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID " +
-                    "order by " + sorter + sorting_direction + " limit ?, ?";
-
-        }
-        else {
-            logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
-            throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
-        }
-
-        try {
-            statement = connection.createStatement();
-            get_data_routerConnections = connection.prepareStatement(get_data);
-        }catch (SQLException e) {
-            logger.warn("PrepareStatement or Statement in getPage wasn't created");
-            throw new InternalDAOException("PrepareStatement in getPage wasn't created", e);
-        }
-
-        try {
-            for(String SQLCommand : SQLCommandForGetTableOfRouters){
-                statement.executeUpdate(SQLCommand);
-            }
-
-            get_data_routerConnections.setInt(1, (page-1)*itemsPerPage);
-            get_data_routerConnections.setInt(2, itemsPerPage);
-
-            resultSet = get_data_routerConnections.executeQuery();
-
-            try {
-                while (resultSet.next()) {
-                    RouterConnectionEntity routerConnection = new RouterConnectionEntity();
-
-                    routerConnection.setId(resultSet.getInt("ID"));
-                    routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
-                    routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
-                    routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
-                    routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
-                    routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
-                    routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
-
-                    routerConnections.add(routerConnection);
-                }
-
-                logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
-            }catch (SQLException e){
-                logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
-                throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);
-            }
-        }catch (SQLException e){
-            logger.info("Put data to PrepareStatement in {} invalid. \n {}", nameTable, log_parameters, e);
-            throw new InvalidDataDAOException(
-                    String.format("Put data to PrepareStatement in %s invalid", nameTable), e);
-        }
-        finally {
-            if (statement != null){
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close Statement in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-
-            if (get_data_routerConnections!=null){
-                try {
-                    get_data_routerConnections.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-            if (resultSet!= null){
-                try{
-                    resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in getPage {} failed", nameTable, e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-
-        return routerConnections.toArray(new RouterConnectionEntity[routerConnections.size()]);
+        return getPage(page, itemsPerPage, sortBy, asc, null, city);
     }
 
     /**
@@ -632,6 +373,95 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, RouterEntity router)
             throws InvalidDataDAOException, InternalDAOException {
 
+        return getPage(page, itemsPerPage, sortBy, asc, router, null);
+    }
+
+    /**
+     * @param router
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    public int count_element(RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
+        int count = 0;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String search = "";
+
+        if (router.getSN() != null){
+            search = "select count(`RouterConnection`.`ID`) from RouterConnection inner join `Router` " +
+                     "on (`RouterConnection`.`ID_From` = `Router`.`ID` " +
+                     "or `RouterConnection`.`ID_To` = `Router`.`ID`) " +
+                     "where `Router`.`SN` = ?";
+        }
+        else{
+            logger.info("For reading router connection incorrectly chosen field, try SN");
+            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
+                    " try SN");
+        }
+
+        try {
+            preparedStatement = connection.prepareStatement(search);
+        } catch (SQLException e) {
+            logger.warn("PrepareStatement in get count wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
+        }
+
+        String log_parameters = "With parameters: SN(" + router.getSN() + ")";
+
+        try {
+            preparedStatement.setString(1, router.getSN());
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements. {}", log_parameters);
+            }
+        } catch (SQLException e) {
+            logger.info("Get count elements failed. {}", log_parameters, e);
+            throw new InternalDAOException("Get count elements failed.", e);
+        }
+        finally {
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param router
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    private RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc,
+                                             RouterEntity router, CityEntity city)
+            throws InvalidDataDAOException, InternalDAOException {
+
         Statement statement = null;
         PreparedStatement get_data_routerConnections = null;
         ResultSet resultSet = null;
@@ -645,13 +475,81 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String get_data = "";
 
         String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
-                + "), sortBy(" + sortBy + "), asc(" + asc + "), SN(" + router.getSN() + ")";
+                + "), sortBy(" + sortBy + "), asc(" + asc + ")";
 
-        if (router.getSN() == null){
-            logger.info("For GetPage connection of SN connection incorrectly, " +
-                    "chosen field, try SN");
-            throw new InvalidDataDAOException("For GetPage connection router connection incorrectly," +
-                    " chosen field, try SN");
+        if (router != null){
+            if (router.getSN() == null){
+                logger.info("For GetPage connection of SN connection incorrectly, " +
+                        "chosen field, try SN");
+                throw new InvalidDataDAOException("For GetPage connection router connection incorrectly," +
+                        " chosen field, try SN");
+            }
+            else {
+                log_parameters += ", SN(" + router.getSN() + ")";
+
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `temp`");
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
+
+                SQLCommandForGetTableOfRouters.add("set @id_SN = (select id from Router where SN = '" +
+                        router.getSN() + "')");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table temp" +
+                        " select * from RouterConnection where ID_From = @id_SN or ID_To = @id_SN");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
+                        "select T.ID, C.`Name`, C.SN, T.ID_From from temp T join CitySN C on T.ID_From = C.ID");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo" +
+                        " select T.ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C on T.ID_To = C.ID");
+            }
+        }
+        else if(city != null){
+            if (city.getName() == null || city.getCountryName() == null){
+                logger.info("For GetPage connection of City connection incorrectly" +
+                        " chosen field, try Name and CountryName");
+                throw new InvalidDataDAOException("For GetPage connection of City connection incorrectly" +
+                        " chosen field, try Name and CountryName");
+            }
+            else{
+                log_parameters += ", City(" + city.getName() + "), Country(" + city.getCountryName() + ")";
+
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS RoutersOfCity");
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS ConnectionsOfRouters");
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS CitySNFrom");
+                SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS CitySNTo");
+
+                SQLCommandForGetTableOfRouters.add("set @id_City = (select id from City" +
+                        " where `Name` = '" + city.getName() +
+                        "' and `Country` = '" + city.getCountryName() + "')");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table RoutersOfCity " +
+                        "select ID from Router where City_id = @id_City");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table ConnectionsOfRouters " +
+                        "select R.ID as ID, R.ID_From, R.ID_To " +
+                        "from RouterConnection R join RoutersOfCity C " +
+                        "on  R.ID_From = C.ID or R.ID_To = C.ID " +
+                        "Group by ID");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
+                        "select T.ID, C.`Name`, C.SN, T.ID_From from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_From = C.ID");
+
+                SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
+                        "select T.ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_To = C.ID");
+            }
+        }
+        else{
+            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
+            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
+
+            SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
+                    "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C on T.ID_From = C.ID");
+
+            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
+                    "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C on T.ID_To = C.ID");
         }
 
         if(sorter != null) {
@@ -663,23 +561,6 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             else {
                 sorting_direction = " desc ";
             }
-
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `temp`");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
-            SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
-
-            SQLCommandForGetTableOfRouters.add("set @id_SN = (select id from Router where SN = '" +
-                    router.getSN() + "')");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table temp" +
-                    " select * from RouterConnection where ID_From = @id_SN or ID_To = @id_SN");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_From from temp T join CitySN C on T.ID_From = C.ID");
-
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo" +
-                    " select T.ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C on T.ID_To = C.ID");
-
 
             get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
                     "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
@@ -764,77 +645,6 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         return routerConnections.toArray(new RouterConnectionEntity[routerConnections.size()]);
-    }
-
-    /**
-     * @param router
-     * @return
-     * @throws InvalidDataDAOException
-     * @throws InternalDAOException
-     */
-    public int count_element(RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
-        int count = 0;
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        String search = "";
-
-        if (router.getSN() != null){
-            search = "select count(`RouterConnection`.`ID`) from RouterConnection inner join `Router` " +
-                     "on (`RouterConnection`.`ID_From` = `Router`.`ID` " +
-                     "or `RouterConnection`.`ID_To` = `Router`.`ID`) " +
-                     "where `Router`.`SN` = ?";
-        }
-        else{
-            logger.info("For reading router connection incorrectly chosen field, try SN");
-            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
-                    " try SN");
-        }
-
-        try {
-            preparedStatement = connection.prepareStatement(search);
-        } catch (SQLException e) {
-            logger.warn("PrepareStatement in get count wasn't created", e);
-            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
-        }
-
-        String log_parameters = "With parameters: SN(" + router.getSN() + ")";
-
-        try {
-            preparedStatement.setString(1, router.getSN());
-
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.first()) {
-                count = resultSet.getInt(1);
-
-                logger.trace("Get count elements. {}", log_parameters);
-            }
-        } catch (SQLException e) {
-            logger.info("Get count elements failed. {}", log_parameters, e);
-            throw new InternalDAOException("Get count elements failed.", e);
-        }
-        finally {
-            if (preparedStatement!=null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in get count false", e);
-                    throw new InternalDAOException(e);
-                }
-            }
-            if (resultSet!= null){
-                try{
-                    resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in get count false",e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-
-        return count;
     }
 
     /**
