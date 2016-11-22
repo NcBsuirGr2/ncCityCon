@@ -51,11 +51,9 @@
                     CityCon Cities
                 </center>
 
-
                 <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
                     <thead>
                     <tr>
-
                         <th>
                             <c:set var="newAsc" value="true"/>
                             <c:if test="${empty param.asc or (param.asc == true and (param.sortBy == 'name' or empty param.sortBy))}">
@@ -70,7 +68,6 @@
                                 </c:if>
                             </a>
                         </th>
-
 
                         <th>
                             <c:set var="newAsc" value="true"/>
@@ -112,7 +109,6 @@
                             <td class="hidden idField">${city.id}</td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
 
@@ -123,7 +119,7 @@
 
                         <div class="col-sm-4">
                             <c:if test="${showUsersOperationBtns}">
-                                <a href="/user?action=add">
+                                <a href="/city?action=add">
                                     <button class="btn btn-primary center-block">Add</button>
                                 </a>
                             </c:if>
@@ -139,7 +135,7 @@
 
                         <div class="col-sm-4">
                             <c:if test="${showUsersOperationBtns}">
-                                <form action="/user" id="deleteForm" method="POST">
+                                <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
                                     <input type="hidden" name="type" value="delete">
                                     <button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
@@ -185,66 +181,17 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
             <div class="col-sm-1">
             </div>
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <center class="before-footer">
         <%@ include file="/include/pagination.jsp" %>
     </center>
 
-
     <%@ include file="/include/footer.html" %>
 </div>
-
-
-
-
 </body>
 </html>
 

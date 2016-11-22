@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Used to show the list of users. Support pagination. Redirects to the last available
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *
- * @author Mike
+ * @author Dima
  * @version 0.2
  */
 public class CityListServlet extends AbstractHttpServlet {

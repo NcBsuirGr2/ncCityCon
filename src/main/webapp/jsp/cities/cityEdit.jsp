@@ -1,41 +1,108 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<title>Edit</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="icon" href="favicon.ico" />
+	<title>Edit city</title>
 </head>
 <body>
 <div class="content-wrapper">
-<%@ include file="/include/header.jsp" %>
+
+	<%@ include file="/include/header.jsp" %>
+
 	<div class="before-footer">
-<div class="panel panel-default">
-	<div class="panel-heading">Edit</div>
-	<form class="form-horizontal" role="form" method="post" action="CityEditServlet" >
-
-		<div class="form-group">
-			<label for="NameCity" class="col-xs-3 control-label">NameCity</label>
-			<div class="col-xs-9">
-				<input class="form-control" placeholder="NameCity" id="NameCity" name="NameCity" type="text" autofocus value="<c:out value="${city.Name}"/> ">
+		<c:if test="${not empty param.errorType}">
+			<div class="alert alert-warning alert-dismissible" style="margin-top: 20px">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Error!</strong>
+				<c:choose>
+					<c:when test="${param.errorType == 'dublicate'}">
+						City with such name already exists.
+					</c:when>
+				</c:choose>
 			</div>
-		</div>
+		</c:if>
 
-		<div class="form-group">
-			<label for="Country" class="col-xs-3 control-label">Country</label>
-			<div class="col-xs-9">
-				<input class="form-control" placeholder="Country" id="Country" name="Country" type="text" autofocus value="<c:out value="${city.Country}"/> ">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<h4>Edit city</h4>
 			</div>
-		</div>
+			<div class="panel-body">
+				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">
+					<div class="form-group">
+						<label for="name" class="col-xs-3 control-label">City:</label>
+						<div class="col-xs-9">
+							<c:if test="${not empty editCity}">
+								<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
+							</c:if>
+							<c:if test="${empty editCity}">
+								<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
+							</c:if>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="country" class="col-xs-3 control-label">Country:</label>
+						<div class="col-xs-9">
+							<c:if test="${not empty editCity}">
+								<input class="form-control" required placeholder="Country" id="country" name="countryName" type="text" value="${editCity.countryName}">
+							</c:if>
+							<c:if test="${empty editCity}">
+								<input class="form-control" required placeholder="Country" id="country" name="countryName" type="text" value="${param.editCountryName}">
+							</c:if>
+						</div>
+					</div>
 
-	</form>
-	<a><button type="button" class="btn btn-primary" value="edit" name="edit">Save</button></a>
-</div>
-</div>
-<%@ include file="/include/footer.html" %>
+					<input type="hidden" name="type" value="${param.action}"/>
+					<input type="hidden" name="id" value="${editCity.id}"/>
+				</form>
+			</div>
+
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-sm-6">
+						<button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
+					</div>
+					<div class="col-sm-6">
+						<a href="/cities" class="btn btn-primary btn-block center-block">Back</a>
+					</div>
+				</div>
+			</div>
+			<!-- Save dialog modal -->
+			<div class="modal fade changesDialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Confirm changes</h4>
+						</div>
+
+						<div class="modal-body">
+							<p>Are you sure you want to apply changes?</p>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+							<input type="submit" class="btn btn-primary" form="form" value="Yes"/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<%@ include file="/include/footer.html" %>
+
 </div>
 </body>
+
+
 </html>
