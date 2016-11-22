@@ -271,7 +271,7 @@
 					<div class="col-sm-2">
 						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
 				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}?itemsPerPage=5&page=${currentPage}">5</option>
-				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}?itemsPerPage=10&page=${currentPage}>10</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}?itemsPerPage=10&page=${currentPage}">10</option>
 				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}?itemsPerPage=15&page=${currentPage}">15</option>
 				        </select>
 				    </div>
