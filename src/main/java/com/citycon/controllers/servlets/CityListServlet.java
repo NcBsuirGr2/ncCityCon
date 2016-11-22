@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @version 0.2
  */
 public class CityListServlet extends AbstractHttpServlet {
-    private static String USER_LIST_PAGE = "/jsp/cities/cityList.jsp";
+    private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
 
     public CityListServlet(){
         super();
@@ -63,7 +63,7 @@ public class CityListServlet extends AbstractHttpServlet {
 
             CityEntity[] cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc);
             req.setAttribute("entityArray", cities);
-            req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
+            req.getRequestDispatcher(CITY_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | NumberFormatException exception) {
             forwardToErrorPage("Invalid search input", req, res);
             logger.debug("Invalid getPage data", exception);
