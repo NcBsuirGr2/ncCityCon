@@ -25,47 +25,15 @@ $(document).ready(function() {
 			success : function(result) {
 				$('#ajaxButtonUserServletResponse').text(result);
 			}
-
 		});
 	});
-
-
-
-	$('#userGetName').blur(function() {
+	$('#ButtonSave').click(function() {
 		$.ajax({
-			url : 'GetUserServlet',
-			type: 'Get',
-			data : {
-				action : "asdf"
-			},
-			success : function(result) {
-				$('#ajaxGetUserServletResponse').text(result);
-			}
-		});
-	});
-
-	$('#userGet2Name').blur(function() {
-		$.ajax({
-			url : 'GetUserServlet' + '?' + $.param({"field" : "field"}),
+			url : 'GetUserServlet' + '?'+ $.param({"action" : $('#ButtonDelete').val()}),
 			type: 'Delete',
 			success : function(result) {
-				$('#ajaxGet2UserServletResponse').text(result);
+				$('#ajaxButtonUserServletResponse').text(result);
 			}
 		});
 	});
-
-	$('#userPostName').blur(function() {
-		$.ajax({
-			url : 'GetUserServlet',
-			type: 'Post',
-			data : {
-				userName : $('#userPostName').val()
-			},
-			success : function(result) {
-				$('#ajaxPostUserServletResponse').text(result);
-			}
-		});
-	});
-
-
 });

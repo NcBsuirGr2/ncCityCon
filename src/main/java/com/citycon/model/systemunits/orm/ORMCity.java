@@ -93,4 +93,18 @@ public class ORMCity extends ORMEntity {
         DAO staticDAO = daoFactory.getCityDAO();
         return (CityEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
+
+	/**
+	 *	Retrieves total number of Cities from DAO layer.
+	 *
+	 * @return int number of Cities
+	 * @throws DAOException if any DAO internal error occur
+	 */
+	public static int getCount() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		return staticDAO.count_element();
+	}
+
+
+
 }
