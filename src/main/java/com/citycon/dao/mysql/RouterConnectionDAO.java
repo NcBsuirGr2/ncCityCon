@@ -143,12 +143,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
-                "on T.ID_From = C.ID where T.ID=" + routerConnection.getId());
+                "select T.ID as ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                "on T.ID_From = C.ID where T.ID=" + routerConnection.getId() + " Group by ID");
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
-                "on T.ID_To = C.ID where T.ID=" + routerConnection.getId());
+                "select T.ID as ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                "on T.ID_To = C.ID where T.ID=" + routerConnection.getId() + " Group by ID");
 
 
         get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
@@ -297,14 +297,17 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String search = "";
 
         if (city.getName() != null && city.getCountryName() != null){
-            search = "select count(`RouterConnection`.`ID`) from `RouterConnection` inner join " +
-                        "(select `Router`.`ID` " +
+            search = "select count(ID) from " +
+                        "(select RouterConnection.ID as ID " +
+                        "from RouterConnection inner join " +
+                            "(select `Router`.`ID` as ID " +
                             "from `Router` inner join `City` " +
                             "on (`Router`.`City_id`=`City`.`ID`) " +
                             "where (`City`.`Name` = ? and `City`.`Country` = ?) " +
-                        ") `routers`" +
-                    "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
-                    " or `RouterConnection`.`ID_To` = `routers`.`ID`) ";
+                            " group by ID) routers " +
+                        "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
+                        "or `RouterConnection`.`ID_To` = `routers`.`ID`) " +
+                        "group by ID) E";
         }
         else{
             logger.info("For reading router connection incorrectly chosen field, try name and country");
@@ -391,10 +394,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String search = "";
 
         if (router.getSN() != null){
-            search = "select count(`RouterConnection`.`ID`) from RouterConnection inner join `Router` " +
-                     "on (`RouterConnection`.`ID_From` = `Router`.`ID` " +
-                     "or `RouterConnection`.`ID_To` = `Router`.`ID`) " +
-                     "where `Router`.`SN` = ?";
+            search = "select count(ID) from " +
+                        "(SELECT `RouterConnection`.`ID` " +
+                        "FROM RouterConnection INNER JOIN `Router` " +
+                        "ON (`RouterConnection`.`ID_From` = `Router`.`ID` " +
+                        "OR `RouterConnection`.`ID_To` = `Router`.`ID`) " +
+                        "WHERE `Router`.`SN` = ?) E";
         }
         else{
             logger.info("For reading router connection incorrectly chosen field, try SN");
@@ -498,10 +503,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         " select * from RouterConnection where ID_From = @id_SN or ID_To = @id_SN");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select T.ID, C.`Name`, C.SN, T.ID_From from temp T join CitySN C on T.ID_From = C.ID");
+                        "select T.ID as ID, C.`Name`, C.SN, T.ID_From from temp T join CitySN C " +
+                        "on T.ID_From = C.ID Group by ID");
 
-                SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo" +
-                        " select T.ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C on T.ID_To = C.ID");
+                SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
+                        "select T.ID as ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C " +
+                        "on T.ID_To = C.ID Group by ID");
             }
         }
         else if(city != null){
@@ -533,12 +540,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         "Group by ID");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select T.ID, C.`Name`, C.SN, T.ID_From from ConnectionsOfRouters T " +
-                        "join CitySN C on T.ID_From = C.ID");
+                        "select T.ID as ID, C.`Name`, C.SN, T.ID_From from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_From = C.ID Group by ID");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                        "select T.ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
-                        "join CitySN C on T.ID_To = C.ID");
+                        "select T.ID as ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_To = C.ID Group by ID");
             }
         }
         else{
@@ -546,10 +553,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C on T.ID_From = C.ID");
+                    "select T.ID as ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                    "on T.ID_From = C.ID Group by ID");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                    "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C on T.ID_To = C.ID");
+                    "select T.ID as ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                    "on T.ID_To = C.ID Group by ID");
         }
 
         if(sorter != null) {
