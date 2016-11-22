@@ -499,6 +499,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         return 0;
     }
 
+    /**
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     public int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
 
         int cityID = 0;
