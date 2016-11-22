@@ -5,6 +5,7 @@ import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.dao.DAO;
+import com.citycon.dao.mysql.RouterDAO;
 import com.citycon.dao.exceptions.DAOException;
 
 /**
@@ -127,4 +128,26 @@ public class ORMRouter extends ORMEntity {
 		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
 		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
 	}
+
+	 /**
+     *	Retrieves total number of routers from DAO layer.
+     * 
+     * @return int number of connections
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount() throws DAOException {
+    	DAO staticDAO = daoFactory.getRouterDAO();
+        return staticDAO.count_element();
+    }
+
+     /**
+     *	Retrieves number of routers for concrete city from DAO layer.
+     * 
+     * @return int number of connections
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount(CityEntity city) throws DAOException {
+    	RouterDAO staticDAO = (RouterDAO)daoFactory.getRouterDAO();
+        return staticDAO.count_element(city);
+    }
 }

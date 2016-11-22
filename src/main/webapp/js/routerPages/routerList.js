@@ -5,8 +5,7 @@ $(document).ready(function() {
 		console.log(document.selectedId);
     });
     $("#deleteForm").submit(function(event) {
-    	console.log($("#deleteId").val());
-		if($("#deleteId").val() <= 0) {
+		if(!document.selectedId) {
 			event.preventDefault();
 			alert("Select router");
 		} 

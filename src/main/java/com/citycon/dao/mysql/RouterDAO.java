@@ -32,10 +32,10 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         hashMap.put("", "`ID`");
         hashMap.put("id", "`ID`");
         hashMap.put("name", "`Name`");
-        hashMap.put("sn", "`SN`");
-        hashMap.put("ports num", "`Port`");
+        hashMap.put("SN", "`SN`");
+        hashMap.put("portsNum", "`Port`");
         hashMap.put("isActive", "`In_Service`");
-        hashMap.put("city id", "`City_id`");
+        hashMap.put("cityId", "`City_id`");
     }
 
     /**

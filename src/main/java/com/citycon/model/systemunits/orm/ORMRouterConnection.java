@@ -143,7 +143,7 @@ public class ORMRouterConnection extends ORMEntity {
         return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, router);
     }
     /**
-     *	Retrieves total nuber of connetions from DAO layer.
+     *	Retrieves total number of connetions from DAO layer.
      * 
      * @return int nuber of connections
      * @throws DAOException if any DAO internal error occur
@@ -153,7 +153,7 @@ public class ORMRouterConnection extends ORMEntity {
         return staticDAO.count_element();
     }
     /**
-     *	Retrieves total nuber of connetions for concrete city from DAO layer.
+     *	Retrieves total number of connetions for concrete city from DAO layer.
      * 
      * @return int nuber of connections
      * @throws DAOException if any DAO internal error occur
@@ -165,7 +165,7 @@ public class ORMRouterConnection extends ORMEntity {
     /**
      *	Retrieves total nuber of connetions for concrete router from DAO layer.
      * 
-     * @return int nuber of connections
+     * @return int number of connections
      * @throws DAOException if any DAO internal error occur
      */
     public static int getCount(RouterEntity router) throws DAOException {

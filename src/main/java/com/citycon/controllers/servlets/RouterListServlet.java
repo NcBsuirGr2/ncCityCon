@@ -3,7 +3,10 @@ package com.citycon.controllers.servlets;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.dao.mysql.RouterDAO;
+
 import com.citycon.model.systemunits.entities.RouterEntity;
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.orm.ORMRouter;
 
 import javax.servlet.RequestDispatcher;
@@ -14,39 +17,74 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Created by root on 16.11.16.
+ * Provides interface to get list of routers. Can return list of all routers
+ * or routers for specific city.
+ * 
+ * @author Mike
+ * @version 0.1
  */
 public class RouterListServlet  extends AbstractHttpServlet {
-    private static String RUTERS_LIST_PAGE = "/jsp/routers/routerList.jsp";
-
-    private String ROUTER_IS_EXIST = "Router with that SN is already exist";
-    private String SERVER_ERROR = "Server error";
-    private String INVALID_DATA = "Invalid Data";
+    private static String ROUTER_LIST_PAGE = "/jsp/routers/routerList.jsp";
+    private String ROUTER_LIST_URL = "/routers";
 
 
 
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
 
-        RouterEntity routers[] = null;
-        RequestDispatcher view = null;
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) 
+                                                    throws ServletException, IOException {
+
+        RouterEntity[] routers;
+        String defaultSorting = "SN";
+
         try {
+            // Getting page for concrete city
+            if (req.getParameter("country") != null && req.getParameter("city") != null 
+                     && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
+                
+                CityEntity city = new CityEntity();
+                city.setCountryName(req.getParameter("country"));
+                city.setName(req.getParameter("city"));
+                StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(city), 
+                                                                defaultSorting, ROUTER_LIST_URL, req, res);
+                if (redirect != null) {
+                    redirect.append("&country=");
+                    redirect.append(req.getParameter("country"));
+                    redirect.append("&city=");
+                    redirect.append(req.getParameter("city"));
+                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
+                    res.sendRedirect(redirect.toString());
+                    return;
+                }
+                routers = ORMRouter.getPage((int)req.getAttribute("currentPage"), 
+                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
+                                (boolean)req.getAttribute("asc"), city);
 
-            routers = ORMRouter.getPage(1,20,"name",true);
-            request.setAttribute("entityArray", routers);
+            // Getting all routers
+            } else {
+                StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(), 
+                                                                defaultSorting, ROUTER_LIST_URL, req, res);
+                if (redirect != null) {
+                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
+                    res.sendRedirect(redirect.toString());
+                    return;
+                }
+                routers = ORMRouter.getPage((int)req.getAttribute("currentPage"), 
+                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
+                                (boolean)req.getAttribute("asc"));
+            }   
 
-            view = request.getRequestDispatcher(RUTERS_LIST_PAGE);
-        } catch (InvalidDataDAOException e) {
-            forwardToErrorPage(INVALID_DATA,request,response);
-            e.printStackTrace();
-        } catch (InternalDAOException e) {
-            forwardToErrorPage(SERVER_ERROR,request,response);
-        } catch (DAOException e) {
-            forwardToErrorPage(e.getMessage(),request,response);
-            e.printStackTrace();
+            req.setAttribute("entityArray", routers);
+            req.getRequestDispatcher(ROUTER_LIST_PAGE).forward(req, res);
+        } catch (InvalidDataDAOException | NumberFormatException exception) {
+            forwardToErrorPage("Invalid search input", req, res);
+            logger.debug("Invalid getPage data", exception);
+        } catch (DAOException exception) {
+            forwardToErrorPage("Internal DAO exception", req, res);
+        } catch (Exception exception) {
+            logger.warn("Exception", exception);
+            forwardToErrorPage("Internal server error", req, res);
         }
-
-        view.forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request,
