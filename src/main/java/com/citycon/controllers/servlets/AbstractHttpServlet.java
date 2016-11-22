@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,10 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";
 
     protected Logger logger;
+
+    public AbstractHttpServlet() {
+    	logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.AbstractHttpServlet");
+    }
 
     protected void forwardToErrorPage(String errorMessage, HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
@@ -59,7 +64,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		}
 		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
 			itemsPerPage = Integer.parseInt(itemsPerPageString);
-		}
+		} 
 		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
 		}		

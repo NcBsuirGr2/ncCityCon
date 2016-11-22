@@ -23,7 +23,7 @@
                     <strong>Error!</strong> 
                     <c:choose>
                         <c:when test="${param.errorType == 'dublicate'}">
-                            Router with such SN already exists already exists.
+                            Router with such SN already exists.
                         </c:when>
                     </c:choose>
                     <c:choose>

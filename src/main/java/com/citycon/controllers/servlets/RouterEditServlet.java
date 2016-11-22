@@ -103,42 +103,13 @@ public class RouterEditServlet extends AbstractHttpServlet {
                         return;
                     }
                     try {
+                        logger.trace("New router:"+newRouter.getEntity().toString());
                         newRouter.create();
                     } catch (DublicateKeyDAOException exception) {
-                        StringBuilder redirect = new StringBuilder();
-                        redirect.append(ROUTER_EDIT_URL);
-                        redirect.append("?errorType=dublicate");
-                        redirect.append("&editPortsNum=");
-                        redirect.append(portsNum);
-                        redirect.append("&editSN=");
-                        redirect.append(SN);
-                        redirect.append("&editName=");
-                        redirect.append(name);
-                        redirect.append("&editActive=");
-                        redirect.append(active);
-                        redirect.append("&editCityName=");
-                        redirect.append(cityName);
-                        redirect.append("&editCountryName=");
-                        redirect.append(countryName);
-                        res.sendRedirect(redirect.toString());
+                        res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
                         return;
                     } catch (InvalidDataDAOException exception) {
-                        StringBuilder redirect = new StringBuilder();
-                        redirect.append(ROUTER_EDIT_URL);
-                        redirect.append("?errorType=invalidData");
-                        redirect.append("&editPortsNum=");
-                        redirect.append(portsNum);
-                        redirect.append("&editSN=");
-                        redirect.append(SN);
-                        redirect.append("&editName=");
-                        redirect.append(name);
-                        redirect.append("&editActive=");
-                        redirect.append(active);
-                        redirect.append("&editCityName");
-                        redirect.append(cityName);
-                        redirect.append("&editCountryName");
-                        redirect.append(countryName);
-                        res.sendRedirect(redirect.toString());
+                        res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
                         return;
                     }
                 } catch (DAOException exception) {
@@ -156,46 +127,44 @@ public class RouterEditServlet extends AbstractHttpServlet {
     }
     protected void doPut(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
-        // try {
-        //     int connectionId = Integer.parseInt(req.getParameter("id"));
-        //     String SN1 = req.getParameter("SN1");
-        //     String SN2 = req.getParameter("SN2");
-        //     // Temporary hack
-        //     ORMRouter router1 = new ORMRouter();
-        //     ORMRouter router2 = new ORMRouter();
+        try {
+            String routerId = req.getParameter("routerId");
+            String name = req.getParameter("name");
+            String active = req.getParameter("active");
+            String cityName = req.getParameter("cityName");
+            String countryName = req.getParameter("countryName");
 
-        //     router1.setSN(SN1);
-        //     router2.setSN(SN2);
-        //     try {
-        //         try {
-        //             router1.read();
-        //             router2.read();
-        //         } catch (InvalidDataDAOException exception) {
-        //             // No routers with such SN, redirect to add/edit page
-        //             res.sendRedirect(ROUTER_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
-        //             return;
-        //         }
-
-        //         ORMRouter updateConnection = new ORMRouter();
-        //         updateConnection.setId(connectionId);
-        //         updateConnection.setFirstRouterId(router1.getId());
-        //         updateConnection.setSecondRouterId(router2.getId());
+            ORMRouter updateRouter = new ORMRouter();
+            try {
+                updateRouter.setId(Integer.parseInt(routerId));
+                updateRouter.setName(name);
+                updateRouter.setActive(active.equals("true"));
+                updateRouter.setCityName(cityName);
+                updateRouter.setCountryName(countryName);
+            } catch (Exception exception) {
+                forwardToErrorPage("Invalid router parameters", req, res);
+                logger.trace("Exception ",exception);
+                return;
+            }
             
-        //         try {
-        //             updateConnection.update();
-        //         } catch (DublicateKeyDAOException exception) {
-        //             res.sendRedirect(ROUTER_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
-        //             return;
-        //         }
-        //     }catch (DAOException cause) {
-        //         logger.warn("Internal DAO exception", cause);
-        //         forwardToErrorPage("Internal DAO exception", req, res);
-        //     }
-        // } catch (NumberFormatException exception) {
-        //     forwardToErrorPage("Not string id value", req, res);
-        //     return;
-        // }
-        // res.sendRedirect(ROUTER_LIST_URL+"?success=add");
+                try {
+                    updateRouter.update();
+                } catch (DublicateKeyDAOException exception) {
+                    res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
+                    return;
+                } catch (InvalidDataDAOException exception) {
+                    res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
+                    return;
+                }
+            }catch (DAOException cause) {
+                logger.warn("Internal DAO exception", cause);
+                forwardToErrorPage("Internal DAO exception", req, res);
+            } catch (Exception exception) {
+                logger.warn("Unexcepted exception");
+                forwardToErrorPage("Internal servler error", req, res);
+                return;
+            }
+        res.sendRedirect(ROUTER_LIST_URL+"?success=add");
     }
     protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
@@ -222,4 +191,30 @@ public class RouterEditServlet extends AbstractHttpServlet {
         res.sendRedirect(ROUTER_LIST_URL+"?success=delete");
         return;
         }
+
+    private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
+        String portsNum = req.getParameter("portsNum");
+        String SN = req.getParameter("SN");
+        String name = req.getParameter("name");
+        String active = req.getParameter("active");
+        String cityName = req.getParameter("cityName");
+        String countryName = req.getParameter("countryName");
+        StringBuilder redirect = new StringBuilder();
+        redirect.append(ROUTER_EDIT_URL);
+        redirect.append("?errorType=");
+        redirect.append(errorType);
+        redirect.append("&editPortsNum=");
+        redirect.append(portsNum);
+        redirect.append("&editSN=");
+        redirect.append(SN);
+        redirect.append("&editName=");
+        redirect.append(name);
+        redirect.append("&editActive=");
+        redirect.append(active);
+        redirect.append("&editCityName");
+        redirect.append(cityName);
+        redirect.append("&editCountryName");
+        redirect.append(countryName);
+        return redirect;
+    }
 }

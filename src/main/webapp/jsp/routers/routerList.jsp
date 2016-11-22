@@ -59,7 +59,7 @@
 										
 											<a href="${samePath}&sortBy=country&asc=${newAsc}">											
 											Country 
-											<c:if test="${empty param.sortBy || param.sortBy == 'SN1'}">
+											<c:if test="${empty param.sortBy || param.sortBy == 'country'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
 												<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
 											</c:if>											
@@ -67,13 +67,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'City'}">
+										<c:if test="${param.asc == true and param.sortBy == 'city'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=City&asc=${newAsc}">											
+											<a href="${samePath}&sortBy=city&asc=${newAsc}">											
 											City
-											<c:if test="${param.sortBy == 'City'}">
+											<c:if test="${param.sortBy == 'city'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -109,13 +109,27 @@
 									</th>	
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'active'}">
+										<c:if test="${param.asc == true and param.sortBy == 'portsNum'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=active&asc=${newAsc}">											
+											<a href="${samePath}&sortBy=portsNum&asc=${newAsc}">											
+											Free ports
+											<c:if test="${param.sortBy == 'portsNum'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${param.asc == true and param.sortBy == 'isActive'}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>
+										
+											<a href="${samePath}&sortBy=isActive&asc=${newAsc}">											
 											Active
-											<c:if test="${param.sortBy == 'active'}">
+											<c:if test="${param.sortBy == 'isActive'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -124,14 +138,6 @@
 							        <th class="hidden">id</th>								
 				        		</tr>
 				        	</thead>
-							<tr>
-								<th>City</th>
-								<th>Name</th>
-								<th>SN</th>
-								<th>Port number</th>
-								<th>Active</th>
-							</tr>
-							</thead>
 
 							<tbody>
 								<c:forEach items="${entityArray}" var="router">
@@ -272,9 +278,9 @@
 
 					<div class="col-sm-2">
 						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}?itemsPerPage=5&page=${currentPage}">5</option>
-				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}?itemsPerPage=10&page=${currentPage}">10</option>
-				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}?itemsPerPage=15&page=${currentPage}">15</option>
+				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}itemsPerPage=5&page=${currentPage}">5</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}itemsPerPage=10&page=${currentPage}">10</option>
+				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}itemsPerPage=15&page=${currentPage}">15</option>
 				        </select>
 				    </div>
 
