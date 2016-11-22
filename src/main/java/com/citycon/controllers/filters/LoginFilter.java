@@ -48,11 +48,18 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				req.setAttribute("showLogoutBtn", true);
 				if (user.getGrant().getUsersBranchLevel() > Grant.NONE) {
 					req.setAttribute("showUsersBtn", true);
+					
+				}
+				if (user.getGrant().getUsersBranchLevel() > Grant.READ) {
+					req.setAttribute("showUsersOperationBtns", true);					
 				}
 				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.NONE) {
 					req.setAttribute("showConnectionsBtn", true);
 					req.setAttribute("showRoutersBtn", true);
 					req.setAttribute("showCitiesBtn", true);
+				}
+				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.READ) {
+					req.setAttribute("showSystemUnitsOperationBtns", true);					
 				}				
 				chain.doFilter(req, res);		
 			}
