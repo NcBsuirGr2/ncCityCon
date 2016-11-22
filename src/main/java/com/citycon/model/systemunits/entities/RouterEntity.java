@@ -13,6 +13,7 @@ public class RouterEntity extends Entity {
 	private String name;
 	private String SN;
 	private int portsNum;
+	private int availablePortsNum;
 	private boolean isActive;
 	private int cityId;
 	private String cityName;
@@ -25,6 +26,9 @@ public class RouterEntity extends Entity {
 	}
 	public int getPortsNum() {
 		return portsNum;
+	}
+	public int getAvailablePortsNum() {
+		return availablePortsNum;
 	}
 	public boolean isActive() {
 		return isActive;
@@ -41,6 +45,9 @@ public class RouterEntity extends Entity {
 	}
 	public void setPortsNum(int portsNum) {
 		this.portsNum = portsNum;
+	}
+	public void setAvailablePortsNum(int availablePortsNum) {
+		this.availablePortsNum = availablePortsNum;
 	}
 	public void isActive(boolean isActive) {
 		this.isActive = isActive;

@@ -1,49 +1,56 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, maximum-scale=1">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, maximum-scale=1">
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
-	<script src="/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/js/selectEntity.js"></script>
-	<script type="text/javascript" src="/js/routerPages/routerList.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
+		<script src="/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/selectEntity.js"></script>
+		<script type="text/javascript" src="/js/routerPages/routerList.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<title>Router List</title>
-</head>
+		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>Router List</title>
+	</head>
 
-<body>
-<div class="content-wrapper">
-<%@ include file="/include/header.jsp" %>
-	<div class="before-footer">
+	<body>
+		<div class="content-wrapper">
+			<%@ include file="/include/header.jsp" %>
+			
+			<div class="row">
+				<div class="col-sm-1">
+				</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">Router List</div>
-			<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
-				<thead>
-				<tr>
-					<th>Name</th>
-					<th>SN</th>
-					<th>Port number</th>
-					<th>Status</th>
-				</tr>
-				</thead>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Router List
+					</div>
 
-				<tbody>
-					<c:forEach items="${entityArray}" var="router">
-						<td class="hidden idField">${router.id}</td>
-						<td>${router.name}</td>
-						<td class="unique">${router.SN}</td>
-						<td>${router.portsNum}</td>
-						<td>${router.active}</td>
+					<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
+						<thead>
+						<tr>
+							<th>Name</th>
+							<th>SN</th>
+							<th>Port number</th>
+							<th>Status</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<div class="panel-footer">
+						</thead>
+
+						<tbody>
+							<c:forEach items="${entityArray}" var="router">
+								<td class="hidden idField">${router.id}</td>
+								<td>${router.name}</td>
+								<td class="unique">${router.SN}</td>
+								<td>${router.portsNum}</td>
+								<td>${router.active}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
+					<div class="panel-footer">
 						<div class="row">
 
 							<div class="col-sm-4">
@@ -109,16 +116,20 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> <!-- Panel footer end -->
 
+				</div> <!-- Panel end -->
+				<div class="col-sm-1">
+				</div>
+			</div> 
+
+			<div class="before-footer">
+			
+			</div>
+
+
+			<%@ include file="/html/footer.html" %>
 		</div>
-
-
-	</div>
-
-
-	<%@ include file="/html/footer.html" %>
-</div>
-</body>
+	</body>
 </html>
 
