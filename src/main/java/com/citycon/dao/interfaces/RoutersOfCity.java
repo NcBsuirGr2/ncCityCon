@@ -11,11 +11,6 @@ import com.citycon.model.systemunits.entities.RouterEntity;
  * Created by Vojts on 16.11.2016.
  */
 public interface RoutersOfCity {
-    void create(RouterEntity newElement, CityEntity cityEntity)
-            throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException;
-
-    void update(RouterEntity updateElement, CityEntity cityEntity)
-            throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException;
 
     RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException;
