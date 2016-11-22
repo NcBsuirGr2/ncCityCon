@@ -79,8 +79,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
                     "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C on T.ID_From = C.ID");
 
-            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo" +
-                    " select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C on T.ID_To = C.ID");
+            SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
+                    "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C on T.ID_To = C.ID");
 
 
             get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
@@ -99,7 +99,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             get_data_routerConnections = connection.prepareStatement(get_data);
         }catch (SQLException e) {
             logger.warn("PrepareStatement or Statement in getPage wasn't created");
-            throw new InternalDAOException("PrepareStatement in getPage wasn't created", e);
+            throw new InternalDAOException("PrepareStatement or Statement in getPage wasn't created", e);
         }
 
         try {
@@ -233,10 +233,13 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
         RouterConnectionEntity  routerConnection = null;
 
-        PreparedStatement search_routerConnection = null;
+        Statement statement = null;
+
         ResultSet resultSet= null;
 
-        String search = "select * from" + nameTable + "where `id`=?";
+        String get_data = "";
+
+        ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
 
         try {
             routerConnection  = (RouterConnectionEntity)readElement;
@@ -245,58 +248,82 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
 
+        if (routerConnection.getId() == 0){
+            logger.info("For reading routerConnection connection incorrectly chosen field, try id");
+            throw new InvalidDataDAOException("For reading routerConnection " +
+                    "connection incorrectly chosen field, try id");
+        }
+
         String log_parameters = "With parameters: Id("+ routerConnection.getId() + ")";
 
-        if(routerConnection.getId() != 0) {
-            try{
-                search_routerConnection = connection.prepareStatement(search);
-            }catch (SQLException e) {
-                logger.warn("PreparedStatement in read wasn't created", e);
-                throw new InternalDAOException("PreparedStatement in read wasn't created", e);
-            }
+        SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
+        SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
-            try {
-                search_routerConnection.setInt(1, readElement.getId());
+        SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
+                "select T.ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                "on T.ID_From = C.ID where T.ID=" + routerConnection.getId());
 
-                resultSet = search_routerConnection.executeQuery();
+        SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
+                "select T.ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                "on T.ID_To = C.ID where T.ID=" + routerConnection.getId());
 
-                if(resultSet.first()) {
-                    routerConnection.setId(resultSet.getInt("id"));
-                    routerConnection.setFirstRouterId(resultSet.getInt("ID_From"));
-                    routerConnection.setSecondRouterId(resultSet.getInt("ID_To"));
 
-                    logger.trace("Read {}.\n {}", nameTable, log_parameters);
-                }
-                else{
-                    logger.info("{} in read not found.\n {}", nameTable, log_parameters);
-                    throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
-                }
-            }catch (SQLException e) {
-                logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
-                throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
-            }
-            finally {
-                if (search_routerConnection!=null){
-                    try {
-                        search_routerConnection.close();
-                    } catch (SQLException e) {
-                        logger.warn("Close PrepareStatement in read {} failed", nameTable, e);
-                        throw new InternalDAOException(e);
-                    }
-                }
-                if (resultSet!= null){
-                    try{
-                        resultSet.close();
-                    }catch (SQLException e){
-                        logger.warn("Close ResultSet in read {} failed", nameTable,e);
-                        throw new InternalDAOException(e);
-                    }
-                }
-            }
+        get_data = "select C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
+                "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
+                "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID ";
+
+
+        try {
+            statement = connection.createStatement();
+        }catch (SQLException e) {
+            logger.warn("Statement in getPage wasn't created");
+            throw new InternalDAOException("Statement in getPage wasn't created", e);
         }
-        else{
-            logger.info("For reading router connection incorrectly chosen field, try id");
-            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field, try id");
+
+        try {
+            for(String SQLCommand : SQLCommandForGetTableOfRouters){
+                System.out.println(SQLCommand);
+                statement.executeUpdate(SQLCommand);
+            }
+
+            resultSet = statement.executeQuery(get_data);
+
+            if(resultSet.first()) {
+                routerConnection.setId(resultSet.getInt("ID"));
+                routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
+                routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
+                routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
+                routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
+                routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
+                routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
+
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
+            }
+            else{
+                logger.info("{} in read not found.\n {}", nameTable, log_parameters);
+                throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
+            }
+        }catch (SQLException e) {
+            logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
+            throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
+        }
+        finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in read {} failed", nameTable, e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in read {} failed", nameTable,e);
+                    throw new InternalDAOException(e);
+                }
+            }
         }
     }
 

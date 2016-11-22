@@ -29,6 +29,7 @@ public class CityDAO extends MySQLDAO {
         hashMap.put("id", "`ID`");
         hashMap.put("name", "`Name`");
         hashMap.put("countryName", "`Country`");
+        hashMap.put("routersNum", "`RoutersNum`");
     }
 
     /**
@@ -64,7 +65,10 @@ public class CityDAO extends MySQLDAO {
                 sorting_direction = " desc ";
             }
 
-            search = "select * from " + nameTable + " order by " + sorter + sorting_direction + " limit ?,?";
+            search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
+                    "from Router R Right outer join City C on R.City_id=C.ID " +
+                    "group by C.ID " +
+                    "order by " + sorter + sorting_direction + " limit ?,?";
         }
         else {
             logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
@@ -82,6 +86,8 @@ public class CityDAO extends MySQLDAO {
             search_cities.setInt(1, (page - 1) * itemsPerPage);
             search_cities.setInt(2, itemsPerPage);
 
+            System.out.println(search_cities);
+
             resultSet = search_cities.executeQuery();
 
             try {
@@ -90,6 +96,7 @@ public class CityDAO extends MySQLDAO {
                     city.setId(resultSet.getInt("id"));
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
+                    city.setRoutersNum(resultSet.getInt("RoutersNum"));
                     cities.add(city);
                 }
 
@@ -189,7 +196,8 @@ public class CityDAO extends MySQLDAO {
 
         PreparedStatement search_city = null;
         ResultSet resultSet= null;
-        String search = "select * from" + nameTable + "where `id`=?";
+        String search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
+                "from Router R join City C on R.City_id=C.ID where C.ID=?";
 
         try {
             city = (CityEntity)readElement;
@@ -215,6 +223,7 @@ public class CityDAO extends MySQLDAO {
                 if(resultSet.first()) {
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
+                    city.setRoutersNum(resultSet.getInt("RoutersNum"));
 
                     logger.trace("Read {}.\n {}", nameTable, log_parameters);
                 }

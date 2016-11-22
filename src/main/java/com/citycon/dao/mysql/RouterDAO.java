@@ -240,12 +240,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         String value = "";
 
         if(router.getId() != 0) {
-            field = "`id`";
+            field = "R.ID";
             value = String.valueOf(router.getId());
             log_parameters += "Id(" + value + ")";
         }
         else if(router.getSN() != null){
-            field = "`SN`";
+            field = "R.SN";
             value = "'" + router.getSN() + "'";
             log_parameters += "SN(" + value + ")";
         }
@@ -254,7 +254,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
             throw new InvalidDataDAOException("For reading router incorrectly chosen field, try ID or SN");
         }
 
-        String search = "select * from" + nameTable + "where " + field + "=" + value;
+        String search = "select R.ID as ID, R.SN as SN, R.`Name`, R.`Port`, R.In_Service, R.City_id, C.`Name` as CityName " +
+                "from Router R join City C on R.City_id=C.ID where " + field + " = " + value;
 
         try {
             search_router = connection.prepareStatement(search);
@@ -264,6 +265,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         }
 
         try {
+            System.out.println(search);
             resultSet = search_router.executeQuery();
 
             if(resultSet.first()) {
@@ -273,6 +275,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                 router.setPortsNum(resultSet.getInt("Port"));
                 router.isActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
+                router.setCityName(resultSet.getString("CityName"));
 
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             }
