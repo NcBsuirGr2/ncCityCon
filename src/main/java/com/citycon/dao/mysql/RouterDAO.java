@@ -35,6 +35,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("portsNum", "`Port`");
         hashMap.put("isActive", "`In_Service`");
         hashMap.put("cityId", "`City_id`");
+        hashMap.put("city", "`CityName`");
+        hashMap.put("country", "`Country`");
     }
 
     /**
@@ -497,7 +499,69 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         return 0;
     }
 
-    private int getCityID(CityEntity city){
-        return 0;
+    private int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
+
+        int cityID = 0;
+
+        PreparedStatement search_city = null;
+        ResultSet resultSet= null;
+
+        if (city.getName() == null || city.getCountryName() == null){
+            logger.info("For getCityID incorrectly chosen field, try City And Country");
+            throw new InvalidDataDAOException("For getCityID incorrectly chosen field, try City And Country");
+        }
+
+        String search = "select ID from City where `Name`=? and Country=?";
+
+        String log_parameters = "With parameters: Name("+ city.getName() +
+                "), Country(" + city.getCountryName() + ")";
+
+
+        try{
+            search_city = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            logger.warn("PreparedStatement in read wasn't created", e);
+            throw new InternalDAOException("PreparedStatement in read wasn't created", e);
+        }
+
+        try {
+            search_city.setString(1, city.getName());
+            search_city.setString(2, city.getCountryName());
+
+            resultSet = search_city.executeQuery();
+
+            if(resultSet.first()) {
+                cityID = resultSet.getInt("ID");
+
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
+            }
+            else{
+                logger.info("{} in read not found.\n {}", nameTable, log_parameters);
+                throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
+            }
+        } catch (SQLException e) {
+            logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
+            throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
+        }
+        finally {
+            if (search_city!=null){
+                try {
+                    search_city.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in read {} failed", nameTable, e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in read {} failed", nameTable,e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return cityID;
     }
 }

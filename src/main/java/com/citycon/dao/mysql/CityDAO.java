@@ -1,9 +1,10 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.exceptions.*;
+import com.citycon.dao.exceptions.DublicateKeyDAOException;
+import com.citycon.dao.exceptions.InternalDAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
@@ -219,11 +220,7 @@ public class CityDAO extends MySQLDAO {
 
         if (city.getName() != null) {
             try{
-                logger.debug("Before preparedStatement");
-                logger.debug("Connection: {}", connection.isClosed());
                 search_city = connection.prepareStatement(search);
-                logger.debug("After preparedStatement");
-                logger.debug("Connection: {}", connection.isClosed());
             }catch (SQLException e) {
                 logger.warn("PreparedStatement in read wasn't created", e);
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
@@ -235,12 +232,7 @@ public class CityDAO extends MySQLDAO {
                 if(city.getCountryName() != null) {
                     search_city.setString(2, city.getCountryName());
                 }
-
-                logger.debug("Before resultSet");
-                logger.debug("Connection: {}", connection.isClosed());
                 resultSet = search_city.executeQuery();
-                logger.debug("After resultSet");
-                logger.debug("Connection: {}", connection.isClosed());
 
                 if(resultSet.first()) {
                     city.setName(resultSet.getString("Name"));
