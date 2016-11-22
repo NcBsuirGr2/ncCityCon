@@ -72,11 +72,10 @@ public class CityEditServlet extends AbstractHttpServlet {
             default : {
                 String name = req.getParameter("name");
                 String countryName = req.getParameter("countryName");
-                String routersNum = req.getParameter("routersNum");
                 logger.info("New city {}", name);
-                if (name == null ||  countryName == null || routersNum == null) {
+                if (name == null || countryName == null) {
                     logger.info("Something is null {},{}", name, countryName);
-                    forwardToErrorPage("Not enough info to create new user", req, res);
+                    forwardToErrorPage("Not enough info to create new city", req, res);
                     return;
                 }
                 ORMCity newCity = new ORMCity();
