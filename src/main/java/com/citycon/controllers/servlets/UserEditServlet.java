@@ -45,7 +45,11 @@ public class UserEditServlet extends AbstractHttpServlet {
 				logger.warn("Error occur during reading user", cause);
 				forwardToErrorPage("Error occur during reading user", req, res);
 				return;
-			}
+			} catch (Exception exception) {
+                logger.warn("Unexcepted exception");
+                forwardToErrorPage("Internal servler error", req, res);
+                return;
+            }
 		}
 		RequestDispatcher editView = req.getRequestDispatcher(USER_EDIT_PAGE);
 		editView.forward(req, res);

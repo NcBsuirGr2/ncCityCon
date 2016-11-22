@@ -49,6 +49,10 @@ public class ORMRouter extends ORMEntity {
 	public String getCityName() {
 		return router.getCityName();
 	}
+	public String getCountryName() {
+		return router.getCountryName();
+	}
+
 
 
 	public void setName(String name) {
@@ -71,6 +75,9 @@ public class ORMRouter extends ORMEntity {
 	}
 	public void setCityName(String cityName) {
 		router.setCityName(cityName);
+	}
+	public void setCountryName(String countryName) {
+		router.setCountryName(countryName);
 	}
 
 	//ORM interface for incapsulated object

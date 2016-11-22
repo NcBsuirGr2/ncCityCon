@@ -18,42 +18,58 @@ import java.sql.Date;
 import java.util.Calendar;
 
 /**
- * Created by root on 16.11.16.
+ * @author Mike
+ * @verion 0.1
  */
 public class RouterEditServlet extends AbstractHttpServlet {
 
-    private String ERROR_PAGE = "/jsp/error.jsp";
-    private String LIST_ROUTERS_PAGE = "/jsp/routers/routerEdit.jsp";
-    private String LIST_ROUTER_URL = "/routers";
+  private static String ROUTER_LIST_PAGE = "/jsp/routers/routerList.jsp";    
+    private static String ROUTER_EDIT_PAGE = "/jsp/routers/routerEdit.jsp";
+    private static String ROUTER_LIST_URL = "/routers";
+    private static String ROUTER_EDIT_URL = "/router";
 
-    public RouterEditServlet(){
-        super();
-        logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.RouterEditServlet");
+    public RouterEditServlet() {
+        logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String sn = req.getParameter("SN");
-        if (sn != null) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) 
+                                                        throws ServletException, IOException {
+        if (req.getParameter("SN") != null) {
             try {
-                ORMRouter router = new ORMRouter();
-                router.setSN(sn);
-                router.read();
-                req.setAttribute("router", router.getEntity());
-            } catch (DAOException cause) {
-                logger.warn("Error occur during reading Router", cause);
-                forwardToErrorPage("Error occur during reading Router", req, res);
+                String routerSN = req.getParameter("SN");
+                try {
+                    ORMRouter router = new ORMRouter();
+                    router.setSN(routerSN);
+                    router.read();
+
+                    req.setAttribute("router", router.getEntity());
+                } catch (DAOException cause) {
+                    logger.warn("Error occur during reading connection", cause);
+                    forwardToErrorPage("Error occur during reading connection", req, res);
+                    return;
+                }
+            } catch (NumberFormatException exception) {
+                forwardToErrorPage("Not string id value", req, res);
+                return;
+            } catch (Exception exception) {
+                logger.warn("Unexcepted exception");
+                forwardToErrorPage("Internal servler error", req, res);
+                return;
             }
         }
-        res.setHeader("Allow", "GET, POST, PUT, DELETE");
-        RequestDispatcher editView = req.getRequestDispatcher(LIST_ROUTERS_PAGE);
+        
+        RequestDispatcher editView = req.getRequestDispatcher(ROUTER_EDIT_PAGE);
         editView.forward(req, res);
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-
-        switch (req.getParameter("type")) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) 
+                                                        throws ServletException, IOException {
+        String type = req.getParameter("type");
+        if (type == null) {
+            forwardToErrorPage("type parameter is null", req, res);
+            return;
+        }
+        switch (type) {
             case "edit" : {
                 doPut(req, res);
                 return;
@@ -62,100 +78,101 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 doDelete(req, res);
                 return;
             }
-            case "add" : {
-                String sn = req.getParameter("SN");
-                String name = req.getParameter("name");
-                String portsNumber = req.getParameter("portsNum");
-                String cityId = req.getParameter("cityId");
-
-                logger.info("New router {}", sn);
-                if (sn == null || name == null || portsNumber == null || cityId == null) {
-                    logger.info("Something is null {},{},{},{}", name, sn, portsNumber, cityId);
-                    forwardToErrorPage("Not enough info to create new roter", req, res);
-                    return;
-                }
-                try {
-                    ORMRouter router = new ORMRouter();
-                    router.setSN(sn);
-                    router.setCityId(Integer.parseInt(cityId));
-                    router.setName(name);
-                    router.setPortsNum(Integer.parseInt(portsNumber));
-                    router.IsActive(true); //TODO is active
-                    router.create();
-                    res.sendRedirect(LIST_ROUTER_URL);
-                } catch (DAOException e) {
-                    logger.warn("Cannot create new router", e);
-                    forwardToErrorPage("Cannot create new router", req, res);
-                }
-                break;
-            } default : {
-                forwardToErrorPage("This adress is not exist", req, res);
-                break;
+            default : {
+                // String SN1 = req.getParameter("SN1");
+                // String SN2 = req.getParameter("SN2");
+                // // Temporary hack
+                // ORMRouter router1 = new ORMRouter();
+                // ORMRouter router2 = new ORMRouter();
+                // router1.setSN(SN1);
+                // router2.setSN(SN2);
+                // try {
+                //     try {
+                //         router1.read();
+                //         router2.read();
+                //     } catch (InvalidDataDAOException exception) {
+                //         // No routers with such SN, redirect to add/edit page
+                //         res.sendRedirect(ROUTER_EDIT_URL+"?errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+                //         return;
+                //     } 
+                //     ORMRouter newConnection = new ORMRouter();
+                //     newConnection.setFirstRouterId(router1.getId());
+                //     newConnection.setSecondRouterId(router2.getId());
+                //     try {
+                //         newConnection.create();
+                //     } catch (DublicateKeyDAOException exception) {
+                //         res.sendRedirect(ROUTER_EDIT_URL+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
+                //         return;
+                //     }
+                // } catch (DAOException exception) {
+                //     logger.warn("DAO error during adding new connection", exception);
+                //     forwardToErrorPage("Internal DAO exception", req, res);
+                // }
+                // res.sendRedirect(ROUTER_LIST_URL+"?success=add");
             }
-
         }
-
     }
+    protected void doPut(HttpServletRequest req, HttpServletResponse res) 
+                                                        throws ServletException, IOException {
+        // try {
+        //     int connectionId = Integer.parseInt(req.getParameter("id"));
+        //     String SN1 = req.getParameter("SN1");
+        //     String SN2 = req.getParameter("SN2");
+        //     // Temporary hack
+        //     ORMRouter router1 = new ORMRouter();
+        //     ORMRouter router2 = new ORMRouter();
 
-    protected void doPut(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String sn = req.getParameter("SN");
-        String name = req.getParameter("name");
-        String cityId = req.getParameter("cityId");
-        String portsNum = req.getParameter("portsNum");
-        String isActive = String.valueOf(true);
+        //     router1.setSN(SN1);
+        //     router2.setSN(SN2);
+        //     try {
+        //         try {
+        //             router1.read();
+        //             router2.read();
+        //         } catch (InvalidDataDAOException exception) {
+        //             // No routers with such SN, redirect to add/edit page
+        //             res.sendRedirect(ROUTER_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+        //             return;
+        //         }
 
-
-        if (sn == null) {
-            forwardToErrorPage("Cannot update router cause SN field is empty", req, res);
-            logger.warn("Cannot update router cause SN field is empty");
-            return;
-        }
-
-        try {
-            ORMRouter router = new ORMRouter();
-            router.setSN(sn);
-            router.setCityId(Integer.parseInt(cityId));
-            router.setName(name);
-            router.setPortsNum(Integer.parseInt(portsNum));
-            router.IsActive(Boolean.getBoolean(isActive)); //TODO is active
-
-            logger.debug("Updating router with SN:{} name:{} PortsNum:{} IsActive:{} CityId:{}",
-                    router.getSN(),router.getName(), router.getPortsNum(), router.isActive(), router.getCityId());
-            router.update();
-        } catch (DAOException cause) {
-            logger.warn("Cannot update router", cause);
-            forwardToErrorPage("Cannot update router", req, res);
-            return;
-        } catch (NumberFormatException cause) {
-            forwardToErrorPage("Invalid SN", req, res);
-            return;
-        }
-
-        res.sendRedirect(LIST_ROUTER_URL);
+        //         ORMRouter updateConnection = new ORMRouter();
+        //         updateConnection.setId(connectionId);
+        //         updateConnection.setFirstRouterId(router1.getId());
+        //         updateConnection.setSecondRouterId(router2.getId());
+            
+        //         try {
+        //             updateConnection.update();
+        //         } catch (DublicateKeyDAOException exception) {
+        //             res.sendRedirect(ROUTER_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
+        //             return;
+        //         }
+        //     }catch (DAOException cause) {
+        //         logger.warn("Internal DAO exception", cause);
+        //         forwardToErrorPage("Internal DAO exception", req, res);
+        //     }
+        // } catch (NumberFormatException exception) {
+        //     forwardToErrorPage("Not string id value", req, res);
+        //     return;
+        // }
+        // res.sendRedirect(ROUTER_LIST_URL+"?success=add");
     }
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
+                                                        throws ServletException, IOException {
+        // try {
+        //     int connectionId = Integer.parseInt(req.getParameter("id"));
+        //     try {
+        //         ORMRouter connection = new ORMRouter();
+        //         connection.setId(connectionId);
+        //         connection.delete();
+        //     } catch (DAOException cause) {
+        //         logger.warn("Error occur during deleting connection", cause);
+        //         forwardToErrorPage("Error occur during deleting connection", req, res);
+        //         return;
+        //     }
+        // } catch (NumberFormatException exception) {
+        //     forwardToErrorPage("Not string id value", req, res);
+        // }
 
-
-    protected void doDelete(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        String sn = req.getParameter("SN");
-        if (sn == null) {
-            forwardToErrorPage("SN is not selected", req, res);
-            logger.warn("Attempt to delete router without SN");
+        // res.sendRedirect(ROUTER_LIST_URL+"?success=delete");
+        // return;
         }
-        try {
-            ORMRouter router = new ORMRouter();
-            router.setSN(sn);
-            router.delete();
-        } catch (DAOException cause) {
-            logger.warn("Cannot delete router", cause);
-            forwardToErrorPage("Cannot delete router", req, res);
-            return;
-        } catch (NumberFormatException cause) {
-            logger.warn("Invalid sn", cause);
-            forwardToErrorPage("Invalid sn", req, res);
-            return;
-        }
-        res.sendRedirect(LIST_ROUTER_URL);
-    }
 }
