@@ -1,10 +1,8 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAO;
-import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
-import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import org.slf4j.Logger;
 

@@ -1,8 +1,7 @@
 package com.citycon.dao.mysql;
 
-import com.citycon.dao.DAO;
+import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.DAOAbstractFactory;
-import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 
 /**

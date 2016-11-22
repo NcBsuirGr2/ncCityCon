@@ -3,22 +3,21 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.dao.interfaces.RoutersOfCity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
-import com.citycon.model.systemunits.entities.UserEntity;
 import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterDAO extends MySQLDAO implements RoutersOfCity{
+public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
 
     /**
@@ -172,6 +171,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                 router.isActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
                 router.setCityName(resultSet.getString("CityName"));
+                router.setUsedPortsNum(this.getUsedPortsNum(router.getId()));
 
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             }
@@ -212,8 +212,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         RouterEntity router = null;
 
         String update = "update" + nameTable +
-                "set `Name`=?, `SN`=?, `Port`=?, `In_Service`=?, `City_id`=? " +
-                "where `id`=?";
+                "set `Name`=?, `In_Service`=? " +
+                "where `SN`=?";
 
         PreparedStatement preparedStatement = null;
 
@@ -231,15 +231,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
             throw new InternalDAOException("PreparedStatement in update wasn't created", e);
         }
 
-        String log_parameters = "With parameters: id(" + router.getId() + ")";
+        String log_parameters = "With parameters: SN(" + router.getSN() + ")";
 
         try {
             preparedStatement.setString(1, router.getName());
-            preparedStatement.setString(2, router.getSN());
-            preparedStatement.setInt(3, router.getPortsNum());
-            preparedStatement.setBoolean(4, router.isActive());
-            preparedStatement.setInt(5, router.getCityId());
-            preparedStatement.setInt(6, router.getId());
+            preparedStatement.setBoolean(2, router.isActive());
+            preparedStatement.setInt(3, router.getId());
 
             preparedStatement.executeUpdate();
 
@@ -267,6 +264,26 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         return new RouterDAO();
     }
 
+    @Override
+    public void create(RouterEntity newElement, CityEntity cityEntity) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+
+    }
+
+    @Override
+    public void update(RouterEntity updateElement, CityEntity cityEntity) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
+
+    }
+
+    /**
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
@@ -378,6 +395,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         return routers.toArray(new RouterEntity[routers.size()]);
     }
 
+    /**
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public int count_element(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
         int count = 0;
@@ -444,5 +467,9 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
         }
 
         return count;
+    }
+
+    private int getUsedPortsNum(int id){
+        return 0;
     }
 }

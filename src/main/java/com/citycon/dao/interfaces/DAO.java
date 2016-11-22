@@ -1,4 +1,4 @@
-package com.citycon.dao;
+package com.citycon.dao.interfaces;
 import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.Entity;
 
