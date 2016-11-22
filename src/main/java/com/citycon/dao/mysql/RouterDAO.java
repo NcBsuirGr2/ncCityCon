@@ -232,42 +232,23 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
             throw new InvalidDataDAOException("Cast Entity in update failed.", e);
         }
 
-        this.update(router, null);
-    }
-
-    /**
-     * @throws InternalDAOException
-     */
-    public static RouterDAO getInstance() throws InternalDAOException {
-        return new RouterDAO();
-    }
-
-    @Override
-    public void create(RouterEntity newElement, CityEntity cityEntity)
-            throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
-
-        newElement.setCityId(this.getCityID(cityEntity));
-
-        this.create(newElement);
-    }
-
-    @Override
-    public void update(RouterEntity router, CityEntity city)
-            throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
-
         String update = "";
 
         PreparedStatement preparedStatement = null;
 
         String log_parameters = "With parameters: SN(" + router.getSN() + ")";
 
-        if (city != null) {
-            int cityID = this.getCityID(city);
+        if (router.getCityName() != null && router.getCountryName()!= null){
+            CityEntity city = new CityEntity();
+            city.setName(router.getCityName());
+            city.setCountryName(router.getCountryName());
+            router.setCityId(this.getCityID(city));
 
-            log_parameters += ", CityID(" + cityID + ")";
+
+            log_parameters += ", CityID(" + router.getCityId() + ")";
 
             update = "update" + nameTable +
-                    "set `Name`=?, `In_Service`=?, City_id = " + cityID + " " +
+                    "set `Name`=?, `In_Service`=?, City_id = " + router.getCityId() + " " +
                     "where `SN`=?";
         }
         else{
@@ -305,6 +286,13 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 }
             }
         }
+    }
+
+    /**
+     * @throws InternalDAOException
+     */
+    public static RouterDAO getInstance() throws InternalDAOException {
+        return new RouterDAO();
     }
 
     /**
