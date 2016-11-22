@@ -22,8 +22,8 @@
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Error!</strong>
 				<c:choose>
-					<c:when test="${param.errorType == 'dublicate'}">
-						City with such name already exists.
+					<c:when test="${param.errorType == 'dublicate2'}">
+						City with such name already exists2.
 					</c:when>
 				</c:choose>
 			</div>

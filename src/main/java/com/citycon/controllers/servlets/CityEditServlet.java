@@ -45,8 +45,8 @@ public class CityEditServlet extends AbstractHttpServlet {
                 city.read();
                 req.setAttribute("editCity", city.getEntity());
             } catch (DAOException cause) {
-                logger.warn("Error occur during reading city", cause);
-                forwardToErrorPage("Error occur during reading city", req, res);
+                logger.warn("Error occur during reading city2", cause);
+                forwardToErrorPage("Error occur during reading city2", req, res);
                 return;
             }
         }
@@ -87,7 +87,7 @@ public class CityEditServlet extends AbstractHttpServlet {
                 } catch(DublicateKeyDAOException cause) {
                     StringBuilder redirect = new StringBuilder();
                     redirect.append(CITY_EDIT_URL);
-                    redirect.append("?errorType=dublicate&editName=");
+                    redirect.append("?errorType=dublicate2&editName=");
                     redirect.append(newCity.getName());
                     redirect.append("&editCountryName=");
                     redirect.append(newCity.getCountryName());

@@ -7,8 +7,8 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/selectEntity.js"></script>
-    <script type="text/javascript" src="/js/userPages/userList.js"></script>
+    <script type="text/javascript" src="/js/cityPages/selectEntityCity.js"></script>
+    <script type="text/javascript" src="/js/cityPages/cityList.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -103,8 +103,8 @@
                     <tbody>
                     <c:forEach items="${entityArray}" var="city">
                         <tr>
-                            <td><a href="/routers">${city.name}</a></td>
-                            <td>${city.countryName}</td>
+                            <td class="uniqueCity"><a href="/routers">${city.name}</a></td>
+                            <td class="uniqueCountry">${city.countryName}</td>
                             <td>${city.routersNum}</td>
                             <td class="hidden idField">${city.id}</td>
                         </tr>
@@ -118,7 +118,7 @@
                     <div class="row">
 
                         <div class="col-sm-4">
-                            <c:if test="${showUsersOperationBtns}">
+                            <c:if test="${showSystemUnitsOperationBtns}">
                                 <a href="/city?action=add">
                                     <button class="btn btn-primary center-block">Add</button>
                                 </a>
@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="col-sm-4">
-                            <c:if test="${showUsersOperationBtns}">
+                            <c:if test="${showSystemUnitsOperationBtns}">
                                 <a class="editHref" href="#">
                                     <button class="btn btn-primary center-block">Edit</button>
                                 </a>
@@ -134,7 +134,7 @@
                         </div>
 
                         <div class="col-sm-4">
-                            <c:if test="${showUsersOperationBtns}">
+                            <c:if test="${showSystemUnitsOperationBtns}">
                                 <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
                                     <input type="hidden" name="type" value="delete">
