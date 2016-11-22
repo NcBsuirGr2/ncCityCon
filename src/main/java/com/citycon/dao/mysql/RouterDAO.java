@@ -37,6 +37,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("cityId", "`City_id`");
         hashMap.put("city", "`CityName`");
         hashMap.put("country", "`Country`");
+        hashMap.put("UsedPortsNum", "`UsedPortsNum`");
     }
 
     /**
@@ -74,6 +75,13 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }catch (ClassCastException e) {
             logger.info("Cast Entity in create failed.", e);
             throw new InvalidDataDAOException("Cast Entity in create are failed", e);
+        }
+
+        if (router.getCityId() == 0){
+            CityEntity city = new CityEntity();
+            city.setName(router.getCityName());
+            city.setCountryName(router.getCountryName());
+            router.setCityId(this.getCityID(city));
         }
 
         try {
@@ -386,6 +394,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                     router.setCityId(resultSet.getInt("City_id"));
                     router.setCountryName(resultSet.getString("Country"));
                     router.setCityName(resultSet.getString("CityName"));
+                    router.setUsedPortsNum(this.getUsedPortsNum(router.getId()));
                     routers.add(router);
                 }
 
@@ -499,7 +508,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         return 0;
     }
 
-    private int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
+    public int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
 
         int cityID = 0;
 
