@@ -12,6 +12,7 @@
 
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/css/routersPages/routerList.css">
 		<title>Router List</title>
 	</head>
 
@@ -31,6 +32,7 @@
 					<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 						<thead>
 						<tr>
+							<th>City</th>
 							<th>Name</th>
 							<th>SN</th>
 							<th>Port number</th>
@@ -40,6 +42,7 @@
 
 						<tbody>
 							<c:forEach items="${entityArray}" var="router">
+								<td>${router.cityName}</td>
 								<td class="hidden idField">${router.id}</td>
 								<td>${router.name}</td>
 								<td class="unique">${router.SN}</td>
@@ -123,9 +126,67 @@
 				</div>
 			</div> 
 
-			<div class="before-footer">
-			
-			</div>
+			<center class="before-footer">
+			<!-- Pagination block -->	
+    			<c:set var="paginationPath" value="?country=${param.country}&city=${param.city}&sortBy=${param.sortBy}&asc=${param.asc}"/>
+		    			
+				<c:if test="${endPage > 1}">
+					<ul class="pagination">
+						<c:if test="${beginPage > previousPage}">
+							<li class="page-item">
+								<a class="page-link" href="${paginationPath}&page=${previousPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+						</c:if>						
+						
+						<c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
+							<c:if test="${i.index == currentPage}">
+									<c:set var="isActive" value="active"/>
+							</c:if>
+							<c:if test="${i.index != currentPage}">
+									<c:set var="isActive" value=""/>
+							</c:if>
+							<li class="page-item ${isActive}">
+								<a class="page-link" href="${paginationPath}&page=${i.index}&itemsPerPage=${param.itemsPerPage}">
+									${i.index}
+								</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${endPage < nextPage}">
+							<li class="page-item">
+								<a class="page-link" href="${paginationPath}&page=${nextPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+				</c:if>	
+
+				<div class="row">
+					<div class="col-sm-3">
+					</div>
+
+					<div class="col-sm-3">
+						<label class="pull-right control-label">Items per page:</label>
+					</div>
+
+					<div class="col-sm-2">
+						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
+				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}?itemsPerPage=5&page=${currentPage}">5</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}?itemsPerPage=10&page=${currentPage}>10</option>
+				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}?itemsPerPage=15&page=${currentPage}">15</option>
+				        </select>
+				    </div>
+
+				    <div class="col-sm-4">
+					</div>
+				</div>
+				<!-- Pagination -->
+			</center>
 
 
 			<%@ include file="/html/footer.html" %>

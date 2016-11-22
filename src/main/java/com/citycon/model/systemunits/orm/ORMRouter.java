@@ -38,8 +38,8 @@ public class ORMRouter extends ORMEntity {
 	public int getPortsNum() {
 		return router.getPortsNum();
 	}
-	public int getAvailablePortsNum() {
-		return router.getAvailablePortsNum();
+	public int getUsedPortsNum() {
+		return router.getUsedPortsNum();
 	}
 	public int getCityId() {
 		return router.getCityId();
@@ -61,8 +61,8 @@ public class ORMRouter extends ORMEntity {
 	public void setPortsNum(int portsNum) {
 		router.setPortsNum(portsNum);
 	}
-	public void setAvailablePortsNum(int availablePortsNum) {
-		router.setAvailablePortsNum(availablePortsNum);
+	public void setUsedPortsNum(int usedPortsNum) {
+		router.setUsedPortsNum(usedPortsNum);
 	}
 	public void IsActive(boolean isActive) {
 		router.isActive(isActive);
