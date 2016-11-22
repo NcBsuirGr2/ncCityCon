@@ -19,7 +19,6 @@ import java.util.ArrayList;
  */
 public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
-
     /**
      * @throws InternalDAOException
      */
@@ -78,6 +77,10 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }
 
         if (router.getCityId() == 0){
+            if (router.getCityName() == null || router.getCountryName() == null){
+                logger.info("For getCityID incorrectly chosen field, try City And Country");
+                throw new InvalidDataDAOException("For getCityID incorrectly chosen field, try City And Country");
+            }
             CityEntity city = new CityEntity();
             city.setName(router.getCityName());
             city.setCountryName(router.getCountryName());
@@ -162,7 +165,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }
 
         String search = "select R.ID as ID, R.SN as SN, R.`Name`, R.`Port`, R.In_Service, R.City_id, " +
-                "C.`Name` as CityName, C.Country as Country" +
+                "C.`Name` as CityName, C.Country as Country " +
                 "from Router R join City C on R.City_id=C.ID where " + field + " = " + value;
 
         try {
