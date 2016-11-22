@@ -229,7 +229,7 @@ public class CityDAO extends MySQLDAO {
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
             }
             try {
-//                search_city.setInt(1, readElement.getId());
+  //                search_city.setInt(1, readElement.getId());
                 search_city.setString(1, city.getName());
 
                 if(city.getCountryName() != null) {
@@ -243,6 +243,7 @@ public class CityDAO extends MySQLDAO {
                 logger.debug("Connection: {}", connection.isClosed());
 
                 if(resultSet.first()) {
+                    city.setId(resultSet.getInt("id"));
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
                     city.setRoutersNum(resultSet.getInt("RoutersNum"));
@@ -255,7 +256,7 @@ public class CityDAO extends MySQLDAO {
                 }
             } catch (SQLException e) {
                 logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
-                throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
+                //throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
             }
             finally {
                 if (search_city!=null){
@@ -295,6 +296,7 @@ public class CityDAO extends MySQLDAO {
         PreparedStatement preparedStatement = null;
 
         String update = "update" + nameTable + "set `Name`=?, `Country`=? where `id`=?";
+//        String update = "update" + nameTable + "set `Name`=?, `Country`=? where `Name`=? and `Country`=?";
 
         try {
             city = (CityEntity) updateElement;
@@ -317,6 +319,10 @@ public class CityDAO extends MySQLDAO {
             preparedStatement.setString(2, city.getCountryName());
 
             preparedStatement.setInt(3, city.getId());
+
+//            preparedStatement.setString(3, city.getName());
+//            preparedStatement.setString(4, city.getCountryName());
+
 
             preparedStatement.executeUpdate();
 

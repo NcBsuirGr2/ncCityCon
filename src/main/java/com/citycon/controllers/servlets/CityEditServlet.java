@@ -2,6 +2,8 @@ package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
+import com.citycon.dao.exceptions.InternalDAOException;
+import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.orm.ORMCity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -44,12 +47,29 @@ public class CityEditServlet extends AbstractHttpServlet {
                 city.setCountryName(cityCountryName);
                 city.read();
                 req.setAttribute("editCity", city.getEntity());
-            } catch (DAOException cause) {
+
+            } catch (InvalidDataDAOException cause) {
                 logger.warn("Error occur during reading city233", cause);
                 forwardToErrorPage("Error occur during reading city234", req, res);
                 return;
             }
+            catch (DublicateKeyDAOException cause) {
+                logger.warn("Error occur during reading city233", cause);
+                forwardToErrorPage("Error occur during reading city235", req, res);
+                return;
+            }
+            catch (InternalDAOException cause) {
+                logger.warn("Error occur during reading city233", cause);
+                forwardToErrorPage("Error occur during reading city236", req, res);
+                return;
+            }
+            catch ( DAOException cause) {
+                logger.warn("Error occur during reading city233", cause);
+                forwardToErrorPage("Error occur during reading city237", req, res);
+                return;
+            }
         }
+
         RequestDispatcher editView = req.getRequestDispatcher(CITY_EDIT_PAGE);
         editView.forward(req, res);
     }
@@ -108,7 +128,7 @@ public class CityEditServlet extends AbstractHttpServlet {
 
     protected void doPut(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-//        String idString = req.getParameter("id");
+        String idString = req.getParameter("id");
         String name = req.getParameter("name");
         String countryName = req.getParameter("countryName");
 
@@ -120,7 +140,7 @@ public class CityEditServlet extends AbstractHttpServlet {
         ORMCity updateCity = new ORMCity();
         try {
 
-//            updateCity.setId(Integer.parseInt(idString));
+            updateCity.setId(Integer.parseInt(idString));
             updateCity.setName(name);
             updateCity.setCountryName(countryName);
             logger.debug("Updating city with name:{} countryname:{}", updateCity.getName(), updateCity.getCountryName());
