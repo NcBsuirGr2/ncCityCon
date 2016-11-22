@@ -128,7 +128,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
         try {
-            String routerId = req.getParameter("routerId");
+            String routerId = req.getParameter("id");
             String name = req.getParameter("name");
             String active = req.getParameter("active");
             String cityName = req.getParameter("cityName");

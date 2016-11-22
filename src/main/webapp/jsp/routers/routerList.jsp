@@ -114,7 +114,7 @@
 										</c:if>
 										
 											<a href="${samePath}&sortBy=portsNum&asc=${newAsc}">											
-											Free ports
+											Total ports
 											<c:if test="${param.sortBy == 'portsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
@@ -156,7 +156,7 @@
 						<div class="panel-footer">
 							<div class="row">
 
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<c:if test="${showSystemUnitsOperationBtns}">
 										<a href="/router?action=add">
 											<button class="btn btn-primary center-block">Add</button>
@@ -164,7 +164,7 @@
 									</c:if>
 								</div>
 
-								<div class="col-sm-4"> 
+								<div class="col-sm-3"> 
 									<c:if test="${showSystemUnitsOperationBtns}">
 										<a class="editHref" href="#"> 
 											<button class="btn btn-primary editBtn center-block">Edit</button>
@@ -172,7 +172,13 @@
 									</c:if>
 								</div>
 
-								<div class="col-sm-4">
+								<div class="col-sm-3"> 
+									<a class="connectionsHref" href="#"> 
+										<button class="btn btn-primary editBtn center-block">Connections</button>
+									</a>
+								</div>
+
+								<div class="col-sm-3">
 									<c:if test="${showSystemUnitsOperationBtns}">
 										<form action="/router" id="deleteForm" method="POST">
 											<input type="hidden" id="deleteId" name="id" value="-1">
