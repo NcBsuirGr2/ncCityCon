@@ -36,10 +36,10 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading text-center">
-                    <h4>Edit router</h4>
+                    <h4>Setup router</h4>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="/router" method="POST" role="form" id="form">
+                    <form class="form-horizontal" action="/user" method="POST" role="form" id="form">
                         <div class="form-group">
                             <label for="name" class="col-xs-3 control-label">Country:</label>
                             <div class="col-xs-9">
@@ -72,17 +72,29 @@
                                 <input class="form-control" required placeholder="Name" name="name" type="text" value="${param.editName}">
                             </c:if>
                             </div>
-                        </div>  
+                        </div>   
                         <div class="form-group">
-                            <label for="group" class="col-xs-3 control-label">Active:</label>
+                            <label for="login" class="col-xs-3 control-label">SN:</label>
+                             <div class="col-xs-9">                                 
+                                <c:if test="${not empty editRouter}">
+                                    <input class="form-control" required placeholder="Login" name="SN" type="text" value="${editRouter.SN}">
+                                </c:if>
+                                <c:if test="${empty editRouter}">
+                                    <input class="form-control" required placeholder="Login" name="SN" type="text" value="${param.editSN}">
+                                </c:if>
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="group" class="col-xs-3 control-label">Ports:</label>
                             <div class="col-xs-9">
-                                <select class="form-control" id="group" name="active" form="form">
-                                    <option value="true" selected>true</option>
-                                    <option value="false">false</option>
+                                <select class="form-control" id="group" name="group" form="form">
+                                    <option value="admin" <c:if test="${editRouter.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
+                                    <option value="operator" <c:if test="${editRouter.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
+                                    <option value="guest" <c:if test="${editRouter.group == 'guest' || param.editGroup == 'guest'}">selected</c:if>>Guest</option>
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden" name="type" value="edit"/>
+                        <input type="hidden" name="type" value="${param.action}"/>
                         <input type="hidden" name="id" value="${editRouter.id}"/>
                      </form>
                 </div>
@@ -93,7 +105,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="/routers" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    

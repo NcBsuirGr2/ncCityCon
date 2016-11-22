@@ -1,6 +1,8 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.*;
+import com.citycon.dao.interfaces.ConnectionsOfCity;
+import com.citycon.dao.interfaces.ConnectionsOfRouter;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter{
+public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter {
 
     /**
      * @throws InternalDAOException

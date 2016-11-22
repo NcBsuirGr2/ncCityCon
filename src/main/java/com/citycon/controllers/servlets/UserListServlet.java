@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
+	private static String USER_LIST_URL = "/users";
 
 	public UserListServlet(){
 		super();
@@ -34,7 +35,7 @@ public class UserListServlet extends AbstractHttpServlet {
 
 		try {
 			//If page must be normalized (negative or too large)
-			if (setPaginationVariables(ORMUser.getCount(), "name", req, res) != null) {
+			if (setPaginationVariables(ORMUser.getCount(), "name", USER_LIST_URL, req, res) != null) {
 				StringBuilder redirect = new StringBuilder();
 					redirect.append("/users?page=");
 					redirect.append(req.getAttribute("currentPage")); // normalized page

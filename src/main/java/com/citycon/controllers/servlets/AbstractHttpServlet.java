@@ -35,7 +35,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
      * @return redirectPath if page number must be normalized
      * @throws InternalDAOException if any internal DAO error occurs
      */
-    protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, HttpServletRequest req,
+    protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, String pagePath, HttpServletRequest req,
      									 HttpServletResponse res) throws NumberFormatException {
     	if (itemsNum <= 0) throw new NumberFormatException("No elements");
     	// Req parametes
@@ -76,7 +76,8 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		if(page < 1) {
 			req.setAttribute("currentPage", 1);
 			StringBuilder redirect = new StringBuilder();
-	        redirect.append("/connections?page=");
+	        redirect.append(pagePath);
+	        redirect.append("?page=");
 	        redirect.append(page); // normalized page
 	        redirect.append("&itemsPerPage=");
 	        redirect.append(req.getParameter("itemsPerPage"));

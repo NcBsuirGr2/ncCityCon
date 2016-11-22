@@ -4,11 +4,19 @@ $(document).ready(function() {
 		$("#deleteId").val(document.selectedId);
 		console.log(document.selectedId);
     });
+    $(".editBtn").on("click", function(event) {
+        if(!document.selectedId) {
+            event.preventDefault();
+            $(".selectRouterModal").modal('show');
+        }
+    })
     $("#deleteForm").submit(function(event) {
-    	console.log($("#deleteId").val());
-		if($("#deleteId").val() <= 0) {
+		if(!document.selectedId) {
 			event.preventDefault();
-			alert("Select router");
+			if (!document.selectedId) {
+	    		e.preventDefault();
+	    		$(".selectRouterModal").modal('show');
+	    	}
 		} 
 	});
 });

@@ -1,10 +1,10 @@
 package com.citycon.model.systemunits.orm;
 
-import com.citycon.dao.mysql.RoutersOfCity;
+import com.citycon.dao.interfaces.RoutersOfCity;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
-import com.citycon.dao.DAO;
+import com.citycon.dao.interfaces.DAO;
+import com.citycon.dao.mysql.RouterDAO;
 import com.citycon.dao.exceptions.DAOException;
 
 /**
@@ -37,6 +37,9 @@ public class ORMRouter extends ORMEntity {
 	public int getPortsNum() {
 		return router.getPortsNum();
 	}
+	public int getUsedPortsNum() {
+		return router.getUsedPortsNum();
+	}
 	public int getCityId() {
 		return router.getCityId();
 	}
@@ -46,6 +49,10 @@ public class ORMRouter extends ORMEntity {
 	public String getCityName() {
 		return router.getCityName();
 	}
+	public String getCountryName() {
+		return router.getCountryName();
+	}
+
 
 
 	public void setName(String name) {
@@ -57,6 +64,9 @@ public class ORMRouter extends ORMEntity {
 	public void setPortsNum(int portsNum) {
 		router.setPortsNum(portsNum);
 	}
+	public void setUsedPortsNum(int usedPortsNum) {
+		router.setUsedPortsNum(usedPortsNum);
+	}
 	public void IsActive(boolean isActive) {
 		router.isActive(isActive);
 	}
@@ -65,6 +75,9 @@ public class ORMRouter extends ORMEntity {
 	}
 	public void setCityName(String cityName) {
 		router.setCityName(cityName);
+	}
+	public void setCountryName(String countryName) {
+		router.setCountryName(countryName);
 	}
 
 	//ORM interface for incapsulated object
@@ -127,4 +140,26 @@ public class ORMRouter extends ORMEntity {
 		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
 		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
 	}
+
+	 /**
+     *	Retrieves total number of routers from DAO layer.
+     * 
+     * @return int number of connections
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount() throws DAOException {
+    	DAO staticDAO = daoFactory.getRouterDAO();
+        return staticDAO.count_element();
+    }
+
+     /**
+     *	Retrieves number of routers for concrete city from DAO layer.
+     * 
+     * @return int number of connections
+     * @throws DAOException if any DAO internal error occur
+     */
+    public static int getCount(CityEntity city) throws DAOException {
+    	RouterDAO staticDAO = (RouterDAO)daoFactory.getRouterDAO();
+        return staticDAO.count_element(city);
+    }
 }

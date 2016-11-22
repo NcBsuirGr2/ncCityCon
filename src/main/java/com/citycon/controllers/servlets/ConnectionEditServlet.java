@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @version 0.2
  */
 public class ConnectionEditServlet extends AbstractHttpServlet {
-	 private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";	 
+	private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";	 
     private static String CONNECTION_EDIT_PAGE = "/jsp/connections/connectionEdit.jsp";
     private static String CONNECTION_LIST_URL = "/connections";
     private static String CONNECTION_EDIT_URL = "/connection";
@@ -67,8 +67,6 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
 
 					req.setAttribute("connection", connection.getEntity());
-					req.setAttribute("dd", "dd");
-					req.getRequestDispatcher(CONNECTION_EDIT_PAGE).forward(req, res);
 				} catch (DAOException cause) {
 					logger.warn("Error occur during reading connection", cause);
 					forwardToErrorPage("Error occur during reading connection", req, res);
@@ -77,7 +75,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			} catch (NumberFormatException exception) {
 				forwardToErrorPage("Not string id value", req, res);
 				return;
-			}
+			} catch (Exception exception) {
+                logger.warn("Unexcepted exception");
+                forwardToErrorPage("Internal servler error", req, res);
+                return;
+            }
 		}
 		
 		RequestDispatcher editView = req.getRequestDispatcher(CONNECTION_EDIT_PAGE);
@@ -196,6 +198,6 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
 		res.sendRedirect(CONNECTION_LIST_URL+"?success=delete");
 		return;
-		}
+	}
 
 }

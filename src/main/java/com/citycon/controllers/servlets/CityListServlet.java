@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CityListServlet extends AbstractHttpServlet {
     private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
+    private String CITY_LIST_URL = "/cities";
 
     public CityListServlet(){
         super();
@@ -34,11 +35,13 @@ public class CityListServlet extends AbstractHttpServlet {
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse res) throws ServletException, IOException {
 
+
+
         try {
             //If page must be normalized (negative or too large)
-            if (setPaginationVariables(ORMCity.getCount(), "name", req, res) != null) {
+            if (setPaginationVariables(ORMCity.getCount(), "name", CITY_LIST_URL, req, res) != null) {
                 StringBuilder redirect = new StringBuilder();
-                redirect.append("/cities?page=");
+                redirect.append("?page=");
                 redirect.append(req.getAttribute("currentPage")); // normalized page
                 redirect.append("&itemsPerPage=");
                 redirect.append(req.getParameter("itemsPerPage"));

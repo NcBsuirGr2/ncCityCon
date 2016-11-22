@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
+    private static String CONNECTION_LIST_URL = "/connections";
 
     public ConnectionListServlet(){
         super();
@@ -34,13 +35,17 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, 
         HttpServletResponse res) throws ServletException, IOException {
+        
         RouterConnectionEntity[] connections;
+        String defaultSorting = "SN1";
+        
         try {
             // Getting page for concrete router
             if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), "SN1", req, res);
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), 
+                                                                CONNECTION_LIST_URL, defaultSorting, req, res);
                 if (redirect != null) {
                     redirect.append("&SN=");
                     redirect.append(req.getParameter("SN"));
@@ -59,7 +64,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), "SN1", req, res);
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), defaultSorting, 
+                                                                            CONNECTION_LIST_URL, req, res);
                 if (redirect != null) {
                     redirect.append("&country=");
                     redirect.append(req.getParameter("country"));
@@ -75,7 +81,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
             // Getting all connections
             } else {
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(), "SN1", req, res);
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(), 
+                                                                    defaultSorting, CONNECTION_LIST_URL, req, res);
                 if (redirect != null) {
                     logger.trace("Incorrect page, redirect to the "+redirect.toString());
                     res.sendRedirect(redirect.toString());
