@@ -1,12 +1,11 @@
 package com.citycon.model.systemunits.orm;
 
-import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
-import com.citycon.dao.DAO;
-import com.citycon.dao.mysql.ConnectionsOfRouter;
-import com.citycon.dao.mysql.ConnectionsOfCity;
+import com.citycon.dao.interfaces.DAO;
+import com.citycon.dao.interfaces.ConnectionsOfRouter;
+import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.exceptions.DAOException;
 
 /**

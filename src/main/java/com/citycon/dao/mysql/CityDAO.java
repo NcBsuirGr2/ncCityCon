@@ -196,8 +196,12 @@ public class CityDAO extends MySQLDAO {
 
         PreparedStatement search_city = null;
         ResultSet resultSet= null;
-        String search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
-                "from Router R join City C on R.City_id=C.ID where C.ID=?";
+
+//        String search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
+//                        "from Router R join City C on R.City_id=C.ID " +
+//                        "where C.ID=?";
+
+        String search = "select * from" + nameTable + "where `Name`=?";
 
         try {
             city = (CityEntity)readElement;
@@ -206,19 +210,37 @@ public class CityDAO extends MySQLDAO {
             throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
 
-        String log_parameters = "With parameters: Id("+ city.getId() + ")";
+        String log_parameters = "With parameters: Name("+ city.getName() + ")";
 
-        if (city.getId() != 0) {
+        if (city.getCountryName() != null){
+            search += " and `Country`=?";
+            log_parameters += ", Country("+ city.getCountryName()+")";
+        }
+
+        if (city.getName() != null) {
             try{
+                logger.debug("Before preparedStatement");
+                logger.debug("Connection: {}", connection.isClosed());
                 search_city = connection.prepareStatement(search);
+                logger.debug("After preparedStatement");
+                logger.debug("Connection: {}", connection.isClosed());
             }catch (SQLException e) {
                 logger.warn("PreparedStatement in read wasn't created", e);
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
             }
             try {
-                search_city.setInt(1, readElement.getId());
+//                search_city.setInt(1, readElement.getId());
+                search_city.setString(1, city.getName());
 
+                if(city.getCountryName() != null) {
+                    search_city.setString(2, city.getCountryName());
+                }
+
+                logger.debug("Before resultSet");
+                logger.debug("Connection: {}", connection.isClosed());
                 resultSet = search_city.executeQuery();
+                logger.debug("After resultSet");
+                logger.debug("Connection: {}", connection.isClosed());
 
                 if(resultSet.first()) {
                     city.setName(resultSet.getString("Name"));

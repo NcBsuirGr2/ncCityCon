@@ -45,8 +45,8 @@ public class CityEditServlet extends AbstractHttpServlet {
                 city.read();
                 req.setAttribute("editCity", city.getEntity());
             } catch (DAOException cause) {
-                logger.warn("Error occur during reading city2", cause);
-                forwardToErrorPage("Error occur during reading city2", req, res);
+                logger.warn("Error occur during reading city233", cause);
+                forwardToErrorPage("Error occur during reading city234", req, res);
                 return;
             }
         }
@@ -108,23 +108,23 @@ public class CityEditServlet extends AbstractHttpServlet {
 
     protected void doPut(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String idString = req.getParameter("id");
+//        String idString = req.getParameter("id");
         String name = req.getParameter("name");
         String countryName = req.getParameter("countryName");
 
-        if (idString == null) {
-            forwardToErrorPage("Cannot update city cause id field is empty", req, res);
-            logger.warn("Cannot update city cause id field is empty");
+        if (name == null || countryName == null) {
+            forwardToErrorPage("Cannot update city cause name & countryName fields is empty", req, res);
+            logger.warn("Cannot update city cause name & countryName fields is empty");
             return;
         }
         ORMCity updateCity = new ORMCity();
         try {
 
-            updateCity.setId(Integer.parseInt(idString));
+//            updateCity.setId(Integer.parseInt(idString));
             updateCity.setName(name);
             updateCity.setCountryName(countryName);
-            logger.debug("Updating city with id:{} name:{} countryname:{} ",
-                    updateCity.getId(), updateCity.getName(), updateCity.getCountryName() );
+            logger.debug("Updating city with name:{} countryname:{}", updateCity.getName(), updateCity.getCountryName());
+
             updateCity.update();
         } catch(DublicateKeyDAOException cause) {
             StringBuilder redirect = new StringBuilder();
@@ -151,15 +151,23 @@ public class CityEditServlet extends AbstractHttpServlet {
             throws ServletException, IOException {
         String idString = req.getParameter("id");
         String name = req.getParameter("name");
-        if (idString == null && name == null) {
-            forwardToErrorPage("Cannot delete city cause the id & name fields are empty", req, res);
-            logger.warn("Attempt to delete city without name");
+        String countryName = req.getParameter("countryName");
+//        TODO: нужно удалять по name & countryName
+//        if (name == null && countryName == null) {
+//            forwardToErrorPage("Cannot delete city cause the name & countryName fields are empty", req, res);
+//            logger.warn("Attempt to delete city without name");
+//            return;
+//        }
+        if (idString == null) {
+            forwardToErrorPage("Cannot delete city cause idString field are empty", req, res);
+            logger.warn("Attempt to delete city without idString");
             return;
         }
         try {
             ORMCity deleteCity = new ORMCity();
             deleteCity.setId(Integer.parseInt(idString));
             deleteCity.setName(name);
+            deleteCity.setCountryName(countryName);
 
             deleteCity.delete();
         } catch (DAOException cause) {

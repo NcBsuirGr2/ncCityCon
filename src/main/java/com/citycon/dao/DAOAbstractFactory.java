@@ -2,6 +2,8 @@ package com.citycon.dao;
 
 
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.interfaces.DAO;
+
 /**
  * Created by Vojts on 09.11.2016.
  */

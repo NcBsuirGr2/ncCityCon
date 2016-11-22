@@ -1,4 +1,4 @@
-package com.citycon.dao.mysql;
+package com.citycon.dao.interfaces;
 
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;

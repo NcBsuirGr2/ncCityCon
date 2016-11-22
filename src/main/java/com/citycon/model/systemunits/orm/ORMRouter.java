@@ -1,10 +1,9 @@
 package com.citycon.model.systemunits.orm;
 
-import com.citycon.dao.mysql.RoutersOfCity;
+import com.citycon.dao.interfaces.RoutersOfCity;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
-import com.citycon.dao.DAO;
+import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.mysql.RouterDAO;
 import com.citycon.dao.exceptions.DAOException;
 
