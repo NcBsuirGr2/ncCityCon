@@ -45,7 +45,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
                 StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), 
-                                                                CONNECTION_LIST_URL, defaultSorting, req, res);
+                                                                defaultSorting, CONNECTION_LIST_URL, req, res);
                 if (redirect != null) {
                     redirect.append("&SN=");
                     redirect.append(req.getParameter("SN"));

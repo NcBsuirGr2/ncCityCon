@@ -42,7 +42,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
      */
     protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, String pagePath, HttpServletRequest req,
      									 HttpServletResponse res) throws NumberFormatException {
-    	if (itemsNum <= 0) throw new NumberFormatException("No elements");
+    	if (itemsNum <= 0) return null;
     	// Req parametes
     	String pageString = req.getParameter("page");
 		String itemsPerPageString = req.getParameter("itemsPerPage");
