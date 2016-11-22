@@ -239,7 +239,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
         PreparedStatement preparedStatement = null;
 
-        String log_parameters = "With parameters: SN(" + router.getSN() + ")";
+        String log_parameters = "With parameters: ID(" + router.getId() + ")";
 
         if (router.getCityName() != null && router.getCountryName()!= null){
             CityEntity city = new CityEntity();
@@ -252,12 +252,12 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
             update = "update" + nameTable +
                     "set `Name`=?, `In_Service`=?, City_id = " + router.getCityId() + " " +
-                    "where `SN`=?";
+                    "where `ID`=?";
         }
         else{
             update = "update" + nameTable +
                     "set `Name`=?, `In_Service`=?" +
-                    "where `SN`=?";
+                    "where `ID`=?";
         }
 
         try {
@@ -270,7 +270,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         try {
             preparedStatement.setString(1, router.getName());
             preparedStatement.setBoolean(2, router.isActive());
-            preparedStatement.setString(3, router.getSN());
+            preparedStatement.setInt(3, router.getId());
 
             preparedStatement.executeUpdate();
 
