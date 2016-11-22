@@ -75,7 +75,7 @@
                         </div>  
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Active:</label>
-                            <div class="col-xs-9">
+                            <div class="col-xs-2">
                                 <select class="form-control" id="group" name="active" form="form">
                                     <option value="true" selected>true</option>
                                     <option value="false">false</option>

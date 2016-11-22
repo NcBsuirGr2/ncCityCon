@@ -169,7 +169,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                 router.setName(resultSet.getString("Name"));
                 router.setSN(resultSet.getString("SN"));
                 router.setPortsNum(resultSet.getInt("Port"));
-                router.isActive(resultSet.getBoolean("In_Service"));
+                router.setActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
                 router.setCityName(resultSet.getString("CityName"));
 
@@ -340,7 +340,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity{
                     router.setName(resultSet.getString("Name"));
                     router.setSN(resultSet.getString("SN"));
                     router.setPortsNum(resultSet.getInt("Port"));
-                    router.isActive(resultSet.getBoolean("In_Service"));
+                    router.setActive(resultSet.getBoolean("In_Service"));
                     router.setCityId(resultSet.getInt("City_id"));
                     router.setCityName(resultSet.getString("CityName"));
                     routers.add(router);

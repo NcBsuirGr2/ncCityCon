@@ -39,63 +39,73 @@
                     <h4>Setup router</h4>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="/user" method="POST" role="form" id="form">
+                    <form class="form-horizontal" action="/router" method="POST" role="form" id="form">
                         <div class="form-group">
                             <label for="name" class="col-xs-3 control-label">Country:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="Country" name="countryName" type="text" value="${editRouter.countryName}">
+                            <div class="col-xs-7">
+                            <c:if test="${not empty addRouter}">
+                                <input class="form-control" required placeholder="Country" name="countryName" type="text" value="${addRouter.countryName}">
                             </c:if>
-                            <c:if test="${empty editRouter}">
+                            <c:if test="${empty addRouter}">
                                 <input class="form-control" required placeholder="Country" name="countryName" type="text" value="${param.editCountryName}">
                             </c:if>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-xs-3 control-label">City:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="City" name="cityName" type="text" value="${editRouter.cityName}">
+                            <div class="col-xs-7">
+                            <c:if test="${not empty addRouter}">
+                                <input class="form-control" required placeholder="City" name="cityName" type="text" value="${addRouter.cityName}">
                             </c:if>
-                            <c:if test="${empty editRouter}">
+                            <c:if test="${empty addRouter}">
                                 <input class="form-control" required placeholder="City" name="cityName" type="text" value="${param.editCityName}">
                             </c:if>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-xs-3 control-label">Name:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
+                            <div class="col-xs-7">
+                            <c:if test="${not empty addRouter}">
+                                <input class="form-control" required placeholder="Name" name="name" type="text" value="${addRouter.name}">
                             </c:if>
-                            <c:if test="${empty editRouter}">
+                            <c:if test="${empty addRouter}">
                                 <input class="form-control" required placeholder="Name" name="name" type="text" value="${param.editName}">
                             </c:if>
                             </div>
                         </div>   
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">SN:</label>
-                             <div class="col-xs-9">                                 
-                                <c:if test="${not empty editRouter}">
-                                    <input class="form-control" required placeholder="Login" name="SN" type="text" value="${editRouter.SN}">
+                             <div class="col-xs-7">                                 
+                                <c:if test="${not empty addRouter}">
+                                    <input class="form-control" required placeholder="SN" name="SN" type="text" value="${addRouter.SN}">
                                 </c:if>
-                                <c:if test="${empty editRouter}">
-                                    <input class="form-control" required placeholder="Login" name="SN" type="text" value="${param.editSN}">
+                                <c:if test="${empty addRouter}">
+                                    <input class="form-control" required placeholder="SN" name="SN" type="text" value="${param.editSN}">
                                 </c:if>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Ports:</label>
-                            <div class="col-xs-9">
-                                <select class="form-control" id="group" name="group" form="form">
-                                    <option value="admin" <c:if test="${editRouter.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
-                                    <option value="operator" <c:if test="${editRouter.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
-                                    <option value="guest" <c:if test="${editRouter.group == 'guest' || param.editGroup == 'guest'}">selected</c:if>>Guest</option>
+                            <div class="col-xs-2">
+                                <select class="form-control" id="group" name="portsNum" form="form">
+                                    <option value="1" <c:if test="${param.editPortsNum == 1}">selected</c:if>>1</option>
+                                    <option value="2" <c:if test="${param.editPortsNum == 2}">selected</c:if>>2</option>
+                                    <option value="3" <c:if test="${param.editPortsNum == 3}">selected</c:if>>3</option>
+                                    <option value="4" <c:if test="${param.editPortsNum == 4}">selected</c:if>>4</option>
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden" name="type" value="${param.action}"/>
-                        <input type="hidden" name="id" value="${editRouter.id}"/>
+                        <div class="form-group">
+                            <label for="group" class="col-xs-3 control-label">Active:</label>
+                            <div class="col-xs-2">
+                                <select class="form-control" name="active" form="form">
+                                    <option value="true" <c:if test="${param.editActive == 'true'}">selected</c:if> >true</option>
+                                    <option value="false" <c:if test="${param.editActive == 'false'}">selected</c:if>>false</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="type" value="add"/>
+                        <input type="hidden" name="id" value="${addRouter.id}"/>
                      </form>
                 </div>
 
@@ -105,7 +115,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="/routers" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    
@@ -121,7 +131,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <p>Are you sure you want to apply changes?</p>
+                                <p>Are you sure you want to create new router?</p>
                             </div>
 
                             <div class="modal-footer">

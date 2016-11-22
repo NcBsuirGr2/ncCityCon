@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, maximum-scale=1">
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
-		<script src="/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/selectEntity.js"></script>
 		<script type="text/javascript" src="/js/routerPages/routerList.js"></script>
 
@@ -19,15 +19,31 @@
 	<body>
 		<div class="content-wrapper">
 			<%@ include file="/include/header.jsp" %>
-			
+			<c:if test="${not empty param.success}">
+				<div class="alert alert-success alert-dismissible">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>Success!</strong> 
+					<c:choose>
+					    <c:when test="${param.success == 'add'}">
+					       	New router has been created.
+					    </c:when>
+					    <c:when test="${param.success == 'delete'}">
+					        Router has been deleted.
+					    </c:when>
+					    <c:when test="${param.success == 'edit'}">
+					        Router has been modified.
+					    </c:when>
+					</c:choose>
+				</div>
+			</c:if>		
 			<div class="row">
 				<div class="col-sm-1">
 				</div>
 				<div class="col-sm-10">
 					<div class="panel panel-default">
-						<div class="panel-heading">
+						<center class="panel-heading">
 							Routers
-						</div>
+						</center>
 
 						<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 							<thead>
@@ -58,7 +74,7 @@
 
 								<div class="col-sm-4">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a href="/connection?action=add">
+										<a href="/router?action=add">
 											<button class="btn btn-primary center-block">Add</button>
 										</a>
 									</c:if>
@@ -74,7 +90,7 @@
 
 								<div class="col-sm-4">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<form action="/connection" id="deleteForm" method="POST">
+										<form action="/router" id="deleteForm" method="POST">
 											<input type="hidden" id="deleteId" name="id" value="-1">
 											<input type="hidden" name="type" value="delete">
 											<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
@@ -104,12 +120,12 @@
 									</div>
 								</div>
 
-								<!-- Select connection modal -->
+								<!-- Select router modal -->
 								<div class="modal fade selectRouterModal" tabindex="-1" role="dialog" aria-hidden="true">
 									<div class="modal-dialog modal-sm">
 										<div class="modal-content">
 											<div class="modal-body">
-												<h4 class="modal-title">No connection selected</h4>
+												<h4 class="modal-title">No router selected</h4>
 											</div>
 
 											<div class="modal-footer">

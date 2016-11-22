@@ -68,8 +68,8 @@ public class ORMRouter extends ORMEntity {
 	public void setUsedPortsNum(int usedPortsNum) {
 		router.setUsedPortsNum(usedPortsNum);
 	}
-	public void IsActive(boolean isActive) {
-		router.isActive(isActive);
+	public void setActive(boolean isActive) {
+		router.setActive(isActive);
 	}
 	public void setCityId(Integer sityId) {
 		router.setCityId(sityId);
@@ -105,7 +105,7 @@ public class ORMRouter extends ORMEntity {
     	if (dao == null) {
 			dao = daoFactory.getRouterDAO();
 		}
-		dao.update(router);
+		dao.delete(router);
     }
     
    	public RouterEntity getEntity()  {
