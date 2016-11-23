@@ -67,9 +67,9 @@ public class CityDAO extends MySQLDAO {
             }
 
             search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
-                    "from Router R Right outer join City C on R.City_id=C.ID " +
-                    "group by C.ID " +
-                    "order by " + sorter + sorting_direction + " limit ?,?";
+                     "from Router R Right outer join City C on R.City_id=C.ID " +
+                     "group by C.ID " +
+                     "order by " + sorter + sorting_direction + " limit ?,?";
         }
         else {
             logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
