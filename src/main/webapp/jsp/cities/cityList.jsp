@@ -74,7 +74,7 @@
                             <c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'countryName'}">
                             <c:set var="newAsc" value="false"/>
                             </c:if>
-                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
+                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=countryName&asc=${newAsc}">
                                 Country
                                 <c:if test="${param.sortBy == 'countryName'}">
                                 <c:if test="${newAsc == true}">&#9660;</c:if>
@@ -88,7 +88,7 @@
                             <c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'routersNum'}">
                             <c:set var="newAsc" value="false"/>
                             </c:if>
-                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
+                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=routersNum&asc=${newAsc}">
                                 Routers Number
                                 <c:if test="${param.sortBy == 'routersNum'}">
                                 <c:if test="${newAsc == true}">&#9660;</c:if>

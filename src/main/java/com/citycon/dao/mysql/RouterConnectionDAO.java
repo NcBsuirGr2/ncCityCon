@@ -62,6 +62,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
      */
     public void create(Entity newElement)
             throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
+
         RouterConnectionEntity routerConnection = null;
 
         String insert = "insert into" + nameTable +
