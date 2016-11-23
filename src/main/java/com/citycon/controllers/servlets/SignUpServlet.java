@@ -23,11 +23,12 @@ import java.util.Calendar;
  * errorType. 
  *
  * @author Tim, Mike
- * @version  1.1
+ * @version  1.2
  */
 public class SignUpServlet extends AbstractHttpServlet {
 
     private static final String SIGN_UP_PAGE = "/jsp/security/signUp.jsp";
+    private static final String SIGN_UP_URL = "/signup";
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                         throws ServletException, IOException {
@@ -42,7 +43,7 @@ public class SignUpServlet extends AbstractHttpServlet {
 
             user.setLogin(req.getParameter("login"));
             user.setPassword(req.getParameter("password"));
-            user.setEmail(req.getParameter("e-mail"));
+            user.setEmail(req.getParameter("email"));
             user.setName(req.getParameter("name"));
             user.setGroup("guest");
             java.sql.Date timeNow = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
@@ -54,13 +55,33 @@ public class SignUpServlet extends AbstractHttpServlet {
                 req.getSession().setAttribute("user", user.getEntity());
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
-                res.sendRedirect("/signup?errorType=dublicate");
+                res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
             } catch(InvalidDataDAOException exception) {
-                res.sendRedirect("/signup?errorType=invalidData");
+                res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
             } 
         } catch (DAOException exception) {
             // InternalDAOException
             forwardToErrorPage(exception.getMessage(), req, res);             
         }       
+    }
+    private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String name = req.getParameter("name");
+
+        StringBuilder redirect = new StringBuilder();
+        redirect.append(SIGN_UP_URL);
+        redirect.append("?errorType=");
+        redirect.append(errorType);
+        redirect.append("&login=");
+        redirect.append(login);
+        redirect.append("&password=");
+        redirect.append(password);
+        redirect.append("&email=");
+        redirect.append(email);
+        redirect.append("&name=");
+        redirect.append(name);
+        return redirect;
     }
 }
