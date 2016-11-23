@@ -18,7 +18,7 @@ function validateForm(form) {
     var $textInputs = $(form).find(".simpleText");
     $textInputs.each(function() {
     	if(!validateSimpleText($(this).val())) {
-    		$(".formAlert").html("Your input \""+$(this).val()+"\" is invalid");
+    		$(".formAlert").html("Your input \""+$(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;")+"\" is invalid");
     		validForm = false;
     	}
     });

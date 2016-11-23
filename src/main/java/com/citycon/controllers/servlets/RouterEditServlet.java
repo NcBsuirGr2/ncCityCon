@@ -165,7 +165,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
-        res.sendRedirect(ROUTER_LIST_URL+"?success=add");
+        res.sendRedirect(ROUTER_LIST_URL+"?success=create");
     }
     protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
