@@ -37,7 +37,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("cityId", "`City_id`");
         hashMap.put("city", "`CityName`");
         hashMap.put("country", "`Country`");
-        hashMap.put("UsedPortsNum", "`UsedPortsNum`");
+        hashMap.put("usedPortsNum", "`UsedPortsNum`");
     }
 
     /**
@@ -184,7 +184,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 router.setName(resultSet.getString("Name"));
                 router.setSN(resultSet.getString("SN"));
                 router.setPortsNum(resultSet.getInt("Port"));
-                router.isActive(resultSet.getBoolean("In_Service"));
+                router.setActive(resultSet.getBoolean("In_Service"));
                 router.setCityId(resultSet.getInt("City_id"));
                 router.setCityName(resultSet.getString("CityName"));
                 router.setCountryName(resultSet.getString("Country"));
@@ -382,7 +382,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                     router.setName(resultSet.getString("Name"));
                     router.setSN(resultSet.getString("SN"));
                     router.setPortsNum(resultSet.getInt("Port"));
-                    router.isActive(resultSet.getBoolean("In_Service"));
+                    router.setActive(resultSet.getBoolean("In_Service"));
                     router.setCityId(resultSet.getInt("City_id"));
                     router.setCountryName(resultSet.getString("Country"));
                     router.setCityName(resultSet.getString("CityName"));

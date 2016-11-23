@@ -37,7 +37,7 @@
                 	<form class="form-horizontal" action="/user" method="POST" role="form" id="form">
                     	<div class="form-group">
                         	<label for="name" class="col-xs-3 control-label">Name:</label>
-                        	<div class="col-xs-9">
+                        	<div class="col-xs-7">
                             <c:if test="${not empty editUser}">
                             	<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${editUser.name}">
                             </c:if>
@@ -48,7 +48,7 @@
                         </div>   
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Login:</label>
-                             <div class="col-xs-9">                                 
+                             <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
                                     <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${editUser.login}">
                                 </c:if>
@@ -59,13 +59,13 @@
                         </div>
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Password:</label>
-                             <div class="col-xs-9">
+                             <div class="col-xs-7">
                                  <input class="form-control" required placeholder="Password" id="password" name="password" type="text" value="${editUser.password}">
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
-                             <div class="col-xs-9">                                 
+                             <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
                                    <input class="form-control" required placeholder="E-mail" id="email" name="email" type="email" value="${editUser.email}">
                                 </c:if>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Group:</label>
-                            <div class="col-xs-9">
+                            <div class="col-xs-2">
                                 <select class="form-control" id="group" name="group" form="form">
                                     <option value="admin" <c:if test="${editUser.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
                                     <option value="operator" <c:if test="${editUser.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>

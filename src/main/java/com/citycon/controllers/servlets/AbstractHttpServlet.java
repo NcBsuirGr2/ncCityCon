@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,10 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";
 
     protected Logger logger;
+
+    public AbstractHttpServlet() {
+    	logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.AbstractHttpServlet");
+    }
 
     protected void forwardToErrorPage(String errorMessage, HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
@@ -37,7 +42,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
      */
     protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, String pagePath, HttpServletRequest req,
      									 HttpServletResponse res) throws NumberFormatException {
-    	if (itemsNum <= 0) throw new NumberFormatException("No elements");
+    	
     	// Req parametes
     	String pageString = req.getParameter("page");
 		String itemsPerPageString = req.getParameter("itemsPerPage");
@@ -59,7 +64,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		}
 		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
 			itemsPerPage = Integer.parseInt(itemsPerPageString);
-		}
+		} 
 		if(ascString != null && !ascString.equals("")) {
 			asc = ascString.equals("true");
 		}		
@@ -71,6 +76,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		req.setAttribute("itemsPerPage", itemsPerPage);
 		req.setAttribute("asc", asc);
 		req.setAttribute("sortBy", sortBy);
+		req.setAttribute("currentPage", page);
+
+		if (itemsNum <= 0) return null;
 
 		// Asc redirect to the first page if req page is negative
 		if(page < 1) {

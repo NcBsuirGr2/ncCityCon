@@ -53,7 +53,7 @@ public class RouterEntity extends Entity {
 	public void setUsedPortsNum(int usedPortsNum) {
 		this.usedPortsNum = usedPortsNum;
 	}
-	public void isActive(boolean isActive) {
+	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 	public void setCityName(String cityName) {
