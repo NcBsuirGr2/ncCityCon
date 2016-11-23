@@ -78,7 +78,7 @@
                                     <label class="col-xs-3 control-label">E-mail:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="email" class="form-control emailInputs" required placeholder="E-mail" name="E-mail">
+                                            <input type="text" class="form-control emailInputs" required placeholder="E-mail" name="E-mail">
                                         </div>
                                     </div>
                                 </div>

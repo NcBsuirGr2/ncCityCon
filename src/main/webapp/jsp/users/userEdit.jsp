@@ -71,10 +71,10 @@
                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
                              <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
-                                   <input class="form-control emailInput" required placeholder="E-mail" name="email" type="email" value="${editUser.email}">
+                                   <input class="form-control emailInput" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control emailInput" required placeholder="E-mail" name="email" type="email" value="${param.editEmail}">
+                                    <input class="form-control emailInput" required placeholder="E-mail" name="email" type="text" value="${param.editEmail}">
                                 </c:if>
                              </div>
                         </div>
