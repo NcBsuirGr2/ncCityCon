@@ -46,26 +46,6 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 					connection.setId(connectionId);
 					connection.read();
 
-
-					// Temporary hack, waiting for DAO
-	    			ORMRouter router1 = new ORMRouter();
-	    			ORMRouter router2 = new ORMRouter();
-
-	    			router1.setId(connection.getFirstRouterId());
-	    			router2.setId(connection.getSecondRouterId());
-	    			try {
-	    				router1.read();
-	    				router2.read();
-	    			} catch (InvalidDataDAOException exception) {
-	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidRouterId");
-	    				return;
-	    			}
-		    		connection.setFirstRouterSN(router1.getSN());
-		    		connection.setSecondRouterSN(router2.getSN());
-		    		//-------------------
-
-
 					req.setAttribute("connection", connection.getEntity());
 				} catch (DAOException cause) {
 					logger.warn("Error occur during reading connection", cause);
@@ -80,6 +60,10 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
+		} else if (req.getParameter("firstSN") != null) {
+			ORMRouterConnection connection = new ORMRouterConnection();
+			connection.setFirstRouterSN(req.getParameter("firstSN"));
+			req.setAttribute("connection", connection.getEntity());
 		}
 		
 		RequestDispatcher editView = req.getRequestDispatcher(CONNECTION_EDIT_PAGE);
@@ -105,6 +89,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
     		default : {
     			String SN1 = req.getParameter("SN1");
     			String SN2 = req.getParameter("SN2");
+
     			// Temporary hack
     			ORMRouter router1 = new ORMRouter();
     			ORMRouter router2 = new ORMRouter();
@@ -122,6 +107,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
 	    			newConnection.setFirstRouterId(router1.getId());
 	    			newConnection.setSecondRouterId(router2.getId());
+
 	    			try {
 	    				newConnection.create();
 	    			} catch (DublicateKeyDAOException exception) {
@@ -143,30 +129,31 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			String SN1 = req.getParameter("SN1");
 			String SN2 = req.getParameter("SN2");
 			// Temporary hack
-			ORMRouter router1 = new ORMRouter();
-			ORMRouter router2 = new ORMRouter();
-
-			router1.setSN(SN1);
-			router2.setSN(SN2);
-			try {
-				try {
-					router1.read();
-					router2.read();
-				} catch (InvalidDataDAOException exception) {
-					// No routers with such SN, redirect to add/edit page
-					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
-					return;
-				}
-
-				ORMRouterConnection updateConnection = new ORMRouterConnection();
-				updateConnection.setId(connectionId);
-				updateConnection.setFirstRouterId(router1.getId());
-				updateConnection.setSecondRouterId(router2.getId());
-			
+    			ORMRouter router1 = new ORMRouter();
+    			ORMRouter router2 = new ORMRouter();
+    			router1.setSN(SN1);
+    			router2.setSN(SN2);
+    			try {
+	    			try {
+	    				router1.read();
+	    				router2.read();
+	    			} catch (InvalidDataDAOException exception) {
+	    				// No routers with such SN, redirect to add/edit page
+	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+	    				return;
+	    			} 
+	    			ORMRouterConnection updateConnection = new ORMRouterConnection();
+	    			updateConnection.setId(connectionId);
+	    			updateConnection.setFirstRouterId(router1.getId());
+	    			updateConnection.setSecondRouterId(router2.getId());			
 				try {
 					updateConnection.update();
 				} catch (DublicateKeyDAOException exception) {
 					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
+					return;
+				} catch (InvalidDataDAOException exception) {
+					// No routers with such SN, redirect to add/edit page
+					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
 					return;
 				}
 			}catch (DAOException cause) {

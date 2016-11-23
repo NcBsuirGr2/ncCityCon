@@ -111,11 +111,23 @@
 										<c:set var="newAsc" value="true"/>
 										<c:if test="${param.asc == true and param.sortBy == 'portsNum'}">
 											<c:set var="newAsc" value="false"/>
-										</c:if>
-										
+										</c:if>										
 											<a href="${samePath}&sortBy=portsNum&asc=${newAsc}">											
-											Total ports
+											Ports num
 											<c:if test="${param.sortBy == 'portsNum'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>											
+										</a>
+									</th>
+									<th>
+										<c:set var="newAsc" value="true"/>
+										<c:if test="${param.asc == true and param.sortBy == 'usedPortsNum'}">
+											<c:set var="newAsc" value="false"/>
+										</c:if>										
+											<a href="${samePath}&sortBy=usedPortsNum&asc=${newAsc}">											
+											Used ports
+											<c:if test="${param.sortBy == 'usedPortsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -146,6 +158,7 @@
 									<td class="unique"><a href="/connections?SN=${router.SN}">${router.SN}</a></td>
 									<td>${router.name}</td>
 									<td>${router.portsNum}</td>
+									<td>${router.usedPortsNum}</td>
 									<td>${router.active}</td>
 									<td class="hidden idField">${router.id}</td>
 									</tr>
