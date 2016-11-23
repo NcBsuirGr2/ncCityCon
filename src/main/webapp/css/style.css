@@ -51,3 +51,10 @@ footer{
 h2 {
 	margin: 10px 0px;
 }
+
+.panel-heading {
+	font-size: 24px;
+}
+.alert {
+	margin: 20px 140px 0px;
+}

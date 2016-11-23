@@ -35,8 +35,9 @@ public class RouterEditServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
-        if (req.getParameter("SN") != null) {
-            try {
+        if (req.getParameter("SN") != null && req.getParameter("action") != null 
+                                            && req.getParameter("action").equals("edit")) {
+            try { 
                 String routerSN = req.getParameter("SN");
                 try {
                     ORMRouter router = new ORMRouter();
@@ -47,8 +48,8 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     req.getRequestDispatcher(ROUTER_EDIT_PAGE).forward(req, res);
                     return;
                 } catch (DAOException cause) {
-                    logger.warn("Error occur during reading connection", cause);
-                    forwardToErrorPage("Error occur during reading connection", req, res);
+                    logger.warn("Error occur during reading router", cause);
+                    forwardToErrorPage("Error occur during reading router", req, res);
                     return;
                 }
             } catch (NumberFormatException exception) {
@@ -61,17 +62,17 @@ public class RouterEditServlet extends AbstractHttpServlet {
             }
         }
         
-        req.getRequestDispatcher(ROUTER_ADD_PAGE).forward(req, res);
+        req.getRequestDispatcher(ROUTER_EDIT_PAGE).forward(req, res);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
-        String type = req.getParameter("type");
-        if (type == null) {
-            forwardToErrorPage("type parameter is null", req, res);
+        String action = req.getParameter("action");
+        if (action == null) {
+            forwardToErrorPage("action parameter is null", req, res);
             return;
         }
-        switch (type) {
+        switch (action) {
             case "edit" : {
                 doPut(req, res);
                 return;
@@ -113,7 +114,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                         return;
                     }
                 } catch (DAOException exception) {
-                    logger.warn("DAO error during adding new connection", exception);
+                    logger.warn("DAO error during adding new router", exception);
                     forwardToErrorPage("Internal DAO exception", req, res);
                     return;
                 } catch (Exception exception) {
@@ -193,27 +194,33 @@ public class RouterEditServlet extends AbstractHttpServlet {
         }
 
     private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
+        String action = req.getParameter("action");
         String portsNum = req.getParameter("portsNum");
         String SN = req.getParameter("SN");
+        String editSN = req.getParameter("editSN");
         String name = req.getParameter("name");
         String active = req.getParameter("active");
         String cityName = req.getParameter("cityName");
         String countryName = req.getParameter("countryName");
         StringBuilder redirect = new StringBuilder();
         redirect.append(ROUTER_EDIT_URL);
-        redirect.append("?errorType=");
+        redirect.append("?action=");
+        redirect.append(action);
+        redirect.append("&errorType=");
         redirect.append(errorType);
-        redirect.append("&editPortsNum=");
+        redirect.append("&portsNum=");
         redirect.append(portsNum);
-        redirect.append("&editSN=");
+        redirect.append("&SN=");
         redirect.append(SN);
-        redirect.append("&editName=");
+        redirect.append("&editSN=");
+        redirect.append(editSN);
+        redirect.append("&name=");
         redirect.append(name);
-        redirect.append("&editActive=");
+        redirect.append("&active=");
         redirect.append(active);
-        redirect.append("&editCityName");
+        redirect.append("&cityName=");
         redirect.append(cityName);
-        redirect.append("&editCountryName");
+        redirect.append("&countryName=");
         redirect.append(countryName);
         return redirect;
     }

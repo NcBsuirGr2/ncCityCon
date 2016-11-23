@@ -3,11 +3,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/js/formValidation.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
         <link rel="icon" href="favicon.ico" />
         <title>Edit user</title>
     </head>
@@ -15,7 +17,9 @@
     <div class="content-wrapper">
 
     <%@ include file="/include/header.jsp" %>
-
+        <div class="alert alert-warning formAlert hide">
+            Invalid form data.
+        </div>
         <div class="before-footer">
             <c:if test="${not empty param.errorType}">
                 <div class="alert alert-warning alert-dismissible" style="margin-top: 20px">
@@ -38,45 +42,45 @@
                     	<div class="form-group">
                         	<label for="name" class="col-xs-3 control-label">Name:</label>
                         	<div class="col-xs-7">
-                            <c:if test="${not empty editUser}">
-                            	<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${editUser.name}">
-                            </c:if>
-                            <c:if test="${empty editUser}">
-                                <input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
-                            </c:if>
+                                <c:if test="${not empty editUser}">
+                                	<input class="form-control simpleText" autofocus required placeholder="Name" name="name" type="text" value="${editUser.name}">
+                                </c:if>
+                                <c:if test="${empty editUser}">
+                                    <input class="form-control simpleText" required placeholder="Name" name="name" type="text" value="${param.editName}">
+                                </c:if>
                             </div>
                         </div>   
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Login:</label>
                              <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
-                                    <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${editUser.login}">
+                                    <input class="form-control simpleText" required placeholder="Login" name="login" type="text" value="${editUser.login}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control" required placeholder="Login" id="login" name="login" type="text" value="${param.editLogin}">
+                                    <input class="form-control simpleText" required placeholder="Login" name="login" type="text" value="${param.editLogin}">
                                 </c:if>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Password:</label>
                              <div class="col-xs-7">
-                                 <input class="form-control" required placeholder="Password" id="password" name="password" type="text" value="${editUser.password}">
+                                 <input class="form-control passwordInput" required placeholder="Password" name="password" type="text" value="${editUser.password}">
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
                              <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
-                                   <input class="form-control" required placeholder="E-mail" id="email" name="email" type="email" value="${editUser.email}">
+                                   <input class="form-control emailInput" required placeholder="E-mail" name="email" type="email" value="${editUser.email}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control" required placeholder="E-mail" id="email" name="email" type="email" value="${param.editEmail}">
+                                    <input class="form-control emailInput" required placeholder="E-mail" name="email" type="email" value="${param.editEmail}">
                                 </c:if>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Group:</label>
-                            <div class="col-xs-2">
+                            <div class="col-xs-4">
                                 <select class="form-control" id="group" name="group" form="form">
                                     <option value="admin" <c:if test="${editUser.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
                                     <option value="operator" <c:if test="${editUser.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
@@ -95,7 +99,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="javascript:history.back()" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    

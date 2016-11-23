@@ -6,8 +6,9 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">        
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="js/formValidation.js"></script>
 
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
@@ -22,7 +23,9 @@
             <%@ include file="/include/header.jsp" %>
 
             <div class="before-footer">
-
+                <div class="alert alert-warning formAlert hide">
+                    Invalid form data.
+                </div>
                 <c:if test="${not empty param.errorType}">
                     <div class="alert alert-warning alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -46,22 +49,42 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="form" method="POST" action="/signup">
+                            <form class="form-horizontal" method="POST" id="form" action="/signup">
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-lg" required placeholder="Login" name="login">
+                                    <label class="col-xs-3 control-label">Name:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control simpleText" autofocus required placeholder="Name" name="name">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                                    <label class="col-xs-3 control-label">Login:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control simpleText" required placeholder="Login" name="login">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control input-lg" required placeholder="e-mail" name="e-mail">
+                                    <label class="col-xs-3 control-label">Password:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control passwordInput" placeholder="Password" name="password">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-lg" placeholder="name" name="name">
+                                    <label class="col-xs-3 control-label">E-mail:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control emailInputs" required placeholder="E-mail" name="E-mail">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 5px">
-                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create an account">
-                                </div>
+                                 <center class="form-group" style="margin-bottom: 5px">
+                                    <input type="submit" class="btn btn-primary" value="Create an account">
+                                </center>
                             </form>
                         </div>
 

@@ -7,7 +7,7 @@
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>	
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/js/selectEntity.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
 		<script type="text/javascript" src="/js/routerPages/routerList.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
@@ -19,6 +19,9 @@
 	<body>
 		<div class="content-wrapper">
 			<%@ include file="/include/header.jsp" %>
+			<div class="alert alert-info selectAlert hide">
+				Please, choose one element from the list below.
+			</div>
 			<c:if test="${not empty param.success}">
 				<div class="alert alert-success alert-dismissible">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -218,21 +221,6 @@
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 												<input type=submit class="btn btn-primary" form="deleteForm" value="Delete"></input>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!-- Select router modal -->
-								<div class="modal fade selectRouterModal" tabindex="-1" role="dialog" aria-hidden="true">
-									<div class="modal-dialog modal-sm">
-										<div class="modal-content">
-											<div class="modal-body">
-												<h4 class="modal-title">No router selected</h4>
-											</div>
-
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
 											</div>
 										</div>
 									</div>

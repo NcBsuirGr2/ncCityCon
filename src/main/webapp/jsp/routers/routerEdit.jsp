@@ -2,20 +2,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/js/formValidation.js"></script>
+
         <link rel="icon" href="favicon.ico" />
+
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+
         <title>Edit router</title>
     </head>
 <body>
     <div class="content-wrapper">
 
     <%@ include file="/include/header.jsp" %>
-
+        <div class="alert alert-warning formAlert hide">
+            Invalid form data.
+        </div>
         <div class="before-footer">
             <c:if test="${not empty param.errorType}">
                 <div class="alert alert-warning alert-dismissible" style="margin-top: 20px">
@@ -35,62 +41,25 @@
             </c:if> 
 
             <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <h4>Edit router</h4>
-                </div>
+                <center class="panel-heading text-center">
+                    Edit router
+                </center>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="/router" method="POST" role="form" id="form">
-                        <div class="form-group">
-                            <label for="name" class="col-xs-3 control-label">Country:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="Country" name="countryName" type="text" value="${editRouter.countryName}">
-                            </c:if>
-                            <c:if test="${empty editRouter}">
-                                <input class="form-control" required placeholder="Country" name="countryName" type="text" value="${param.editCountryName}">
-                            </c:if>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-xs-3 control-label">City:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="City" name="cityName" type="text" value="${editRouter.cityName}">
-                            </c:if>
-                            <c:if test="${empty editRouter}">
-                                <input class="form-control" required placeholder="City" name="cityName" type="text" value="${param.editCityName}">
-                            </c:if>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-xs-3 control-label">Name:</label>
-                            <div class="col-xs-9">
-                            <c:if test="${not empty editRouter}">
-                                <input class="form-control" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
-                            </c:if>
-                            <c:if test="${empty editRouter}">
-                                <input class="form-control" required placeholder="Name" name="name" type="text" value="${param.editName}">
-                            </c:if>
-                            </div>
-                        </div>  
-                        <div class="form-group">
-                            <label for="group" class="col-xs-3 control-label">Active:</label>
-                            <div class="col-xs-2">
-                                <select class="form-control" id="group" name="active" form="form">
-                                    <option value="true" selected>true</option>
-                                    <option value="false">false</option>
-                                </select>
-                            </div>
-                        </div>
-                        <input type="hidden" name="type" value="edit"/>
-                        <input type="hidden" name="id" value="${editRouter.id}"/>
-                     </form>
+                <c:choose>
+                    <c:when test="${param.action eq 'edit'}">
+                        <%@ include file="/include/routerEditForm.jsp"%>
+                    </c:when>
+                    <c:otherwise>
+                        <%@ include file="/include/routerAddForm.jsp"%>
+                    </c:otherwise>
+                </c:choose>
+
                 </div>
 
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
+                            <button type="button" class="btn btn-primary btn-block center-block " data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
                             <a href="/routers" class="btn btn-primary btn-block center-block">Back</a>

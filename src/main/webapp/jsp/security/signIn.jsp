@@ -8,12 +8,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="/css/style_loginForm.css" rel="stylesheet" type="text/css">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
         <link href="/css/securityPages/common.css" rel="stylesheet" type="text/css">
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="js/common.js"></script>
 
         <link href="favicon.ico" rel="icon"/>
     </head>
@@ -25,7 +25,7 @@
 
          <%@ include file="/include/header.jsp" %>
             <div class="before-footer">
-
+                
             <c:if test="${not empty param.errorType}">
                 <div class="alert alert-warning alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -46,16 +46,26 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="form" method="post" action="/signin">
+                            <form class="form-horizontal" method="POST" id="form" action="/signin">                               
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-lg" placeholder="Login" name="login">
+                                    <label class="col-xs-3 control-label">Login:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" autofocus placeholder="Login" name="login">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control input-lg" placeholder="Password" name="password">
+                                    <label class="col-xs-3 control-label">Password:</label>
+                                    <div class="col-xs-7">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control passwordInput" placeholder="Password" name="password">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Sign In">
-                                </div>
+                                <center class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Sign In">
+                                </center>
                             </form>
                         </div>
                     </div>

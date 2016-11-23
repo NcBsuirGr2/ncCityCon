@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE>
+<!DOCTYPE html>
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,7 +10,10 @@
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="/js/formValidation.js"></script>
+
             <link rel="icon" href="favicon.ico" />
+
             <title>Edit connection</title>
         </head>
 
@@ -18,7 +21,9 @@
         <div class="content-wrapper">
 
             <%@ include file="/include/header.jsp" %>
-
+            <div class="alert alert-warning formAlert hide">
+                Invalid form data.
+            </div>
             <c:if test="${not empty param.errorType}">
                 <div class="alert alert-warning alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -45,10 +50,10 @@
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
                                 	<div class="col-xs-7">
                                         <c:if test="${not empty connection.firstRouterSN}">
-                                    	   <input class="form-control" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
+                                    	   <input class="form-control simpleText" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
+                                           <input class="form-control simpleText" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
                                         </c:if>
                                     </div>
                             </div>   
@@ -56,10 +61,10 @@
                                 <label for="city" class="col-xs-3 control-label">SN-2:</label>
                                      <div class="col-xs-7">                                         
                                         <c:if test="${not empty connection.firstRouterSN}">
-                                            <input class="form-control" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
+                                            <input class="form-control simpleText" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
+                                           <input class="form-control simpleText" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
                                         </c:if>
                                      </div>
                             </div>
