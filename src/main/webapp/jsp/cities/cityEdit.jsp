@@ -72,7 +72,7 @@
 						</div>
 					</div>
 
-					<input type="hidden" name="type" value="${param.action}"/>
+					<input type="hidden" name="action" value="${param.action}"/>
 					<input type="hidden" name="id" value="${editCity.id}"/>
 				</form>
 			</div>
