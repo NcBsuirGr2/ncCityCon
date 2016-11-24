@@ -18,7 +18,7 @@ $(document).ready(function() {
     url: function(phrase) {
       city1 = phrase;
       console.log(city1);
-      return "/autocomplete?field=city&query="+phrase;//+"&country="+$("#country1").val();
+      return "/autocomplete?field=city&query="+phrase+"&country="+$("#country1").val();
     },
     getValue: "name"
   };
@@ -43,7 +43,7 @@ $(document).ready(function() {
     url: function(phrase) {
       city2 = phrase;
       console.log(city2);
-      return "/autocomplete?field=city&query="+phrase;//+"&country="+$("#country2").val();
+      return "/autocomplete?field=city&query="+phrase+"&country="+$("#country2").val();
     },
     getValue: "name"
   };
@@ -56,10 +56,10 @@ $(document).ready(function() {
     getValue: "name"
   };
 
-  //$("#country1").easyAutocomplete(country1_options);
+  $("#country1").easyAutocomplete(country1_options);
   $("#city1").easyAutocomplete(city1_options);
   $("#SN1").easyAutocomplete(router1_options);
-  //$("#country2").easyAutocomplete(country2_options);
+  $("#country2").easyAutocomplete(country2_options);
   $("#city2").easyAutocomplete(city2_options);
   $("#SN2").easyAutocomplete(router2_options);
 })

@@ -49,41 +49,74 @@
                     </div>
                     <div class="panel-body">
                     	<form class="form-horizontal" id="form" method="POST" action="/connection" >
+                            <div class="form-group row">
+                                <label for="port" class="col-xs-3 control-label">Country-1:</label>
+                                <div class="col-xs-7">
+                                    <c:if test="${not empty connection.firstRouterCountry}">
+                                       <input class="form-control simpleText" id="country1" name="country1" placeholder="Belarus" type="text" value="${connection.firstRouterCountry}">
+                                    </c:if>
+                                    <c:if test="${empty connection.firstRouterCountry}">
+                                       <input class="form-control simpleText" id="country1" name="country1" placeholder="Belarus" type="text" value="${param.firstCountry}">
+                                    </c:if>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">City-1:</label>
-                                    <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="city1" value="${connection.firstRouterCityName}">  
-                                    </div>
+                                <div class="col-xs-7">
+                                    <c:if test="${not empty connection.firstRouterCityName}">
+                                       <input class="form-control simpleText" id="city1" name="city1" placeholder="Minsk" type="text" value="${connection.firstRouterCityName}">
+                                    </c:if>
+                                    <c:if test="${empty connection.firstRouterCityName}">
+                                       <input class="form-control simpleText" id="city1" name="city1" placeholder="Minsk" type="text" value="${param.firstCity}">
+                                    </c:if>
+                                </div>
                             </div> 
                         	<div class="form-group row">
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
-                                	<div class="col-xs-7">
-                                        <c:if test="${not empty connection.firstRouterSN}">
-                                    	   <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
-                                        </c:if>
-                                        <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
-                                        </c:if>
-                                    </div>
+                            	<div class="col-xs-7">
+                                    <c:if test="${not empty connection.firstRouterSN}">
+                                	   <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
+                                    </c:if>
+                                    <c:if test="${empty connection.firstRouterSN}">
+                                       <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
+                                    </c:if>
+                                </div>
                             </div>   
-  
+                            <br>
+                            <div class="form-group row">
+                                <label for="port" class="col-xs-3 control-label">Country-2:</label>
+                                <div class="col-xs-7">
+                                    <c:if test="${not empty connection.secondRouterCountry}">
+                                       <input class="form-control simpleText" id="country2" name="country2" placeholder="Belarus" type="text" value="${connection.secondRouterCountry}">
+                                    </c:if>
+                                    <c:if test="${empty connection.secondRouterCountry}">
+                                       <input class="form-control simpleText" id="country2" name="country2" placeholder="Belarus" type="text" value="${param.secondCountry}">
+                                    </c:if>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">City-2:</label>
-                                    <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="city2" value="${connection.secondRouterCityName}">  
-                                    </div>
-                            </div> 
+                                <div class="col-xs-7">
+                                    <c:if test="${not empty connection.secondRouterCityName}">
+                                       <input class="form-control simpleText" id="city2" name="city2" placeholder="Minsk" type="text" value="${connection.secondRouterCityName}">
+                                    </c:if>
+                                    <c:if test="${empty connection.secondRouterCityName}">
+                                       <input class="form-control simpleText" id="city2" name="city2" placeholder="Minsk" type="text" value="${param.secondCity}">
+                                    </c:if>
+                                </div>
+                            </div>
                             <div class="form-group row">
-                                <label for="city" class="col-xs-3 control-label">SN-2:</label>
-                                     <div class="col-xs-7">                                         
-                                        <c:if test="${not empty connection.firstRouterSN}">
-                                            <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
-                                        </c:if>
-                                        <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
-                                        </c:if>
-                                     </div>
+                                <label for="port" class="col-xs-3 control-label">SN-2:</label>
+                                <div class="col-xs-7">
+                                    <c:if test="${not empty connection.secondRouterSN}">
+                                       <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
+                                    </c:if>
+                                    <c:if test="${empty connection.secondRouterSN}">
+                                       <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
+                                    </c:if>
+                                </div>
                             </div>
                             <input type="hidden" name="action" value="${param.action}"/>
                             <input type="hidden" name="id" value="${connection.id}"/>

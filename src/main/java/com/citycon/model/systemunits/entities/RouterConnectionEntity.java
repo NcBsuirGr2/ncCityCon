@@ -35,7 +35,7 @@ public class RouterConnectionEntity extends Entity {
 		return firstRouterCityName;
 	}
 	public String getFirstRouterCountryName() {
-		return firstRouterCountryName;
+		return firstRouterCountry;
 	}
 	public String getSecondRouterCityName() {
 		return secondRouterCityName;
@@ -59,14 +59,12 @@ public class RouterConnectionEntity extends Entity {
 	public void setFirstRouterCityName(String firstRouterCityName) {
 		this.firstRouterCityName = firstRouterCityName;
 	}
-	public void setFirstRouterCountryName(String firstRouterCountryName) {
-		this.firstRouterCountryName = firstRouterCountryName;
+	public void setFirstRouterCountry(String firstRouterCountry) {
+		this.firstRouterCountry = firstRouterCountry;
 	}
 	public void setSecondRouterCityName(String secondRouterCityName) {
 		this.secondRouterCityName = secondRouterCityName;
 	}
-	public void setFirstRouterCountry(String firstRouterCountry) {
-		this.firstRouterCountry = firstRouterCountry; }
 	public void setSecondRouterCountry(String secondRouterCountry) {
 		this.secondRouterCountry = secondRouterCountry;
 	}
