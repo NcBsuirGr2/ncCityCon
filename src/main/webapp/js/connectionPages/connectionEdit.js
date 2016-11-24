@@ -60,11 +60,11 @@ $(document).ready(function() {
 	});
 
 
-	$("#country2").on("change", function() {
-		updCity1($(this).val());
-		updSN1($(this).val(), $("#city2").val());
+	$("#country2").on("click", function() {
+		updCity2($(this).val());
+		updSN2($(this).val(), $("#city2").val());
 	});
 	$("#city2").on("change", function() {
-		updSN1($("#country2").val(), $(this).val());
+		updSN2($("#country2").val(), $(this).val());
 	});
 })

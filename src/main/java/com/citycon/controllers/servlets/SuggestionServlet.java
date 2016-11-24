@@ -107,10 +107,10 @@ public class SuggestionServlet extends HttpServlet {
                     Writer writer = res.getWriter();
                     writer.write("{\"suggestions\":[");
                     for (int i = 0; i < routers.length-1; ++i) {
-                        writer.write("\""+routers[i].getName()+"\",");
+                        writer.write("\""+routers[i].getSN()+"\",");
                     }
                     if (routers.length > 0) {
-                        writer.write("\""+routers[routers.length-1].getName()+"\"");
+                        writer.write("\""+routers[routers.length-1].getSN()+"\"");
                     }                    
                     writer.write("]}");
                     writer.flush(); 

@@ -45,12 +45,12 @@
             <div class="before-footer">
                 <div class="panel panel-default">
                 	<div class="panel-heading text-center">
-                        <h4>Edit connection</h4>
+                        <h4>Setup connection</h4>
                     </div>
                     <div class="panel-body">
                     	<form class="form-horizontal" id="form" method="POST" action="/connection" >
                             <div class="form-group row">
-                                <label for="port" class="col-xs-3 control-label">Country-1:</label>
+                                <label class="col-xs-3 control-label">Country-1:</label>
                                 <div class="col-xs-7">
                                     <select class="form-control" id="country1" name="country1" form="form">
                                         <option label=" "></option>
@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="port" class="col-xs-3 control-label">City-1:</label>
+                                <label class="col-xs-3 control-label">City-1:</label>
                                 <div class="col-xs-7">
                                     <select class="form-control" id="city1" name="city1" form="form">
                                         <option label=" "></option>
@@ -101,7 +101,7 @@
                                 </div>
                             </div> 
                         	<div class="form-group row">
-                            	<label for="port" class="col-xs-3 control-label">SN-1:</label>
+                            	<label class="col-xs-3 control-label">SN-1:</label>
                             	<div class="col-xs-7">
                                     <select class="form-control" id="SN1" name="SN1" form="form">
                                         <option label=" "></option>
@@ -121,9 +121,9 @@
                             <br>
                             <br>
                             <div class="form-group row">
-                                <label for="port" class="col-xs-3 control-label">Country-2:</label>
+                                <label class="col-xs-3 control-label">Country-2:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="country1" name="country1" form="form">
+                                    <select class="form-control" id="country2" name="country2" form="form">
                                         <option label=" "></option>
                                         <option value="Belarus" 
                                             <c:if test="${connection.secondRouterCountry == 'Belarus' or param.secondCountry == 'Belarus'}">    selected
@@ -154,7 +154,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="port" class="col-xs-3 control-label">City-2:</label>
+                                <label class="col-xs-3 control-label">City-2:</label>
                                 <div class="col-xs-7">
                                     <select class="form-control" id="city2" name="city2" form="form">
                                         <option label=" "></option>
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="port" class="col-xs-3 control-label">SN-2:</label>
+                                <label class="col-xs-3 control-label">SN-2:</label>
                                 <div class="col-xs-7">
                                     <select class="form-control" id="SN2" name="SN2" form="form">
                                         <option label=" "></option>
