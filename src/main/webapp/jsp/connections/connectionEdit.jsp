@@ -14,7 +14,7 @@
             <script src="/js/jquery.easy-autocomplete.min.js"></script>
 
             <script src="/js/formValidation.js"></script>
-            <script src="/js/connectionPages/autocomplete.js"></script>
+            <script src="/js/connectionPages/connectionEdit.js"></script>
 
             <link rel="icon" href="favicon.ico" />
 
@@ -52,70 +52,141 @@
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">Country-1:</label>
                                 <div class="col-xs-7">
-                                    <c:if test="${not empty connection.firstRouterCountry}">
-                                       <input class="form-control simpleText" id="country1" name="country1" placeholder="Belarus" type="text" value="${connection.firstRouterCountry}">
-                                    </c:if>
-                                    <c:if test="${empty connection.firstRouterCountry}">
-                                       <input class="form-control simpleText" id="country1" name="country1" placeholder="Belarus" type="text" value="${param.firstCountry}">
-                                    </c:if>
+                                    <select class="form-control" id="country1" name="country1" form="form">
+                                        <option label=" "></option>
+                                        <option value="Belarus" 
+                                            <c:if test="${connection.firstRouterCountry == 'Belarus' or param.firstCountry == 'Belarus'}">    selected
+                                            </c:if>
+                                            >Belarus</option>
+                                        <option value="Moldova"
+                                            <c:if test="${connection.firstRouterCountry == 'Moldova' or param.firstCountry == 'Moldova'}">    selected
+                                            </c:if>
+                                            >Moldova</option>
+                                        </option>
+                                        <option value="Poland"
+                                            <c:if test="${connection.firstRouterCountry == 'Poland' or param.firstCountry == 'Poland'}">    selected
+                                            </c:if>
+                                            >Poland
+                                        </option>
+                                        <option value="Ukraine"
+                                            <c:if test="${connection.firstRouterCountry == 'Ukraine' or param.firstCountry == 'Ukraine'}">    selected
+                                            </c:if>
+                                            >Ukraine
+                                        </option>
+                                        <option value="Russia"
+                                            <c:if test="${connection.firstRouterCountry == 'Russia' or param.firstCountry == 'Russia'}">    selected
+                                            </c:if>
+                                            >Russia
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">City-1:</label>
                                 <div class="col-xs-7">
-                                    <c:if test="${not empty connection.firstRouterCityName}">
-                                       <input class="form-control simpleText" id="city1" name="city1" placeholder="Minsk" type="text" value="${connection.firstRouterCityName}">
-                                    </c:if>
-                                    <c:if test="${empty connection.firstRouterCityName}">
-                                       <input class="form-control simpleText" id="city1" name="city1" placeholder="Minsk" type="text" value="${param.firstCity}">
-                                    </c:if>
+                                    <select class="form-control" id="city1" name="city1" form="form">
+                                        <option label=" "></option>
+                                        <c:if test="${not empty connection or not empty param.firstCity}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.firstRouterCityName}" selected>${connection.firstRouterCityName}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.firstCity}" selected>${param.firstCity}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                    </select>
                                 </div>
                             </div> 
                         	<div class="form-group row">
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
                             	<div class="col-xs-7">
-                                    <c:if test="${not empty connection.firstRouterSN}">
-                                	   <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
-                                    </c:if>
-                                    <c:if test="${empty connection.firstRouterSN}">
-                                       <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
-                                    </c:if>
+                                    <select class="form-control" id="SN1" name="SN1" form="form">
+                                        <option label=" "></option>
+                                        <c:if test="${not empty connection or not empty param.SN1}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.firstRouterSN}" selected>${connection.firstRouterSN}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.SN1}" selected>${param.SN1}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                    </select>
                                 </div>
                             </div>   
+                            <br>
                             <br>
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">Country-2:</label>
                                 <div class="col-xs-7">
-                                    <c:if test="${not empty connection.secondRouterCountry}">
-                                       <input class="form-control simpleText" id="country2" name="country2" placeholder="Belarus" type="text" value="${connection.secondRouterCountry}">
-                                    </c:if>
-                                    <c:if test="${empty connection.secondRouterCountry}">
-                                       <input class="form-control simpleText" id="country2" name="country2" placeholder="Belarus" type="text" value="${param.secondCountry}">
-                                    </c:if>
+                                    <select class="form-control" id="country1" name="country1" form="form">
+                                        <option label=" "></option>
+                                        <option value="Belarus" 
+                                            <c:if test="${connection.secondRouterCountry == 'Belarus' or param.secondCountry == 'Belarus'}">    selected
+                                            </c:if>
+                                            >Belarus</option>
+                                        <option value="Moldova"
+                                            <c:if test="${connection.secondRouterCountry == 'Moldova' or param.secondCountry == 'Moldova'}">    selected
+                                            </c:if>
+                                            >Moldova</option>
+                                        </option>
+                                        <option value="Poland"
+                                            <c:if test="${connection.secondRouterCountry == 'Poland' or param.secondCountry == 'Poland'}">    selected
+                                            </c:if>
+                                            >Poland
+                                        </option>
+                                        <option value="Ukraine"
+                                            <c:if test="${connection.secondRouterCountry == 'Ukraine' or param.secondCountry == 'Ukraine'}">    selected
+                                            </c:if>
+                                            >Ukraine
+                                        </option>
+                                        <option value="Russia"
+                                            <c:if test="${connection.secondRouterCountry == 'Russia' or param.secondCountry == 'Russia'}">    selected
+                                            </c:if>
+                                            >Russia
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">City-2:</label>
                                 <div class="col-xs-7">
-                                    <c:if test="${not empty connection.secondRouterCityName}">
-                                       <input class="form-control simpleText" id="city2" name="city2" placeholder="Minsk" type="text" value="${connection.secondRouterCityName}">
-                                    </c:if>
-                                    <c:if test="${empty connection.secondRouterCityName}">
-                                       <input class="form-control simpleText" id="city2" name="city2" placeholder="Minsk" type="text" value="${param.secondCity}">
-                                    </c:if>
+                                    <select class="form-control" id="city2" name="city2" form="form">
+                                        <option label=" "></option>
+                                        <c:if test="${not empty connection or not empty param.secondCity}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.secondRouterCityName}" selected>${connection.secondRouterCityName}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.secondCity}" selected>${param.secondCity}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="port" class="col-xs-3 control-label">SN-2:</label>
                                 <div class="col-xs-7">
-                                    <c:if test="${not empty connection.secondRouterSN}">
-                                       <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
-                                    </c:if>
-                                    <c:if test="${empty connection.secondRouterSN}">
-                                       <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
-                                    </c:if>
+                                    <select class="form-control" id="SN2" name="SN2" form="form">
+                                        <option label=" "></option>
+                                        <c:if test="${not empty connection or not empty param.SN2}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.secondRouterSN}" selected>${connection.secondRouterSN}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.SN2}" selected>${param.SN2}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                    </select>
                                 </div>
                             </div>
                             <input type="hidden" name="action" value="${param.action}"/>
