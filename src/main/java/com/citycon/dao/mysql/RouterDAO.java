@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +36,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("cityId", "`City_id`");
         hashMap.put("city", "`CityName`");
         hashMap.put("country", "`Country`");
-        //hashMap.put("usedPortsNum", "`UsedPortsNum`");
+        hashMap.put("usedPortsNum", "`UsedPortsNum`");
     }
 
     /**
@@ -344,16 +343,110 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 }
                 log_parameters += ", City(" + city.getName() + "), Country(" + city.getCountryName() + ")";
 
-                search = "select Distinct R.ID as ID, R.SN as SN, R.`Name`, R.`Port`, R.In_Service, R.City_id, " +
-                        "C.`Name` as CityName, C.Country as Country " +
-                        "from Router R join City C on R.City_id=C.ID " +
-                        "where C.`Name`='"+ city.getName() +"' and C.Country='" + city.getCountryName() +
+                search= "SELECT \n" +
+                        "    RFrom.ID AS ID,\n" +
+                        "            RFrom.SN as SN,\n" +
+                        "            RFrom.`Name` as `Name`,\n" +
+                        "            RFrom.`Port` as `Port`,\n" +
+                        "            RFrom.In_Service as In_Service,\n" +
+                        "            RFrom.City_id as City_id,\n" +
+                        "            RFrom.CityName as CityName,\n" +
+                        "            RFrom.Country as Country,\n" +
+                        "            RFrom.UsedPortsNum + RTo.UsedPortsNum as UsedPortsNum\n" +
+                        "FROM\n" +
+                        "    (SELECT DISTINCT\n" +
+                        "        R.ID AS ID,\n" +
+                        "            R.SN AS SN,\n" +
+                        "            R.`Name`,\n" +
+                        "            R.`Port`,\n" +
+                        "            R.In_Service,\n" +
+                        "            R.City_id,\n" +
+                        "            R.UsedPortsNum,\n" +
+                        "            C.`Name` AS CityName,\n" +
+                        "            C.Country AS Country\n" +
+                        "    FROM\n" +
+                        "        (SELECT \n" +
+                        "        Ro.*, COUNT(Con.ID_From) AS UsedPortsNum\n" +
+                        "    FROM\n" +
+                        "        Router Ro\n" +
+                        "    LEFT OUTER JOIN RouterConnection Con ON Ro.ID = Con.ID_From\n" +
+                        "    GROUP BY Ro.ID\n" +
+                        "    ORDER BY Ro.ID) R\n" +
+                        "    JOIN City C ON R.City_id = C.ID) RFrom\n" +
+                        "        JOIN\n" +
+                        "    (SELECT DISTINCT\n" +
+                        "        R.ID AS ID,\n" +
+                        "            R.SN AS SN,\n" +
+                        "            R.`Name`,\n" +
+                        "            R.`Port`,\n" +
+                        "            R.In_Service,\n" +
+                        "            R.City_id,\n" +
+                        "            R.UsedPortsNum,\n" +
+                        "            C.`Name` AS CityName,\n" +
+                        "            C.Country AS Country\n" +
+                        "    FROM\n" +
+                        "        (SELECT \n" +
+                        "        Ro.*, COUNT(Con.ID_To) AS UsedPortsNum\n" +
+                        "    FROM\n" +
+                        "        Router Ro\n" +
+                        "    LEFT OUTER JOIN RouterConnection Con ON Ro.ID = Con.ID_To\n" +
+                        "    GROUP BY Ro.ID\n" +
+                        "    ORDER BY Ro.ID) R\n" +
+                        "    JOIN City C ON R.City_id = C.ID) RTo ON RFrom.ID = RTo.ID " +
+                        "where RFrom.CityName='"+ city.getName() +"' and RFrom.Country='" + city.getCountryName() +
                         "' order by " + sorter + sorting_direction + " limit ?, ?";
             }
             else {
-                search = "select Distinct R.ID as ID, R.SN as SN, R.`Name`, R.`Port`, R.In_Service, R.City_id, " +
-                        "C.`Name` as CityName, C.Country as Country " +
-                        "from Router R join City C on R.City_id=C.ID " +
+                search = "SELECT \n" +
+                        "    RFrom.ID AS ID,\n" +
+                        "            RFrom.SN,\n" +
+                        "            RFrom.`Name`,\n" +
+                        "            RFrom.`Port`,\n" +
+                        "            RFrom.In_Service,\n" +
+                        "            RFrom.City_id,\n" +
+                        "            RFrom.CityName,\n" +
+                        "            RFrom.Country,\n" +
+                        "            RFrom.UsedPortsNum + RTo.UsedPortsNum as UsedPortsNum\n" +
+                        "FROM\n" +
+                        "    (SELECT DISTINCT\n" +
+                        "        R.ID AS ID,\n" +
+                        "            R.SN AS SN,\n" +
+                        "            R.`Name`,\n" +
+                        "            R.`Port`,\n" +
+                        "            R.In_Service,\n" +
+                        "            R.City_id,\n" +
+                        "            R.UsedPortsNum,\n" +
+                        "            C.`Name` AS CityName,\n" +
+                        "            C.Country AS Country\n" +
+                        "    FROM\n" +
+                        "        (SELECT \n" +
+                        "        Ro.*, COUNT(Con.ID_From) AS UsedPortsNum\n" +
+                        "    FROM\n" +
+                        "        Router Ro\n" +
+                        "    LEFT OUTER JOIN RouterConnection Con ON Ro.ID = Con.ID_From\n" +
+                        "    GROUP BY Ro.ID\n" +
+                        "    ORDER BY Ro.ID) R\n" +
+                        "    JOIN City C ON R.City_id = C.ID) RFrom\n" +
+                        "        JOIN\n" +
+                        "    (SELECT DISTINCT\n" +
+                        "        R.ID AS ID,\n" +
+                        "            R.SN AS SN,\n" +
+                        "            R.`Name`,\n" +
+                        "            R.`Port`,\n" +
+                        "            R.In_Service,\n" +
+                        "            R.City_id,\n" +
+                        "            R.UsedPortsNum,\n" +
+                        "            C.`Name` AS CityName,\n" +
+                        "            C.Country AS Country\n" +
+                        "    FROM\n" +
+                        "        (SELECT \n" +
+                        "        Ro.*, COUNT(Con.ID_To) AS UsedPortsNum\n" +
+                        "    FROM\n" +
+                        "        Router Ro\n" +
+                        "    LEFT OUTER JOIN RouterConnection Con ON Ro.ID = Con.ID_To\n" +
+                        "    GROUP BY Ro.ID\n" +
+                        "    ORDER BY Ro.ID) R\n" +
+                        "    JOIN City C ON R.City_id = C.ID) RTo ON RFrom.ID = RTo.ID " +
                         "order by " + sorter + sorting_direction + " limit ?, ?";
             }
         }
@@ -386,7 +479,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                     router.setCityId(resultSet.getInt("City_id"));
                     router.setCountryName(resultSet.getString("Country"));
                     router.setCityName(resultSet.getString("CityName"));
-                    router.setUsedPortsNum(this.getUsedPortsNum(router.getId()));
+                    router.setUsedPortsNum(resultSet.getInt("UsedPortsNum"));
                     routers.add(router);
                 }
 
@@ -506,11 +599,9 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
         int UsedPortsNum = 0;
 
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
 
         ResultSet resultSet= null;
-
-        ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
 
         if (id == 0){
             logger.info("For getUsedPortsNum incorrectly chosen field, try ID");
@@ -519,27 +610,19 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
         String log_parameters = "With parameters: ID(" + id + ")";
 
-        SQLCommandForGetTableOfRouters.add("set @count_connections_from_for_id_to = (select count(ID_From) " +
-                "from RouterConnection where ID_From = " + id + ")");
-        SQLCommandForGetTableOfRouters.add("set @count_connections_to_for_id_to = (select count(ID_To) " +
-                "from RouterConnection where ID_To = " + id +")");
-
-        String search = "select @count_connections_from_for_id_to + " +
-                "@count_connections_to_for_id_to as num";
+        String search = "select count(ID_From)+count(ID_To) as num from RouterConnection where ID=?";
 
         try{
-            statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(search);
         }catch (SQLException e) {
             logger.warn("PreparedStatement in read wasn't created", e);
             throw new InternalDAOException("PreparedStatement in read wasn't created", e);
         }
 
         try {
-            for(String SQLCommand : SQLCommandForGetTableOfRouters){
-                statement.executeUpdate(SQLCommand);
-            }
+            preparedStatement.setInt(1, id);
 
-            resultSet = statement.executeQuery(search);
+            resultSet = preparedStatement.executeQuery(search);
 
             if(resultSet.first()) {
                 UsedPortsNum = resultSet.getInt("num");
@@ -555,11 +638,11 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
             throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
         }
         finally {
-            if (statement != null){
+            if (preparedStatement != null){
                 try {
-                    statement.close();
+                    preparedStatement.close();
                 } catch (SQLException e) {
-                    logger.warn("Close Statement in getUsedPortsNum {} failed", nameTable, e);
+                    logger.warn("Close PrepareStatement in getUsedPortsNum {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
