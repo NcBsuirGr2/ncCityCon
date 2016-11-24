@@ -142,7 +142,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     }
 
     protected void initializePaginData(HttpSession session) {
-    	HashMap<String, HashMap<String, String>> pagesPaginationParameters = new HashMap<>();
+    	HashMap<String, HashMap<String, String>> paginationParameters = new HashMap<>();
 
     	HashMap<String, String> defaultUsersParameters = new HashMap<>();
     	defaultUsersParameters.put("page", "1");
@@ -168,9 +168,11 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     	defaultConnectionsParameters.put("sortBy", "SN1");
     	defaultConnectionsParameters.put("asc", "true");
 
-    	pagesPaginationParameters.put("users", defaultUsersParameters);
-    	pagesPaginationParameters.put("cities", defaultCitiesParameters);
-    	pagesPaginationParameters.put("routers", defaultRoutersParameters);
-    	pagesPaginationParameters.put("connections", defaultConnectionsParameters);
+    	paginationParameters.put("users", defaultUsersParameters);
+    	paginationParameters.put("cities", defaultCitiesParameters);
+    	paginationParameters.put("routers", defaultRoutersParameters);
+    	paginationParameters.put("connections", defaultConnectionsParameters);
+
+    	session.setAttribute("paginationParameters", paginationParameters);
     }
 }

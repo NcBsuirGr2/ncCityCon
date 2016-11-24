@@ -12,12 +12,12 @@ public class RouterConnectionEntity extends Entity {
 	private int firstRouterId;
 	private String firstRouterSN;
 	private String firstRouterCityName;
-	private String firstRouterCountryName;
+	private String firstRouterCountry;
 
 	private int secondRouterId;
 	private String secondRouterSN;
 	private String secondRouterCityName;
-	private String secondRouterCountryName;
+	private String secondRouterCountry;
 
 	public int getFirstRouterId() {
 		return firstRouterId;
@@ -40,9 +40,9 @@ public class RouterConnectionEntity extends Entity {
 	public String getSecondRouterCityName() {
 		return secondRouterCityName;
 	}
-	public String getSecondRouterCountryName() {
-		return secondRouterCountryName;
-	}
+
+	public String getFirstRouterCountry() { return firstRouterCountry; }
+	public String getSecondRouterCountry() { return secondRouterCountry; }
 
 	public void setFirstRouterId(int firstRouterId) {
 		this.firstRouterId = firstRouterId;
@@ -65,8 +65,10 @@ public class RouterConnectionEntity extends Entity {
 	public void setSecondRouterCityName(String secondRouterCityName) {
 		this.secondRouterCityName = secondRouterCityName;
 	}
-	public void setSecondRouterCountryName(String secondRouterCountryName) {
-		this.secondRouterCountryName = secondRouterCountryName;
+	public void setFirstRouterCountry(String firstRouterCountry) {
+		this.firstRouterCountry = firstRouterCountry; }
+	public void setSecondRouterCountry(String secondRouterCountry) {
+		this.secondRouterCountry = secondRouterCountry;
 	}
 
 	public String toString() {
@@ -79,12 +81,16 @@ public class RouterConnectionEntity extends Entity {
 		routerConnectionString.append(firstRouterSN);
 		routerConnectionString.append("), firstRouterCityName(");
 		routerConnectionString.append(firstRouterCityName);
+		routerConnectionString.append("), firstRouterCountry");
+		routerConnectionString.append(firstRouterCountry);
 		routerConnectionString.append("), secondRouterId(");
 		routerConnectionString.append(secondRouterId);
 		routerConnectionString.append("), secondRouterSN(");
 		routerConnectionString.append(secondRouterSN);
 		routerConnectionString.append("), secondRouterCityName(");
 		routerConnectionString.append(secondRouterCityName);
+		routerConnectionString.append("), secondRouterCountry");
+		routerConnectionString.append(secondRouterCountry);
 		routerConnectionString.append(")");
 		return routerConnectionString.toString();
 	}

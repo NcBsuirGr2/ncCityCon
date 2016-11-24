@@ -36,6 +36,31 @@
 			<div class="panel-body">
 				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">
 					<div class="form-group">
+						<label for="country" class="col-xs-3 control-label">Country:</label>
+						<div class="col-xs-9">
+							<c:if test="${not empty editCity}">
+								<select class="form-control" id="country" name="countryName" form="form">
+									<option disabled selected value>${editCity.countryName}</option>
+									<option value="Belarus">Belarus</option>
+									<option value="Russia">Russia</option>
+									<option value="Ukraine">Ukraine</option>
+									<option value="Poland">Poland</option>
+									<option value="Moldova">Moldova</option>
+								</select>
+							</c:if>
+							<c:if test="${empty editCity}">
+								<select class="form-control" id="country" name="countryName" form="form">
+									<option disabled selected value></option>
+									<option value="Belarus">Belarus</option>
+									<option value="Russia">Russia</option>
+									<option value="Ukraine">Ukraine</option>
+									<option value="Poland">Poland</option>
+									<option value="Moldova">Moldova</option>
+								</select>
+							</c:if>
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="name" class="col-xs-3 control-label">City:</label>
 						<div class="col-xs-9">
 							<c:if test="${not empty editCity}">
@@ -43,17 +68,6 @@
 							</c:if>
 							<c:if test="${empty editCity}">
 								<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
-							</c:if>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="country" class="col-xs-3 control-label">Country:</label>
-						<div class="col-xs-9">
-							<c:if test="${not empty editCity}">
-								<input class="form-control" required placeholder="Country" id="country" name="countryName" type="text" value="${editCity.countryName}">
-							</c:if>
-							<c:if test="${empty editCity}">
-								<input class="form-control" required placeholder="Country" id="country" name="countryName" type="text" value="${param.editCountryName}">
 							</c:if>
 						</div>
 					</div>

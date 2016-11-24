@@ -31,9 +31,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         hashMap.put("", "`City1`");
         hashMap.put("id", "`ID`");
         hashMap.put("City1", "`City1`");
+        hashMap.put("Country1", "`Country1`");
         hashMap.put("SN1", "`SN1`");
         hashMap.put("ID1", "`Id1`");
         hashMap.put("City2", "`City2`");
+        hashMap.put("Country2", "`Country2`");
         hashMap.put("SN2", "`SN2`");
         hashMap.put("ID2", "`Id2`");
     }
@@ -48,7 +50,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
      * @throws InternalDAOException
      */
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
-                                                        throws InvalidDataDAOException, InternalDAOException {
+            throws InvalidDataDAOException, InternalDAOException {
 
         return getPage(page, itemsPerPage, sortBy, asc, null, null);
     }
@@ -73,7 +75,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         try {
             routerConnection = (RouterConnectionEntity) newElement;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             logger.info("Cast Entity in create failed.", e);
             throw new InvalidDataDAOException("Cast Entity in create are failed", e);
         }
@@ -85,7 +87,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InternalDAOException("PrepareStatement in create wasn't created", e);
         }
 
-        String log_parameters = "With parameters: Id_From("+ routerConnection.getFirstRouterId()
+        String log_parameters = "With parameters: Id_From(" + routerConnection.getFirstRouterId()
                 + "), Id_To(" + routerConnection.getSecondRouterId() + ")";
 
         try {
@@ -95,12 +97,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             preparedStatement.executeUpdate();
 
             logger.trace("Create {}.\n {}", nameTable, log_parameters);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
             throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
-        }
-        finally {
-            if(preparedStatement != null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -117,84 +118,83 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
      * @throws InvalidDataDAOException
      */
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
-        RouterConnectionEntity  routerConnection = null;
+        RouterConnectionEntity routerConnection = null;
 
         Statement statement = null;
 
-        ResultSet resultSet= null;
+        ResultSet resultSet = null;
 
         String get_data = "";
 
         ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
 
         try {
-            routerConnection  = (RouterConnectionEntity)readElement;
-        }catch (ClassCastException e) {
+            routerConnection = (RouterConnectionEntity) readElement;
+        } catch (ClassCastException e) {
             logger.info("Cast Entity in read failed.", e);
             throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
 
-        if (routerConnection.getId() == 0){
+        if (routerConnection.getId() == 0) {
             logger.info("For reading routerConnection connection incorrectly chosen field, try id");
             throw new InvalidDataDAOException("For reading routerConnection " +
                     "connection incorrectly chosen field, try id");
         }
 
-        String log_parameters = "With parameters: Id("+ routerConnection.getId() + ")";
+        String log_parameters = "With parameters: Id(" + routerConnection.getId() + ")";
 
         SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
         SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
                 "on T.ID_From = C.ID where T.ID=" + routerConnection.getId());
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
                 "on T.ID_To = C.ID where T.ID=" + routerConnection.getId());
 
 
-        get_data = "select distinct C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
-                "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
-                "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID ";
+        get_data = "SELECT DISTINCT C1.ID AS ID, C1.`Name` AS City1, C1.Country AS Country1, C1.SN AS SN1, C1.ID_From AS Id1, " +
+                "C2.`Name` AS City2, C2.Country AS Country2, C2.SN AS SN2, C2.ID_To AS Id2 " +
+                "FROM CitySNFrom C1 JOIN CitySNTo C2 ON C1.ID = C2.ID ";
 
 
         try {
             statement = connection.createStatement();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.warn("Statement in getPage wasn't created");
             throw new InternalDAOException("Statement in getPage wasn't created", e);
         }
 
         try {
-            for(String SQLCommand : SQLCommandForGetTableOfRouters){
-                System.out.println(SQLCommand);
+            for (String SQLCommand : SQLCommandForGetTableOfRouters) {
                 statement.executeUpdate(SQLCommand);
             }
 
             resultSet = statement.executeQuery(get_data);
 
-            if(resultSet.first()) {
+            if (resultSet.first()) {
                 routerConnection.setId(resultSet.getInt("ID"));
                 routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
+                routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
                 routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
                 routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
                 routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
+                routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
                 routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
                 routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
 
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
-            }
-            else{
+            } else {
                 logger.info("{} in read not found.\n {}", nameTable, log_parameters);
                 throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
             throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
-        }
-        finally {
-            if (statement!=null){
+        } finally {
+            if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
@@ -202,11 +202,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     throw new InternalDAOException(e);
                 }
             }
-            if (resultSet!= null){
-                try{
+            if (resultSet != null) {
+                try {
                     resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in read {} failed", nameTable,e);
+                } catch (SQLException e) {
+                    logger.warn("Close ResultSet in read {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -229,14 +229,14 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         try {
             routerConnection = (RouterConnectionEntity) updateElement;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             logger.info("Cast Entity in update failed.", e);
             throw new InvalidDataDAOException("Cast Entity in update failed.", e);
         }
 
         try {
             preparedStatement = connection.prepareStatement(update);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.warn("PreparedStatement in update wasn't created", e);
             throw new InternalDAOException("PreparedStatement in update wasn't created", e);
         }
@@ -254,9 +254,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         } catch (SQLException e) {
             logger.info("Update {} failed.\n {}", nameTable, log_parameters, e);
             throw new DublicateKeyDAOException((String.format("Update %s failed", nameTable)), e);
-        }
-        finally {
-            if (preparedStatement != null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -299,20 +298,19 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         String search = "";
 
-        if (city.getName() != null && city.getCountryName() != null){
+        if (city.getName() != null && city.getCountryName() != null) {
             search = "select count(ID) from " +
-                        "(select distinct RouterConnection.ID as ID " +
-                        "from RouterConnection inner join " +
-                            "(select distinct `Router`.`ID` as ID " +
-                            "from `Router` inner join `City` " +
-                            "on (`Router`.`City_id`=`City`.`ID`) " +
-                            "where (`City`.`Name` = ? and `City`.`Country` = ?) " +
-                            "routers " +
-                        "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
-                        "or `RouterConnection`.`ID_To` = `routers`.`ID`) " +
-                        ") E";
-        }
-        else{
+                    "(select distinct RouterConnection.ID as ID " +
+                    "from RouterConnection inner join " +
+                    "(select distinct `Router`.`ID` as ID " +
+                    "from `Router` inner join `City` " +
+                    "on (`Router`.`City_id`=`City`.`ID`) " +
+                    "where (`City`.`Name` = ? and `City`.`Country` = ?) " +
+                    "routers " +
+                    "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
+                    "or `RouterConnection`.`ID_To` = `routers`.`ID`) " +
+                    ") E";
+        } else {
             logger.info("For reading router connection incorrectly chosen field, try name and country");
             throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
                     " try name and country");
@@ -342,9 +340,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         } catch (SQLException e) {
             logger.info("Get count elements failed. {}", log_parameters, e);
             throw new InternalDAOException("Get count elements failed.", e);
-        }
-        finally {
-            if (preparedStatement!=null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -352,11 +349,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     throw new InternalDAOException(e);
                 }
             }
-            if (resultSet!= null){
-                try{
+            if (resultSet != null) {
+                try {
                     resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in get count false",e);
+                } catch (SQLException e) {
+                    logger.warn("Close ResultSet in get count false", e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -396,15 +393,14 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         String search = "";
 
-        if (router.getSN() != null){
+        if (router.getSN() != null) {
             search = "select count(ID) from " +
-                        "(SELECT distinct `RouterConnection`.`ID` " +
-                        "FROM RouterConnection INNER JOIN `Router` " +
-                        "ON (`RouterConnection`.`ID_From` = `Router`.`ID` " +
-                        "OR `RouterConnection`.`ID_To` = `Router`.`ID`) " +
-                        "WHERE `Router`.`SN` = ?) E";
-        }
-        else{
+                    "(SELECT distinct `RouterConnection`.`ID` " +
+                    "FROM RouterConnection INNER JOIN `Router` " +
+                    "ON (`RouterConnection`.`ID_From` = `Router`.`ID` " +
+                    "OR `RouterConnection`.`ID_To` = `Router`.`ID`) " +
+                    "WHERE `Router`.`SN` = ?) E";
+        } else {
             logger.info("For reading router connection incorrectly chosen field, try SN");
             throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
                     " try SN");
@@ -432,9 +428,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         } catch (SQLException e) {
             logger.info("Get count elements failed. {}", log_parameters, e);
             throw new InternalDAOException("Get count elements failed.", e);
-        }
-        finally {
-            if (preparedStatement!=null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -442,11 +437,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     throw new InternalDAOException(e);
                 }
             }
-            if (resultSet!= null){
-                try{
+            if (resultSet != null) {
+                try {
                     resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in get count false",e);
+                } catch (SQLException e) {
+                    logger.warn("Close ResultSet in get count false", e);
                     throw new InternalDAOException(e);
                 }
             }
@@ -482,17 +477,16 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         String get_data = "";
 
-        String log_parameters = "With parameters: page("+ page + "), itemsPerPage(" + itemsPerPage
+        String log_parameters = "With parameters: page(" + page + "), itemsPerPage(" + itemsPerPage
                 + "), sortBy(" + sortBy + "), asc(" + asc + ")";
 
-        if (router != null){
-            if (router.getSN() == null){
+        if (router != null) {
+            if (router.getSN() == null) {
                 logger.info("For GetPage connection of SN connection incorrectly, " +
                         "chosen field, try SN");
                 throw new InvalidDataDAOException("For GetPage connection router connection incorrectly," +
                         " chosen field, try SN");
-            }
-            else {
+            } else {
                 log_parameters += ", SN(" + router.getSN() + ")";
 
                 SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `temp`");
@@ -513,15 +507,13 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C " +
                         "on T.ID_To = C.ID");
             }
-        }
-        else if(city != null){
-            if (city.getName() == null || city.getCountryName() == null){
+        } else if (city != null) {
+            if (city.getName() == null || city.getCountryName() == null) {
                 logger.info("For GetPage connection of City connection incorrectly" +
                         " chosen field, try Name and CountryName");
                 throw new InvalidDataDAOException("For GetPage connection of City connection incorrectly" +
                         " chosen field, try Name and CountryName");
-            }
-            else{
+            } else {
                 log_parameters += ", City(" + city.getName() + "), Country(" + city.getCountryName() + ")";
 
                 SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS RoutersOfCity");
@@ -549,37 +541,35 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
                         "join CitySN C on T.ID_To = C.ID");
             }
-        }
-        else{
+        } else {
             SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
             SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                    "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
                     "on T.ID_From = C.ID");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                    "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                    "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
                     "on T.ID_To = C.ID");
         }
 
-        if(sorter != null) {
+        if (sorter != null) {
             String sorting_direction = "";
 
-            if(asc){
+            if (asc) {
                 sorting_direction = " asc ";
-            }
-            else {
+            } else {
                 sorting_direction = " desc ";
             }
 
-            get_data = "select distinct C1.ID as ID, C1.`Name` as City1, C1.SN as SN1, C1.ID_From as Id1, " +
-                    "C2.`Name` as City2, C2.SN as SN2, C2.ID_To as Id2 " +
+            get_data = "select distinct C1.ID as ID, C1.`Name` as City1, C1.Country as Country1, " +
+                    "C1.SN as SN1, C1.ID_From as Id1, " +
+                    "C2.`Name` as City2, C2.Country as Country2, C2.SN as SN2, C2.ID_To as Id2 " +
                     "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID " +
                     "order by " + sorter + sorting_direction + " limit ?, ?";
 
-        }
-        else {
+        } else {
             logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);
             throw new InvalidDataDAOException("Enter parameter to sort in read are invalid");
         }
@@ -587,17 +577,17 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         try {
             statement = connection.createStatement();
             get_data_routerConnections = connection.prepareStatement(get_data);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.warn("PrepareStatement or Statement in getPage wasn't created");
             throw new InternalDAOException("PrepareStatement in getPage wasn't created", e);
         }
 
         try {
-            for(String SQLCommand : SQLCommandForGetTableOfRouters){
+            for (String SQLCommand : SQLCommandForGetTableOfRouters) {
                 statement.executeUpdate(SQLCommand);
             }
 
-            get_data_routerConnections.setInt(1, (page-1)*itemsPerPage);
+            get_data_routerConnections.setInt(1, (page - 1) * itemsPerPage);
             get_data_routerConnections.setInt(2, itemsPerPage);
 
             resultSet = get_data_routerConnections.executeQuery();
@@ -608,9 +598,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
                     routerConnection.setId(resultSet.getInt("ID"));
                     routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
+                    routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
                     routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
                     routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
                     routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
+                    routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
                     routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
                     routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
 
@@ -618,17 +610,16 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                 }
 
                 logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
                 throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.info("Put data to PrepareStatement in {} invalid. \n {}", nameTable, log_parameters, e);
             throw new InvalidDataDAOException(
                     String.format("Put data to PrepareStatement in %s invalid", nameTable), e);
-        }
-        finally {
-            if (statement != null){
+        } finally {
+            if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
@@ -637,7 +628,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                 }
             }
 
-            if (get_data_routerConnections!=null){
+            if (get_data_routerConnections != null) {
                 try {
                     get_data_routerConnections.close();
                 } catch (SQLException e) {
@@ -645,10 +636,10 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     throw new InternalDAOException(e);
                 }
             }
-            if (resultSet!= null){
-                try{
+            if (resultSet != null) {
+                try {
                     resultSet.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     logger.warn("Close ResultSet in getPage {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }

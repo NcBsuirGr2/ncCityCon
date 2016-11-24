@@ -87,8 +87,6 @@ public class CityDAO extends MySQLDAO {
             search_cities.setInt(1, (page - 1) * itemsPerPage);
             search_cities.setInt(2, itemsPerPage);
 
-            System.out.println(search_cities);
-
             resultSet = search_cities.executeQuery();
 
             try {
