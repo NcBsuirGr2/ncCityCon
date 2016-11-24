@@ -501,11 +501,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         " select * from RouterConnection where ID_From = @id_SN or ID_To = @id_SN");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_From from temp T join CitySN C " +
+                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from temp T join CitySN C " +
                         "on T.ID_From = C.ID");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                        "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from temp T join CitySN C " +
+                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from temp T join CitySN C " +
                         "on T.ID_To = C.ID");
             }
         } else if (city != null) {
@@ -535,11 +535,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         "on  R.ID_From = C.ID or R.ID_To = C.ID ");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_From from ConnectionsOfRouters T " +
+                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from ConnectionsOfRouters T " +
                         "join CitySN C on T.ID_From = C.ID");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                        "select distinct T.ID as ID, C.`Name`, C.SN, T.ID_To from ConnectionsOfRouters T " +
+                        "select distinct T.ID as ID, C.`Name`, C.SN, C.Country, T.ID_To from ConnectionsOfRouters T " +
                         "join CitySN C on T.ID_To = C.ID");
             }
         } else {
