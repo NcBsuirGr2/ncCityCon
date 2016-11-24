@@ -23,12 +23,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>AutoCompleteServlet</servlet-name>
-        <servlet-class>com.citycon.controllers.servlets.AutoCompleteServlet</servlet-class>
+        <servlet-name>SuggestionServlet</servlet-name>
+        <servlet-class>com.citycon.controllers.servlets.SuggestionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AutoCompleteServlet</servlet-name>
-        <url-pattern>/autocomplete</url-pattern>
+        <servlet-name>SuggestionServlet</servlet-name>
+        <url-pattern>/suggestions</url-pattern>
     </servlet-mapping>
 
 
