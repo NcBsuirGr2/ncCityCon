@@ -76,11 +76,11 @@ public class CityEditServlet extends AbstractHttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        String type = req.getParameter("type");
-        if (type == null) {
-            forwardToErrorPage("type parameter is null", req, res);
+        String action = req.getParameter("action");
+        if (action == null) {
+            forwardToErrorPage("action parameter is null", req, res);
         }
-        switch (type) {
+        switch (action) {
             case "edit" : {
                 doPut(req, res);
                 return;

@@ -62,14 +62,14 @@ public class SuggestionServlet extends HttpServlet {
                     CityEntity[] cities = dao.getCities(country);
 
                     Writer writer = res.getWriter();
-                    writer.write("[");
+                    writer.write("{\"suggestions\":[");
                     for (int i = 0; i < cities.length-1; ++i) {
                         writer.write("\""+cities[i].getName()+"\",");
                     }
                     if (cities.length > 0) {
                         writer.write("\""+cities[cities.length-1].getName()+"\"");
                     }
-                    writer.write("]");
+                    writer.write("]}");
                     writer.flush(); 
                     return; 
                 } catch(InternalDAOException e) {                               
@@ -105,14 +105,14 @@ public class SuggestionServlet extends HttpServlet {
                     //--------------------------------
                     
                     Writer writer = res.getWriter();
-                    writer.write("[");
+                    writer.write("{\"suggestions\":[");
                     for (int i = 0; i < routers.length-1; ++i) {
                         writer.write("\""+routers[i].getName()+"\",");
                     }
                     if (routers.length > 0) {
                         writer.write("\""+routers[routers.length-1].getName()+"\"");
                     }                    
-                    writer.write("]");
+                    writer.write("]}");
                     writer.flush(); 
                     return; 
                 } catch(InternalDAOException e) {
