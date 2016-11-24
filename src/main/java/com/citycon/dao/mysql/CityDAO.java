@@ -237,7 +237,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
                     city.setId(resultSet.getInt("id"));
                     city.setName(resultSet.getString("Name"));
                     city.setCountryName(resultSet.getString("Country"));
-                    city.setRoutersNum(resultSet.getInt("RoutersNum"));
+                    //city.setRoutersNum(resultSet.getInt("RoutersNum"));
 
                     logger.trace("Read {}.\n {}", nameTable, log_parameters);
                 }
