@@ -56,13 +56,13 @@
                     <tr>
                         <th>
                             <c:set var="newAsc" value="true"/>
-                            <c:if test="${empty param.asc or (param.asc == true and (param.sortBy == 'name' or empty param.sortBy))}">
+                            <c:if test="${paginationParameters['cities']['asc'] == true and paginationParameters['cities']['sortBy'] == 'name'}">
                             <c:set var="newAsc" value="false"/>
                             </c:if>
 
-                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=name&asc=${newAsc}">
+                            <a href="?sortBy=name&asc=${newAsc}">
                                 City
-                                <c:if test="${empty param.sortBy || param.sortBy == 'name'}">
+                                <c:if test="${paginationParameters['cities']['sortBy'] == 'name'}">
                                 <c:if test="${newAsc == true}">&#9660;</c:if>
                                 <c:if test="${newAsc == false}">&#9650;</c:if>
                                 </c:if>
@@ -71,12 +71,12 @@
 
                         <th>
                             <c:set var="newAsc" value="true"/>
-                            <c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'countryName'}">
+                            <c:if test="${paginationParameters['cities']['asc'] == true && paginationParameters['cities']['sortBy'] == 'countryName'}">
                             <c:set var="newAsc" value="false"/>
                             </c:if>
-                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=countryName&asc=${newAsc}">
+                            <a href="?sortBy=countryName&asc=${newAsc}">
                                 Country
-                                <c:if test="${param.sortBy == 'countryName'}">
+                                <c:if test="${paginationParameters['cities']['sortBy'] == 'countryName'}">
                                 <c:if test="${newAsc == true}">&#9660;</c:if>
                                 <c:if test="${newAsc == false}">&#9650;</c:if>
                                 </c:if>
@@ -85,14 +85,14 @@
 
                         <th>
                             <c:set var="newAsc" value="true"/>
-                            <c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'routersNum'}">
+                            <c:if test="${paginationParameters['cities']['asc'] == true && paginationParameters['cities']['sortBy'] == 'routersNum'}">
                             <c:set var="newAsc" value="false"/>
                             </c:if>
-                            <a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=routersNum&asc=${newAsc}">
+                            <a href="?sortBy=routersNum&asc=${newAsc}">
                                 Routers Number
-                                <c:if test="${param.sortBy == 'routersNum'}">
-                                <c:if test="${newAsc == true}">&#9660;</c:if>
-                                <c:if test="${newAsc == false}">&#9650;</c:if>
+                                <c:if test="${paginationParameters['cities']['sortBy'] == 'routersNum'}">
+                                    <c:if test="${newAsc == true}">&#9660;</c:if>
+                                    <c:if test="${newAsc == false}">&#9650;</c:if>
                                 </c:if>
                             </a>
                         </th>
@@ -137,7 +137,7 @@
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
-                                    <input type="hidden" name="type" value="delete">
+                                    <input type="hidden" name="action" value="delete">
                                     <button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
                                 </form>
                             </c:if>
@@ -187,7 +187,63 @@
     </div>
 
     <center class="before-footer">
-        <%@ include file="/include/pagination.jsp" %>
+        <c:if test="${endPage > 1}">
+            <ul class="pagination">
+                <c:if test="${beginPage > previousPage}">
+                    <li class="page-item">
+                        <a class="page-link" href="?page=${previousPage}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                </c:if>
+
+                
+                
+                <c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
+                    <c:if test="${i.index == currentPage}">
+                            <c:set var="isActive" value="active"/>
+                    </c:if>
+                    <c:if test="${i.index != currentPage}">
+                            <c:set var="isActive" value=""/>
+                    </c:if>
+                    <li class="page-item ${isActive}">
+                        <a class="page-link" href="?page=${i.index}">
+                            ${i.index}
+                        </a>
+                    </li>
+                </c:forEach>
+
+                <c:if test="${endPage < nextPage}">
+                    <li class="page-item">
+                        <a class="page-link" href="?page=${nextPage}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </c:if> 
+
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+
+            <div class="col-sm-3">
+                <label class="pull-right control-label">Items per page:</label>
+            </div>
+
+            <div class="col-sm-2">
+                <select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
+                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 5}">selected</c:if>  value="?itemsPerPage=5">5</option>
+                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
+                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
+                </select>
+            </div>
+
+            <div class="col-sm-4">
+            </div>
+        </div>
     </center>
 
     <%@ include file="/include/footer.html" %>

@@ -55,7 +55,7 @@ public class SignUpServlet extends AbstractHttpServlet {
                 user.read();
                 HttpSession session = req.getSession();
                 session.setAttribute("user", user.getEntity());
-                initializePaginData(session);
+                initializePaginationData(session);
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
                 res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());

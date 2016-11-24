@@ -16,6 +16,9 @@
 		<title>Router List</title>
 	</head>
 
+
+	<c:set var="samePath" value="?country=${param.country}&city=${param.city}"/>
+
 	<body>
 		<div class="content-wrapper">
 			<%@ include file="/include/header.jsp" %>
@@ -47,22 +50,20 @@
 						<center class="panel-heading">
 							Routers
 						</center>
-
 						<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 							<thead>
-							<thead>
-								<c:set var="samePath" value="?country=${param.country}&city=${param.city}&itemsPerPage=${param.itemsPerPage}&page=${param.page}"/>
+							<thead>							
 
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == 'true' and (param.sortBy == 'country' or (empty param.sortBy)))}">
+										<c:if test="${paginationParameters['routers']['asc'] == 'true' and paginationParameters['routers']['sortBy'] == 'country'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=country&asc=${newAsc}">											
 											Country 
-											<c:if test="${empty param.sortBy || param.sortBy == 'country'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'country'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
 												<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
 											</c:if>											
@@ -70,13 +71,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'city'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'city'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=city&asc=${newAsc}">											
 											City
-											<c:if test="${param.sortBy == 'city'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'city'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -84,13 +85,13 @@
 									</th>									
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'SN'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'SN'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=SN&asc=${newAsc}">											
 											SN 
-											<c:if test="${param.sortBy == 'SN'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'SN'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -98,13 +99,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'name'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'name'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=name&asc=${newAsc}">											
 											Name
-											<c:if test="${param.sortBy == 'name'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'name'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -112,12 +113,12 @@
 									</th>	
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'portsNum'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'portsNum'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>										
 											<a href="${samePath}&sortBy=portsNum&asc=${newAsc}">											
 											Ports num
-											<c:if test="${param.sortBy == 'portsNum'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'portsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -125,12 +126,12 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'usedPortsNum'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>										
 											<a href="${samePath}&sortBy=usedPortsNum&asc=${newAsc}">											
 											Used ports
-											<c:if test="${param.sortBy == 'usedPortsNum'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -138,13 +139,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'isActive'}">
+										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'isActive'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=isActive&asc=${newAsc}">											
 											Active
-											<c:if test="${param.sortBy == 'isActive'}">
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'isActive'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -236,14 +237,12 @@
 			</div> 
 
 			<center class="before-footer">
-			<!-- Pagination block -->	
-    			<c:set var="paginationPath" value="?country=${param.country}&city=${param.city}&sortBy=${param.sortBy}&asc=${param.asc}"/>
-		    			
+			<!-- Pagination block -->			    			
 				<c:if test="${endPage > 1}">
 					<ul class="pagination">
 						<c:if test="${beginPage > previousPage}">
 							<li class="page-item">
-								<a class="page-link" href="${paginationPath}&page=${previousPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Previous">
+								<a class="page-link" href="${samePath}&page=${previousPage}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 									<span class="sr-only">Previous</span>
 								</a>
@@ -258,7 +257,7 @@
 									<c:set var="isActive" value=""/>
 							</c:if>
 							<li class="page-item ${isActive}">
-								<a class="page-link" href="${paginationPath}&page=${i.index}&itemsPerPage=${param.itemsPerPage}">
+								<a class="page-link" href="${samePath}&page=${i.index}">
 									${i.index}
 								</a>
 							</li>
@@ -266,7 +265,7 @@
 
 						<c:if test="${endPage < nextPage}">
 							<li class="page-item">
-								<a class="page-link" href="${paginationPath}&page=${nextPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Next">
+								<a class="page-link" href="${samePath}&page=${nextPage}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 									<span class="sr-only">Next</span>
 								</a>
@@ -285,9 +284,9 @@
 
 					<div class="col-sm-2">
 						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}&itemsPerPage=5&page=${currentPage}">5</option>
-				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}&itemsPerPage=10&page=${currentPage}">10</option>
-				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}&itemsPerPage=15&page=${currentPage}">15</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 5}">selected</c:if>  value="${samePath}&itemsPerPage=5">5</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 10 || empty paginationParameters['routers']['itemsPerPage']}">selected</c:if> value="${samePath}&itemsPerPage=10">10</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 15}">selected</c:if> value="${samePath}&itemsPerPage=15">15</option>
 				        </select>
 				    </div>
 

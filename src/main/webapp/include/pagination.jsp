@@ -4,7 +4,7 @@
 	<ul class="pagination">
 		<c:if test="${beginPage > previousPage}">
 			<li class="page-item">
-				<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${previousPage}&sortBy=${param.sortBy}&asc=${param.asc}" aria-label="Previous">
+				<a class="page-link" href="?page=${previousPage}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 					<span class="sr-only">Previous</span>
 				</a>
@@ -21,7 +21,7 @@
 					<c:set var="isActive" value=""/>
 			</c:if>
 			<li class="page-item ${isActive}">
-				<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${i.index}&sortBy=${param.sortBy}&asc=${param.asc}">
+				<a class="page-link" href="?page=${i.index}">
 					${i.index}
 				</a>
 			</li>
@@ -29,7 +29,7 @@
 
 		<c:if test="${endPage < nextPage}">
 			<li class="page-item">
-				<a class="page-link" href="?itemsPerPage=${param.itemsPerPage}&page=${nextPage}&sortBy=${param.sortBy}&asc=${param.asc}" aria-label="Next">
+				<a class="page-link" href="?page=${nextPage}" aria-label="Next">
 					<span aria-hidden="true">&raquo;</span>
 					<span class="sr-only">Next</span>
 				</a>
@@ -48,9 +48,9 @@
 
 	<div class="col-sm-2">
 		<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="?itemsPerPage=5&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">5</option>
-            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="?itemsPerPage=10&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">10</option>
-            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="?itemsPerPage=15&page=${param.page}&sortBy=${param.sortBy}&asc=${param.asc}">15</option>
+            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 5}">selected</c:if>  value="?itemsPerPage=5">5</option>
+            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 10 || empty paginationParameters['users']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
+            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
         </select>
     </div>
 

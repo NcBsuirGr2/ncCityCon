@@ -54,13 +54,13 @@
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == true and (param.sortBy == 'name' or empty param.sortBy))}">
+										<c:if test="${paginationParameters['users']['asc'] == true and paginationParameters['users']['sortBy'] == 'name'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
-										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=name&asc=${newAsc}">
+										<a href="?asc=${newAsc}&sortBy=name">
 											Name 
-											<c:if test="${empty param.sortBy || param.sortBy == 'name'}">
+											<c:if test="${paginationParameters['users']['sortBy'] == 'name'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -68,12 +68,12 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'login'}">
+										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'login'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
-										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=login&asc=${newAsc}">
+										<a href="?asc=${newAsc}&sortBy=login">
 											Login 
-											<c:if test="${param.sortBy == 'login'}">
+											<c:if test="${paginationParameters['users']['sortBy'] == 'login'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>
@@ -81,13 +81,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'group'}">
+										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'group'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
-										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=group&asc=${newAsc}">
+										<a href="?asc=${newAsc}&sortBy=group">
 											Group 
-											<c:if test="${param.sortBy == 'group'}">
+											<c:if test="${paginationParameters['users']['sortBy'] == 'group'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>
@@ -95,13 +95,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'email'}">
+										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'email'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
-										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=email&asc=${newAsc}">
+										<a href="?asc=${newAsc}&sortBy=email">
 											E-mail 
-											<c:if test="${param.sortBy == 'email'}">
+											<c:if test="${paginationParameters['users']['sortBy'] == 'email'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>
@@ -109,13 +109,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${not empty param.asc && param.asc == true && param.sortBy == 'createDate'}">
+										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'createDate'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 
-										<a href="?itemsPerPage=${param.itemsPerPage}&page=${param.page}&sortBy=createDate&asc=${newAsc}">
+										<a href="?asc=${newAsc}&sortBy=createDate">
 											Join date 
-											<c:if test="${param.sortBy == 'createDate'}">
+											<c:if test="${paginationParameters['users']['sortBy'] == 'createDate'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>

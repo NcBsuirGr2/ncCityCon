@@ -40,7 +40,7 @@
 					    </c:when>
 					</c:choose>
 				</div>
-			</c:if>		
+			</c:if>
 			<div class="row">
 
 				<div class="col-sm-1">
@@ -53,29 +53,29 @@
 
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
+
 		     					<c:choose>
 									<c:when test="${not empty param.SN}">
-										<c:set var="selectFrom" value="?SN=${param.SN}"/>
+										<c:set var="samePath" value="?SN=${param.SN}"/>
 									</c:when>
 
 									<c:otherwise>
-										<c:set var="selectFrom" value="?country=${param.country}&city=${param.city}"/>
+										<c:set var="samePath" value="?country=${param.country}&city=${param.city}"/>
 									</c:otherwise>
 								</c:choose>
-
-								<c:set var="samePath" value="${selectFrom}&itemsPerPage=${param.itemsPerPage}&page=${param.page}"/>
 
 
 								<tr>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${empty param.asc or (param.asc == 'true' and (param.sortBy == 'SN1' or (empty param.sortBy)))}">
+
+										<c:if test="${paginationParameters['connections']['asc'] == 'true' and paginationParameters['connections']['sortBy'] == 'SN1'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=SN1&asc=${newAsc}">											
 											SN-1 
-											<c:if test="${empty param.sortBy || param.sortBy == 'SN1'}">
+											<c:if test="${paginationParameters['connections']['sortBy'] == 'SN1'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
 												<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
 											</c:if>											
@@ -83,13 +83,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'City1'}">
+										<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'City1'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=City1&asc=${newAsc}">											
 											City-1 
-											<c:if test="${param.sortBy == 'City1'}">
+											<c:if test="${paginationParameters['connections']['sortBy'] == 'City1'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -97,13 +97,13 @@
 									</th>									
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'SN2'}">
+										<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'SN2'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=SN2&asc=${newAsc}">											
 											SN-2 
-											<c:if test="${param.sortBy == 'SN2'}">
+											<c:if test="${paginationParameters['connections']['sortBy'] == 'SN2'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -111,13 +111,13 @@
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
-										<c:if test="${param.asc == true and param.sortBy == 'City2'}">
+										<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'City2'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
 											<a href="${samePath}&sortBy=City2&asc=${newAsc}">											
 											City-2 
-											<c:if test="${param.sortBy == 'City2'}">
+											<c:if test="${paginationParameters['connections']['sortBy'] == 'City2'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>											
@@ -162,7 +162,7 @@
 									<c:if test="${showSystemUnitsOperationBtns}">
 										<form action="/connection" id="deleteForm" method="POST">
 											<input type="hidden" id="deleteId" name="id" value="-1">
-											<input type="hidden" name="type" value="delete">
+											<input type="hidden" name="action" value="delete">
 											<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 								    	</form>		
 								    </c:if>
@@ -215,7 +215,7 @@
 					<ul class="pagination">
 						<c:if test="${beginPage > previousPage}">
 							<li class="page-item">
-								<a class="page-link" href="${paginationPath}&page=${previousPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Previous">
+								<a class="page-link" href="${samePath}&page=${previousPage}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 									<span class="sr-only">Previous</span>
 								</a>
@@ -232,7 +232,7 @@
 									<c:set var="isActive" value=""/>
 							</c:if>
 							<li class="page-item ${isActive}">
-								<a class="page-link" href="${paginationPath}&page=${i.index}&itemsPerPage=${param.itemsPerPage}">
+								<a class="page-link" href="${samePath}&page=${i.index}">
 									${i.index}
 								</a>
 							</li>
@@ -240,7 +240,7 @@
 
 						<c:if test="${endPage < nextPage}">
 							<li class="page-item">
-								<a class="page-link" href="${paginationPath}&page=${nextPage}&itemsPerPage=${param.itemsPerPage}" aria-label="Next">
+								<a class="page-link" href="${samePath}&page=${nextPage}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 									<span class="sr-only">Next</span>
 								</a>
@@ -259,9 +259,9 @@
 
 					<div class="col-sm-2">
 						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-				            <option <c:if test="${param.itemsPerPage == 5}">selected</c:if>  value="${paginationPath}&itemsPerPage=5&page=${currentPage}">5</option>
-				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${paginationPath}&itemsPerPage=10&page=${currentPage}">10</option>
-				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${paginationPath}&itemsPerPage=15&page=${currentPage}">15</option>
+				            <option <c:if test="${paginationParameters['connections']['itemsPerPage'] == 5}">selected</c:if>  value="${samePath}&itemsPerPage=5">5</option>
+				            <option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="${samePath}&itemsPerPage=10">10</option>
+				            <option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="${samePath}&itemsPerPage=15">15</option>
 				        </select>
 				    </div>
 

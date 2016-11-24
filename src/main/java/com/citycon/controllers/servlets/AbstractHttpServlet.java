@@ -134,7 +134,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		return null;
     }
 
-    protected void initializePaginData(HttpSession session) {
+    protected void initializePaginationData(HttpSession session) {
     	HashMap<String, HashMap<String, String>> paginationParameters = new HashMap<>();
 
     	HashMap<String, String> defaultUsersParameters = new HashMap<>();

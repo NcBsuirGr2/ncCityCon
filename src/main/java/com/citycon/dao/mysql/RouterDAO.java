@@ -10,6 +10,7 @@ import com.citycon.model.systemunits.entities.RouterEntity;
 import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
             throws InternalDAOException, InvalidDataDAOException {
         RouterEntity router = null;
 
-        PreparedStatement search_router = null;
+        Statement search_router = null;
         ResultSet resultSet = null;
 
         try {
@@ -169,14 +170,14 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 "from Router R join City C on R.City_id=C.ID where " + field + " = " + value;
 
         try {
-            search_router = connection.prepareStatement(search);
+            search_router = connection.createStatement();
         }catch (SQLException e) {
             logger.warn("PreparedStatement in read wasn't created", e);
             throw new InternalDAOException("PreparedStatement in read wasn't created", e);
         }
 
         try {
-            resultSet = search_router.executeQuery();
+            resultSet = search_router.executeQuery(search);
 
             if(resultSet.first()) {
                 router.setId(resultSet.getInt("id"));
@@ -187,8 +188,6 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 router.setCityId(resultSet.getInt("City_id"));
                 router.setCityName(resultSet.getString("CityName"));
                 router.setCountryName(resultSet.getString("Country"));
-                router.setUsedPortsNum(this.getUsedPortsNum(router.getId()));
-
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             }
             else {
