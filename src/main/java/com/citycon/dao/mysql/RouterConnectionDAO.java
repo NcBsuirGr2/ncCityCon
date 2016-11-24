@@ -1,6 +1,7 @@
 package com.citycon.dao.mysql;
 
 import com.citycon.dao.exceptions.*;
+import com.citycon.dao.interfaces.CitiesOfCountry;
 import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.interfaces.ConnectionsOfRouter;
 import com.citycon.model.systemunits.entities.CityEntity;
