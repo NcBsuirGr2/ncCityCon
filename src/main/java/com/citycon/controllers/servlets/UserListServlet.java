@@ -14,12 +14,14 @@ import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 /**
  * Used to show the list of users. Support pagination. Redirects to the last available
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  * 	
  * @author Mike
- * @version 0.2
+ * @version 0.3
  */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
@@ -34,27 +36,31 @@ public class UserListServlet extends AbstractHttpServlet {
 		HttpServletResponse res) throws ServletException, IOException {
 
 		try {
+			HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+											.getSession().getAttribute("paginationParameters")).get("users");
+
 			//If page must be normalized (negative or too large)
-			if (setPaginationVariables(ORMUser.getCount(), "name", USER_LIST_URL, req, res) != null) {
+			if (setPaginationVariables(ORMUser.getCount(), paginationParameters, req, res) != null) {
 				StringBuilder redirect = new StringBuilder();
-					redirect.append("/users?page=");
-					redirect.append(req.getAttribute("currentPage")); // normalized page
+					redirect.append(paginationParameters.get("path"));
+					redirect.append("?page=");
+					redirect.append(paginationParameters.get("page")); // normalized page
 					redirect.append("&itemsPerPage=");
-					redirect.append(req.getParameter("itemsPerPage"));
+					redirect.append(paginationParameters.get("itemsPerPage"));
 					redirect.append("&sortBy=");
-					redirect.append(req.getParameter("sortBy"));
+					redirect.append(paginationParameters.get("sortBy"));
 					redirect.append("&asc=");
-					redirect.append(req.getParameter("asc"));
+					redirect.append(paginationParameters.get("asc"));
 					logger.debug("Incorrect page, redirect to the "+redirect.toString());
 					res.sendRedirect(redirect.toString());
 					return;
 			}
 
 
-			int page = (int)req.getAttribute("currentPage");
-			int itemsPerPage = (int)req.getAttribute("itemsPerPage");
-			boolean asc = (boolean)req.getAttribute("asc");
-			String sortBy = (String)req.getAttribute("sortBy");
+			int page = Integer.parseInt(paginationParameters.get("page"));
+			int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+			boolean asc = paginationParameters.get("asc").equals("true");
+			String sortBy = paginationParameters.get("sortBy");
 
 			logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
 																page, itemsPerPage, sortBy, asc);
@@ -69,6 +75,9 @@ public class UserListServlet extends AbstractHttpServlet {
 			forwardToErrorPage("Internal DAO exception", req, res);
 		} catch (ClassCastException exception) {
 			logger.warn("Cannot cast", exception);
+			forwardToErrorPage("Internal server error", req, res);
+		} catch (Exception exception) {
+			logger.warn("Unexpected xeception", exception);
 			forwardToErrorPage("Internal server error", req, res);
 		}
 	}

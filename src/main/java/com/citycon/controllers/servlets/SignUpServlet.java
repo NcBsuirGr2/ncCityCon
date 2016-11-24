@@ -10,6 +10,7 @@ import com.citycon.model.systemunits.orm.ORMUser;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.Calendar;
  * errorType. 
  *
  * @author Tim, Mike
- * @version  1.2
+ * @version  1.3
  */
 public class SignUpServlet extends AbstractHttpServlet {
 
@@ -52,7 +53,9 @@ public class SignUpServlet extends AbstractHttpServlet {
             try {
                 user.create();                  
                 user.read();
-                req.getSession().setAttribute("user", user.getEntity());
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user.getEntity());
+                initializePaginData(session);
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
                 res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());

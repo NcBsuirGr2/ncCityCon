@@ -9,6 +9,7 @@ import com.citycon.model.systemunits.orm.ORMUser;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * errorType. 
  *
  * @author Tim, Mike
- * @version  1.1
+ * @version  1.2
  */
 public class SignInServlet extends AbstractHttpServlet {
 
@@ -46,7 +47,9 @@ public class SignInServlet extends AbstractHttpServlet {
             logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
             try {                 
                 user.read();
-                req.getSession().setAttribute("user", user.getEntity());
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user.getEntity());
+                initializePaginData(session);
                 res.sendRedirect("/");
             } catch(InvalidDataDAOException exception) {
                 res.sendRedirect("/signin?errorType=invalidData");

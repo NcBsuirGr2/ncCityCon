@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
-
+import java.util.HashMap;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *  
  * @author Mike
- * @version 0.1
+ * @version 0.2
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
@@ -37,7 +37,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         HttpServletResponse res) throws ServletException, IOException {
         
         RouterConnectionEntity[] connections;
-        String defaultSorting = "SN1";
+        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+                                            .getSession().getAttribute("paginationParameters")).get("connections");
         
         try {
             // Getting page for concrete router
@@ -45,7 +46,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
                 StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), 
-                                                                defaultSorting, CONNECTION_LIST_URL, req, res);
+                                                                paginationParameters, req, res);
                 if (redirect != null) {
                     redirect.append("&SN=");
                     redirect.append(req.getParameter("SN"));
@@ -53,9 +54,15 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                     res.sendRedirect(redirect.toString());
                     return;
                 }
-                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
-                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
-                                (boolean)req.getAttribute("asc"), router);
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
+
+                logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+                                                                page, itemsPerPage, sortBy, asc);
+
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, router);
                 
             // Getting page for concrete city
             } else if (req.getParameter("country") != null && req.getParameter("city") != null 
@@ -64,8 +71,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), defaultSorting, 
-                                                                            CONNECTION_LIST_URL, req, res);
+                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), 
+                                                                            paginationParameters, req, res);
                 if (redirect != null) {
                     redirect.append("&country=");
                     redirect.append(req.getParameter("country"));
@@ -75,22 +82,34 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                     res.sendRedirect(redirect.toString());
                     return;
                 }
-                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
-                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
-                                (boolean)req.getAttribute("asc"), city);
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
+
+                logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+                                                                page, itemsPerPage, sortBy, asc);
+
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, city);
 
             // Getting all connections
             } else {
                 StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(), 
-                                                                    defaultSorting, CONNECTION_LIST_URL, req, res);
+                                                                    paginationParameters, req, res);
                 if (redirect != null) {
                     logger.trace("Incorrect page, redirect to the "+redirect.toString());
                     res.sendRedirect(redirect.toString());
                     return;
                 }
-                connections = ORMRouterConnection.getPage((int)req.getAttribute("currentPage"), 
-                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
-                                (boolean)req.getAttribute("asc"));
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
+
+                logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+                                                                page, itemsPerPage, sortBy, asc);
+
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc);
             }   
 
             req.setAttribute("entityArray", connections);

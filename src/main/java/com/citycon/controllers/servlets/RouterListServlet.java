@@ -15,13 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 
 /**
  * Provides interface to get list of routers. Can return list of all routers
  * or routers for specific city.
  * 
  * @author Mike
- * @version 0.1
+ * @version 0.3
  */
 public class RouterListServlet  extends AbstractHttpServlet {
     private static String ROUTER_LIST_PAGE = "/jsp/routers/routerList.jsp";
@@ -35,7 +36,8 @@ public class RouterListServlet  extends AbstractHttpServlet {
                                                     throws ServletException, IOException {
 
         RouterEntity[] routers;
-        String defaultSorting = "SN";
+        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+                                            .getSession().getAttribute("paginationParameters")).get("routers");
 
         try {
             // Getting page for concrete city
@@ -46,7 +48,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
                 StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(city), 
-                                                                defaultSorting, ROUTER_LIST_URL, req, res);
+                                                                paginationParameters, req, res);
                 if (redirect != null) {
                     redirect.append("&country=");
                     redirect.append(req.getParameter("country"));
@@ -56,22 +58,32 @@ public class RouterListServlet  extends AbstractHttpServlet {
                     res.sendRedirect(redirect.toString());
                     return;
                 }
-                routers = ORMRouter.getPage((int)req.getAttribute("currentPage"), 
-                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
-                                (boolean)req.getAttribute("asc"), city);
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
+
+                logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+                                                                page, itemsPerPage, sortBy, asc);
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, city);
 
             // Getting all routers
             } else {
                 StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(), 
-                                                                defaultSorting, ROUTER_LIST_URL, req, res);
+                                                                paginationParameters, req, res);
                 if (redirect != null) {
                     logger.trace("Incorrect page, redirect to the "+redirect.toString());
                     res.sendRedirect(redirect.toString());
                     return;
                 }
-                routers = ORMRouter.getPage((int)req.getAttribute("currentPage"), 
-                        (int)req.getAttribute("itemsPerPage"), (String)req.getAttribute("sortBy"), 
-                                (boolean)req.getAttribute("asc"));
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
+
+                logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+                                                                page, itemsPerPage, sortBy, asc);
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc);
             }   
 
             req.setAttribute("entityArray", routers);

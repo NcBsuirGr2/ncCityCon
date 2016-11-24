@@ -42,59 +42,52 @@ public abstract class AbstractHttpServlet extends HttpServlet {
      * @return redirectPath if page number must be normalized
      * @throws InternalDAOException if any internal DAO error occurs
      */
-    protected StringBuilder setPaginationVariables(int itemsNum, String defaultSorting, String pagePath, HttpServletRequest req,
+    protected StringBuilder setPaginationVariables(int itemsNum, HashMap<String, String> paginationParameters, HttpServletRequest req,
      									 HttpServletResponse res) throws NumberFormatException {
     	
     	// Req parametes
-    	String pageString = req.getParameter("page");
-		String itemsPerPageString = req.getParameter("itemsPerPage");
-		String ascString = req.getParameter("asc");
+    	String pageReq = req.getParameter("page");
+		String itemsPerPageReq = req.getParameter("itemsPerPage");
+		String ascReq = req.getParameter("asc");
 		String sortByReq = req.getParameter("sortBy");
 
         
 		// Default parametes
-		int page = 1;
-		int itemsPerPage = 10;
-		boolean asc = true;
-		String sortBy = defaultSorting;
+		int page = Integer.parseInt(paginationParameters.get("page"));
+		int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
 
         
 		// Parsing req parameters, NumberFormatException can be thrown
 		
-		if(pageString != null && !pageString.equals("")) {
-		page = Integer.parseInt(pageString);
+		if(pageReq != null && !pageReq.equals("")) {
+			page = Integer.parseInt(pageReq);
+			paginationParameters.put("page", String.valueOf(page));
 		}
-		if(itemsPerPageString != null && !itemsPerPageString.equals("")) {
-			itemsPerPage = Integer.parseInt(itemsPerPageString);
+		if(itemsPerPageReq != null && !itemsPerPageReq.equals("")) {
+			itemsPerPage = Integer.parseInt(itemsPerPageReq);
+			paginationParameters.put("itemsPerPage", String.valueOf(itemsPerPage));
 		} 
-		if(ascString != null && !ascString.equals("")) {
-			asc = ascString.equals("true");
+		if(ascReq != null && !ascReq.equals("")) {
+			paginationParameters.put("asc", ascReq);
 		}		
 		if(sortByReq != null && !sortByReq.equals("")) {
-            sortBy = sortByReq;
+            paginationParameters.put("sortBy", sortByReq);
         }
-
-		// Default values
-		req.setAttribute("itemsPerPage", itemsPerPage);
-		req.setAttribute("asc", asc);
-		req.setAttribute("sortBy", sortBy);
-		req.setAttribute("currentPage", page);
 
 		if (itemsNum <= 0) return null;
 
 		// Asc redirect to the first page if req page is negative
 		if(page < 1) {
-			req.setAttribute("currentPage", 1);
+			paginationParameters.put("page", "1");
 			StringBuilder redirect = new StringBuilder();
-	        redirect.append(pagePath);
-	        redirect.append("?page=");
-	        redirect.append(page); // normalized page
+	        redirect.append(paginationParameters.get("path"));
+	        redirect.append("?page=1"); // normalized page
 	        redirect.append("&itemsPerPage=");
-	        redirect.append(req.getParameter("itemsPerPage"));
+	        redirect.append(paginationParameters.get("itemsPerPage"));
 	        redirect.append("&sortBy=");
-	        redirect.append(req.getParameter("sortBy"));
+	        redirect.append(paginationParameters.get("sortBy"));
 	        redirect.append("&asc=");
-	        redirect.append(req.getParameter("asc"));
+	        redirect.append(paginationParameters.get("asc"));
 			return redirect;
 		}
 
@@ -105,16 +98,16 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 			if(itemsNum != page*itemsPerPage) {
 				page += 1;
 			}
-			req.setAttribute("currentPage", page);
+			paginationParameters.put("page", String.valueOf(page));
 			StringBuilder redirect = new StringBuilder();
 	        redirect.append("/connections?page=");
 	        redirect.append(page); // normalized page
 	        redirect.append("&itemsPerPage=");
-	        redirect.append(req.getParameter("itemsPerPage"));
+	        redirect.append(paginationParameters.get("itemsPerPage"));
 	        redirect.append("&sortBy=");
-	        redirect.append(req.getParameter("sortBy"));
+	        redirect.append(paginationParameters.get("sortBy"));
 	        redirect.append("&asc=");
-	        redirect.append(req.getParameter("asc"));
+	        redirect.append(paginationParameters.get("asc"));
 			return redirect;
 		}
 
@@ -145,24 +138,28 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     	HashMap<String, HashMap<String, String>> paginationParameters = new HashMap<>();
 
     	HashMap<String, String> defaultUsersParameters = new HashMap<>();
+    	defaultUsersParameters.put("path", "/users");
     	defaultUsersParameters.put("page", "1");
     	defaultUsersParameters.put("itemsPerPage", "10");
     	defaultUsersParameters.put("sortBy", "name");
     	defaultUsersParameters.put("asc", "true");
 
     	HashMap<String, String> defaultCitiesParameters = new HashMap<>();
+    	defaultCitiesParameters.put("path", "/cities");
     	defaultCitiesParameters.put("page", "1");
     	defaultCitiesParameters.put("itemsPerPage", "10");
     	defaultCitiesParameters.put("sortBy", "name");
     	defaultCitiesParameters.put("asc", "true");
 
     	HashMap<String, String> defaultRoutersParameters = new HashMap<>();
+    	defaultRoutersParameters.put("path", "routers");
     	defaultRoutersParameters.put("page", "1");
     	defaultRoutersParameters.put("itemsPerPage", "10");
     	defaultRoutersParameters.put("sortBy", "SN");
     	defaultRoutersParameters.put("asc", "true");
 
     	HashMap<String, String> defaultConnectionsParameters = new HashMap<>();
+    	defaultConnectionsParameters.put("path", "connections");
     	defaultConnectionsParameters.put("page", "1");
     	defaultConnectionsParameters.put("itemsPerPage", "10");
     	defaultConnectionsParameters.put("sortBy", "SN1");

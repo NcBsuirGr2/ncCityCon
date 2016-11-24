@@ -16,12 +16,14 @@ import com.citycon.model.systemunits.orm.ORMCity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 /**
  * Used to show the list of users. Support pagination. Redirects to the last available
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *
  * @author Dima
- * @version 0.2
+ * @version 0.3
  */
 public class CityListServlet extends AbstractHttpServlet {
     private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
@@ -35,20 +37,22 @@ public class CityListServlet extends AbstractHttpServlet {
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse res) throws ServletException, IOException {
 
-
+        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+                                            .getSession().getAttribute("paginationParameters")).get("cities");
 
         try {
             //If page must be normalized (negative or too large)
-            if (setPaginationVariables(ORMCity.getCount(), "name", CITY_LIST_URL, req, res) != null) {
+            if (setPaginationVariables(ORMCity.getCount(), paginationParameters, req, res) != null) {
                 StringBuilder redirect = new StringBuilder();
+                redirect.append(paginationParameters.get("path"));
                 redirect.append("?page=");
-                redirect.append(req.getAttribute("currentPage")); // normalized page
+                redirect.append(paginationParameters.get("page")); // normalized page
                 redirect.append("&itemsPerPage=");
-                redirect.append(req.getParameter("itemsPerPage"));
+                redirect.append(paginationParameters.get("itemsPerPage"));
                 redirect.append("&sortBy=");
-                redirect.append(req.getParameter("sortBy"));
+                redirect.append(paginationParameters.get("sortBy"));
                 redirect.append("&asc=");
-                redirect.append(req.getParameter("asc"));
+                redirect.append(paginationParameters.get("asc"));
                 logger.debug("Incorrect page, redirect to the "+redirect.toString());
                 res.sendRedirect(redirect.toString());
                 return;
@@ -56,12 +60,12 @@ public class CityListServlet extends AbstractHttpServlet {
 
 
 
-            int page = (int)req.getAttribute("currentPage");
-            int itemsPerPage = (int)req.getAttribute("itemsPerPage");
-            boolean asc = (boolean)req.getAttribute("asc");
-            String sortBy = (String)req.getAttribute("sortBy");
+            int page = Integer.parseInt(paginationParameters.get("page"));
+            int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
+            boolean asc = paginationParameters.get("asc").equals("true");
+            String sortBy = paginationParameters.get("sortBy");
 
-            logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+            logger.trace("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                     page, itemsPerPage, sortBy, asc);
 
             CityEntity[] cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc);
