@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter, CitiesOfCountry {
+public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter {
 
     /**
      * @throws InternalDAOException
@@ -655,79 +655,5 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
      */
     public static RouterConnectionDAO getInstance() throws InternalDAOException {
         return new RouterConnectionDAO();
-    }
-
-    /**
-     * @param country
-     * @return
-     * @throws InternalDAOException
-     * @throws InvalidDataDAOException
-     */
-    @Override
-    public CityEntity[] getCities(String country) throws InternalDAOException, InvalidDataDAOException {
-
-        PreparedStatement search_cities = null;
-        ResultSet resultSet = null;
-
-        ArrayList<CityEntity> cities = new ArrayList();
-
-        String search = "";
-
-        if (country == null) {
-            logger.info("Enter parameter to get cities of country are invalid. Try country.");
-            throw new InvalidDataDAOException("Enter parameter to get cities of country are invalid. " +
-                    "Try country.");
-        }
-
-        String log_parameters = "With parameters: Country(" + country + ")";
-
-        search = "select ID, `Name` from City where Country=?";
-
-        try {
-            search_cities = connection.prepareStatement(search);
-        } catch (SQLException e) {
-            logger.warn("PrepareStatement in get cities of country wasn't created");
-            throw new InternalDAOException("PrepareStatement in get cities of country wasn't created", e);
-        }
-
-        try {
-            search_cities.setString(1, country);
-
-            resultSet = search_cities.executeQuery();
-
-            try {
-                while (resultSet.next()) {
-                    CityEntity city = new CityEntity();
-
-                    city.setId(resultSet.getInt("id"));
-                    city.setName(resultSet.getString("Name"));
-                    city.setCountryName(country);
-
-                    cities.add(city);
-                }
-
-                logger.trace("Get cities of country.\n {}", log_parameters);
-            } catch (SQLException e) {
-                logger.info("Get cities of country failed.\n {}", log_parameters, e);
-                throw new InvalidDataDAOException(String.format(
-                        "Get cities of country failed"), e);
-            }
-        } catch (SQLException e) {
-            logger.info("Put data to PrepareStatement in Get cities of country invalid. \n {}"
-                    , log_parameters, e);
-            throw new InvalidDataDAOException(String.format("Put data to PrepareStatement " +
-                    "in Get cities of country invalid"), e);
-        } finally {
-            if (search_cities != null) {
-                try {
-                    search_cities.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in Get cities of country failed", e);
-                    throw new InternalDAOException(e);
-                }
-
-            }
-        }
-        return cities.toArray(new CityEntity[cities.size()]);
     }
 }
