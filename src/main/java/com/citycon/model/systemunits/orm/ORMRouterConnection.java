@@ -38,6 +38,9 @@ public class ORMRouterConnection extends ORMEntity {
 	public String getFirstRouterCityName() {
 		return routerConnection.getFirstRouterCityName();
 	}
+	public String getFirstRouterCountry() {
+		return routerConnection.getFirstRouterCountry();
+	}
 	public int getSecondRouterId() {
 		return routerConnection.getSecondRouterId();
 	}
@@ -46,6 +49,9 @@ public class ORMRouterConnection extends ORMEntity {
 	}
 	public String getSecondRouterCityName() {
 		return routerConnection.getSecondRouterCityName();
+	}
+	public String getSecondRouterCountry() {
+		return routerConnection.getSecondRouterCountry();
 	}
 
 	public void setFirstRouterId(int firstRouterId) {
@@ -57,6 +63,9 @@ public class ORMRouterConnection extends ORMEntity {
 	public void setFirstRouterCityName(String firstRouterCityName) {
 		routerConnection.setFirstRouterCityName(firstRouterCityName);
 	}
+	public void setFirstRouterCountry(String firstRouterCountry){
+		routerConnection.setFirstRouterCountry(firstRouterCountry);
+	}
 	public void setSecondRouterId(int secondRouterId) {
 		routerConnection.setSecondRouterId(secondRouterId);
 	}
@@ -65,6 +74,9 @@ public class ORMRouterConnection extends ORMEntity {
 	}
 	public void setSecondRouterCityName(String secondRouterCityName) {
 		routerConnection.setSecondRouterCityName(secondRouterCityName);
+	}
+	public void setSecondRouterCountry(String secondRouterCountry){
+		routerConnection.setSecondRouterCountry(secondRouterCountry);
 	}
 
 
