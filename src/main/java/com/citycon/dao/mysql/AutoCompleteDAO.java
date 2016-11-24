@@ -65,6 +65,7 @@ public class AutoCompleteDAO {
         ArrayList<String> suggestions = new ArrayList<>();
         logger.trace("Before prepare statement");
         try (PreparedStatement statement = connection.prepareStatement("select distinct Country from City  where Country like ?")) {
+            statement.setQueryTimeout(5);
             logger.trace("After prepare statement");
             if (queryPart != null) {
                 statement.setString(1, "%"+queryPart+"%");
@@ -72,9 +73,9 @@ public class AutoCompleteDAO {
                 statement.setString(1, "%%");
             }
             
-
+            logger.trace("Before executeQuery");
             try (ResultSet resultSet = statement.executeQuery()) {             
-
+                logger.trace("After executeQuery");
                 while(resultSet.next()) {
                     suggestions.add(resultSet.getString("Country"));
                 }
@@ -134,6 +135,7 @@ public class AutoCompleteDAO {
         ArrayList<String> suggestions = new ArrayList<>();
         logger.trace("Before prepare statement");
         try (PreparedStatement statement = connection.prepareStatement(statementString)) {
+            statement.setQueryTimeout(5);
             logger.trace("After prepare statement");
             if (queryPart != null) {
                 statement.setString(1, "%"+queryPart+"%");
@@ -144,7 +146,9 @@ public class AutoCompleteDAO {
             }
             
 
+            logger.trace("Before executeQuery");
             try (ResultSet resultSet = statement.executeQuery()) {             
+                logger.trace("After executeQuery");          
 
                 while(resultSet.next()) {
                     suggestions.add(resultSet.getString(resultString));

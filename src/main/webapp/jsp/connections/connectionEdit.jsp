@@ -60,7 +60,7 @@
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
                                 	<div class="col-xs-7">
                                         <c:if test="${not empty connection.firstRouterSN}">
-                                    	   <input class="form-control simpleText" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
+                                    	   <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
                                            <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
@@ -78,14 +78,14 @@
                                 <label for="city" class="col-xs-3 control-label">SN-2:</label>
                                      <div class="col-xs-7">                                         
                                         <c:if test="${not empty connection.firstRouterSN}">
-                                            <input class="form-control simpleText" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
+                                            <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
                                            <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
                                         </c:if>
                                      </div>
                             </div>
-                            <input type="hidden" name="type" value="${param.action}"/>
+                            <input type="hidden" name="action" value="${param.action}"/>
                             <input type="hidden" name="id" value="${connection.id}"/>
                         </form>
                     </div>

@@ -72,12 +72,12 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
-    	String type = req.getParameter("type");
-    	if (type == null) {
-    		forwardToErrorPage("type parameter is null", req, res);
+    	String action = req.getParameter("action");
+    	if (action == null) {
+    		forwardToErrorPage("action parameter is null", req, res);
     		return;
     	}
-    	switch (type) {
+    	switch (action) {
     		case "edit" : {
     			doPut(req, res);
     			return;
@@ -101,7 +101,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    				router2.read();
 	    			} catch (InvalidDataDAOException exception) {
 	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+	    				res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
 	    				return;
 	    			} 
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
@@ -111,7 +111,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			try {
 	    				newConnection.create();
 	    			} catch (DublicateKeyDAOException exception) {
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
+	    				res.sendRedirect(getRedirectPathToSamePage("noFreePorts", req, res).toString());
 	    				return;
 	    			}
 	    		} catch (DAOException exception) {
@@ -139,7 +139,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    				router2.read();
 	    			} catch (InvalidDataDAOException exception) {
 	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(CONNECTION_EDIT_URL+"?errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+	    				res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
 	    				return;
 	    			} 
 	    			ORMRouterConnection updateConnection = new ORMRouterConnection();
@@ -149,11 +149,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				try {
 					updateConnection.update();
 				} catch (DublicateKeyDAOException exception) {
-					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"?errorType=noFreePorts&SN1="+SN1+"&SN2="+SN2);
+					res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
 					return;
 				} catch (InvalidDataDAOException exception) {
 					// No routers with such SN, redirect to add/edit page
-					res.sendRedirect(CONNECTION_EDIT_URL+"?action=edit?id="+connectionId+"&errorType=invalidSN&SN1="+SN1+"&SN2="+SN2);
+					res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
 					return;
 				}
 			}catch (DAOException cause) {
@@ -186,5 +186,33 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 		res.sendRedirect(CONNECTION_LIST_URL+"?success=delete");
 		return;
 	}
+	private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
+        String action = req.getParameter("action");
+        String country1 = req.getParameter("country1");
+        String country2 = req.getParameter("country2");
+        String city1 = req.getParameter("city1");
+        String city2 = req.getParameter("city2");
+        String SN1 = req.getParameter("SN1");
+        String SN2 = req.getParameter("SN2");
+        StringBuilder redirect = new StringBuilder();
+        redirect.append(CONNECTION_EDIT_URL);
+        redirect.append("?action=");
+        redirect.append(action);
+        redirect.append("&errorType=");
+        redirect.append(errorType);        
+        redirect.append("&firstCountry=");
+        redirect.append(country1);
+        redirect.append("&secondCountry=");
+        redirect.append(country2);
+        redirect.append("&firstCity=");
+        redirect.append(city1);
+        redirect.append("&secondCity=");
+        redirect.append(city2);
+        redirect.append("&SN1=");
+        redirect.append(SN1);
+        redirect.append("&SN2=");
+        redirect.append(SN2);
+        return redirect;
+    }
 
 }

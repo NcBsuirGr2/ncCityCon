@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * 
@@ -137,5 +139,38 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		req.setAttribute("nextPage", nextPage);	
 
 		return null;
+    }
+
+    protected void initializePaginData(HttpSession session) {
+    	HashMap<String, HashMap<String, String>> pagesPaginationParameters = new HashMap<>();
+
+    	HashMap<String, String> defaultUsersParameters = new HashMap<>();
+    	defaultUsersParameters.put("page", "1");
+    	defaultUsersParameters.put("itemsPerPage", "10");
+    	defaultUsersParameters.put("sortBy", "name");
+    	defaultUsersParameters.put("asc", "true");
+
+    	HashMap<String, String> defaultCitiesParameters = new HashMap<>();
+    	defaultCitiesParameters.put("page", "1");
+    	defaultCitiesParameters.put("itemsPerPage", "10");
+    	defaultCitiesParameters.put("sortBy", "name");
+    	defaultCitiesParameters.put("asc", "true");
+
+    	HashMap<String, String> defaultRoutersParameters = new HashMap<>();
+    	defaultRoutersParameters.put("page", "1");
+    	defaultRoutersParameters.put("itemsPerPage", "10");
+    	defaultRoutersParameters.put("sortBy", "SN");
+    	defaultRoutersParameters.put("asc", "true");
+
+    	HashMap<String, String> defaultConnectionsParameters = new HashMap<>();
+    	defaultConnectionsParameters.put("page", "1");
+    	defaultConnectionsParameters.put("itemsPerPage", "10");
+    	defaultConnectionsParameters.put("sortBy", "SN1");
+    	defaultConnectionsParameters.put("asc", "true");
+
+    	pagesPaginationParameters.put("users", defaultUsersParameters);
+    	pagesPaginationParameters.put("cities", defaultCitiesParameters);
+    	pagesPaginationParameters.put("routers", defaultRoutersParameters);
+    	pagesPaginationParameters.put("connections", defaultConnectionsParameters);
     }
 }
