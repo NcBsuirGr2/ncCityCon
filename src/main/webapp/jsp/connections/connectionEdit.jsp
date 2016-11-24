@@ -6,11 +6,15 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" href="/css/style.css">
+            <link rel="stylesheet" href="/css/easy-autocomplete.min.css"> 
             <link rel="stylesheet" type="text/css" href="/css/connectionPages/connectionEdit.css">
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="/js/jquery.easy-autocomplete.min.js"></script>
+
             <script src="/js/formValidation.js"></script>
+            <script src="/js/connectionPages/autocomplete.js"></script>
 
             <link rel="icon" href="favicon.ico" />
 
@@ -19,7 +23,6 @@
 
     <body>
         <div class="content-wrapper">
-
             <%@ include file="/include/header.jsp" %>
             <div class="alert alert-warning formAlert hide">
                 Invalid form data.
@@ -46,6 +49,13 @@
                     </div>
                     <div class="panel-body">
                     	<form class="form-horizontal" id="form" method="POST" action="/connection" >
+
+                            <div class="form-group row">
+                                <label for="port" class="col-xs-3 control-label">City-1:</label>
+                                    <div class="col-xs-7">
+                                        <input class="form-control" type="text" id="city1" value="${connection.firstRouterCityName}">  
+                                    </div>
+                            </div> 
                         	<div class="form-group row">
                             	<label for="port" class="col-xs-3 control-label">SN-1:</label>
                                 	<div class="col-xs-7">
@@ -53,10 +63,17 @@
                                     	   <input class="form-control simpleText" name="SN1" placeholder="SN1" type="text" value="${connection.firstRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control simpleText" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
+                                           <input class="form-control simpleText" id="SN1" name="SN1" placeholder="SN1" type="text" value="${param.SN1}">
                                         </c:if>
                                     </div>
                             </div>   
+  
+                            <div class="form-group row">
+                                <label for="port" class="col-xs-3 control-label">City-2:</label>
+                                    <div class="col-xs-7">
+                                        <input class="form-control" type="text" id="city2" value="${connection.secondRouterCityName}">  
+                                    </div>
+                            </div> 
                             <div class="form-group row">
                                 <label for="city" class="col-xs-3 control-label">SN-2:</label>
                                      <div class="col-xs-7">                                         
@@ -64,7 +81,7 @@
                                             <input class="form-control simpleText" name="SN2" placeholder="SN2" type="text" value="${connection.secondRouterSN}">
                                         </c:if>
                                         <c:if test="${empty connection.firstRouterSN}">
-                                           <input class="form-control simpleText" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
+                                           <input class="form-control simpleText" id="SN2" name="SN2" placeholder="SN2" type="text" value="${param.SN2}">
                                         </c:if>
                                      </div>
                             </div>

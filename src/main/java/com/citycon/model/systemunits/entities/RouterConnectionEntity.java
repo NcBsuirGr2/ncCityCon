@@ -12,10 +12,12 @@ public class RouterConnectionEntity extends Entity {
 	private int firstRouterId;
 	private String firstRouterSN;
 	private String firstRouterCityName;
+	private String firstRouterCountryName;
 
 	private int secondRouterId;
 	private String secondRouterSN;
 	private String secondRouterCityName;
+	private String secondRouterCountryName;
 
 	public int getFirstRouterId() {
 		return firstRouterId;
@@ -32,8 +34,14 @@ public class RouterConnectionEntity extends Entity {
 	public String getFirstRouterCityName() {
 		return firstRouterCityName;
 	}
+	public String getFirstRouterCountryName() {
+		return firstRouterCountryName;
+	}
 	public String getSecondRouterCityName() {
 		return secondRouterCityName;
+	}
+	public String getSecondRouterCountryName() {
+		return secondRouterCountryName;
 	}
 
 	public void setFirstRouterId(int firstRouterId) {
@@ -51,8 +59,14 @@ public class RouterConnectionEntity extends Entity {
 	public void setFirstRouterCityName(String firstRouterCityName) {
 		this.firstRouterCityName = firstRouterCityName;
 	}
+	public void setFirstRouterCountryName(String firstRouterCountryName) {
+		this.firstRouterCountryName = firstRouterCountryName;
+	}
 	public void setSecondRouterCityName(String secondRouterCityName) {
 		this.secondRouterCityName = secondRouterCityName;
+	}
+	public void setSecondRouterCountryName(String secondRouterCountryName) {
+		this.secondRouterCountryName = secondRouterCountryName;
 	}
 
 	public String toString() {
