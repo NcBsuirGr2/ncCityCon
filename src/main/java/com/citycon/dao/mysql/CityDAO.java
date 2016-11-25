@@ -197,11 +197,9 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         PreparedStatement search_city = null;
         ResultSet resultSet= null;
 
-//        String search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
-//                        "from Router R join City C on R.City_id=C.ID " +
-//                        "where C.ID=?";
-
-        String search = "select * from" + nameTable + "where `Name`=?";
+        String search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
+                        "from Router R join City C on R.City_id=C.ID " +
+                        "where C.`Name`=? and C.Country=?";
 
         try {
             city = (CityEntity)readElement;
@@ -210,67 +208,60 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
 
-        String log_parameters = "With parameters: Name("+ city.getName() + ")";
-
-        if (city.getCountryName() != null){
-            search += " and `Country`=?";
-            log_parameters += ", Country("+ city.getCountryName()+")";
+        if (city.getName() == null || city.getCountryName() == null){
+            logger.info("For reading city incorrectly chosen field, try City and Country");
+            throw new InvalidDataDAOException("For reading city incorrectly chosen field, try City and Country");
         }
 
-        if (city.getName() != null) {
-            try{
-                search_city = connection.prepareStatement(search);
-            }catch (SQLException e) {
-                logger.warn("PreparedStatement in read wasn't created", e);
-                throw new InternalDAOException("PreparedStatement in read wasn't created", e);
-            }
-            try {
-  //                search_city.setInt(1, readElement.getId());
-                search_city.setString(1, city.getName());
+        String log_parameters = "With parameters: Name("+ city.getName() +
+                "), Country(" + city.getCountryName() + ")";
 
-                if(city.getCountryName() != null) {
-                    search_city.setString(2, city.getCountryName());
-                }
-                resultSet = search_city.executeQuery();
-
-                if(resultSet.first()) {
-                    city.setId(resultSet.getInt("id"));
-                    city.setName(resultSet.getString("Name"));
-                    city.setCountryName(resultSet.getString("Country"));
-                    //city.setRoutersNum(resultSet.getInt("RoutersNum"));
-
-                    logger.trace("Read {}.\n {}", nameTable, log_parameters);
-                }
-                else{
-                    logger.info("{} in read not found.\n {}", nameTable, log_parameters);
-                    throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
-                }
-            } catch (SQLException e) {
-                logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
-                //throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
-            }
-            finally {
-                if (search_city!=null){
-                    try {
-                        search_city.close();
-                    } catch (SQLException e) {
-                        logger.warn("Close PrepareStatement in read {} failed", nameTable, e);
-                        throw new InternalDAOException(e);
-                    }
-                }
-                if (resultSet!= null){
-                    try{
-                        resultSet.close();
-                    }catch (SQLException e){
-                        logger.warn("Close ResultSet in read {} failed", nameTable,e);
-                        throw new InternalDAOException(e);
-                    }
-                }
-            }
+        try{
+            search_city = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            logger.warn("PreparedStatement in read wasn't created", e);
+            throw new InternalDAOException("PreparedStatement in read wasn't created", e);
         }
-        else{
-            logger.info("For reading city incorrectly chosen field, try id");
-            throw new InvalidDataDAOException("For reading city incorrectly chosen field, try id");
+        try {
+            //                search_city.setInt(1, readElement.getId());
+            search_city.setString(1, city.getName());
+            search_city.setString(2, city.getCountryName());
+
+            resultSet = search_city.executeQuery();
+
+            if(resultSet.first()) {
+                city.setId(resultSet.getInt("id"));
+                city.setName(resultSet.getString("Name"));
+                city.setCountryName(resultSet.getString("Country"));
+                city.setRoutersNum(resultSet.getInt("RoutersNum"));
+
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
+            }
+            else{
+                logger.info("{} in read not found.\n {}", nameTable, log_parameters);
+                throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
+            }
+        } catch (SQLException e) {
+            logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
+            throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
+        }
+        finally {
+            if (search_city!=null){
+                try {
+                    search_city.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in read {} failed", nameTable, e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in read {} failed", nameTable,e);
+                    throw new InternalDAOException(e);
+                }
+            }
         }
     }
 
