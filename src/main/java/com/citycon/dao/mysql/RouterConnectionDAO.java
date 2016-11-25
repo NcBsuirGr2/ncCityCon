@@ -246,7 +246,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         PreparedStatement preparedStatement = null;
 
-        String update = "update" + nameTable + "set `ID_From`=?, `ID_To`=? where `id`=?";
+        Statement statement = null;
+
+        ArrayList<String> SQLCommandForGetTableOfRouters = new ArrayList<>();
+
+        String update = "";
 
         try {
             routerConnection = (RouterConnectionEntity) updateElement;
@@ -255,8 +259,20 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException("Cast Entity in update failed.", e);
         }
 
+        if (routerConnection.getFirstRouterSN() != null && routerConnection.getSecondRouterSN() != null) {
+            SQLCommandForGetTableOfRouters.add("set @ID_From = (select ID from Router where SN='"
+                    + routerConnection.getFirstRouterSN() + "')");
+            SQLCommandForGetTableOfRouters.add("set @ID_To = (select ID from Router where SN='"
+                    + routerConnection.getSecondRouterSN() + "')");
+            update = "update RouterConnection set ID_From = @ID_From, ID_To = @ID_To where `id`=?";
+        }
+        else {
+            update = "update" + nameTable + "set `ID_From`=?, `ID_To`=? where `id`=?";
+        }
+
         try {
             preparedStatement = connection.prepareStatement(update);
+            statement = connection.createStatement();
         } catch (SQLException e) {
             logger.warn("PreparedStatement in update wasn't created", e);
             throw new InternalDAOException("PreparedStatement in update wasn't created", e);
@@ -265,9 +281,17 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String log_parameters = "With parameters: id(" + routerConnection.getId() + ")";
 
         try {
-            preparedStatement.setInt(1, routerConnection.getFirstRouterId());
-            preparedStatement.setInt(2, routerConnection.getSecondRouterId());
-            preparedStatement.setInt(3, routerConnection.getId());
+            if (routerConnection.getFirstRouterSN() != null && routerConnection.getSecondRouterSN() != null) {
+                for(String Command:SQLCommandForGetTableOfRouters){
+                    statement.executeUpdate(Command);
+                }
+                preparedStatement.setInt(1, routerConnection.getId());
+            }
+            else {
+                preparedStatement.setInt(1, routerConnection.getFirstRouterId());
+                preparedStatement.setInt(2, routerConnection.getSecondRouterId());
+                preparedStatement.setInt(3, routerConnection.getId());
+            }
 
             preparedStatement.executeUpdate();
 
@@ -281,6 +305,14 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     preparedStatement.close();
                 } catch (SQLException e) {
                     logger.warn("Close PrepareStatement in update {} failed", nameTable, e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if(statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close statement in update {} failed", nameTable, e);
                     throw new InternalDAOException(e);
                 }
             }
