@@ -101,7 +101,8 @@ public class MySQLDAOConnection {
         try {
             Class.forName(MYSQL_CONNECTOR_CLASS);
             connectionPool = new ConnectionPool(URL, USERNAME, PASSWORD);
-            connectionPool.setMaxUseTime(3*1000);
+            connectionPool.setMaxUseTime(5*100);
+            connectionPool.setCleaningInterval(6*1000);
             logger.trace("ConnectionPool create");
         } catch (ClassNotFoundException e) {
             logger.error("Driver for database failed");
