@@ -20,24 +20,26 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Checks if user loggined into system. After login UserEntity object must be
- * created in sessionScope. If there is no such object, filter should not pass 
- * request futher.
+ * created in session scope. If there is no user object on the session scope, 
+ * filter should not pass request futher. 
  *
  * @author Mike
- * @version 0.1
+ * @version 0.2
  */
 public class LoginFilter extends AbstractHttpFilter implements Filter {
-	public void init(FilterConfig config) throws ServletException {
-		// init 
+
+	private Logger logger;
+
+	public LoginFilter() {
+		logger = LoggerFactory.getLogger("com.citycon.controllers.filters.LoginFilter");
 	}
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws ServletException, IOException {		
+	public void doFilter(ServletRequest req, ServletResponse res, 
+					FilterChain chain) throws ServletException, IOException {		
 
-				Logger dd = LoggerFactory.getLogger("com.citycon.controllers.filters.LoginFilter");
 		try {
 			HttpServletResponse httpRes = (HttpServletResponse)res;
-			HttpServletRequest httpReq=(HttpServletRequest)req;
+			HttpServletRequest httpReq = (HttpServletRequest)req;
 
 			HttpSession session = httpReq.getSession(false);
 			if ((session == null) || (session.getAttribute("user") == null)) {
@@ -45,7 +47,9 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				return;
 			} else {
 				UserEntity user = (UserEntity)session.getAttribute("user");
+
 				req.setAttribute("showLogoutBtn", true);
+
 				if (user.getGrant().getUsersBranchLevel() > Grant.NONE) {
 					req.setAttribute("showUsersBtn", true);
 					
@@ -53,6 +57,7 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				if (user.getGrant().getUsersBranchLevel() > Grant.READ) {
 					req.setAttribute("showUsersOperationBtns", true);					
 				}
+
 				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.NONE) {
 					req.setAttribute("showConnectionsBtn", true);
 					req.setAttribute("showRoutersBtn", true);
@@ -60,17 +65,17 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				}
 				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.READ) {
 					req.setAttribute("showSystemUnitsOperationBtns", true);					
-				}				
+				}	
+
 				chain.doFilter(req, res);		
 			}
 		} catch (ClassCastException e) {
-			Logger logger = LoggerFactory.getLogger("com.citycon.controllers.filters.LoginFilter");
 			logger.info("Cannot cast: ", e);
+			forwardToErrorPage("Internal server error", req, res);
 			return;
+		} catch (Exception e) {
+			logger.info("Cannot cast: ", e);
+			forwardToErrorPage("Internal server error", req, res);
 		}
-	}
-
-	public void destroy() {
-		// clean up
 	}
 }

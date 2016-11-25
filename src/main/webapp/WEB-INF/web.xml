@@ -236,9 +236,4 @@
 	 		<filter-name>SystemListFilter</filter-name>
 	 		<url-pattern>/connections</url-pattern>
 	 	</filter-mapping>
-
- 	
-
-
-
 </web-app>

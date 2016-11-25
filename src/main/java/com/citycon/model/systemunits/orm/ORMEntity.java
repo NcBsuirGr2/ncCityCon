@@ -21,7 +21,7 @@ public abstract class ORMEntity {
 	 * to DAO layer that should perform 'create' operation. The incapsulated Entity
 	 * should not contain id field.
 	 * 
-	 * @return id the id of created element.
+	 * @return id the id of created element.																					
 	 * @throws ORMException if error occurs during create operation
 	 */
 	public abstract void create() throws DAOException;
@@ -53,12 +53,12 @@ public abstract class ORMEntity {
 	 * @return id the id of deleted element.
 	 * @throws DAOException if error occurs during delete operation
 	 */
-
-	public abstract Entity getEntity() throws DAOException;
-
-	/**
-	 * @return simple entity from orm object
-	 */
-
     public abstract void delete() throws DAOException;
+
+    /**
+     * Returns encapsulated <code>Entity</code> object.
+     * 
+	 * @return enitiy encapsulated <code>Entity</code> object
+	 */
+	public abstract Entity getEntity();   
 }

@@ -1,15 +1,20 @@
 package com.citycon.controllers.filters;
 
 import com.citycon.model.Grant;
-import com.citycon.model.systemunits.entities.UserEntity;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+
 import java.io.IOException;
 
 /**
- * Created by root on 16.11.16.
+ * Checks if user has enough rights to edit another CityCon users.
+ * 
+ * @author Tim, Mike
+ * @version 1.1
  */
 public class UserEditFilter extends AbstractHttpFilter implements Filter {
 
@@ -20,7 +25,7 @@ public class UserEditFilter extends AbstractHttpFilter implements Filter {
             chain.doFilter(req, res);
         } else {
             forwardToSecurityErrorPage(req,res);
+            return;
         }
-
     }
 }

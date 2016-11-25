@@ -1,19 +1,19 @@
 package com.citycon.model.systemunits.entities;
 
-import com.citycon.model.Grant;
 /**
  * Represents all necessary information about city. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
  * to display city information.
  *
  * @author Mike
- * @version 1.1
+ * @version 1.2
  */
 public class CityEntity extends Entity {	
 	private String name;
 	private String countryName;
 	private int routersNum;
 
+	// ----- Getters -----
 	public String getName() {
 		return name;
 	}
@@ -24,6 +24,7 @@ public class CityEntity extends Entity {
 		return routersNum;
 	}
 
+	// ----- Setters -----
 	public void setName(String name) {
 		this.name = name;
 	}

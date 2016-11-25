@@ -1,13 +1,12 @@
 package com.citycon.model.systemunits.entities;
 
-import com.citycon.model.Grant;
 /**
  * Represents all necessary information about router. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
  * to display router information.
  *
  * @author Mike
- * @version 1.1
+ * @version 1.2
  */
 public class RouterEntity extends Entity {
 	private String name;
@@ -19,6 +18,7 @@ public class RouterEntity extends Entity {
 	private String cityName;
 	private String countryName;
 
+	// ----- Getters -----
 	public String getName() {
 		return name;
 	}
@@ -40,7 +40,11 @@ public class RouterEntity extends Entity {
 	public String getCountryName() {
 		return countryName;
 	}
+	public int getCityId() {
+		return cityId;
+	}
 
+	// ----- Setters -----
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -62,14 +66,10 @@ public class RouterEntity extends Entity {
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
 	}
-
     public void setCityId(int cityId) {
         this.cityId = cityId;
     }
 
-	public int getCityId() {
-		return cityId;
-	}
 	public String toString() {
 		StringBuilder routerString = new StringBuilder();
 		routerString.append("Router: id(");

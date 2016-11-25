@@ -10,7 +10,7 @@ import java.sql.Date;
  * to display city information.
  *
  * @author Mike
- * @version 1.1
+ * @version 1.2
  */
 public class UserEntity extends Entity {
 	private String name;
@@ -21,6 +21,7 @@ public class UserEntity extends Entity {
 	private String group;
 	private Date createDate;
 
+	// ----- Getters -----
 	public String getName() {
 		return name;
 	}
@@ -40,6 +41,7 @@ public class UserEntity extends Entity {
 		return group;
 	}
 
+	// ----- Setters -----
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -63,10 +65,10 @@ public class UserEntity extends Entity {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
+	
 	public String toString() {
 		StringBuilder userString = new StringBuilder();
 		userString.append("User: id(");

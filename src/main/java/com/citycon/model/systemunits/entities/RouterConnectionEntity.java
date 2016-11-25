@@ -19,77 +19,84 @@ public class RouterConnectionEntity extends Entity {
 	private String secondRouterCityName;
 	private String secondRouterCountry;
 
+	// ----- Getters -----
 	public int getFirstRouterId() {
 		return firstRouterId;
 	}
 	public int getSecondRouterId() {
 		return secondRouterId;
 	}
+
 	public String getFirstRouterSN() {
 		return firstRouterSN;
 	}
 	public String getSecondRouterSN() {
 		return secondRouterSN;
 	}
+
 	public String getFirstRouterCityName() {
 		return firstRouterCityName;
-	}
-	public String getFirstRouterCountryName() {
-		return firstRouterCountry;
-	}
+	}	
 	public String getSecondRouterCityName() {
 		return secondRouterCityName;
 	}
 
-	public String getFirstRouterCountry() { return firstRouterCountry; }
-	public String getSecondRouterCountry() { return secondRouterCountry; }
-
+	public String getFirstRouterCountry() { 
+		return firstRouterCountry; 
+	}
+	public String getSecondRouterCountry() { 
+		return secondRouterCountry; 
+	}
+	// ----- Setters -----
 	public void setFirstRouterId(int firstRouterId) {
 		this.firstRouterId = firstRouterId;
 	}
 	public void setSecondRouterId(int secondRouterId) {
 		this.secondRouterId = secondRouterId;
 	}
+
 	public void setFirstRouterSN(String firstRouterSN) {
 		this.firstRouterSN = firstRouterSN;
 	}
 	public void setSecondRouterSN(String secondRouterSN) {
 		this.secondRouterSN = secondRouterSN;
 	}
+
 	public void setFirstRouterCityName(String firstRouterCityName) {
 		this.firstRouterCityName = firstRouterCityName;
 	}
-	public void setFirstRouterCountry(String firstRouterCountry) {
-		this.firstRouterCountry = firstRouterCountry;
-	}
 	public void setSecondRouterCityName(String secondRouterCityName) {
 		this.secondRouterCityName = secondRouterCityName;
+	}
+
+	public void setFirstRouterCountry(String firstRouterCountry) {
+		this.firstRouterCountry = firstRouterCountry;
 	}
 	public void setSecondRouterCountry(String secondRouterCountry) {
 		this.secondRouterCountry = secondRouterCountry;
 	}
 
 	public String toString() {
-		StringBuilder routerConnectionString = new StringBuilder();
-		routerConnectionString.append("RouterConnection: id(");
-		routerConnectionString.append(id);
-		routerConnectionString.append("), firstRouterId(");
-		routerConnectionString.append(firstRouterId);
-		routerConnectionString.append("), firstRouterSN(");
-		routerConnectionString.append(firstRouterSN);
-		routerConnectionString.append("), firstRouterCityName(");
-		routerConnectionString.append(firstRouterCityName);
-		routerConnectionString.append("), firstRouterCountry");
-		routerConnectionString.append(firstRouterCountry);
-		routerConnectionString.append("), secondRouterId(");
-		routerConnectionString.append(secondRouterId);
-		routerConnectionString.append("), secondRouterSN(");
-		routerConnectionString.append(secondRouterSN);
-		routerConnectionString.append("), secondRouterCityName(");
-		routerConnectionString.append(secondRouterCityName);
-		routerConnectionString.append("), secondRouterCountry");
-		routerConnectionString.append(secondRouterCountry);
-		routerConnectionString.append(")");
-		return routerConnectionString.toString();
+		StringBuilder string = new StringBuilder();
+		string.append("RouterConnection: id(");
+		string.append(id);
+		string.append("), firstRouterId(");
+		string.append(firstRouterId);
+		string.append("), firstRouterSN(");
+		string.append(firstRouterSN);
+		string.append("), firstRouterCityName(");
+		string.append(firstRouterCityName);
+		string.append("), firstRouterCountry");
+		string.append(firstRouterCountry);
+		string.append("), secondRouterId(");
+		string.append(secondRouterId);
+		string.append("), secondRouterSN(");
+		string.append(secondRouterSN);
+		string.append("), secondRouterCityName(");
+		string.append(secondRouterCityName);
+		string.append("), secondRouterCountry");
+		string.append(secondRouterCountry);
+		string.append(")");
+		return string.toString();
 	}
 }

@@ -10,10 +10,12 @@ import java.sql.Date;
 /**
  * ORM wrapper for the <code>UserEntity</code>. This class must be used in servlets to
  * manipulate CRUD operations for the plain entity through the concrete DAO.
+ * DAO object is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass 
+ * <code>ORMEnitity</code>. DAO initialization is lazy, so feel free to instantiate ORMCity objects.
  *
  * @author Mike
  * @version 0.4
- * @see  UserEntity
+ * @see  UserEntity, ORMEntity
  */
 public class ORMUser extends ORMEntity {
 	DAO dao;
@@ -106,23 +108,25 @@ public class ORMUser extends ORMEntity {
     /**
 	 * Get any page of users from DAO layer. 
 	 *
-	 * @param  page number of page to show
-	 * @param  itemsPerPage number of items to show on one page
-	 * @param  sortBy field to sort by
-	 * @param  asc sorting in asc order if true
-	 * @return cityEntity[] the array of users on demanded page.
-	 * @throws DAOException if parameters are invalid or DAO layer has internal problems
+	 * @param  page 			number of page to show
+	 * @param  itemsPerPage		number of items to show on one page
+	 * @param  sortBy 			field to sort by
+	 * @param  asc 				sorting in asc order if true
+	 * @return cityEntity[] 	the array of users on demanded page.
+	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static UserEntity[] getPage(int page, int itemsPerPage, 
     							String sortBy, boolean asc) throws DAOException {
+
     	DAO staticDAO = daoFactory.getUserDAO();
         return (UserEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
     }
+    
     /**
-     *	Retrieves total nuber of Users from DAO layer.
+     *	Retrieves total nuber of users from DAO layer.
      * 
-     * @return int nuber of Users
-     * @throws DAOException if any DAO internal error occur
+     * @return int 				nuber of Users
+     * @throws DAOException 	if any DAO internal error occur
      */
     public static int getCount() throws DAOException {
     	DAO staticDAO = daoFactory.getUserDAO();

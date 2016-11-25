@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
-   <!-- <script type="text/javascript" src="/js/cityPages/selectEntityCity.js"></script> -->
+   <script type="text/javascript" src="/js/cityPages/selectEntityCity.js"></script>
     <script type="text/javascript" src="/js/cityPages/cityList.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">

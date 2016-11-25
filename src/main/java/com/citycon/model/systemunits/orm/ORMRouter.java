@@ -9,11 +9,13 @@ import com.citycon.dao.exceptions.DAOException;
 
 /**
  * ORM wrapper for the <code>RouterEntity</code>. This class must be used in servlets to
- * manipulate CRUD operations for the plain entity through the concrete DAO.
+ * manipulate CRUD operations for the plain entity through the concrete DAO. DAO object
+ * is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass 
+ * <code>ORMEnitity</code>. DAO initialization is lazy, so feel free to instantiate ORMCity objects.
  *
  * @author Mike
- * @version 0.4
- * @see  RouterEntity
+ * @version 1.0
+ * @see  RouterEntity, ORMEntity
  */
 public class ORMRouter extends ORMEntity {
 	DAO dao;
@@ -52,8 +54,6 @@ public class ORMRouter extends ORMEntity {
 	public String getCountryName() {
 		return router.getCountryName();
 	}
-
-
 
 	public void setName(String name) {
 		router.setName(name);
@@ -114,11 +114,12 @@ public class ORMRouter extends ORMEntity {
      /**
 	 * Get any page of routers from DAO layer. 
 	 *
-	 * @param  page number of page to show
-	 * @param  itemsPerPage number of items to show on one page
-	 * @param  sortBy field to sort by
-	 * @param  asc sorting in asc order if true
-	 * @return cityEntity[] the array of routers on demanded page.
+	 * @param  page 			number of page to show
+	 * @param  itemsPerPage		number of items to show on one page
+	 * @param  sortBy 			field to sort by
+	 * @param  asc 				sorting in asc order if true
+	 * @return cityEntity[] 	the array of routers on demanded page.
+	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static RouterEntity[] getPage(int page, int itemsPerPage, 
     							String sortBy, boolean asc) throws DAOException {
@@ -127,16 +128,18 @@ public class ORMRouter extends ORMEntity {
     }
 
 	/**
-	 * @param page
-	 * @param itemsPerPage
-	 * @param sortBy
-	 * @param asc
-	 * @param city
-	 * @return
-	 * @throws DAOException
+	 * Get any page of routers for concrete city from DAO layer. 
+	 *
+	 * @param  page 			number of page to show
+	 * @param  itemsPerPage		number of items to show on one page
+	 * @param  sortBy 			field to sort by
+	 * @param  asc 				sorting in asc order if true
+	 * @return cityEntity[] 	the array of routers on demanded page.
+	 * @throws DAOException 	if any DAO error occurs
 	 */
 	public static RouterEntity[] getPage(int page, int itemsPerPage,
-										 String sortBy, boolean asc, CityEntity city) throws DAOException {
+				 String sortBy, boolean asc, CityEntity city) throws DAOException {
+
 		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
 		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
 	}
@@ -144,8 +147,8 @@ public class ORMRouter extends ORMEntity {
 	 /**
      *	Retrieves total number of routers from DAO layer.
      * 
-     * @return int number of connections
-     * @throws DAOException if any DAO internal error occur
+     * @return int 				number of connections
+     * @throws DAOException 	if any DAO internal error occur
      */
     public static int getCount() throws DAOException {
     	DAO staticDAO = daoFactory.getRouterDAO();
@@ -155,8 +158,8 @@ public class ORMRouter extends ORMEntity {
      /**
      *	Retrieves number of routers for concrete city from DAO layer.
      * 
-     * @return int number of connections
-     * @throws DAOException if any DAO internal error occur
+     * @return int 				number of connections
+     * @throws DAOException 	if any DAO internal error occur
      */
     public static int getCount(CityEntity city) throws DAOException {
     	RouterDAO staticDAO = (RouterDAO)daoFactory.getRouterDAO();
