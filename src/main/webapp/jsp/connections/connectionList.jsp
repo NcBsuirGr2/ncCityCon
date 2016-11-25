@@ -144,7 +144,7 @@
 
 								<div class="col-sm-4">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a href="/connection&${sameSelect}&action=add&">
+										<a href="/connection?${sameSelect}&action=add&">
 											<button class="btn btn-primary center-block">Add</button>
 										</a>
 									</c:if>
