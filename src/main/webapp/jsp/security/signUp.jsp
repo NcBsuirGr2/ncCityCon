@@ -54,7 +54,7 @@
                                     <label class="col-xs-3 control-label">Name:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" class="form-control simpleText" autofocus required placeholder="Name" name="name" value="${param.name}">
+                                            <input type="text" maxlength="15" class="form-control simpleText" autofocus required placeholder="Name" name="name" value="${param.name}">
                                         </div>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                     <label class="col-xs-3 control-label">Login:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" class="form-control simpleText" required placeholder="Login" name="login" value="${param.login}">
+                                            <input type="text" maxlength="15" class="form-control simpleText" required placeholder="Login" name="login" value="${param.login}">
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <label class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="password" class="form-control passwordInput" placeholder="Password" name="password" value="${param.password}">
+                                            <input type="password" maxlength="15" class="form-control passwordInput" placeholder="Password" name="password" value="${param.password}">
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                     <label class="col-xs-3 control-label">E-mail:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" class="form-control emailInput" required placeholder="E-mail" name="email" value="${param.email}">
+                                            <input type="text" maxlength="20" class="form-control emailInput" required placeholder="E-mail" name="email" value="${param.email}">
                                         </div>
                                     </div>
                                 </div>

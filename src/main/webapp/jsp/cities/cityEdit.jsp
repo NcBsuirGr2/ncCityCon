@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="/js/cityPages/suggestions.js"></script>
+	<script src="/js/formValidation.js"></script>
 	<link rel="icon" href="favicon.ico" />
 	<title>Edit city</title>
 </head>
@@ -18,6 +19,9 @@
 	<%@ include file="/include/header.jsp" %>
 
 	<div class="before-footer">
+		<div class="alert alert-warning formAlert hide">
+            Invalid form data.
+        </div>
 		<c:if test="${not empty param.errorType}">
 			<div class="alert alert-warning alert-dismissible" style="margin-top: 20px">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -39,7 +43,7 @@
 					<div class="form-group">
 						<label for="country" class="col-xs-3 control-label">Country:</label>
 						<div class="col-xs-7">
-							<select class="form-control" id="country" name="countryName" form="form">
+							<select class="form-control simpleText" id="country" name="countryName" form="form">
                                 <option label=" "></option>
                                 <c:if test="${not empty connection or not empty param.firstCity}">
                                     <c:choose>
@@ -58,10 +62,10 @@
 						<label for="name" class="col-xs-3 control-label">City:</label>
 						<div class="col-xs-7">
 							<c:if test="${not empty editCity}">
-								<input class="form-control" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
+								<input class="form-control simpleText" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
 							</c:if>
 							<c:if test="${empty editCity}">
-								<input class="form-control" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
+								<input class="form-control simpleText" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
 							</c:if>
 						</div>
 					</div>

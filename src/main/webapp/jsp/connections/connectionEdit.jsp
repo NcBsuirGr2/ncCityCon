@@ -64,7 +64,7 @@
                             <div class="form-group row">
                                 <label class="col-xs-3 control-label">Country-1:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="country1" name="country1" form="form">
+                                    <select class="form-control simpleText" id="country1" name="country1" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.firstCountry}">
                                             <c:choose>
@@ -83,7 +83,7 @@
                             <div class="form-group row">
                                 <label class="col-xs-3 control-label">City-1:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="city1" name="city1" form="form">
+                                    <select class="form-control simpleText" id="city1" name="city1" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.firstCity}">
                                             <c:choose>
@@ -101,7 +101,7 @@
                         	<div class="form-group row">
                             	<label class="col-xs-3 control-label">SN-1:</label>
                             	<div class="col-xs-7">
-                                    <select class="form-control" id="SN1" name="SN1" form="form">
+                                    <select class="form-control simpleText" id="SN1" name="SN1" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.SN1}">
                                             <c:choose>
@@ -121,7 +121,7 @@
                             <div class="form-group row">
                                 <label class="col-xs-3 control-label">Country-2:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="country2" name="country2" form="form">
+                                    <select class="form-control simpleText" id="country2" name="country2" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.secondCountry}">
                                             <c:choose>
@@ -140,7 +140,7 @@
                             <div class="form-group row">
                                 <label class="col-xs-3 control-label">City-2:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="city2" name="city2" form="form">
+                                    <select class="form-control simpleText" id="city2" name="city2" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.secondCity}">
                                             <c:choose>
@@ -158,7 +158,7 @@
                             <div class="form-group row">
                                 <label class="col-xs-3 control-label">SN-2:</label>
                                 <div class="col-xs-7">
-                                    <select class="form-control" id="SN2" name="SN2" form="form">
+                                    <select class="form-control simpleText" id="SN2" name="SN2" form="form">
                                         <option label=" "></option>
                                         <c:if test="${not empty connection or not empty param.SN2}">
                                             <c:choose>

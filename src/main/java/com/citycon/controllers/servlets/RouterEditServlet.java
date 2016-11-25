@@ -197,7 +197,6 @@ public class RouterEditServlet extends AbstractHttpServlet {
         String action = req.getParameter("action");
         String portsNum = req.getParameter("portsNum");
         String SN = req.getParameter("SN");
-        String editSN = req.getParameter("editSN");
         String name = req.getParameter("name");
         String active = req.getParameter("active");
         String cityName = req.getParameter("cityName");
@@ -212,8 +211,6 @@ public class RouterEditServlet extends AbstractHttpServlet {
         redirect.append(portsNum);
         redirect.append("&SN=");
         redirect.append(SN);
-        redirect.append("&editSN=");
-        redirect.append(editSN);
         redirect.append("&name=");
         redirect.append(name);
         redirect.append("&active=");
