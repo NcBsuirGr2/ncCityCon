@@ -68,9 +68,9 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
         RouterConnectionEntity routerConnection = null;
 
-        String insert = "insert into" + nameTable +
-                "(`ID_From`, `ID_To`)" +
-                " values (?, ?)";
+        String insert = "";
+
+        String log_parameters = "";
 
         PreparedStatement preparedStatement = null;
 
@@ -81,6 +81,23 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException("Cast Entity in create are failed", e);
         }
 
+        if (routerConnection.getFirstRouterSN() != null && routerConnection.getFirstRouterSN() != null){
+            insert = "insert into RouterConnection (ID_From, ID_To) " +
+                    "values ((select ID from Router where SN=?), " +
+                    "(select ID from Router where SN=?))";
+
+            log_parameters = "With parameters: SN_From(" + routerConnection.getFirstRouterSN()
+                    + "), SN_To(" + routerConnection.getSecondRouterSN() + ")";
+        }
+        else {
+            insert = "insert into" + nameTable +
+                "(`ID_From`, `ID_To`)" +
+                " values (?, ?)";
+
+            log_parameters = "With parameters: Id_From(" + routerConnection.getFirstRouterId()
+                    + "), Id_To(" + routerConnection.getSecondRouterId() + ")";
+        }
+
         try {
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
@@ -88,12 +105,15 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InternalDAOException("PrepareStatement in create wasn't created", e);
         }
 
-        String log_parameters = "With parameters: Id_From(" + routerConnection.getFirstRouterId()
-                + "), Id_To(" + routerConnection.getSecondRouterId() + ")";
-
         try {
-            preparedStatement.setInt(1, routerConnection.getFirstRouterId());
-            preparedStatement.setInt(2, routerConnection.getSecondRouterId());
+            if (routerConnection.getFirstRouterSN() != null && routerConnection.getFirstRouterSN() != null){
+                preparedStatement.setString(1, routerConnection.getFirstRouterSN());
+                preparedStatement.setString(2, routerConnection.getSecondRouterSN());
+            }
+            else {
+                preparedStatement.setInt(1, routerConnection.getFirstRouterId());
+                preparedStatement.setInt(2, routerConnection.getSecondRouterId());
+            }
 
             preparedStatement.executeUpdate();
 
