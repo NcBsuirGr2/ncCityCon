@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/userPages/userList.css">
+    <link rel="stylesheet" type="text/css" href="/css/cityPages/cityList.css">
     <link rel="icon" href="favicon.ico" />
 
     <title>Cities</title>
@@ -121,7 +121,7 @@
                 <div class="panel-footer">
                     <div class="row">
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <a href="/city?action=add">
                                     <button class="btn btn-primary center-block">Add</button>
@@ -129,7 +129,7 @@
                             </c:if>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <a class="editHref" href="#">
                                     <button class="btn btn-primary center-block">Edit</button>
@@ -137,7 +137,7 @@
                             </c:if>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
@@ -147,10 +147,18 @@
                             </c:if>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <a class="routersHref" href="#">
                                     <button class="btn btn-primary center-block">Routers</button>
+                                </a>
+                            </c:if>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <c:if test="${showSystemUnitsOperationBtns}">
+                                <a class="connectionsHref" href="#">
+                                    <button class="btn btn-primary center-block">Connections</button>
                                 </a>
                             </c:if>
                         </div>
