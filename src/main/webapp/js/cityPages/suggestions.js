@@ -2,7 +2,6 @@ function updateSelect(selected, url) {
 	$.ajax({
 		url: url,
 		success: function(data) {
-			console.log("ajax success");
 			if(!data) return;
 			var jdata = JSON.parse(data);
 			var suggestions = jdata.suggestions;
@@ -38,5 +37,4 @@ function updCountry() {
 
 $(document).ready(function() {
 	updCountry();
-	updCity($("#country").val());
 })

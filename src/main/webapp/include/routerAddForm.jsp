@@ -4,13 +4,13 @@
         <div class="col-xs-7">
             <select class="form-control" id="country" name="countryName" form="form">
                 <option label=" "></option>
-                <c:if test="${not empty editRouter or not empty param.countryName}">
+                <c:if test="${not empty editRouter or not empty param.country}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
                             <option value="${editRouter.countryName}" selected>${editRouter.countryName}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${param.countryName}" selected>${param.countryName}</option>
+                            <option value="${param.country}" selected>${param.country}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
@@ -23,13 +23,13 @@
         <div class="col-xs-7">
             <select class="form-control" id="city" name="cityName" form="form">
                 <option label=" "></option>
-                <c:if test="${not empty editRouter or not empty param.cityName}">
+                <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
                             <option value="${editRouter.cityName}" selected>${editRouter.cityName}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${param.cityName}" selected>${param.cityName}</option>
+                            <option value="${param.city}" selected>${param.city}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:if>

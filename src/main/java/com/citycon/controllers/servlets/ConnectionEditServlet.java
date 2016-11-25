@@ -103,26 +103,13 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
     			return;
     		}
     		default : {
-    			String SN1 = req.getParameter("SN1");
-    			String SN2 = req.getParameter("SN2");
-
-    			// Temporary hack
-    			ORMRouter router1 = new ORMRouter();
-    			ORMRouter router2 = new ORMRouter();
-    			router1.setSN(SN1);
-    			router2.setSN(SN2);
     			try {
-	    			try {
-	    				router1.read();
-	    				router2.read();
-	    			} catch (InvalidDataDAOException exception) {
-	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
-	    				return;
-	    			} 
+	    			String SN1 = req.getParameter("SN1");
+	    			String SN2 = req.getParameter("SN2");
+
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
-	    			newConnection.setFirstRouterId(router1.getId());
-	    			newConnection.setSecondRouterId(router2.getId());
+	    			newConnection.setFirstRouterSN(SN1);
+	    			newConnection.setSecondRouterSN(SN2);
 
 	    			try {
 	    				newConnection.create();
@@ -144,34 +131,20 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			int connectionId = Integer.parseInt(req.getParameter("id"));
 			String SN1 = req.getParameter("SN1");
 			String SN2 = req.getParameter("SN2");
-			// Temporary hack
-    			ORMRouter router1 = new ORMRouter();
-    			ORMRouter router2 = new ORMRouter();
-    			router1.setSN(SN1);
-    			router2.setSN(SN2);
-    			try {
-	    			try {
-	    				router1.read();
-	    				router2.read();
-	    			} catch (InvalidDataDAOException exception) {
-	    				// No routers with such SN, redirect to add/edit page
-	    				res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
-	    				return;
-	    			} 
-	    			ORMRouterConnection updateConnection = new ORMRouterConnection();
-	    			updateConnection.setId(connectionId);
-	    			updateConnection.setFirstRouterId(router1.getId());
-	    			updateConnection.setSecondRouterId(router2.getId());			
-				try {
-					updateConnection.update();
-				} catch (DublicateKeyDAOException exception) {
-					res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
-					return;
-				} catch (InvalidDataDAOException exception) {
-					// No routers with such SN, redirect to add/edit page
-					res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
-					return;
-				}
+			
+			ORMRouterConnection updateConnection = new ORMRouterConnection();
+			updateConnection.setId(connectionId);
+			updateConnection.setFirstRouterSN(SN1);
+			updateConnection.setSecondRouterSN(SN2);			
+			try {
+				updateConnection.update();
+			} catch (DublicateKeyDAOException exception) {
+				res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
+				return;
+			} catch (InvalidDataDAOException exception) {
+				// No routers with such SN, redirect to add/edit page
+				res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
+				return;
 			}catch (DAOException cause) {
 				logger.warn("Internal DAO exception", cause);
 				forwardToErrorPage("Internal DAO exception", req, res);
