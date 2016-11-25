@@ -405,4 +405,14 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
         return cities.toArray(new CityEntity[cities.size()]);
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public String[] getCountries(){
+        String[] countries = { "Belarus", "Russia", "Ukraine", "Poland", "Moldova"};
+
+        return countries;
+    }
 }
