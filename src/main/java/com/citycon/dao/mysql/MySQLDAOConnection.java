@@ -19,6 +19,17 @@ public class MySQLDAOConnection {
     private static volatile MySQLDAOConnection instance;
 
     private static DataSource dataSource;
+<<<<<<< HEAD
+=======
+
+    private final String MYSQL_CONNECTOR_CLASS = "com.mysql.jdbc.Driver";
+
+    private static final String URL = "jdbc:mysql://23.99.115.175:3306/nc2_cityCon";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "nc_2groupDB";
+>>>>>>> e59c4ca58032dd4b8f19f10d4683178aac2e6b11
+
+    private static final String NAME = "java:comp/env/Phone";
 
     private Logger logger;
 
