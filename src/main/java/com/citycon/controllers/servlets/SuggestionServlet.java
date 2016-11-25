@@ -24,8 +24,8 @@ import java.util.Iterator;
 
 
 /**
- * Provides backend for connection setup. Can return all cities of particular
- * country and all routers of particular city.
+ * Provides json-backend for suggestions. Supports suggestions for cities of
+ * particular, country and routers of particular city.
  *
  * @author  Mike
  * @version  2.0

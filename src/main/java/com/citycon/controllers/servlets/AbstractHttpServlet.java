@@ -3,17 +3,20 @@ package com.citycon.controllers.servlets;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * Common abstract servlet. Provides several methods for all servlets in app
  * 
+ * @author Mike
+ * @version 1.0
  */
 public abstract class AbstractHttpServlet extends HttpServlet {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";
@@ -27,37 +30,37 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     protected void forwardToErrorPage(String errorMessage, HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
 
-        RequestDispatcher errorPage = req.getRequestDispatcher(ERROR_PAGE);
         req.setAttribute("errorMessage", errorMessage);
-        errorPage.forward(req, res);
+        req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
     }
     /**
-     *	Aimed to validate and set default pagination variables. Return fasle, if
-     *	page is negative or too lagre (and sets normalized page value in req resope)
-     *	Also set default asc and itemsPerPage values if they don't exists.
+     *	Aimed to validate and set default pagination variables. Return not null StringBuilder 
+     *	for represents new path, if page is negative or too lagre (and sets normalized page 
+     *	value in req resope). Also set default asc and itemsPerPage values if they don't exists.
      * 
-     * @param  itemsNum number of itmes from DAO
-     * @param  req request object to get pagination variables
-     * @param  res response object to set correct pagination variables
-     * @return redirectPath if page number must be normalized
-     * @throws InternalDAOException if any internal DAO error occurs
+     * @param  itemsNum 				number of itmes from DAO
+     * @param  parinationParameters 	HashMap of pagination parametes
+     * @param  req 						request object to get pagination variables
+     * @param  res 						response object to set correct pagination variables
+     * @return redirectPath 			if page number must be normalized
+     * @throws InternalDAOException 	if any internal DAO error occurs
      */
-    protected StringBuilder setPaginationVariables(int itemsNum, HashMap<String, String> paginationParameters, HttpServletRequest req,
-     									 HttpServletResponse res) throws NumberFormatException {
+    protected StringBuilder setPaginationVariables(int itemsNum, HashMap<String, String> paginationParameters, 
+    					HttpServletRequest req, HttpServletResponse res) throws NumberFormatException {
     	
     	// Req parametes
     	String pageReq = req.getParameter("page");
 		String itemsPerPageReq = req.getParameter("itemsPerPage");
 		String ascReq = req.getParameter("asc");
 		String sortByReq = req.getParameter("sortBy");
-
         
 		// Default parametes
 		int page = Integer.parseInt(paginationParameters.get("page"));
 		int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
 
         
-		// Parsing req parameters, NumberFormatException can be thrown
+		// Parsing req parameters, updating pagination variables if
+		// req parameters are valid.
 		
 		if(pageReq != null && !pageReq.equals("")) {
 			page = Integer.parseInt(pageReq);
@@ -74,6 +77,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
             paginationParameters.put("sortBy", sortByReq);
         }
 
+        //No need redirect, can not do anything
 		if (itemsNum <= 0) return null;
 
 		// Asc redirect to the first page if req page is negative
@@ -99,6 +103,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				page += 1;
 			}
 			paginationParameters.put("page", String.valueOf(page));
+
 			StringBuilder redirect = new StringBuilder();
 	        redirect.append("/connections?page=");
 	        redirect.append(page); // normalized page
@@ -111,7 +116,8 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 			return redirect;
 		}
 
-		// Pagination variables
+		// Setting pagination attributes
+
 		int PAGINATION_BUTTONS_NUM = 10;
 
 		int currentPage = page;
@@ -134,6 +140,13 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		return null;
     }
 
+    /**
+     * Aimed to initialize pagination data. Pagination data is represented as
+     * <code>HasMap</code> of <code>HapMaps</code>. Each of nested <code>HasMap</code>
+     * represents pagination data for one app table.
+     * 
+     * @param session [description]
+     */
     protected void initializePaginationData(HttpSession session) {
     	HashMap<String, HashMap<String, String>> paginationParameters = new HashMap<>();
 

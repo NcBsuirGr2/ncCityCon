@@ -17,7 +17,7 @@
 				<div class="col-md-6 col-md-offset-3">
 					<div class="login-panel panel panel-default">
 						<center class="panel-heading" >
-							<h2 >CityCon</h2>
+							<h2>CityCon</h2>
 						</center>
 						<div class="panel-body">
 							<a href="/signin" class="btn btn-primary btn-block btn-lg center-block">Sign in</a>
