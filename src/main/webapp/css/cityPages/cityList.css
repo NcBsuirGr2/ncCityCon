@@ -1,0 +1,12 @@
+.panel-heading {
+    font-size: 24px;
+}
+.panel {
+    margin: 20px 300px 0px;
+}
+#itemsPerPageSelect {
+    width: 80px;
+}
+.alert {
+    margin: 20px 80px 0px;
+}
