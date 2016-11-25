@@ -17,7 +17,7 @@
 	</head>
 
 
-	<c:set var="samePath" value="?country=${param.country}&city=${param.city}"/>
+	<c:set var="samePath" value="country=${param.country}&city=${param.city}"/>
 
 	<body>
 		<div class="content-wrapper">
@@ -61,7 +61,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=country&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=country&asc=${newAsc}">											
 											Country 
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'country'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
@@ -75,7 +75,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=city&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=city&asc=${newAsc}">											
 											City
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'city'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -89,7 +89,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=SN&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=SN&asc=${newAsc}">											
 											SN 
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'SN'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -103,7 +103,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=name&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=name&asc=${newAsc}">											
 											Name
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'name'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -116,7 +116,7 @@
 										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'portsNum'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>										
-											<a href="${samePath}&sortBy=portsNum&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=portsNum&asc=${newAsc}">											
 											Ports num
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'portsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -129,7 +129,7 @@
 										<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
 											<c:set var="newAsc" value="false"/>
 										</c:if>										
-											<a href="${samePath}&sortBy=usedPortsNum&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=usedPortsNum&asc=${newAsc}">											
 											Used ports
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -143,7 +143,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										
-											<a href="${samePath}&sortBy=isActive&asc=${newAsc}">											
+											<a href="?${samePath}&sortBy=isActive&asc=${newAsc}">											
 											Active
 											<c:if test="${paginationParameters['routers']['sortBy'] == 'isActive'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
@@ -175,7 +175,7 @@
 
 								<div class="col-sm-3">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a href="/router?action=add">
+										<a href="/router?${samePath}&action=add">
 											<button class="btn btn-primary center-block">Add</button>
 										</a>
 									</c:if>
@@ -242,7 +242,7 @@
 					<ul class="pagination">
 						<c:if test="${beginPage > previousPage}">
 							<li class="page-item">
-								<a class="page-link" href="${samePath}&page=${previousPage}" aria-label="Previous">
+								<a class="page-link" href="?${samePath}&page=${previousPage}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 									<span class="sr-only">Previous</span>
 								</a>
@@ -257,7 +257,7 @@
 									<c:set var="isActive" value=""/>
 							</c:if>
 							<li class="page-item ${isActive}">
-								<a class="page-link" href="${samePath}&page=${i.index}">
+								<a class="page-link" href="?${samePath}&page=${i.index}">
 									${i.index}
 								</a>
 							</li>
@@ -265,7 +265,7 @@
 
 						<c:if test="${endPage < nextPage}">
 							<li class="page-item">
-								<a class="page-link" href="${samePath}&page=${nextPage}" aria-label="Next">
+								<a class="page-link" href="?${samePath}&page=${nextPage}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 									<span class="sr-only">Next</span>
 								</a>
@@ -284,9 +284,9 @@
 
 					<div class="col-sm-2">
 						<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 5}">selected</c:if>  value="${samePath}&itemsPerPage=5">5</option>
-				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 10 || empty paginationParameters['routers']['itemsPerPage']}">selected</c:if> value="${samePath}&itemsPerPage=10">10</option>
-				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 15}">selected</c:if> value="${samePath}&itemsPerPage=15">15</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 5}">selected</c:if>  value="?${samePath}&itemsPerPage=5">5</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 10 || empty paginationParameters['routers']['itemsPerPage']}">selected</c:if> value="?${samePath}&itemsPerPage=10">10</option>
+				            <option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 15}">selected</c:if> value="?${samePath}&itemsPerPage=15">15</option>
 				        </select>
 				    </div>
 

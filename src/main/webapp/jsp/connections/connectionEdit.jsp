@@ -11,7 +11,6 @@
 
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script src="/js/jquery.easy-autocomplete.min.js"></script>
 
             <script src="/js/formValidation.js"></script>
             <script src="/js/connectionPages/connectionEdit.js"></script>
@@ -47,6 +46,9 @@
                         </c:when>
                         <c:when test="${param.errorType == 'noFreePorts'}">
                             Routers have no ports to connect to.
+                        </c:when>
+                        <c:when test="${param.errorType == 'dublicate'}">
+                            Check your data for dublicate.
                         </c:when>
                     </c:choose>
                 </div>

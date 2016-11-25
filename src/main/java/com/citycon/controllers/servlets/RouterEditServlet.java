@@ -218,9 +218,9 @@ public class RouterEditServlet extends AbstractHttpServlet {
         redirect.append(name);
         redirect.append("&active=");
         redirect.append(active);
-        redirect.append("&cityName=");
+        redirect.append("&city=");
         redirect.append(cityName);
-        redirect.append("&countryName=");
+        redirect.append("&country=");
         redirect.append(countryName);
         return redirect;
     }

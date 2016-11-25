@@ -38,7 +38,7 @@
 				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">
 					<div class="form-group">
 						<label for="country" class="col-xs-3 control-label">Country:</label>
-						<div class="col-xs-9">
+						<div class="col-xs-7">
 							<select class="form-control" id="country" name="countryName" form="form">
                                 <option label=" "></option>
                                 <c:if test="${not empty connection or not empty param.firstCity}">
@@ -56,7 +56,7 @@
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-xs-3 control-label">City:</label>
-						<div class="col-xs-9">
+						<div class="col-xs-7">
 							<c:if test="${not empty editCity}">
 								<input class="form-control" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
 							</c:if>
