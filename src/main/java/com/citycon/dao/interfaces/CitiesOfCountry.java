@@ -9,4 +9,5 @@ import com.citycon.model.systemunits.entities.CityEntity;
  */
 public interface CitiesOfCountry {
     CityEntity[] getCities(String country) throws InternalDAOException, InvalidDataDAOException;
+    String[] getCountries();
 }

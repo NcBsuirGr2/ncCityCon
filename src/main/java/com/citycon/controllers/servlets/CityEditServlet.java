@@ -143,7 +143,7 @@ public class CityEditServlet extends AbstractHttpServlet {
             updateCity.setId(Integer.parseInt(idString));
             updateCity.setName(name);
             updateCity.setCountryName(countryName);
-            logger.debug("Updating city with name:{} countryname:{}", updateCity.getName(), updateCity.getCountryName());
+            logger.debug("Updating city with name:{} countryName:{}", updateCity.getName(), updateCity.getCountryName());
 
             updateCity.update();
         } catch(DublicateKeyDAOException cause) {
