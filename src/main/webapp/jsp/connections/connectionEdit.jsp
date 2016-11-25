@@ -19,8 +19,7 @@
             <link rel="icon" href="favicon.ico" />
 
             <title>Edit connection</title>
-        </head>
-
+        </head> 
     <body>
 
         <c:choose>

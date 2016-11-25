@@ -32,11 +32,15 @@ function updateSelect(selected, url) {
 		}
 	})
 }
+function updCountry() {
+	updateSelect($("#country"), "/suggestions?field=country");
+}
 function updCity(country) {
 	updateSelect($("#city"), "/suggestions?field=city&country="+country);
 }
 
 $(document).ready(function() {
+	updCountry();
 	updCity($("#country").val());
 
 	$("#country").on("change", function() {

@@ -4,30 +4,16 @@
         <div class="col-xs-7">
             <select class="form-control" id="country" name="countryName" form="form">
                 <option label=" "></option>
-                <option value="Belarus" 
-                    <c:if test="${editRouter.countryName == 'Belarus' or param.countryName == 'Belarus'}">    selected
-                    </c:if>
-                    >Belarus</option>
-                <option value="Moldova"
-                    <c:if test="${editRouter.countryName == 'Moldova' or param.countryName == 'Moldova'}">    selected
-                    </c:if>
-                    >Moldova</option>
-                </option>
-                <option value="Poland"
-                    <c:if test="${editRouter.countryName == 'Poland' or param.countryName == 'Poland'}">    selected
-                    </c:if>
-                    >Poland
-                </option>
-                <option value="Ukraine"
-                    <c:if test="${editRouter.countryName == 'Ukraine' or param.countryName == 'Ukraine'}">    selected
-                    </c:if>
-                    >Ukraine
-                </option>
-                <option value="Russia"
-                    <c:if test="${editRouter.countryName == 'Russia' or param.countryName == 'Russia'}">    selected
-                    </c:if>
-                    >Russia
-                </option>
+                <c:if test="${not empty editRouter or not empty param.countryName}">
+                    <c:choose>
+                        <c:when test="${not empty editRouter}">
+                            <option value="${editRouter.countryName}" selected>${editRouter.countryName}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${param.countryName}" selected>${param.countryName}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
             </select>
         </div>
     </div>
@@ -76,7 +62,7 @@
     </div>
     <div class="form-group">
         <label for="group" class="col-xs-3 control-label">Active:</label>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <select class="form-control" name="active" form="form">
                 <option value="true" <c:if test="${param.editActive == 'true'}">selected</c:if> >true</option>
                 <option value="false" <c:if test="${param.editActive == 'false'}">selected</c:if>>false</option>
