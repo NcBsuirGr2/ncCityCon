@@ -146,6 +146,15 @@
                                 </form>
                             </c:if>
                         </div>
+
+                        <div class="col-sm-4">
+                            <c:if test="${showSystemUnitsOperationBtns}">
+                                <a class="routersHref" href="#">
+                                    <button class="btn btn-primary center-block">Routers</button>
+                                </a>
+                            </c:if>
+                        </div>
+
                         <!-- Delete dialog modal -->
                         <div class="modal fade deleteDialog">
                             <div class="modal-dialog" role="document">
