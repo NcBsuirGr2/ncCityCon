@@ -64,10 +64,10 @@
 						<label for="name" class="col-xs-3 control-label">City:</label>
 						<div class="col-xs-9">
 							<c:if test="${not empty editCity}">
-								<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
+								<input class="form-control" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
 							</c:if>
 							<c:if test="${empty editCity}">
-								<input class="form-control" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
+								<input class="form-control" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
 							</c:if>
 						</div>
 					</div>

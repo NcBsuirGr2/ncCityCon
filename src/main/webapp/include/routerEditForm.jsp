@@ -14,10 +14,10 @@
         <label for="name" class="col-xs-3 control-label">City:</label>
         <div class="col-xs-9">
         <c:if test="${not empty editRouter}">
-            <input class="form-control simpleText" required placeholder="City" name="cityName" type="text" value="${editRouter.cityName}">
+            <input class="form-control simpleText" maxlength="15" required placeholder="City" name="cityName" type="text" value="${editRouter.cityName}">
         </c:if>
         <c:if test="${empty editRouter}">
-            <input class="form-control simpleText" required placeholder="City" name="cityName" type="text" value="${param.cityName}">
+            <input class="form-control simpleText" maxlength="15" required placeholder="City" name="cityName" type="text" value="${param.cityName}">
         </c:if>
         </div>
     </div>
@@ -25,10 +25,10 @@
         <label for="name" class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-9">
         <c:if test="${not empty editRouter}">
-            <input class="form-control simpleText" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
+            <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
         </c:if>
         <c:if test="${empty editRouter}">
-            <input class="form-control simpleText" required placeholder="Name" name="name" type="text" value="${param.name}">
+            <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
         </c:if>
         </div>
     </div>  

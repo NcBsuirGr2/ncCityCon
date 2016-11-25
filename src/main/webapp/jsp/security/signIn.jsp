@@ -51,7 +51,7 @@
                                     <label class="col-xs-3 control-label">Login:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" autofocus placeholder="Login" name="login">
+                                            <input type="text" maxlength="15" class="form-control" autofocus placeholder="Login" name="login">
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                     <label class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="password" class="form-control passwordInput" placeholder="Password" name="password">
+                                            <input type="password" maxlength="15" class="form-control passwordInput" placeholder="Password" name="password">
                                         </div>
                                     </div>
                                 </div>

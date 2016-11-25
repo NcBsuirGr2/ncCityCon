@@ -43,10 +43,10 @@
                         	<label for="name" class="col-xs-3 control-label">Name:</label>
                         	<div class="col-xs-7">
                                 <c:if test="${not empty editUser}">
-                                	<input class="form-control simpleText" autofocus required placeholder="Name" name="name" type="text" value="${editUser.name}">
+                                	<input class="form-control simpleText" maxlength="15" autofocus required placeholder="Name" name="name" type="text" value="${editUser.name}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control simpleText" required placeholder="Name" name="name" type="text" value="${param.editName}">
+                                    <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.editName}">
                                 </c:if>
                             </div>
                         </div>   
@@ -54,27 +54,27 @@
                             <label for="login" class="col-xs-3 control-label">Login:</label>
                              <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
-                                    <input class="form-control simpleText" required placeholder="Login" name="login" type="text" value="${editUser.login}">
+                                    <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${editUser.login}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control simpleText" required placeholder="Login" name="login" type="text" value="${param.editLogin}">
+                                    <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${param.editLogin}">
                                 </c:if>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Password:</label>
                              <div class="col-xs-7">
-                                 <input class="form-control passwordInput" required placeholder="Password" name="password" type="text" value="${editUser.password}">
+                                 <input class="form-control passwordInput" maxlength="15" required placeholder="Password" name="password" type="text" value="${editUser.password}">
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
                              <div class="col-xs-7">                                 
                                 <c:if test="${not empty editUser}">
-                                   <input class="form-control emailInput" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
+                                   <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
                                 </c:if>
                                 <c:if test="${empty editUser}">
-                                    <input class="form-control emailInput" required placeholder="E-mail" name="email" type="text" value="${param.editEmail}">
+                                    <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${param.editEmail}">
                                 </c:if>
                              </div>
                         </div>
