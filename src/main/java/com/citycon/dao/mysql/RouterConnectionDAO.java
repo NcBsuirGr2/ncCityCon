@@ -306,7 +306,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     "(select distinct `Router`.`ID` as ID " +
                     "from `Router` inner join `City` " +
                     "on (`Router`.`City_id`=`City`.`ID`) " +
-                    "where (`City`.`Name` = ? and `City`.`Country` = ?) " +
+                    "where `City`.`Name` = ? and `City`.`Country` = ?) " +
                     "routers " +
                     "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
                     "or `RouterConnection`.`ID_To` = `routers`.`ID`) " +
@@ -340,7 +340,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             }
         } catch (SQLException e) {
             logger.info("Get count elements failed. {}", log_parameters, e);
-            throw new InternalDAOException("Get count elements failed.", e);
+            throw new InvalidDataDAOException("Get count elements failed.", e);
         } finally {
             if (preparedStatement != null) {
                 try {
