@@ -65,30 +65,16 @@
                                 <div class="col-xs-7">
                                     <select class="form-control" id="country1" name="country1" form="form">
                                         <option label=" "></option>
-                                        <option value="Belarus" 
-                                            <c:if test="${connection.firstRouterCountry == 'Belarus' or param.firstCountry == 'Belarus'}">    selected
-                                            </c:if>
-                                            >Belarus</option>
-                                        <option value="Moldova"
-                                            <c:if test="${connection.firstRouterCountry == 'Moldova' or param.firstCountry == 'Moldova'}">    selected
-                                            </c:if>
-                                            >Moldova</option>
-                                        </option>
-                                        <option value="Poland"
-                                            <c:if test="${connection.firstRouterCountry == 'Poland' or param.firstCountry == 'Poland'}">    selected
-                                            </c:if>
-                                            >Poland
-                                        </option>
-                                        <option value="Ukraine"
-                                            <c:if test="${connection.firstRouterCountry == 'Ukraine' or param.firstCountry == 'Ukraine'}">    selected
-                                            </c:if>
-                                            >Ukraine
-                                        </option>
-                                        <option value="Russia"
-                                            <c:if test="${connection.firstRouterCountry == 'Russia' or param.firstCountry == 'Russia'}">    selected
-                                            </c:if>
-                                            >Russia
-                                        </option>
+                                        <c:if test="${not empty connection or not empty param.firstCountry}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.firstRouterCountry}" selected>${connection.firstRouterCountry}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.firstCountry}" selected>${param.firstCountry}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
                                     </select>
                                 </div>
                             </div>
@@ -136,30 +122,16 @@
                                 <div class="col-xs-7">
                                     <select class="form-control" id="country2" name="country2" form="form">
                                         <option label=" "></option>
-                                        <option value="Belarus" 
-                                            <c:if test="${connection.secondRouterCountry == 'Belarus' or param.secondCountry == 'Belarus'}">    selected
-                                            </c:if>
-                                            >Belarus</option>
-                                        <option value="Moldova"
-                                            <c:if test="${connection.secondRouterCountry == 'Moldova' or param.secondCountry == 'Moldova'}">    selected
-                                            </c:if>
-                                            >Moldova</option>
-                                        </option>
-                                        <option value="Poland"
-                                            <c:if test="${connection.secondRouterCountry == 'Poland' or param.secondCountry == 'Poland'}">    selected
-                                            </c:if>
-                                            >Poland
-                                        </option>
-                                        <option value="Ukraine"
-                                            <c:if test="${connection.secondRouterCountry == 'Ukraine' or param.secondCountry == 'Ukraine'}">    selected
-                                            </c:if>
-                                            >Ukraine
-                                        </option>
-                                        <option value="Russia"
-                                            <c:if test="${connection.secondRouterCountry == 'Russia' or param.secondCountry == 'Russia'}">    selected
-                                            </c:if>
-                                            >Russia
-                                        </option>
+                                        <c:if test="${not empty connection or not empty param.secondCountry}">
+                                            <c:choose>
+                                                <c:when test="${not empty connection}">
+                                                    <option value="${connection.secondRouterCountry}" selected>${connection.secondRouterCountry}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${param.secondCountry}" selected>${param.secondCountry}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
                                     </select>
                                 </div>
                             </div>

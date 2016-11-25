@@ -52,7 +52,7 @@ public class SuggestionServlet extends HttpServlet {
             case "city" : {
                 try {
                     String country = req.getParameter("country");
-                    if (field == null) {
+                    if (country == null) {
                         logger.debug("Invalid usage of SuggestionServlet, need "
                                          + "\"country\" parameter for \"city\" field");
                         return;
@@ -82,13 +82,13 @@ public class SuggestionServlet extends HttpServlet {
             case "router" : {
                 try {
                     String country = req.getParameter("country");
-                    if (field == null) {
+                    if (country == null) {
                         logger.debug("Invalid usage of SuggestionServlet, need "
                                          + "\"country\" parameter for \"router\" field");
                         return;
                     }
                     String city = req.getParameter("city");
-                    if (field == null) {
+                    if (city == null) {
                         logger.debug("Invalid usage of SuggestionServlet, need "
                                          + "\"city\" parameter for \"router\" field");
                         return;
@@ -111,6 +111,31 @@ public class SuggestionServlet extends HttpServlet {
                     }
                     if (routers.length > 0) {
                         writer.write("\""+routers[routers.length-1].getSN()+"\"");
+                    }                    
+                    writer.write("]}");
+                    writer.flush(); 
+                    return; 
+                } catch(InternalDAOException e) {
+                    Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.SuggestionServlet");            
+                    logger.warn("Cannot read suggestions", e);
+                } catch (Exception e) {
+                    Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.SuggestionServlet");            
+                    logger.warn("Exception", e);
+                }
+                break;
+            }
+            case "country" : {
+                try {
+                    CitiesOfCountry dao = (CitiesOfCountry)factory.getCityDAO();                    
+                    String[] countries = dao.getCountries();
+                    
+                    Writer writer = res.getWriter();
+                    writer.write("{\"suggestions\":[");
+                    for (int i = 0; i < countries.length-1; ++i) {
+                        writer.write("\""+countries[i]+"\",");
+                    }
+                    if (countries.length > 0) {
+                        writer.write("\""+countries[countries.length-1]+"\"");
                     }                    
                     writer.write("]}");
                     writer.flush(); 

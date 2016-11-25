@@ -31,11 +31,18 @@ function updateSelect(selected, url) {
 		}
 	})
 }
+
+function updCountry1() {
+	updateSelect($("#country1"), "/suggestions?field=country");
+}
 function updCity1(country) {
 	updateSelect($("#city1"), "/suggestions?field=city&country="+country);
 }
 function updSN1(country, city) {
 	updateSelect($("#SN1"), "/suggestions?field=router&country="+country+"&city="+city);
+}
+function updCountry2() {
+	updateSelect($("#country2"), "/suggestions?field=country");
 }
 function updCity2(country) {
 	updateSelect($("#city2"), "/suggestions?field=city&country="+country);
@@ -45,8 +52,10 @@ function updSN2(country, city) {
 }
 
 $(document).ready(function() {
+	updCountry1();
 	updCity1($("#country1").val());
 	updSN1($("#country1").val(), $("#city1").val());
+	updCountry2();
 	updCity2($("#country2").val());
 	updSN2($("#country2").val(), $("#city2").val());
 
