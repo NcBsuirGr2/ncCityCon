@@ -22,6 +22,17 @@
         </head>
 
     <body>
+
+        <c:choose>
+            <c:when test="${not empty param.SN}">
+                <c:set var="sameSelect" value="SN=${param.SN}"/>
+            </c:when>
+
+            <c:otherwise>
+                <c:set var="sameSelect" value="country=${param.country}&city=${param.city}"/>
+            </c:otherwise>
+        </c:choose>
+
         <div class="content-wrapper">
             <%@ include file="/include/header.jsp" %>
             <div class="alert alert-warning formAlert hide">
@@ -191,6 +202,7 @@
                             </div>
                             <input type="hidden" name="action" value="${param.action}"/>
                             <input type="hidden" name="id" value="${connection.id}"/>
+                            <input type="hidden" name="sameSelect" value="${sameSelect}"/>
                         </form>
                     </div>
 
@@ -200,8 +212,7 @@
                                 <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                             </div>
                             <div class="col-sm-6">
-                            <!-- Implement Back btn -->
-                                <a href="/connections" class="btn btn-primary btn-block center-block">Back</a>
+                                <a href="/connections?${sameSelect}" class="btn btn-primary btn-block center-block">Back</a>
                             </div>
                         </div>
                     </div>    

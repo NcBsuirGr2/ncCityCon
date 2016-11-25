@@ -48,8 +48,8 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
 					req.setAttribute("connection", connection.getEntity());
 				} catch (DAOException cause) {
-					logger.warn("Error occur during reading connection", cause);
-					forwardToErrorPage("Error occur during reading connection", req, res);
+					logger.warn("Error occured during reading connection", cause);
+					forwardToErrorPage("Error occured during reading connection", req, res);
 					return;
 				}
 			} catch (NumberFormatException exception) {
@@ -60,10 +60,26 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
-		} else if (req.getParameter("firstSN") != null) {
+		} else if (req.getParameter("SN") != null) {
 			ORMRouterConnection connection = new ORMRouterConnection();
-			connection.setFirstRouterSN(req.getParameter("firstSN"));
-			req.setAttribute("connection", connection.getEntity());
+			ORMRouter router = new ORMRouter();
+			router.setSN(req.getParameter("SN"));
+			try {
+				router.read();				
+				connection.setFirstRouterSN(req.getParameter("SN"));
+				connection.setFirstRouterCityName(router.getCityName());
+				connection.setFirstRouterCountry(router.getCountryName());
+				req.setAttribute("connection", connection.getEntity());
+			} catch (DAOException cause) {
+				logger.warn("Error occured during reading router to fill connection", cause);
+				forwardToErrorPage("Error occured during reading connection", req, res);
+				return;
+			}
+		} else if (req.getParameter("city") != null && req.getParameter("country") != null) {
+			ORMRouterConnection connection = new ORMRouterConnection();
+			connection.setFirstRouterCityName(req.getParameter("city"));
+			connection.setFirstRouterCountry(req.getParameter("country"));
+			req.setAttribute("connection", connection.getEntity());			
 		}
 		
 		RequestDispatcher editView = req.getRequestDispatcher(CONNECTION_EDIT_PAGE);
@@ -118,7 +134,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			logger.warn("DAO error during adding new connection", exception);
 	    			forwardToErrorPage("Internal DAO exception", req, res);
 	    		}
-    			res.sendRedirect(CONNECTION_LIST_URL+"?success=add");
+    			res.sendRedirect(CONNECTION_LIST_URL+"?success=add&"+req.getParameter("sameSelect"));
     		}
     	}
     }
@@ -164,7 +180,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			forwardToErrorPage("Not string id value", req, res);
 			return;
 		}
-		res.sendRedirect(CONNECTION_LIST_URL+"?success=add");
+		res.sendRedirect(CONNECTION_LIST_URL+"?success=edit&"+req.getParameter("sameSelect"));
 	}
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
@@ -175,15 +191,15 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				connection.setId(connectionId);
 				connection.delete();
 			} catch (DAOException cause) {
-				logger.warn("Error occur during deleting connection", cause);
-				forwardToErrorPage("Error occur during deleting connection", req, res);
+				logger.warn("Error occured during deleting connection", cause);
+				forwardToErrorPage("Error occured during deleting connection", req, res);
 				return;
 			}
 		} catch (NumberFormatException exception) {
 			forwardToErrorPage("Not string id value", req, res);
 		}
 
-		res.sendRedirect(CONNECTION_LIST_URL+"?success=delete");
+		res.sendRedirect(CONNECTION_LIST_URL+"?success=delete&"+req.getParameter("sameSelect"));
 		return;
 	}
 	private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
