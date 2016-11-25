@@ -4,7 +4,7 @@
   <groupId>com.ncCityCon</groupId>
   <artifactId>cityCon</artifactId>
   <packaging>war</packaging>
-  <version>0.5.0</version>
+  <version>0.6.0</version>
   
   <dependencies>
     <dependency>
@@ -55,8 +55,6 @@
       <version>1.7.21</version>
       <scope>compile</scope>
     </dependency>
-
-
 
   </dependencies>
 
