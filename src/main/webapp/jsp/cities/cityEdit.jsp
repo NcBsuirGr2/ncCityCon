@@ -8,6 +8,7 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/js/cityPages/suggestions.js"></script>
 	<link rel="icon" href="favicon.ico" />
 	<title>Edit city</title>
 </head>
@@ -38,26 +39,19 @@
 					<div class="form-group">
 						<label for="country" class="col-xs-3 control-label">Country:</label>
 						<div class="col-xs-9">
-							<c:if test="${not empty editCity}">
-								<select class="form-control" id="country" name="countryName" form="form">
-									<option disabled selected value>${editCity.countryName}</option>
-									<option value="Belarus">Belarus</option>
-									<option value="Russia">Russia</option>
-									<option value="Ukraine">Ukraine</option>
-									<option value="Poland">Poland</option>
-									<option value="Moldova">Moldova</option>
-								</select>
-							</c:if>
-							<c:if test="${empty editCity}">
-								<select class="form-control" id="country" name="countryName" form="form">
-									<option disabled selected value></option>
-									<option value="Belarus">Belarus</option>
-									<option value="Russia">Russia</option>
-									<option value="Ukraine">Ukraine</option>
-									<option value="Poland">Poland</option>
-									<option value="Moldova">Moldova</option>
-								</select>
-							</c:if>
+							<select class="form-control" id="country" name="countryName" form="form">
+                                <option label=" "></option>
+                                <c:if test="${not empty connection or not empty param.firstCity}">
+                                    <c:choose>
+                                        <c:when test="${not empty connection}">
+                                            <option value="${connection.firstRouterCityName}" selected>${connection.firstRouterCityName}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${param.firstCity}" selected>${param.firstCity}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </select>
 						</div>
 					</div>
 					<div class="form-group">
