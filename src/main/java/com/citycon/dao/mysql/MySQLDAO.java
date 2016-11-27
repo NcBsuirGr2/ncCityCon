@@ -25,7 +25,23 @@ public abstract class MySQLDAO implements DAO {
      * @throws InternalDAOException
      */
     protected MySQLDAO() throws InternalDAOException {
-        connection = MySQLDAOConnection.getInstance().getConnection();
+    }
+
+    protected Connection getConnection() throws InternalDAOException {
+        logger.trace("Get connection");
+        return MySQLDAOConnection.getInstance().getConnection();
+    }
+
+
+    protected void closeConnection() throws InternalDAOException {
+        try {
+            if(!connection.isClosed()){
+                connection.close();
+            }
+        } catch (SQLException e) {
+            logger.error("Close Connection failed", e);
+            throw new InternalDAOException(e);
+        }
     }
 
     /**
@@ -41,6 +57,7 @@ public abstract class MySQLDAO implements DAO {
         ResultSet resultSet = null;
 
         try {
+            connection = getConnection();
             statement = connection.createStatement();
         } catch (SQLException e) {
             logger.warn("Statement in get count wasn't created", e);
@@ -62,6 +79,8 @@ public abstract class MySQLDAO implements DAO {
             throw new InternalDAOException("Get count elements failed", e);
         }
         finally {
+            closeConnection();
+
             if (statement!=null){
                 try {
                     statement.close();
@@ -95,6 +114,7 @@ public abstract class MySQLDAO implements DAO {
         String delete = "delete from" + nameTable + "where `id`=?";
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(delete);
         }catch (SQLException e) {
             logger.warn("Prepare statement in delete wasn't created", e);
@@ -112,6 +132,8 @@ public abstract class MySQLDAO implements DAO {
             throw new InvalidDataDAOException("Delete failed", e);
         }
         finally {
+            closeConnection();
+
             if (preparedStatement != null){
                 try {
                     preparedStatement.close();

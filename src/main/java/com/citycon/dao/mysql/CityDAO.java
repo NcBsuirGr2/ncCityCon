@@ -78,6 +78,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
 
         try {
+            connection = getConnection();
             search_cities = connection.prepareStatement(search);
         }catch (SQLException e) {
             logger.warn("PrepareStatement in getPage wasn't created");
@@ -110,6 +111,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new InvalidDataDAOException(String.format("Put data to PrepareStatement in {} invalid", nameTable), e);
         }
         finally {
+            closeConnection();
+
             if (search_cities!=null){
                 try {
                     search_cities.close();
@@ -155,6 +158,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in create wasn't created", e);
@@ -175,6 +179,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
         }
         finally {
+            closeConnection();
+
             if(preparedStatement != null){
                 try {
                     preparedStatement.close();
@@ -217,6 +223,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
                 "), Country(" + city.getCountryName() + ")";
 
         try{
+            connection = getConnection();
             search_city = connection.prepareStatement(search);
         }catch (SQLException e) {
             logger.warn("PreparedStatement in read wasn't created", e);
@@ -246,6 +253,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
         }
         finally {
+            closeConnection();
+
             if (search_city!=null){
                 try {
                     search_city.close();
@@ -288,6 +297,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(update);
         }catch (SQLException e) {
             logger.warn("PreparedStatement in update wasn't created", e);
@@ -314,6 +324,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new DublicateKeyDAOException((String.format("Update %s failed", nameTable)), e);
         }
         finally {
+            closeConnection();
+
             if (preparedStatement != null){
                 try {
                     preparedStatement.close();
@@ -359,6 +371,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         search = "select ID, `Name` from City where Country=?";
 
         try {
+            connection = getConnection();
             search_cities = connection.prepareStatement(search);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in get cities of country wasn't created");
@@ -393,6 +406,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             throw new InvalidDataDAOException(String.format("Put data to PrepareStatement " +
                     "in Get cities of country invalid"), e);
         } finally {
+            closeConnection();
+
             if (search_cities != null) {
                 try {
                     search_cities.close();

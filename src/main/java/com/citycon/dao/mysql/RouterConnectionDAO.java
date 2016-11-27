@@ -99,6 +99,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in create wasn't created", e);
@@ -122,6 +123,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
             throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
         } finally {
+            closeConnection();
+
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
@@ -182,6 +185,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
 
         try {
+            connection = getConnection();
+
             statement = connection.createStatement();
         } catch (SQLException e) {
             logger.warn("Statement in getPage wasn't created");
@@ -215,6 +220,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
             throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
         } finally {
+            closeConnection();
+
             if (statement != null) {
                 try {
                     statement.close();
@@ -271,6 +278,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
+            connection = getConnection();
+
             preparedStatement = connection.prepareStatement(update);
             statement = connection.createStatement();
         } catch (SQLException e) {
@@ -300,6 +309,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             logger.info("Update {} failed.\n {}", nameTable, log_parameters, e);
             throw new DublicateKeyDAOException((String.format("Update %s failed", nameTable)), e);
         } finally {
+            closeConnection();
+
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
@@ -370,6 +381,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(search);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in get count wasn't created", e);
@@ -394,6 +406,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             logger.info("Get count elements failed. {}", log_parameters, e);
             throw new InvalidDataDAOException("Get count elements failed.", e);
         } finally {
+            closeConnection();
+
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
@@ -460,6 +474,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(search);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in get count wasn't created", e);
@@ -482,6 +497,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             logger.info("Get count elements failed. {}", log_parameters, e);
             throw new InternalDAOException("Get count elements failed.", e);
         } finally {
+            closeConnection();
+
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
@@ -628,6 +645,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
+            connection = getConnection();
             statement = connection.createStatement();
             get_data_routerConnections = connection.prepareStatement(get_data);
         } catch (SQLException e) {
@@ -672,6 +690,8 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException(
                     String.format("Put data to PrepareStatement in %s invalid", nameTable), e);
         } finally {
+            closeConnection();
+
             if (statement != null) {
                 try {
                     statement.close();

@@ -4,8 +4,7 @@
   <groupId>com.ncCityCon</groupId>
   <artifactId>cityCon</artifactId>
   <packaging>war</packaging>
-  <version>0.6.0</version>
-  
+  <version>1.0.0 Beta</version>
   <dependencies>
     <dependency>
       <groupId>jstl</groupId>

@@ -79,6 +79,8 @@ public class UserDAO extends MySQLDAO {
         }
 
         try {
+            connection = getConnection();
+
             search_users = connection.prepareStatement(search);
         }catch (SQLException e) {
             logger.warn("PrepareStatement in getPage wasn't created");
@@ -114,6 +116,8 @@ public class UserDAO extends MySQLDAO {
             throw new InvalidDataDAOException(String.format("Put data to PrepareStatement in {} invalid", nameTable), e);
         }
         finally {
+            closeConnection();
+
             if (search_users!=null){
                 try {
                     search_users.close();
@@ -162,6 +166,8 @@ public class UserDAO extends MySQLDAO {
         }
 
         try {
+            connection = getConnection();
+
             preparedStatement = connection.prepareStatement(insert);
         } catch (SQLException e) {
             logger.warn("PrepareStatement in create wasn't created", e);
@@ -188,6 +194,8 @@ public class UserDAO extends MySQLDAO {
             throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
         }
         finally {
+            closeConnection();
+
             if(preparedStatement != null){
                 try {
                     preparedStatement.close();
@@ -229,10 +237,11 @@ public class UserDAO extends MySQLDAO {
         if(user.getLogin() != null) {
             try{
                 logger.debug("Before preparedStatement");
-                logger.debug("Connection: {}", connection.isClosed());
+                //logger.debug("Connection: {}", connection.isClosed());
+                connection = getConnection();
                 search_user = connection.prepareStatement(search);
-                logger.debug("After preparedStatement");
-                logger.debug("Connection: {}", connection.isClosed());
+                //logger.debug("After preparedStatement");
+                //logger.debug("Connection: {}", connection.isClosed());
             }catch (SQLException e) {
                 logger.warn("PreparedStatement in read wasn't created", e);
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
@@ -270,6 +279,8 @@ public class UserDAO extends MySQLDAO {
                 throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
             }
             finally {
+                closeConnection();
+
                 if (search_user!=null){
                     try {
                         search_user.close();
@@ -316,6 +327,8 @@ public class UserDAO extends MySQLDAO {
         }
 
         try {
+            connection = getConnection();
+
             preparedStatement = connection.prepareStatement(update);
         }catch (SQLException e) {
             logger.warn("PreparedStatement in update wasn't created", e);
@@ -340,6 +353,8 @@ public class UserDAO extends MySQLDAO {
             throw new DublicateKeyDAOException((String.format("Update %s failed", nameTable)), e);
         }
         finally {
+            closeConnection();
+
             if (preparedStatement != null){
                 try {
                     preparedStatement.close();
@@ -367,6 +382,7 @@ public class UserDAO extends MySQLDAO {
         String search = "select * from `Grant` where `idGrant`=?";
 
         try {
+            connection = getConnection();
             search_grant = connection.prepareStatement(search);
         }catch (SQLException e) {
             logger.warn("Prepare statement in get Grant wasn't created", e);
@@ -391,6 +407,8 @@ public class UserDAO extends MySQLDAO {
             throw new InternalDAOException("Read grant failed", e);
         }
         finally {
+            closeConnection();
+
             if (search_grant!=null){
                 try {
                     search_grant.close();
