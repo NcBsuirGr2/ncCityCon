@@ -1,8 +1,12 @@
 function validateSimpleText(text) {
-	return text.match(/^[-a-z0-9]+$/i);
+	return text.match(/^[-a-zA-Z0-9]+$/i);
 }
 
-function validatePassword(password) {
+function validateNotEmpty(text) {
+	return (text && text != "");
+}
+
+function validateASCIIAndHack(password) {
 	// Check ascii range
 	var asciiMatch = password.match(/^[!-~]+$/i);
 	var tagHackMatch = !password.match(/<.*\/>/);
@@ -23,9 +27,17 @@ function validateForm(form) {
     		return validForm;
     	}
     });
-    var $passwordInputs = $(form).find(".passwordInput");
-    $passwordInputs.each(function() {
-    	if(!validatePassword($(this).val())) {
+    var $notEmptyInputs = $(form).find(".notEmptyInput");
+    $notEmptyInputs.each(function() {
+    	if(!validateNotEmpty($(this).val())) {
+    		$(".formAlert").html("Please fill out required fields");
+    		validForm = false;
+    		return validForm;
+    	}
+    });
+    var $asciiInput = $(form).find(".asciiInput");
+    $asciiInput.each(function() {
+    	if(!validateASCIIAndHack($(this).val())) {
     		$(".formAlert").html("Your password is invalid");
     		validForm = false;
     		return validForm;

@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="login" class="col-xs-3 control-label">Password:</label>
                              <div class="col-xs-7">
-                                 <input class="form-control passwordInput" maxlength="15" required placeholder="Password" name="password" type="text" value="${editUser.password}">
+                                 <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="text" value="${editUser.password}">
                              </div>
                         </div>
                         <div class="form-group">

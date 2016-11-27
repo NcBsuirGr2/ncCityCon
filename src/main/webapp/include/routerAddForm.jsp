@@ -2,7 +2,7 @@
     <div class="form-group">
         <label class="col-xs-3 control-label">Country:</label>
         <div class="col-xs-7">
-            <select class="form-control" id="country" name="countryName" form="form">
+            <select class="form-control notEmptyInput" id="country" name="countryName" form="form">
                 <option label=" "></option>
                 <c:if test="${not empty editRouter or not empty param.country}">
                     <c:choose>
@@ -21,7 +21,7 @@
     <div class="form-group row">
         <label class="col-xs-3 control-label">City:</label>
         <div class="col-xs-7">
-            <select class="form-control" id="city" name="cityName" form="form">
+            <select class="form-control notEmptyInput" id="city" name="cityName" form="form">
                 <option label=" "></option>
                 <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
@@ -40,13 +40,13 @@
     <div class="form-group">
         <label for="name" class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-7">
-            <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+            <input class="form-control notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
         </div>
     </div>   
     <div class="form-group">
         <label for="login" class="col-xs-3 control-label">SN:</label>
          <div class="col-xs-7">                                 
-                <input class="form-control simpleText" maxlength="15" required placeholder="SN" name="SN" type="text" value="${param.SN}">
+                <input class="form-control notEmptyInput asciiInput" maxlength="15" required placeholder="SN" name="SN" type="text" value="${param.SN}">
          </div>
     </div>
     <div class="form-group">
