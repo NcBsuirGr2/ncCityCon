@@ -200,6 +200,8 @@
 										<form action="/router" id="deleteForm" method="POST">
 											<input type="hidden" id="deleteId" name="id" value="-1">
 											<input type="hidden" name="action" value="delete">
+										    <input type="hidden" id="city" name="city" value="${param.city}"/>
+											<input type="hidden" id="country" name="country" value="${param.country}"/>
 											<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 								    	</form>		
 								    </c:if>

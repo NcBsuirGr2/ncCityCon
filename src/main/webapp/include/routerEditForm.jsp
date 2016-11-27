@@ -71,5 +71,6 @@
     </div>
     <input type="hidden" name="action" value="edit"/>
     <input type="hidden" name="id" value="${editRouter.id}"/>
-    
+    <input type="hidden" name="city" value="${param.city}"/>
+    <input type="hidden" name="country" value="${param.country}"/>
  </form>

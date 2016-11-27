@@ -70,4 +70,6 @@
         </div>
     </div>
     <input type="hidden" name="action" value="add"/>
+    <input type="hidden" name="city" value="${param.city}"/>
+    <input type="hidden" name="country" value="${param.country}"/>
  </form>

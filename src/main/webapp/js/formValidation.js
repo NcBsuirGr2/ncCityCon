@@ -20,6 +20,7 @@ function validateForm(form) {
     	if(!validateSimpleText($(this).val())) {
     		$(".formAlert").html("Your input \""+$(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;")+"\" is invalid");
     		validForm = false;
+    		return validForm;
     	}
     });
     var $passwordInputs = $(form).find(".passwordInput");
@@ -27,6 +28,7 @@ function validateForm(form) {
     	if(!validatePassword($(this).val())) {
     		$(".formAlert").html("Your password is invalid");
     		validForm = false;
+    		return validForm;
     	}
     });
     var $emailInputs = $(form).find(".emailInput");
@@ -34,6 +36,7 @@ function validateForm(form) {
     	if(!validateEmail($(this).val())) {
     		$(".formAlert").html("Your email is invalid");
     		validForm = false;
+    		return validForm;
     	}
     });
     return validForm;
