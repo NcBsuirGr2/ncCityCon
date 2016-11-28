@@ -176,7 +176,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <p>Are you sure you want to delete selected user?</p>
+                                    <p>Are you sure you want to delete selected city?</p>
                                 </div>
 
                                 <div class="modal-footer">
@@ -187,12 +187,12 @@
                         </div>
                     </div>
 
-                    <!-- Select user modal -->
+                    <!-- Select city modal -->
                     <div class="modal fade selectUserModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <h4 class="modal-title">No user selected</h4>
+                                    <h4 class="modal-title">No city selected</h4>
                                 </div>
 
                                 <div class="modal-footer">

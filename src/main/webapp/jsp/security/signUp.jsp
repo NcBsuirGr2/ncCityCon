@@ -70,7 +70,7 @@
                                     <label class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="password" maxlength="15" class="form-control passwordInput" placeholder="Password" name="password" value="${param.password}">
+                                            <input type="password" maxlength="15" class="form-control asciiInput" placeholder="Password" name="password" value="${param.password}">
                                         </div>
                                     </div>
                                 </div>

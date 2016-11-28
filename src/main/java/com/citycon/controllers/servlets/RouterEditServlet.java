@@ -122,7 +122,8 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     forwardToErrorPage("Internal servler error", req, res);
                     return;
                 }
-                res.sendRedirect(ROUTER_LIST_URL+"?success=add");
+                res.sendRedirect(ROUTER_LIST_URL+"?success=add&country="+req.getParameter("country") 
+                                                                + "&city="+req.getParameter("city"));
             }
         }
     }
@@ -165,7 +166,8 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
-        res.sendRedirect(ROUTER_LIST_URL+"?success=edit");
+        res.sendRedirect(ROUTER_LIST_URL+"?success=edit&country="+req.getParameter("country") 
+                                                                + "&city="+req.getParameter("city"));
     }
     protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
@@ -189,7 +191,8 @@ public class RouterEditServlet extends AbstractHttpServlet {
             return;
         }
 
-        res.sendRedirect(ROUTER_LIST_URL+"?success=delete");
+        res.sendRedirect(ROUTER_LIST_URL+"?success=delete&country="+req.getParameter("country") 
+                                                                + "&city="+req.getParameter("city"));
         return;
         }
 
