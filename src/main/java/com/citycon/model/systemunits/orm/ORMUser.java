@@ -104,6 +104,9 @@ public class ORMUser extends ORMEntity {
     public UserEntity getEntity()  {
 		return user;
 	}
+	public void setEntity(UserEntity user)  {
+		this.user = user;
+	}
 
     /**
 	 * Get any page of users from DAO layer. 

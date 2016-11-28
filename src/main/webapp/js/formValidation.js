@@ -9,7 +9,7 @@ function validatePassword(password) {
 	return asciiMatch && tagHackMatch;
 } 
 function validateEmail(email) {
-	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+)+$/i);
+	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+){1,}$/i);
 }
 
 function validateForm(form) {

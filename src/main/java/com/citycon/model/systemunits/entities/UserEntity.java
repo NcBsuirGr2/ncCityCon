@@ -90,4 +90,9 @@ public class UserEntity extends Entity {
 		userString.append(")");
 		return userString.toString();
 	}
+	public boolean equals(Object comp) {
+		if (this == comp) return true;
+		if (!(this instanceof UserEntity)) return false;
+		return this.id == ((UserEntity)comp).getId();
+	}
 }
