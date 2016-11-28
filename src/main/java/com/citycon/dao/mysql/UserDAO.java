@@ -236,16 +236,8 @@ public class UserDAO extends MySQLDAO {
 
         if(user.getLogin() != null) {
             try{
-<<<<<<< HEAD
-                logger.debug("Before preparedStatement");
-                //logger.debug("Connection: {}", connection.isClosed());
                 connection = getConnection();
                 search_user = connection.prepareStatement(search);
-                //logger.debug("After preparedStatement");
-                //logger.debug("Connection: {}", connection.isClosed());
-=======
-                search_user = connection.prepareStatement(search);
->>>>>>> bugfixMike
             }catch (SQLException e) {
                 logger.warn("PreparedStatement in read wasn't created", e);
                 throw new InternalDAOException("PreparedStatement in read wasn't created", e);
