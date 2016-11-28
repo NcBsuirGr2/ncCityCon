@@ -67,8 +67,10 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 			paginationParameters.put("page", String.valueOf(page));
 		}
 		if(itemsPerPageReq != null && !itemsPerPageReq.equals("")) {
-			itemsPerPage = Integer.parseInt(itemsPerPageReq);
-			paginationParameters.put("itemsPerPage", String.valueOf(itemsPerPage));
+			if (Integer.parseInt(itemsPerPageReq) != 0) {
+				itemsPerPage = Integer.parseInt(itemsPerPageReq);
+				paginationParameters.put("itemsPerPage", String.valueOf(itemsPerPage));
+			}			
 		} 
 		if(ascReq != null && !ascReq.equals("")) {
 			paginationParameters.put("asc", ascReq);

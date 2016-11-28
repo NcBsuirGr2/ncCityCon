@@ -13,11 +13,13 @@ public class RouterConnectionEntity extends Entity {
 	private String firstRouterSN;
 	private String firstRouterCityName;
 	private String firstRouterCountry;
+	private boolean firstRouterActive;
 
 	private int secondRouterId;
 	private String secondRouterSN;
 	private String secondRouterCityName;
 	private String secondRouterCountry;
+	private boolean secondRouterActive;
 
 	// ----- Getters -----
 	public int getFirstRouterId() {
@@ -47,6 +49,12 @@ public class RouterConnectionEntity extends Entity {
 	public String getSecondRouterCountry() { 
 		return secondRouterCountry; 
 	}
+	public boolean isFirstRouterActive() { 
+		return firstRouterActive; 
+	}
+	public boolean isSecondRouterActive() { 
+		return secondRouterActive; 
+	}
 	// ----- Setters -----
 	public void setFirstRouterId(int firstRouterId) {
 		this.firstRouterId = firstRouterId;
@@ -75,6 +83,13 @@ public class RouterConnectionEntity extends Entity {
 	public void setSecondRouterCountry(String secondRouterCountry) {
 		this.secondRouterCountry = secondRouterCountry;
 	}
+	public void setFirstRouterActive(boolean firstRouterAcitive) {
+		this.firstRouterActive = firstRouterAcitive;
+	}
+	public void setSecondRouterActive(boolean secondRouterActive) {
+		this.secondRouterActive = secondRouterActive;
+	}
+
 
 	public String toString() {
 		StringBuilder string = new StringBuilder();
@@ -88,6 +103,8 @@ public class RouterConnectionEntity extends Entity {
 		string.append(firstRouterCityName);
 		string.append("), firstRouterCountry");
 		string.append(firstRouterCountry);
+		string.append("), firstRouterActive");
+		string.append(firstRouterActive);
 		string.append("), secondRouterId(");
 		string.append(secondRouterId);
 		string.append("), secondRouterSN(");
@@ -96,6 +113,8 @@ public class RouterConnectionEntity extends Entity {
 		string.append(secondRouterCityName);
 		string.append("), secondRouterCountry");
 		string.append(secondRouterCountry);
+		string.append("), secondRouterActive");
+		string.append(secondRouterActive);
 		string.append(")");
 		return string.toString();
 	}

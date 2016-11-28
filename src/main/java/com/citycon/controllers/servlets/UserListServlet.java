@@ -77,7 +77,7 @@ public class UserListServlet extends AbstractHttpServlet {
 			logger.warn("Cannot cast", exception);
 			forwardToErrorPage("Internal server error", req, res);
 		} catch (Exception exception) {
-			logger.warn("Unexpected xeception", exception);
+			logger.warn("Unexpected exception", exception);
 			forwardToErrorPage("Internal server error", req, res);
 		}
 	}

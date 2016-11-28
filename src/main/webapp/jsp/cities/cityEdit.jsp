@@ -45,13 +45,13 @@
 						<div class="col-xs-7">
 							<select class="form-control simpleText" id="country" name="countryName" form="form">
                                 <option label=" "></option>
-                                <c:if test="${not empty connection or not empty param.firstCity}">
+                                <c:if test="${not empty city or not empty param.countryName}">
                                     <c:choose>
-                                        <c:when test="${not empty connection}">
-                                            <option value="${connection.firstRouterCityName}" selected>${connection.firstRouterCityName}</option>
+                                        <c:when test="${not empty city}">
+                                            <option value="${city.countryName}" selected>${city.countryName}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option value="${param.firstCity}" selected>${param.firstCity}</option>
+                                            <option value="${param.countryName}" selected>${param.countryName}</option>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>

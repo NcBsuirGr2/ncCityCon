@@ -2,6 +2,7 @@ package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
+import com.citycon.controllers.listeners.SessionHolder;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
@@ -142,10 +143,14 @@ public class UserEditServlet extends AbstractHttpServlet {
 			updateUser.setPassword(password);
 			updateUser.setEmail(email);
 			updateUser.setGroup(group);
+
 			logger.debug("Updating user with id:{} loging:{} password:{} name:{} email:{} group:{}", 
 				updateUser.getId(), updateUser.getName(), updateUser.getLogin(), updateUser.getPassword(),
 				updateUser.getEmail(), updateUser.getGroup());
+
 			updateUser.update();
+			SessionHolder.updateUser(updateUser.getEntity());
+
 		} catch(DublicateKeyDAOException cause) {
 			StringBuilder redirect = new StringBuilder();
 			redirect.append(USER_EDIT_URL);
@@ -186,6 +191,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			deleteUser.setLogin(login);
 
 			deleteUser.delete();
+			SessionHolder.deleteUser(deleteUser.getEntity());
 		} catch (DAOException cause) {
 			logger.warn("Cannot delete user", cause);
 			forwardToErrorPage("Cannot delete user", req, res);

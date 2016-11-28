@@ -236,4 +236,9 @@
 	 		<filter-name>SystemListFilter</filter-name>
 	 		<url-pattern>/connections</url-pattern>
 	 	</filter-mapping>
+
+	 	<!-- Listeners -->
+	 	<listener>
+	 		<listener-class>com.citycon.controllers.listeners.SessionHolder</listener-class>
+	 	</listener>
 </web-app>

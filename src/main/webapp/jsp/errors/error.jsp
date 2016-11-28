@@ -13,7 +13,7 @@
 	<div class="before-footer">
     <h1 align="center">Error</h1>
     <h3 align="center">
-        Sorry, error has occured.
+        Sorry, error has occurred.
         Error message was: ${errorMessage}
     </h3>
     </div>

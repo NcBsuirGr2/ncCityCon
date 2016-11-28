@@ -183,10 +183,13 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
         String city2 = req.getParameter("city2");
         String SN1 = req.getParameter("SN1");
         String SN2 = req.getParameter("SN2");
+        String sameSelect = req.getParameter("sameSelect");
         StringBuilder redirect = new StringBuilder();
         redirect.append(CONNECTION_EDIT_URL);
         redirect.append("?action=");
         redirect.append(action);
+        redirect.append("&");
+        redirect.append(sameSelect);
         redirect.append("&errorType=");
         redirect.append(errorType);        
         redirect.append("&firstCountry=");
