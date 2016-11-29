@@ -1,5 +1,8 @@
 package com.citycon.model.systemunits.entities;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Represents all necessary information about city. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -9,6 +12,7 @@ package com.citycon.model.systemunits.entities;
  * @version 1.2
  */
 public class CityEntity extends Entity {	
+	@Size(min=3, max=10)
 	private String name;
 	private String countryName;
 	private int routersNum;
