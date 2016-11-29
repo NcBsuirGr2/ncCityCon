@@ -23,7 +23,7 @@ import java.util.HashMap;
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *
  * @author Dima
- * @version 0.3
+ * @version 0.4
  */
 public class CityListServlet extends AbstractHttpServlet {
     private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";

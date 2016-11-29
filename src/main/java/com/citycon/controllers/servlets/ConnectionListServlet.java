@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *  
  * @author Mike
- * @version 0.2
+ * @version 0.3
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";

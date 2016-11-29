@@ -23,7 +23,7 @@ import java.util.Calendar;
  * that user has successfully logged into system.
  *
  * @author  Dima
- * @version  0.2
+ * @version  0.3
  */
 public class CityEditServlet extends AbstractHttpServlet {
 
