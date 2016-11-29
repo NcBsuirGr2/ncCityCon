@@ -52,23 +52,23 @@ public class CityEditServlet extends AbstractHttpServlet {
                 editCity.read();
                 req.setAttribute("editCity", editCity.getEntity());
             } catch (InvalidDataDAOException cause) {
-                logger.warn("Error occur during reading city233", cause);
-                forwardToErrorPage("Error occur during reading city234", req, res);
+                logger.warn("Error occur during reading city. InvalidDataDAOException", cause);
+                forwardToErrorPage("Error occur during reading city. InvalidDataDAOException", req, res);
                 return;
             }
             catch (DublicateKeyDAOException cause) {
-                logger.warn("Error occur during reading city233", cause);
-                forwardToErrorPage("Error occur during reading city235", req, res);
+                logger.warn("Error occur during reading city. DublicateKeyDAOException", cause);
+                forwardToErrorPage("Error occur during reading city. DublicateKeyDAOException", req, res);
                 return;
             }
             catch (InternalDAOException cause) {
-                logger.warn("Error occur during reading city233", cause);
-                forwardToErrorPage("Error occur during reading city236", req, res);
+                logger.warn("Error occur during reading city. InternalDAOException", cause);
+                forwardToErrorPage("Error occur during reading city. InternalDAOException", req, res);
                 return;
             }
             catch ( DAOException cause) {
-                logger.warn("Error occur during reading city233", cause);
-                forwardToErrorPage("Error occur during reading city237", req, res);
+                logger.warn("Error occur during reading city. DAOException", cause);
+                forwardToErrorPage("Error occur during reading city. DAOException", req, res);
                 return;
             }
         }
@@ -113,8 +113,13 @@ public class CityEditServlet extends AbstractHttpServlet {
                 } catch(DublicateKeyDAOException cause) {
                     StringBuilder redirect = new StringBuilder();
                     redirect.append(CITY_EDIT_URL);
+<<<<<<< HEAD
                     redirect.append("?errorType=dublicate2&editName=");
                     redirect.append(city.getName());
+=======
+                    redirect.append("?errorType=dublicate&editName=");
+                    redirect.append(newCity.getName());
+>>>>>>> 38b2e04735c69550366d28a2d9068e94d9b63e74
                     redirect.append("&editCountryName=");
                     redirect.append(city.getCountryName());
                     res.sendRedirect(redirect.toString());
