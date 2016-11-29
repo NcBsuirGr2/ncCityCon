@@ -171,16 +171,18 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
-                "on T.ID_From = C.ID where T.ID=" + routerConnection.getId());
+                "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                "on T.ID_From = C.ID left outer join Router R on R.SN = C.SN where T.ID=" + routerConnection.getId());
 
         SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
-                "on T.ID_To = C.ID where T.ID=" + routerConnection.getId());
+                "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                "on T.ID_To = C.ID left outer join Router R on R.SN = C.SN where T.ID=" + routerConnection.getId());
 
 
-        get_data = "SELECT DISTINCT C1.ID AS ID, C1.`Name` AS City1, C1.Country AS Country1, C1.SN AS SN1, C1.ID_From AS Id1, " +
-                "C2.`Name` AS City2, C2.Country AS Country2, C2.SN AS SN2, C2.ID_To AS Id2 " +
+        get_data = "SELECT DISTINCT C1.ID AS ID, C1.`Name` AS City1, C1.Country AS Country1, C1.SN AS SN1, " +
+                "C1.ID_From AS Id1, C1.In_Service as FirstAvailable, " +
+                "C2.`Name` AS City2, C2.Country AS Country2, C2.SN AS SN2, " +
+                "C2.ID_To AS Id2, C2.In_Service as SecondAvailable " +
                 "FROM CitySNFrom C1 JOIN CitySNTo C2 ON C1.ID = C2.ID ";
 
 
@@ -206,10 +208,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                 routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
                 routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
                 routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
+                routerConnection.setFirstRouterActive(resultSet.getBoolean("FirstAvailable"));
                 routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
                 routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
                 routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
                 routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
+                routerConnection.setSecondRouterActive(resultSet.getBoolean("SecondAvailable"));
 
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             } else {
@@ -570,12 +574,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         " select * from RouterConnection where ID_From = @id_SN or ID_To = @id_SN");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from temp T join CitySN C " +
-                        "on T.ID_From = C.ID");
+                        "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_From from temp T join CitySN C " +
+                        "on T.ID_From = C.ID left outer join Router R on R.SN = C.SN");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from temp T join CitySN C " +
-                        "on T.ID_To = C.ID");
+                        "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_To from temp T join CitySN C " +
+                        "on T.ID_To = C.ID left outer join Router R on R.SN = C.SN");
             }
         } else if (city != null) {
             if (city.getName() == null || city.getCountryName() == null) {
@@ -604,24 +608,24 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                         "on  R.ID_From = C.ID or R.ID_To = C.ID ");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                        "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from ConnectionsOfRouters T " +
-                        "join CitySN C on T.ID_From = C.ID");
+                        "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_From from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_From = C.ID join Router R on R.SN = C.SN");
 
                 SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                        "select distinct T.ID as ID, C.`Name`, C.SN, C.Country, T.ID_To from ConnectionsOfRouters T " +
-                        "join CitySN C on T.ID_To = C.ID");
+                        "select distinct T.ID as ID, R.In_Service, C.`Name`, C.SN, C.Country, T.ID_To from ConnectionsOfRouters T " +
+                        "join CitySN C on T.ID_To = C.ID join Router R on R.SN = C.SN");
             }
         } else {
             SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNFrom`");
             SQLCommandForGetTableOfRouters.add("DROP TABLE IF EXISTS `CitySNTo`");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNFrom " +
-                    "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
-                    "on T.ID_From = C.ID");
+                    "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_From from RouterConnection T join CitySN C " +
+                    "on T.ID_From = C.ID join Router R on R.SN = C.SN");
 
             SQLCommandForGetTableOfRouters.add("create temporary table CitySNTo " +
-                    "select distinct T.ID as ID, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
-                    "on T.ID_To = C.ID");
+                    "select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_To from RouterConnection T join CitySN C " +
+                    "on T.ID_To = C.ID join Router R on R.SN = C.SN");
         }
 
         if (sorter != null) {
@@ -634,8 +638,9 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             }
 
             get_data = "select distinct C1.ID as ID, C1.`Name` as City1, C1.Country as Country1, " +
-                    "C1.SN as SN1, C1.ID_From as Id1, " +
-                    "C2.`Name` as City2, C2.Country as Country2, C2.SN as SN2, C2.ID_To as Id2 " +
+                    "C1.SN as SN1, C1.ID_From as Id1, C1.In_Service as FirstAvailable, " +
+                    "C2.`Name` as City2, C2.Country as Country2, C2.SN as SN2, C2.ID_To as Id2, " +
+                    "C2.In_Service as SecondAvailable " +
                     "from CitySNFrom C1 join CitySNTo C2 on C1.ID = C2.ID " +
                     "order by " + sorter + sorting_direction + " limit ?, ?";
 
@@ -672,10 +677,12 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
                     routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
                     routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
+                    routerConnection.setFirstRouterActive(resultSet.getBoolean("FirstAvailable"));
                     routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
                     routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
                     routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
                     routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
+                    routerConnection.setSecondRouterActive(resultSet.getBoolean("SecondAvailable"));
 
                     routerConnections.add(routerConnection);
                 }
