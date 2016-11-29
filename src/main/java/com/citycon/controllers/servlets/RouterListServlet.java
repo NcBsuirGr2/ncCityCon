@@ -28,10 +28,6 @@ public class RouterListServlet  extends AbstractHttpServlet {
     private static String ROUTER_LIST_PAGE = "/jsp/routers/routerList.jsp";
     private String ROUTER_LIST_URL = "/routers";
 
-
-
-
-
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
                                                     throws ServletException, IOException {
 

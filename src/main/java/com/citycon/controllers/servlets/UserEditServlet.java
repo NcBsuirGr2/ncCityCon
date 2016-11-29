@@ -46,7 +46,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 		if (userLogin != null) {
 			try {
 				ORMUser user = new ORMUser();
-				user.setLogin(userLogin);
+				user.getEntity().setLogin(userLogin);
 				user.read();
 				req.setAttribute("editUser", user.getEntity());
 			} catch (DAOException cause) {
@@ -79,7 +79,6 @@ public class UserEditServlet extends AbstractHttpServlet {
 				return;
 			}
 			default : {
-				
 				String name = req.getParameter("name");
 				String login = req.getParameter("login");
 				String password = req.getParameter("password");
@@ -92,16 +91,16 @@ public class UserEditServlet extends AbstractHttpServlet {
 					forwardToErrorPage("Not enough info to create new user", req, res);
 					return;
 				}
+				UserEntity user = new UserEntity();				
+				user.setName(name);
+				user.setLogin(login);
+				user.setPassword(password);
+				user.setEmail(email);
+				user.setGroup(group);
+				user.setCreateDate(createDate);
+
 				ORMUser newUser = new ORMUser();
 				try {	
-					UserEntity user = new UserEntity();				
-					user.setName(name);
-					user.setLogin(login);
-					user.setPassword(password);
-					user.setEmail(email);
-					user.setGroup(group);
-					user.setCreateDate(createDate);
-
 					ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 					Validator validator = factory.getValidator();
 					Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
@@ -118,13 +117,13 @@ public class UserEditServlet extends AbstractHttpServlet {
 					StringBuilder redirect = new StringBuilder();
 					redirect.append(USER_EDIT_URL);
 					redirect.append("?errorType=dublicate&editName=");
-					redirect.append(newUser.getName());
+					redirect.append(user.getName());
 					redirect.append("&editLogin=");
-					redirect.append(newUser.getLogin());
+					redirect.append(user.getLogin());
 					redirect.append("&editEmail=");
-					redirect.append(newUser.getEmail());
+					redirect.append(user.getEmail());
 					redirect.append("&editGroup=");
-					redirect.append(newUser.getGroup());
+					redirect.append(user.getGroup());
 					res.sendRedirect(redirect.toString());
 					return;
 				} catch(DAOException cause) {
@@ -159,19 +158,23 @@ public class UserEditServlet extends AbstractHttpServlet {
 			logger.warn("Cannot update user cause id field is empty");
 			return;
 		}
-		ORMUser updateUser = new ORMUser();
-		try {
-			
-			updateUser.setId(Integer.parseInt(idString));
-			updateUser.setName(name);
-			updateUser.setLogin(login);
-			updateUser.setPassword(password);
-			updateUser.setEmail(email);
-			updateUser.setGroup(group);
+		
+		UserEntity user = new UserEntity();
+		try {				
+			user.setId(Integer.parseInt(idString));
+			user.setName(name);
+			user.setLogin(login);
+			user.setPassword(password);
+			user.setEmail(email);
+			user.setGroup(group);
+
+			ORMUser updateUser = new ORMUser();
+
+			updateUser.setEntity(user);
 
 			logger.debug("Updating user with id:{} loging:{} password:{} name:{} email:{} group:{}", 
-				updateUser.getId(), updateUser.getName(), updateUser.getLogin(), updateUser.getPassword(),
-				updateUser.getEmail(), updateUser.getGroup());
+				user.getId(), user.getName(), user.getLogin(), user.getPassword(),
+				user.getEmail(), user.getGroup());
 
 			updateUser.update();
 			SessionHolder.updateUser(updateUser.getEntity());
@@ -180,13 +183,13 @@ public class UserEditServlet extends AbstractHttpServlet {
 			StringBuilder redirect = new StringBuilder();
 			redirect.append(USER_EDIT_URL);
 			redirect.append("?errorType=dublicate&editName=");
-			redirect.append(updateUser.getName());
+			redirect.append(user.getName());
 			redirect.append("&editLogin=");
-			redirect.append(updateUser.getLogin());
+			redirect.append(user.getLogin());
 			redirect.append("&editEmail=");
-			redirect.append(updateUser.getEmail());
+			redirect.append(user.getEmail());
 			redirect.append("&editGroup=");
-			redirect.append(updateUser.getGroup());
+			redirect.append(user.getGroup());
 			res.sendRedirect(redirect.toString());
 			return;
 		} catch (DAOException cause) {
@@ -204,17 +207,14 @@ public class UserEditServlet extends AbstractHttpServlet {
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
 											throws ServletException, IOException {
 		String idString = req.getParameter("id");
-		String login = req.getParameter("login");
-		if (idString == null && login == null) {
+		if (idString == null) {
 			forwardToErrorPage("Cannot delete user cause the id & login fields are empty", req, res);
 			logger.warn("Attempt to delete user without login or password");
 			return;
 		}
 		try {
 			ORMUser deleteUser = new ORMUser();
-			deleteUser.setId(Integer.parseInt(idString));
-			deleteUser.setLogin(login);
-
+			deleteUser.getEntity().setId(Integer.parseInt(idString));
 			deleteUser.delete();
 			SessionHolder.deleteUser(deleteUser.getEntity());
 		} catch (DAOException cause) {

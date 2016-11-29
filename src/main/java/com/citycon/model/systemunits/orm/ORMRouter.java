@@ -3,6 +3,7 @@ package com.citycon.model.systemunits.orm;
 import com.citycon.dao.interfaces.RoutersOfCity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.mysql.RouterDAO;
 import com.citycon.dao.exceptions.DAOException;
@@ -19,7 +20,7 @@ import com.citycon.dao.exceptions.DAOException;
  */
 public class ORMRouter extends ORMEntity {
 	DAO dao;
-	Entity router = new RouterEntity();
+	RouterEntity router = new RouterEntity();
 
 	//Get-set interface for incapsulated object
 	public RouterEntity getEntity() {

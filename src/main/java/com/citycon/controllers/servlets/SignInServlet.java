@@ -39,21 +39,20 @@ public class SignInServlet extends AbstractHttpServlet {
     protected void doPost(HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
         Logger logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.SignInServlet");
-        try {
-            ORMUser user = new ORMUser();             
-            
-            user.setLogin(req.getParameter("login"));
-            user.setPassword(req.getParameter("password"));            
-            logger.debug("SignIn request with login:{} and password:{}", user.getLogin(), user.getPassword());
-            try {                 
-                user.read();
-                HttpSession session = req.getSession();
-                session.setAttribute("user", user.getEntity());
-                initializePaginationData(session);
-                res.sendRedirect("/");
-            } catch(InvalidDataDAOException exception) {
-                res.sendRedirect("/signin?errorType=invalidData");
-            } 
+        UserEntity user = new UserEntity();
+        user.setLogin(req.getParameter("login"));
+        user.setPassword(req.getParameter("password"));
+        ORMUser enteredUser = new ORMUser(); 
+        enteredUser.setEntity(user); 
+        logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
+        try {                 
+            enteredUser.read();
+            HttpSession session = req.getSession();
+            session.setAttribute("user", enteredUser.getEntity());
+            initializePaginationData(session);
+            res.sendRedirect("/");
+        } catch(InvalidDataDAOException exception) {
+            res.sendRedirect("/signin?errorType=invalidData");
         } catch (DAOException exception) {
             // Internal DAOException
             forwardToErrorPage(exception.getMessage(), req, res);             
