@@ -82,9 +82,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <center class="form-group" style="margin-bottom: 5px">
+                                 <div class="form-group" style="margin-bottom: 5px; text-align: center;">
                                     <input type="submit" class="btn btn-primary" value="Create an account">
-                                </center>
+                                </div>
                             </form>
                         </div>
 
