@@ -81,21 +81,21 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException("Cast Entity in create are failed", e);
         }
 
-        if (routerConnection.getFirstRouterSN() != null && routerConnection.getFirstRouterSN() != null){
+        if (routerConnection.getFirstRouter().getSN() != null && routerConnection.getSecondRouter().getSN() != null){
             insert = "insert into RouterConnection (ID_From, ID_To) " +
                     "values ((select ID from Router where SN=?), " +
                     "(select ID from Router where SN=?))";
 
-            log_parameters = "With parameters: SN_From(" + routerConnection.getFirstRouterSN()
-                    + "), SN_To(" + routerConnection.getSecondRouterSN() + ")";
+            log_parameters = "With parameters: SN_From(" + routerConnection.getFirstRouter().getSN()
+                    + "), SN_To(" + routerConnection.getSecondRouter().getSN() + ")";
         }
         else {
             insert = "insert into" + nameTable +
                 "(`ID_From`, `ID_To`)" +
                 " values (?, ?)";
 
-            log_parameters = "With parameters: Id_From(" + routerConnection.getFirstRouterId()
-                    + "), Id_To(" + routerConnection.getSecondRouterId() + ")";
+            log_parameters = "With parameters: Id_From(" + routerConnection.getFirstRouter().getId()
+                    + "), Id_To(" + routerConnection.getSecondRouter().getId() + ")";
         }
 
         try {
@@ -107,13 +107,13 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
 
         try {
-            if (routerConnection.getFirstRouterSN() != null && routerConnection.getFirstRouterSN() != null){
-                preparedStatement.setString(1, routerConnection.getFirstRouterSN());
-                preparedStatement.setString(2, routerConnection.getSecondRouterSN());
+            if (routerConnection.getFirstRouter().getSN() != null && routerConnection.getSecondRouter().getSN() != null){
+                preparedStatement.setString(1, routerConnection.getFirstRouter().getSN());
+                preparedStatement.setString(2, routerConnection.getSecondRouter().getSN());
             }
             else {
-                preparedStatement.setInt(1, routerConnection.getFirstRouterId());
-                preparedStatement.setInt(2, routerConnection.getSecondRouterId());
+                preparedStatement.setInt(1, routerConnection.getFirstRouter().getId());
+                preparedStatement.setInt(2, routerConnection.getSecondRouter().getId());
             }
 
             preparedStatement.executeUpdate();
@@ -204,16 +204,30 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
             if (resultSet.first()) {
                 routerConnection.setId(resultSet.getInt("ID"));
-                routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
-                routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
-                routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
-                routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
-                routerConnection.setFirstRouterActive(resultSet.getBoolean("FirstAvailable"));
-                routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
-                routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
-                routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
-                routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
-                routerConnection.setSecondRouterActive(resultSet.getBoolean("SecondAvailable"));
+
+                CityEntity cityFirstConnection = new CityEntity();
+                cityFirstConnection.setName(resultSet.getString("City1"));
+                cityFirstConnection.setCountryName(resultSet.getString("Country1"));
+
+                RouterEntity routerFirstConnection = new RouterEntity();
+                routerFirstConnection.setSN(resultSet.getString("SN1"));
+                routerFirstConnection.setId(resultSet.getInt("Id1"));
+                routerFirstConnection.setActive(resultSet.getBoolean("FirstAvailable"));
+
+                routerFirstConnection.setCity(cityFirstConnection);
+                routerConnection.setFirstRouter(routerFirstConnection);
+
+                CityEntity citySecondConnection = new CityEntity();
+                citySecondConnection.setName(resultSet.getString("City2"));
+                citySecondConnection.setCountryName(resultSet.getString("Country2"));
+
+                RouterEntity routerSecondConnection = new RouterEntity();
+                routerSecondConnection.setSN(resultSet.getString("SN2"));
+                routerSecondConnection.setId(resultSet.getInt("Id2"));
+                routerSecondConnection.setActive(resultSet.getBoolean("SecondAvailable"));
+
+                routerSecondConnection.setCity(citySecondConnection);
+                routerConnection.setSecondRouter(routerSecondConnection);
 
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             } else {
@@ -270,11 +284,11 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             throw new InvalidDataDAOException("Cast Entity in update failed.", e);
         }
 
-        if (routerConnection.getFirstRouterSN() != null && routerConnection.getSecondRouterSN() != null) {
+        if (routerConnection.getFirstRouter().getSN() != null && routerConnection.getSecondRouter().getSN() != null) {
             SQLCommandForGetTableOfRouters.add("set @ID_From = (select ID from Router where SN='"
-                    + routerConnection.getFirstRouterSN() + "')");
+                    + routerConnection.getFirstRouter().getSN() + "')");
             SQLCommandForGetTableOfRouters.add("set @ID_To = (select ID from Router where SN='"
-                    + routerConnection.getSecondRouterSN() + "')");
+                    + routerConnection.getSecondRouter().getSN() + "')");
             update = "update RouterConnection set ID_From = @ID_From, ID_To = @ID_To where `id`=?";
         }
         else {
@@ -294,15 +308,15 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String log_parameters = "With parameters: id(" + routerConnection.getId() + ")";
 
         try {
-            if (routerConnection.getFirstRouterSN() != null && routerConnection.getSecondRouterSN() != null) {
+            if (routerConnection.getFirstRouter().getSN() != null && routerConnection.getSecondRouter().getSN() != null) {
                 for(String Command:SQLCommandForGetTableOfRouters){
                     statement.executeUpdate(Command);
                 }
                 preparedStatement.setInt(1, routerConnection.getId());
             }
             else {
-                preparedStatement.setInt(1, routerConnection.getFirstRouterId());
-                preparedStatement.setInt(2, routerConnection.getSecondRouterId());
+                preparedStatement.setInt(1, routerConnection.getFirstRouter().getId());
+                preparedStatement.setInt(2, routerConnection.getSecondRouter().getId());
                 preparedStatement.setInt(3, routerConnection.getId());
             }
 
@@ -673,16 +687,30 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     RouterConnectionEntity routerConnection = new RouterConnectionEntity();
 
                     routerConnection.setId(resultSet.getInt("ID"));
-                    routerConnection.setFirstRouterCityName(resultSet.getString("City1"));
-                    routerConnection.setFirstRouterCountry(resultSet.getString("Country1"));
-                    routerConnection.setFirstRouterSN(resultSet.getString("SN1"));
-                    routerConnection.setFirstRouterId(resultSet.getInt("Id1"));
-                    routerConnection.setFirstRouterActive(resultSet.getBoolean("FirstAvailable"));
-                    routerConnection.setSecondRouterCityName(resultSet.getString("City2"));
-                    routerConnection.setSecondRouterCountry(resultSet.getString("Country2"));
-                    routerConnection.setSecondRouterSN(resultSet.getString("SN2"));
-                    routerConnection.setSecondRouterId(resultSet.getInt("Id2"));
-                    routerConnection.setSecondRouterActive(resultSet.getBoolean("SecondAvailable"));
+
+                    CityEntity cityFirstConnection = new CityEntity();
+                    cityFirstConnection.setName(resultSet.getString("City1"));
+                    cityFirstConnection.setCountryName(resultSet.getString("Country1"));
+
+                    RouterEntity routerFirstConnection = new RouterEntity();
+                    routerFirstConnection.setSN(resultSet.getString("SN1"));
+                    routerFirstConnection.setId(resultSet.getInt("Id1"));
+                    routerFirstConnection.setActive(resultSet.getBoolean("FirstAvailable"));
+
+                    routerFirstConnection.setCity(cityFirstConnection);
+                    routerConnection.setFirstRouter(routerFirstConnection);
+
+                    CityEntity citySecondConnection = new CityEntity();
+                    citySecondConnection.setName(resultSet.getString("City2"));
+                    citySecondConnection.setCountryName(resultSet.getString("Country2"));
+
+                    RouterEntity routerSecondConnection = new RouterEntity();
+                    routerSecondConnection.setSN(resultSet.getString("SN2"));
+                    routerSecondConnection.setId(resultSet.getInt("Id2"));
+                    routerSecondConnection.setActive(resultSet.getBoolean("SecondAvailable"));
+
+                    routerSecondConnection.setCity(citySecondConnection);
+                    routerConnection.setSecondRouter(routerSecondConnection);
 
                     routerConnections.add(routerConnection);
                 }

@@ -77,15 +77,16 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
             throw new InvalidDataDAOException("Cast Entity in create are failed", e);
         }
 
-        if (router.getCityId() == 0){
-            if (router.getCityName() == null || router.getCountryName() == null){
+        if (router.getCity().getId() == 0){
+            if (router.getCity().getName() == null || router.getCity().getCountryName() == null){
                 logger.info("For getCityID incorrectly chosen field, try City And Country");
                 throw new InvalidDataDAOException("For getCityID incorrectly chosen field, try City And Country");
             }
             CityEntity city = new CityEntity();
-            city.setName(router.getCityName());
-            city.setCountryName(router.getCountryName());
-            router.setCityId(this.getCityID(city));
+            city.setName(router.getCity().getName());
+            city.setCountryName(router.getCity().getCountryName());
+            city.setId(this.getCityID(city));
+            router.setCity(city);
         }
 
         try {
@@ -98,14 +99,14 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
         String log_parameters = "With parameters: Name("+ router.getName() + "), SN(" + router.getSN()
                 + "), CountPorts(" + router.getPortsNum() + "), IsActive(" + router.isActive()
-                + "), CityId(" + router.getCityId() + ")";
+                + "), CityId(" + router.getCity().getId() + ")";
 
         try {
             preparedStatement.setString(1, router.getName());
             preparedStatement.setString(2, router.getSN());
             preparedStatement.setInt(3, router.getPortsNum());
             preparedStatement.setBoolean(4, router.isActive());
-            preparedStatement.setInt(5, router.getCityId());
+            preparedStatement.setInt(5, router.getCity().getId());
 
             preparedStatement.executeUpdate();
 
@@ -189,9 +190,13 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                 router.setSN(resultSet.getString("SN"));
                 router.setPortsNum(resultSet.getInt("Port"));
                 router.setActive(resultSet.getBoolean("In_Service"));
-                router.setCityId(resultSet.getInt("City_id"));
-                router.setCityName(resultSet.getString("CityName"));
-                router.setCountryName(resultSet.getString("Country"));
+
+                CityEntity city = new CityEntity();
+                city.setId(resultSet.getInt("City_id"));
+                city.setName(resultSet.getString("CityName"));
+                city.setCountryName(resultSet.getString("Country"));
+
+                router.setCity(city);
                 logger.trace("Read {}.\n {}", nameTable, log_parameters);
             }
             else {
@@ -246,17 +251,18 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
         String log_parameters = "With parameters: ID(" + router.getId() + ")";
 
-        if (router.getCityName() != null && router.getCountryName()!= null){
+        if (router.getCity().getName() != null && router.getCity().getCountryName()!= null){
             CityEntity city = new CityEntity();
-            city.setName(router.getCityName());
-            city.setCountryName(router.getCountryName());
-            router.setCityId(this.getCityID(city));
+            city.setName(router.getCity().getName());
+            city.setCountryName(router.getCity().getCountryName());
+            city.setId(this.getCityID(city));
 
+            router.setCity(city);
 
-            log_parameters += ", CityID(" + router.getCityId() + ")";
+            log_parameters += ", CityID(" + router.getCity().getId() + ")";
 
             update = "update" + nameTable +
-                    "set `Name`=?, `In_Service`=?, City_id = " + router.getCityId() + " " +
+                    "set `Name`=?, `In_Service`=?, City_id = " + router.getCity().getId() + " " +
                     "where `ID`=?";
         }
         else{
@@ -485,9 +491,14 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                     router.setSN(resultSet.getString("SN"));
                     router.setPortsNum(resultSet.getInt("Port"));
                     router.setActive(resultSet.getBoolean("In_Service"));
-                    router.setCityId(resultSet.getInt("City_id"));
-                    router.setCountryName(resultSet.getString("Country"));
-                    router.setCityName(resultSet.getString("CityName"));
+
+                    CityEntity cityEntity = new CityEntity();
+                    cityEntity.setId(resultSet.getInt("City_id"));
+                    cityEntity.setName(resultSet.getString("CityName"));
+                    cityEntity.setCountryName(resultSet.getString("Country"));
+
+                    router.setCity(cityEntity);
+
                     router.setUsedPortsNum(resultSet.getInt("UsedPortsNum"));
                     routers.add(router);
                 }
