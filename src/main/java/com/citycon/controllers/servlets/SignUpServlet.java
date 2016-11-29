@@ -40,8 +40,7 @@ public class SignUpServlet extends AbstractHttpServlet {
     protected void doPost(HttpServletRequest req,
                           HttpServletResponse res) throws ServletException, IOException {
         try {
-            ORMUser user = new ORMUser();             
-
+            UserEntity user = new UserEntity();
             user.setLogin(req.getParameter("login"));
             user.setPassword(req.getParameter("password"));
             user.setEmail(req.getParameter("email"));
@@ -50,11 +49,13 @@ public class SignUpServlet extends AbstractHttpServlet {
             java.sql.Date timeNow = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
             user.setCreateDate(timeNow);
 
+            ORMUser newUser = new ORMUser(); 
+            newUser.setEntity(user); 
             try {
-                user.create();                  
-                user.read();
+                newUser.create();                  
+                newUser.read();
                 HttpSession session = req.getSession();
-                session.setAttribute("user", user.getEntity());
+                session.setAttribute("user", newUser.getEntity());
                 initializePaginationData(session);
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
