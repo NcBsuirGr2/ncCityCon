@@ -101,14 +101,17 @@ public class UserEditServlet extends AbstractHttpServlet {
 					user.setEmail(email);
 					user.setGroup(group);
 					user.setCreateDate(createDate);
+
 					ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 					Validator validator = factory.getValidator();
 					Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+					
 					logger.debug("Violations size: {}", violations.size());
 					for (ConstraintViolation<UserEntity> violation : violations) {
 						logger.debug("Violation");
 						logger.debug("There are violations for new user: {}", violation.getMessage());
-					}					
+					}			
+
 					newUser.setEntity(user);
 					newUser.create();
 				} catch(DublicateKeyDAOException cause) {

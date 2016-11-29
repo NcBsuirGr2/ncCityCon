@@ -11,9 +11,11 @@ import javax.validation.constraints.Size;
  * @author Mike
  * @version 1.2
  */
-public class CityEntity extends Entity {	
+public class CityEntity extends Entity {
+
 	@Size(min=3, max=10)
 	private String name;
+	
 	private String countryName;
 	private int routersNum;
 

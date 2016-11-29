@@ -5,6 +5,7 @@ import com.citycon.model.Grant;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Email;
@@ -17,7 +18,7 @@ import java.sql.Date;
  * to display city information.
  *
  * @author Mike
- * @version 1.2
+ * @version 1.3
  */
 public class UserEntity extends Entity {
 	@NotBlank
@@ -39,12 +40,14 @@ public class UserEntity extends Entity {
 	@Email
 	private String email;
 
+	@Valid
 	private Grant grant;
 
 	@NotBlank
 	@Pattern(regexp="^(Admin|Guest|Operator)$", flags=Pattern.Flag.CASE_INSENSITIVE)
 	private String group;
 
+	@NotNull
 	private Date createDate;
 
 	// ----- Getters -----
