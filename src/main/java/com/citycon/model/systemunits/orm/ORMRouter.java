@@ -1,7 +1,7 @@
 package com.citycon.model.systemunits.orm;
 
 import com.citycon.dao.interfaces.RoutersOfCity;
-import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.mysql.RouterDAO;
@@ -19,65 +19,15 @@ import com.citycon.dao.exceptions.DAOException;
  */
 public class ORMRouter extends ORMEntity {
 	DAO dao;
-	RouterEntity router = new RouterEntity();
+	Entity router = new RouterEntity();
 
 	//Get-set interface for incapsulated object
-	
-	public int getId() {
-		return router.getId();
-	}
-	public void setId(int id) {
-		router.setId(id);
+	public RouterEntity getEntity() {
+		return router;
 	}
 
-	public String getName() {
-		return router.getName();
-	}
-	public String getSN() {
-		return router.getSN();
-	}
-	public int getPortsNum() {
-		return router.getPortsNum();
-	}
-	public int getUsedPortsNum() {
-		return router.getUsedPortsNum();
-	}
-	public int getCityId() {
-		return router.getCityId();
-	}
-	public boolean isActive() {
-		return router.isActive();
-	}
-	public String getCityName() {
-		return router.getCityName();
-	}
-	public String getCountryName() {
-		return router.getCountryName();
-	}
-
-	public void setName(String name) {
-		router.setName(name);
-	}
-	public void setSN(String SN) {
-		router.setSN(SN);
-	}
-	public void setPortsNum(int portsNum) {
-		router.setPortsNum(portsNum);
-	}
-	public void setUsedPortsNum(int usedPortsNum) {
-		router.setUsedPortsNum(usedPortsNum);
-	}
-	public void setActive(boolean isActive) {
-		router.setActive(isActive);
-	}
-	public void setCityId(Integer sityId) {
-		router.setCityId(sityId);
-	}
-	public void setCityName(String cityName) {
-		router.setCityName(cityName);
-	}
-	public void setCountryName(String countryName) {
-		router.setCountryName(countryName);
+	public void setEntity(RouterEntity router) {
+		this.router = router;
 	}
 
 	//ORM interface for incapsulated object
@@ -106,10 +56,6 @@ public class ORMRouter extends ORMEntity {
 		}
 		dao.delete(router);
     }
-    
-   	public RouterEntity getEntity()  {
-		return router;
-	}
 
      /**
 	 * Get any page of routers from DAO layer. 

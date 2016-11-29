@@ -241,4 +241,5 @@
 	 	<listener>
 	 		<listener-class>com.citycon.controllers.listeners.SessionHolder</listener-class>
 	 	</listener>
+	 	
 </web-app>

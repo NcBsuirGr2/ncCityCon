@@ -63,9 +63,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <center class="form-group">
+                                <div class="form-group" style="text-align: center;">
                                     <input type="submit" class="btn btn-primary" value="Sign In">
-                                </center>
+                                </div>
                             </form>
                         </div>
                     </div>

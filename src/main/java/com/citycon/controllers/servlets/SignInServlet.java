@@ -44,7 +44,7 @@ public class SignInServlet extends AbstractHttpServlet {
             
             user.setLogin(req.getParameter("login"));
             user.setPassword(req.getParameter("password"));            
-            logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
+            logger.debug("SignIn request with login:{} and password:{}", user.getLogin(), user.getPassword());
             try {                 
                 user.read();
                 HttpSession session = req.getSession();
