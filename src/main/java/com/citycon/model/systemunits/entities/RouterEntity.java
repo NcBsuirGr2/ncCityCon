@@ -1,5 +1,12 @@
 package com.citycon.model.systemunits.entities;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
+import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * Represents all necessary information about router. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -9,14 +16,19 @@ package com.citycon.model.systemunits.entities;
  * @version 1.2
  */
 public class RouterEntity extends Entity {
+	@NotBlank
+	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
+	@Pattern(regexp="^[a-z][-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE)
 	private String name;
+
 	private String SN;
 	private int portsNum;
 	private int usedPortsNum;
 	private boolean isActive;
-	private int cityId;
-	private String cityName;
-	private String countryName;
+
+	@NotNull
+	@Valid
+	private CityEntity city;
 
 	// ----- Getters -----
 	public String getName() {
@@ -34,14 +46,8 @@ public class RouterEntity extends Entity {
 	public boolean isActive() {
 		return isActive;
 	}
-	public String getCityName() {
-		return cityName;
-	}
-	public String getCountryName() {
-		return countryName;
-	}
-	public int getCityId() {
-		return cityId;
+	public CityEntity getCity() {
+		return city;
 	}
 
 	// ----- Setters -----
@@ -60,15 +66,9 @@ public class RouterEntity extends Entity {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
+	public void setCity(CityEntity city) {
+		this.city = city;
 	}
-	public void setCountryName(String countryName) {
-		this.countryName = countryName;
-	}
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
 
 	public String toString() {
 		StringBuilder routerString = new StringBuilder();
@@ -84,12 +84,8 @@ public class RouterEntity extends Entity {
 		routerString.append(usedPortsNum);
 		routerString.append("), isActive(");
 		routerString.append(isActive);
-		routerString.append("), cityId(");
-		routerString.append(cityId);
-		routerString.append("), cityName(");
-		routerString.append(cityName);
-		routerString.append("), countryName(");
-		routerString.append(countryName);
+		routerString.append("), city(");
+		routerString.append(city);
 		routerString.append(")");
 		return routerString.toString();
 	}

@@ -61,4 +61,10 @@ public abstract class ORMEntity {
 	 * @return enitiy encapsulated <code>Entity</code> object
 	 */
 	public abstract Entity getEntity();   
+	/**
+     * Allows to set incapsulated <code>Entity</code> object.
+     *
+     * @param  entity <code>Entity</code> object to incapsulate
+	 */
+	public abstract void setEntity(Entity entity);   
 }

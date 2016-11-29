@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.exceptions.DAOException;
@@ -20,32 +21,12 @@ public class ORMCity extends ORMEntity {
 
 
 	//Get-set interface for incapsulated object
-	
-	public int getId() {
-		return city.getId();
-	}
-	public void setId(int id) {
-		city.setId(id);
+	public CityEntity getEntity() {
+		return city;
 	}
 
-	public String getName() {
-		return city.getName();
-	}
-	public String getCountryName() {
-		return city.getCountryName();
-	}
-	public int getRoutersNum() {
-		return city.getRoutersNum();
-	}
-
-	public void setName(String name) {
-		city.setName(name);
-	}
-	public void setCountryName(String countryName) {
-		city.setCountryName(countryName);
-	}
-	public void setRoutersNum(int routersNum) {
-		city.setRoutersNum(routersNum);
+	public void setEntity(CityEntity city) {
+		this.city = city;
 	}
 
 
@@ -75,10 +56,6 @@ public class ORMCity extends ORMEntity {
 		}
 		dao.delete(city);
     }
-
-    public CityEntity getEntity()  {
-		return city;
-	}
 
      /**
 	 * Get any page of cities from DAO layer. 

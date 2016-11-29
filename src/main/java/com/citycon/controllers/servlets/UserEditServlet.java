@@ -3,6 +3,7 @@ package com.citycon.controllers.servlets;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.controllers.listeners.SessionHolder;
+import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
@@ -10,9 +11,15 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Set;
 
 
 /**
@@ -72,6 +79,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 				return;
 			}
 			default : {
+				
 				String name = req.getParameter("name");
 				String login = req.getParameter("login");
 				String password = req.getParameter("password");
@@ -85,14 +93,26 @@ public class UserEditServlet extends AbstractHttpServlet {
 					return;
 				}
 				ORMUser newUser = new ORMUser();
-				try {					
-					newUser.setName(name);
-					newUser.setLogin(login);
-					newUser.setPassword(password);
-					newUser.setEmail(email);
-					newUser.setGroup(group);
-					newUser.setCreateDate(createDate);
+				try {	
+					UserEntity user = new UserEntity();				
+					user.setName(name);
+					user.setLogin(login);
+					user.setPassword(password);
+					user.setEmail(email);
+					user.setGroup(group);
+					user.setCreateDate(createDate);
 
+					ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+					Validator validator = factory.getValidator();
+					Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+					
+					logger.debug("Violations size: {}", violations.size());
+					for (ConstraintViolation<UserEntity> violation : violations) {
+						logger.debug("Violation");
+						logger.debug("There are violations for new user: {}", violation.getMessage());
+					}			
+
+					newUser.setEntity(user);
 					newUser.create();
 				} catch(DublicateKeyDAOException cause) {
 					StringBuilder redirect = new StringBuilder();
@@ -128,7 +148,12 @@ public class UserEditServlet extends AbstractHttpServlet {
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
 		String group = req.getParameter("group");
-
+		logger.info("New user {}", login);
+		if (name == null || login == null || password == null || group == null) {
+			logger.info("Something is null {},{},{},{},{}", name, login, password, email, group);
+			forwardToErrorPage("Not enough info to create new user", req, res);
+			return;
+		}
 		if (idString == null) {
 			forwardToErrorPage("Cannot update user cause id field is empty", req, res);
 			logger.warn("Cannot update user cause id field is empty");

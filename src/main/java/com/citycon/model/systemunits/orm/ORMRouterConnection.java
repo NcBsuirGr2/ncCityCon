@@ -1,7 +1,7 @@
 package com.citycon.model.systemunits.orm;
 
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.RouterEntity;
+import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.interfaces.ConnectionsOfRouter;
@@ -23,74 +23,12 @@ public class ORMRouterConnection extends ORMEntity {
 	RouterConnectionEntity routerConnection = new RouterConnectionEntity();
 	
 	//Get-set interface for incapsulated object
-	
-	public int getId() {
-		return routerConnection.getId();
-	}
-	public void setId(int id) {
-		routerConnection.setId(id);
+	public RouterConnectionEntity getEntity() {
+		return routerConnection;
 	}
 
-	public int getFirstRouterId() {
-		return routerConnection.getFirstRouterId();
-	}
-	public String getFirstRouterSN() {
-		return routerConnection.getFirstRouterSN();
-	}
-	public String getFirstRouterCityName() {
-		return routerConnection.getFirstRouterCityName();
-	}
-	public String getFirstRouterCountry() {
-		return routerConnection.getFirstRouterCountry();
-	}
-	public boolean isFirstRouterActive() {
-		return routerConnection.isFirstRouterActive();
-	}
-	public int getSecondRouterId() {
-		return routerConnection.getSecondRouterId();
-	}
-	public String getSecondRouterSN() {
-		return routerConnection.getSecondRouterSN();
-	}
-	public String getSecondRouterCityName() {
-		return routerConnection.getSecondRouterCityName();
-	}
-	public String getSecondRouterCountry() {
-		return routerConnection.getSecondRouterCountry();
-	}
-	public boolean isSecondRouterActive() {
-		return routerConnection.isSecondRouterActive();
-	}
-
-	public void setFirstRouterId(int firstRouterId) {
-		routerConnection.setFirstRouterId(firstRouterId);
-	}
-	public void setFirstRouterSN(String firstRouterSN) {
-		routerConnection.setFirstRouterSN(firstRouterSN);
-	}
-	public void setFirstRouterCityName(String firstRouterCityName) {
-		routerConnection.setFirstRouterCityName(firstRouterCityName);
-	}
-	public void setFirstRouterCountry(String firstRouterCountry){
-		routerConnection.setFirstRouterCountry(firstRouterCountry);
-	}
-	public void setFirstRouterActive(boolean firstRouterActive){
-		routerConnection.setFirstRouterActive(firstRouterActive);
-	}
-	public void setSecondRouterId(int secondRouterId) {
-		routerConnection.setSecondRouterId(secondRouterId);
-	}
-	public void setSecondRouterSN(String secondRouterSN) {
-		routerConnection.setSecondRouterSN(secondRouterSN);
-	}
-	public void setSecondRouterCityName(String secondRouterCityName) {
-		routerConnection.setSecondRouterCityName(secondRouterCityName);
-	}
-	public void setSecondRouterCountry(String secondRouterCountry){
-		routerConnection.setSecondRouterCountry(secondRouterCountry);
-	}
-	public void setSecondRouterActive(boolean secondRouterActive){
-		routerConnection.setSecondRouterActive(secondRouterActive);
+	public void setEntity(RouterConnectionEntity routerConnection) {
+		this.routerConnection = routerConnection;
 	}
 
 
@@ -121,9 +59,6 @@ public class ORMRouterConnection extends ORMEntity {
 		dao.delete(routerConnection);
     }
 
-    public RouterConnectionEntity getEntity()  {
-		return routerConnection;
-	}
 
     /**
 	 * Get any page of connections from DAO layer. 
