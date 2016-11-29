@@ -6,7 +6,6 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.orm.ORMRouter;
-import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
@@ -18,8 +17,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * Used to perform CRUD operations with routers. On GET returns page for
+ * editing or adding new router. POST must contain 'type' parameter with values
+ * 'add', 'delete' or 'edit'. Redirects to the main routes page on success 
+ * POST.
+ * 
  * @author Mike
- * @verion 0.2
+ * @verion 0.3
  */
 public class RouterEditServlet extends AbstractHttpServlet {
 
@@ -39,12 +43,13 @@ public class RouterEditServlet extends AbstractHttpServlet {
                                             && req.getParameter("action").equals("edit")) {
             try { 
                 String routerSN = req.getParameter("SN");
+                RouterEntity router = new RouterEntity();
+                router.setSN(routerSN);
+                ORMRouter editRouter = new ORMRouter();
+                editRouter.setEntity(router);                
                 try {
-                    ORMRouter router = new ORMRouter();
-                    router.setSN(routerSN);
-                    router.read();
-
-                    req.setAttribute("editRouter", router.getEntity());
+                    editRouter.read();
+                    req.setAttribute("editRouter", editRouter.getEntity());
                     req.getRequestDispatcher(ROUTER_EDIT_PAGE).forward(req, res);
                     return;
                 } catch (DAOException cause) {
@@ -92,15 +97,18 @@ public class RouterEditServlet extends AbstractHttpServlet {
 
                     ORMRouter newRouter = new ORMRouter();
                     try {
-                        newRouter.setPortsNum(Integer.parseInt(portsNum));
-                        newRouter.setSN(SN);
-                        newRouter.setName(name);
-                        newRouter.setActive(active.equals("true"));
-                        newRouter.setCityName(cityName);
-                        newRouter.setCountryName(countryName);
+                        RouterEntity router = new RouterEntity();
+                        router.setPortsNum(Integer.parseInt(portsNum));
+                        router.setSN(SN);
+                        router.setName(name);
+                        router.setActive(active.equals("true"));
+                        router.getCity().setName(cityName);
+                        router.getCity().setCountryName(countryName);
+
+                        newRouter.setEntity(router);
                     } catch (Exception exception) {
                         forwardToErrorPage("Invalid router parameters", req, res);
-                        logger.trace("Exception ",exception);
+                        logger.warn("Exception ",exception);
                         return;
                     }
                     try {
@@ -130,24 +138,27 @@ public class RouterEditServlet extends AbstractHttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
         try {
-            String routerId = req.getParameter("id");
-            String name = req.getParameter("name");
-            String active = req.getParameter("active");
-            String cityName = req.getParameter("cityName");
-            String countryName = req.getParameter("countryName");
+                String routerId = req.getParameter("id");
+                String name = req.getParameter("name");
+                String active = req.getParameter("active");
+                String cityName = req.getParameter("cityName");
+                String countryName = req.getParameter("countryName");
 
-            ORMRouter updateRouter = new ORMRouter();
-            try {
-                updateRouter.setId(Integer.parseInt(routerId));
-                updateRouter.setName(name);
-                updateRouter.setActive(active.equals("true"));
-                updateRouter.setCityName(cityName);
-                updateRouter.setCountryName(countryName);
-            } catch (Exception exception) {
-                forwardToErrorPage("Invalid router parameters", req, res);
-                logger.trace("Exception ",exception);
-                return;
-            }
+                ORMRouter updateRouter = new ORMRouter();
+                try {
+                    RouterEntity router = new RouterEntity();
+                    router.setId(Integer.parseInt(routerId));
+                    router.setName(name);
+                    router.setActive(active.equals("true"));
+                    router.getCity().setName(cityName);
+                    router.getCity().setCountryName(countryName);
+
+                    updateRouter.setEntity(router);
+                } catch (Exception exception) {
+                    forwardToErrorPage("Invalid router parameters", req, res);
+                    logger.warn("Exception ",exception);
+                    return;
+                }
             
                 try {
                     updateRouter.update();
@@ -175,7 +186,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             int routerId = Integer.parseInt(req.getParameter("id"));
             try {
                 ORMRouter router = new ORMRouter();
-                router.setId(routerId);
+                router.getEntity().setId(routerId);
                 router.delete();
             } catch (DAOException cause) {
                 logger.warn("Error occur during deleting router", cause);

@@ -9,8 +9,8 @@ package com.citycon.model.systemunits.entities;
  * @version 1.1
  */
 public class RouterConnectionEntity extends Entity {
-	private RouterEntity firstRouter;
-	private RouterEntity secondRouter;
+	private RouterEntity firstRouter = new RouterEntity();
+	private RouterEntity secondRouter = new RouterEntity();
 
 	// ----- Getters -----
 	public RouterEntity getFirstRouter() {

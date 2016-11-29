@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *  
  * @author Mike
- * @version 0.2
+ * @version 0.3
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
@@ -37,8 +37,16 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         HttpServletResponse res) throws ServletException, IOException {
         
         RouterConnectionEntity[] connections;
-        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
-                                            .getSession().getAttribute("paginationParameters")).get("connections");
+        HashMap<String, String> paginationParameters;
+        try {
+            paginationParameters = ((HashMap<String, HashMap<String, String>>)(req
+                                            .getSession().getAttribute("paginationParameters"))).get("connections");
+        } catch (ClassCastException e) {
+            logger.warn("Cannot cast paginationParameters to HashMap: ", e);
+            forwardToErrorPage(req, res);
+            return;
+        }
+        
         
         try {
             // Getting page for concrete router

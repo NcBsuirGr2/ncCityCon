@@ -9,6 +9,9 @@ import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 
 import com.citycon.model.systemunits.orm.ORMRouterConnection;
+import com.citycon.model.systemunits.entities.RouterConnectionEntity;
+import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.orm.ORMRouter;
 
 import com.citycon.dao.exceptions.DAOException;
@@ -19,12 +22,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Used to perform CRUD operations with connections. On GET returns page for
- * editing or adding new servlet. POST must contain 'type' parameter with values
+ * editing or adding new connection. POST must contain 'type' parameter with values
  * 'add', 'delete' or 'edit'. Redirects to the main connections page on success 
  * POST.
  * 
  * @author Mike
- * @version 0.2
+ * @version 0.3
  */
 public class ConnectionEditServlet extends AbstractHttpServlet {
 	private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";	 
@@ -41,14 +44,14 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 		if (req.getParameter("id") != null) {
 			try {
 				int connectionId = Integer.parseInt(req.getParameter("id"));
+				RouterConnectionEntity connection = new RouterConnectionEntity();
+				connection.setId(connectionId);
 				try {
-					ORMRouterConnection connection = new ORMRouterConnection();
-					connection.setId(connectionId);
-					connection.read();
-
-					req.setAttribute("connection", connection.getEntity());
+					ORMRouterConnection editConnection = new ORMRouterConnection();
+					editConnection.read();
+					req.setAttribute("connection", editConnection.getEntity());
 				} catch (DAOException cause) {
-					logger.warn("Error occured during reading connection", cause);
+					logger.warn("Error occured during reading {}", connection, cause);
 					forwardToErrorPage("Error occured during reading connection", req, res);
 					return;
 				}
@@ -61,25 +64,25 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
                 return;
             }
 		} else if (req.getParameter("SN") != null) {
-			ORMRouterConnection connection = new ORMRouterConnection();
-			ORMRouter router = new ORMRouter();
-			router.setSN(req.getParameter("SN"));
+			ORMRouter filledRouter = new ORMRouter();
+			filledRouter.getEntity().setSN(req.getParameter("SN"));
 			try {
-				router.read();				
-				connection.setFirstRouterSN(req.getParameter("SN"));
-				connection.setFirstRouterCityName(router.getCityName());
-				connection.setFirstRouterCountry(router.getCountryName());
-				req.setAttribute("connection", connection.getEntity());
+				filledRouter.read();
+				RouterConnectionEntity connection = new RouterConnectionEntity();
+				connection.setFirstRouter(filledRouter.getEntity());
+				req.setAttribute("connection", connection);
 			} catch (DAOException cause) {
 				logger.warn("Error occured during reading router to fill connection", cause);
 				forwardToErrorPage("Error occured during reading connection", req, res);
 				return;
 			}
 		} else if (req.getParameter("city") != null && req.getParameter("country") != null) {
-			ORMRouterConnection connection = new ORMRouterConnection();
-			connection.setFirstRouterCityName(req.getParameter("city"));
-			connection.setFirstRouterCountry(req.getParameter("country"));
-			req.setAttribute("connection", connection.getEntity());			
+			RouterConnectionEntity connection = new RouterConnectionEntity();
+			CityEntity city = new CityEntity();
+			city.setName(req.getParameter("city"));
+			city.setCountryName(req.getParameter("country"));
+			connection.getFirstRouter().setCity(city);
+			req.setAttribute("connection", connection);			
 		}
 		
 		RequestDispatcher editView = req.getRequestDispatcher(CONNECTION_EDIT_PAGE);
@@ -107,10 +110,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			String SN1 = req.getParameter("SN1");
 	    			String SN2 = req.getParameter("SN2");
 
+	    			RouterConnectionEntity connection = new RouterConnectionEntity();
+	    			connection.getFirstRouter().setSN(SN1);
+	    			connection.getSecondRouter().setSN(SN2);
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
-	    			newConnection.setFirstRouterSN(SN1);
-	    			newConnection.setSecondRouterSN(SN2);
-
+	    			newConnection.setEntity(connection);
 	    			try {
 	    				newConnection.create();
 	    			} catch (DublicateKeyDAOException exception) {
@@ -131,11 +135,13 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			int connectionId = Integer.parseInt(req.getParameter("id"));
 			String SN1 = req.getParameter("SN1");
 			String SN2 = req.getParameter("SN2");
-			
+
+			RouterConnectionEntity connection = new RouterConnectionEntity();
+			connection.setId(connectionId);
+			connection.getFirstRouter().setSN(SN1);			
+			connection.getSecondRouter().setSN(SN2);
 			ORMRouterConnection updateConnection = new ORMRouterConnection();
-			updateConnection.setId(connectionId);
-			updateConnection.setFirstRouterSN(SN1);
-			updateConnection.setSecondRouterSN(SN2);			
+			updateConnection.setEntity(connection);		
 			try {
 				updateConnection.update();
 			} catch (DublicateKeyDAOException exception) {
@@ -155,13 +161,15 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 		}
 		res.sendRedirect(CONNECTION_LIST_URL+"?success=edit&"+req.getParameter("sameSelect"));
 	}
+
+
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
 	    try {
 			int connectionId = Integer.parseInt(req.getParameter("id"));
 			try {
 				ORMRouterConnection connection = new ORMRouterConnection();
-				connection.setId(connectionId);
+				connection.getEntity().setId(connectionId);
 				connection.delete();
 			} catch (DAOException cause) {
 				logger.warn("Error occured during deleting connection", cause);
