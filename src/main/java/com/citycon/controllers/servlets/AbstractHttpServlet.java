@@ -33,6 +33,12 @@ public abstract class AbstractHttpServlet extends HttpServlet {
         req.setAttribute("errorMessage", errorMessage);
         req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
     }
+    protected void forwardToErrorPage(HttpServletRequest req,
+                          HttpServletResponse res) throws ServletException, IOException {
+
+        req.setAttribute("errorMessage", "Internal server error");
+        req.getRequestDispatcher(ERROR_PAGE).forward(req, res);
+    }
     /**
      *	Aimed to validate and set default pagination variables. Return not null StringBuilder 
      *	for represents new path, if page is negative or too lagre (and sets normalized page 

@@ -28,7 +28,7 @@ public class RouterEntity extends Entity {
 
 	@NotNull
 	@Valid
-	private CityEntity city;
+	private CityEntity city = new CityEntity();
 
 	// ----- Getters -----
 	public String getName() {

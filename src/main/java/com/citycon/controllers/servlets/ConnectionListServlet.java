@@ -37,8 +37,16 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         HttpServletResponse res) throws ServletException, IOException {
         
         RouterConnectionEntity[] connections;
-        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
-                                            .getSession().getAttribute("paginationParameters")).get("connections");
+        HashMap<String, String> paginationParameters;
+        try {
+            paginationParameters = ((HashMap<String, HashMap<String, String>>)(req
+                                            .getSession().getAttribute("paginationParameters"))).get("connections");
+        } catch (ClassCastException e) {
+            logger.warn("Cannot cast paginationParameters to HashMap: ", e);
+            forwardToErrorPage(req, res);
+            return;
+        }
+        
         
         try {
             // Getting page for concrete router
