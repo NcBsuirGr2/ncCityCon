@@ -5,7 +5,7 @@ import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.orm.ORMCity;
-import com.citycon.model.systemunits.orm.ORMUser;
+import com.citycon.model.systemunits.entities.CityEntity;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
