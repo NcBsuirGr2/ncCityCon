@@ -157,8 +157,8 @@
 
 							<tbody>
 								<c:forEach items="${entityArray}" var="router">
-									<td>${router.countryName}</td>
-									<td>${router.cityName}</td>																		
+									<td>${router.city.countryName}</td>
+									<td>${router.city.name}</td>																		
 									<td class="unique"><a href="/connections?SN=${router.SN}">${router.SN}</a></td>
 									<td>${router.name}</td>
 									<td>${router.portsNum}</td>

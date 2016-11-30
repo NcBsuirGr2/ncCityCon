@@ -129,10 +129,10 @@
 				        	<tbody>
 								<c:forEach items="${entityArray}" var="connection">
 									<tr>
-										<td>${connection.firstRouterSN}</td>
-										<td>${connection.firstRouterCityName}</td>
-										<td>${connection.secondRouterSN}</td>
-										<td>${connection.secondRouterCityName}</td>
+										<td>${connection.firstRouter.SN}</td>
+										<td>${connection.firstRouter.city.name}</td>
+										<td>${connection.secondRouter.SN}</td>
+										<td>${connection.secondRouter.city.name}</td>
 										<td class="hidden unique idField">${connection.id}</td>
 									</tr>
 								</c:forEach>

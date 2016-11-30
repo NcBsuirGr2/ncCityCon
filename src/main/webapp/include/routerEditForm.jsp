@@ -7,7 +7,7 @@
                 <c:if test="${not empty editRouter or not empty param.country}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
-                            <option value="${editRouter.countryName}" selected>${editRouter.countryName}</option>
+                            <option value="${editRouter.city.countryName}" selected>${editRouter.city.countryName}</option>
                         </c:when>
                         <c:otherwise>
                             <option value="${param.country}" selected>${param.country}</option>
@@ -26,7 +26,7 @@
                 <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
-                            <option value="${editRouter.cityName}" selected>${editRouter.cityName}</option>
+                            <option value="${editRouter.cityN.nme}" selected>${editRouter.city.name}</option>
                         </c:when>
                         <c:otherwise>
                             <option value="${param.city}" selected>${param.city}</option>
@@ -64,8 +64,8 @@
         <label for="group" class="col-xs-3 control-label">Active:</label>
         <div class="col-xs-2">
             <select class="form-control" id="group" name="active" form="form">
-                <option value="true" <c:if test="${param.active eq 'true'}">selected</c:if>>true</option>
-                <option value="false" <c:if test="${param.active eq 'false'}">selected</c:if>>false</option>
+                <option value="true" <c:if test="${param.active eq 'true' || editRouter.active eq 'true'}">selected</c:if>>true</option>
+                <option value="false" <c:if test="${param.active eq 'false' || editRouter.active eq 'false'}">selected</c:if>>false</option>
             </select>
         </div>
     </div>

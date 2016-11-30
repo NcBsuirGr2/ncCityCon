@@ -69,7 +69,7 @@
                                         <c:if test="${not empty connection or not empty param.firstCountry}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.firstRouterCountry}" selected>${connection.firstRouterCountry}</option>
+                                                    <option value="${connection.firstRouter.city.countryName}" selected>${connection.firstRouter.city.countryName}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.firstCountry}" selected>${param.firstCountry}</option>
@@ -88,7 +88,7 @@
                                         <c:if test="${not empty connection or not empty param.firstCity}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.firstRouterCityName}" selected>${connection.firstRouterCityName}</option>
+                                                    <option value="${connection.firstRouter.city.name}" selected>${connection.firstRouter.city.name}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.firstCity}" selected>${param.firstCity}</option>
@@ -106,7 +106,7 @@
                                         <c:if test="${not empty connection or not empty param.SN1}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.firstRouterSN}" selected>${connection.firstRouterSN}</option>
+                                                    <option value="${connection.firstRouter.SN}" selected>${connection.firstRouter.SN}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.SN1}" selected>${param.SN1}</option>
@@ -126,7 +126,7 @@
                                         <c:if test="${not empty connection or not empty param.secondCountry}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterCountry}" selected>${connection.secondRouterCountry}</option>
+                                                    <option value="${connection.secondRouterCountryconnection.secondRouter.city.countryName}" selected>${connection.secondRouter.city.countryName}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.secondCountry}" selected>${param.secondCountry}</option>
@@ -145,7 +145,7 @@
                                         <c:if test="${not empty connection or not empty param.secondCity}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterCityName}" selected>${connection.secondRouterCityName}</option>
+                                                    <option value="${connection.secondRouterCityNameconnection.secondRouter.city.name}" selected>${connection.secondRouter.city.name}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.secondCity}" selected>${param.secondCity}</option>
@@ -163,7 +163,7 @@
                                         <c:if test="${not empty connection or not empty param.SN2}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterSN}" selected>${connection.secondRouterSN}</option>
+                                                    <option value="${connection.secondRouterSNconnection.secondRouter}" selected>${connection.secondRouter}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.SN2}" selected>${param.SN2}</option>
