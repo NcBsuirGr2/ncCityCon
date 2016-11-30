@@ -208,7 +208,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
         String constraintMessage = null;
         for (ConstraintViolation<T> violation : violations) {
-            logger.debug("Violations during validate: {}", violation.getMessage());
+            logger.debug("Violation during validate: {}", violation.getMessage());
             constraintMessage = violation.getMessage();
         }
         return constraintMessage;

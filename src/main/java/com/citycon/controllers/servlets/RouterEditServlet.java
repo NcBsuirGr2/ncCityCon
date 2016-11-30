@@ -256,17 +256,4 @@ public class RouterEditServlet extends AbstractHttpServlet {
         redirect.append(countryName);
         return redirect;
     }
-
-    protected String validate(RouterEntity router) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<RouterEntity>> violations = validator.validate(router);
-
-        String constraintMessage = null;
-        for (ConstraintViolation<RouterEntity> violation : violations) {
-            logger.debug("Violation for router: {}", violation.getMessage());
-            constraintMessage = violation.getMessage();
-        }
-        return constraintMessage;
-    }
 }

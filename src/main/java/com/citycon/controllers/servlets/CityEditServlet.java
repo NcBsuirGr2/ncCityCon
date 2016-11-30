@@ -233,16 +233,4 @@ public class CityEditServlet extends AbstractHttpServlet {
         }
         res.sendRedirect(CITY_LIST_URL+"?success=delete");
     }
-    protected String validate(CityEntity city) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<CityEntity>> violations = validator.validate(city);
-
-        String constraintMessage = null;
-        for (ConstraintViolation<CityEntity> violation : violations) {
-            logger.debug("There are violations for new city: {}", violation.getMessage());
-            constraintMessage = violation.getMessage();
-        }
-        return constraintMessage;
-    }
 }

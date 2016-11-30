@@ -238,16 +238,4 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
         return redirect;
     }
 
-    protected String validate(RouterConnectionEntity connection) {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
-		Set<ConstraintViolation<RouterConnectionEntity>> violations = validator.validate(connection);
-
-		String constraintMessage = null;
-		for (ConstraintViolation<RouterConnectionEntity> violation : violations) {
-			logger.debug("There are violations for new connection: {}", violation.getMessage());
-			constraintMessage = violation.getMessage();
-		}
-		return constraintMessage;
-	}
 }

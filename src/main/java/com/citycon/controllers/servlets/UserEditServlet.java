@@ -232,16 +232,4 @@ public class UserEditServlet extends AbstractHttpServlet {
 		}
 		res.sendRedirect(USER_LIST_URL+"?success=delete");
 	}
-	protected String validate(UserEntity user) {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
-		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
-
-		String constraintMessage = null;
-		for (ConstraintViolation<UserEntity> violation : violations) {
-			logger.debug("There are violations for new user: {}", violation.getMessage());
-			constraintMessage = violation.getMessage();
-		}
-		return constraintMessage;
-	}
 }
