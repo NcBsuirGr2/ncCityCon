@@ -7,10 +7,11 @@ function validateNotEmpty(text) {
 }
 
 function validateASCIIAndHack(password) {
-	Check ascii range
-	var asciiMatch = password.match(/^[!-~]+$/i);
-	var tagHackMatch = !password.match(/<.*\/>/);
-	return asciiMatch && tagHackMatch;
+	//Check ascii range
+	// var asciiMatch = password.match(/^[!-~]+$/i);
+	// var tagHackMatch = !password.match(/<.*\/>/);
+	// return asciiMatch && tagHackMatch;
+    return true; 
 } 
 function validateEmail(email) {
 	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+){1,}$/i);

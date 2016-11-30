@@ -205,11 +205,14 @@ public abstract class AbstractHttpServlet extends HttpServlet {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<T>> violations = validator.validate(validateObj, groups);
+        logger.debug("groups size is {}", groups.length);
 
         String constraintMessage = null;
         for (ConstraintViolation<T> violation : violations) {
             logger.debug("Violation during validate: {}", violation.getMessage());
-            constraintMessage = violation.getMessage();
+            if (constraintMessage == null ) {
+              constraintMessage = violation.getMessage();
+            }            
         }
         return constraintMessage;
     }

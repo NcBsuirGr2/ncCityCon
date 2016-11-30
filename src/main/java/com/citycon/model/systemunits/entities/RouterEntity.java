@@ -6,6 +6,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.Valid;
+import javax.validation.groups.Default;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -21,15 +22,15 @@ import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
  * @version 1.2
  */
 public class RouterEntity extends Entity {
-	@NotBlank
+	@NotBlank(message="Router name can not be blank")
 	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")
+	@Pattern(regexp="^[a-z-_a-z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")
 	private String name;
 
-	@NotBlank
-	@Size(min=3, max=30, message="Router name must be {min}..{max} in length", 
+	@NotBlank(message="Router SN can not be blank", groups={RouterAddGroup.class, ConnectionGroup.class})
+	@Size(min=3, max=30, message="Router SN must be {min}..{max} in length", 
 		groups={RouterAddGroup.class, ConnectionGroup.class})
-	@Pattern(regexp="^[-_#:a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, 
+	@Pattern(regexp="^[-_#:a-z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, 
 		message="Invalid SN: ${validatedValue}", groups={RouterAddGroup.class, ConnectionGroup.class})
 	private String SN;
 

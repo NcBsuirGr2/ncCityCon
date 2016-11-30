@@ -123,16 +123,16 @@
 											</c:if>											
 										</a>
 									</th>								
-							        <th class="hidden">id</th>								
+							        <th class="hidden">id</th>					
 				        		</tr>
 				        	</thead>
 				        	<tbody>
 								<c:forEach items="${entityArray}" var="connection">
 									<tr>
-										<td>${connection.firstRouter.SN}</td>
-										<td>${connection.firstRouter.city.name}</td>
-										<td>${connection.secondRouter.SN}</td>
-										<td>${connection.secondRouter.city.name}</td>
+										<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >${connection.firstRouter.SN}</td>
+										<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >${connection.firstRouter.city.name}</td>
+										<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>${connection.secondRouter.SN}</td>
+										<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>${connection.secondRouter.city.name}</td>
 										<td class="hidden unique idField">${connection.id}</td>
 									</tr>
 								</c:forEach>

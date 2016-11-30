@@ -21,28 +21,28 @@ import java.sql.Date;
  * @version 1.3
  */
 public class UserEntity extends Entity {
-	@NotBlank
+	@NotBlank(message="User name can not be blank")
 	@Size(min=3, max=30, message="User name must be {min}..{max} in length")
 	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")
 	private String name;
 
-	@NotBlank
+	@NotBlank(message="User login can not be blank")
 	@Size(min=3, max=15, message="User login must be {min}..{max} in length")
 	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user login: ${validatedValue}")
 	private String login;
 
 
-	@NotBlank
+	@NotBlank(message="User password can not be blank")
 	@Pattern(regexp="^[-a-z0-9!#$%&'*+/=?^_`{|}~]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user password: ${validatedValue}")
 	private String password;	
 
-	@NotBlank
+	@NotBlank(message="User email can not be blank")
 	@Email(message="Invalid user email: ${validatedValue}")
 	private String email;
 
 	private Grant grant;
 
-	@NotBlank
+	@NotBlank(message="User group can not be blank")
 	@Pattern(regexp="^(Admin|Guest|Operator)$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user group: ${validatedValue}")
 	private String group;
 

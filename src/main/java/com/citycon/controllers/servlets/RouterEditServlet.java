@@ -17,6 +17,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
+import javax.validation.groups.Default;
 import com.citycon.model.systemunits.entities.validationgroups.RouterAddGroup;
 
 import java.util.Set;
@@ -114,7 +115,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                         router.getCity().setCountryName(countryName);
 
                         /*Validation*/
-                        String validationMessage = validate(router);
+                        String validationMessage = validate(router, Default.class, RouterAddGroup.class);
                         if (validationMessage != null) {
                             forwardToErrorPage(validationMessage, req, res);
                             return;
@@ -169,7 +170,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     router.getCity().setCountryName(countryName);
 
                     /*Validation*/
-                    String validationMessage = validate(router, RouterAddGroup.class);
+                    String validationMessage = validate(router);
                     if (validationMessage != null) {
                         forwardToErrorPage(validationMessage, req, res);
                         return;
