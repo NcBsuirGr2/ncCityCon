@@ -27,7 +27,7 @@ public class CityEntity extends Entity {
 	private String countryName;
 
 	@Min(value=0, message="Routers num can not be negative")
-	private int routersNum;
+	private int routersNum = 0;
 
 	// ----- Getters -----
 	public String getName() {

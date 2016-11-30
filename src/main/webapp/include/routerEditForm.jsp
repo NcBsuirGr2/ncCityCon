@@ -26,7 +26,7 @@
                 <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
-                            <option value="${editRouter.cityN.nme}" selected>${editRouter.city.name}</option>
+                            <option value="${editRouter.city.name}" selected>${editRouter.city.name}</option>
                         </c:when>
                         <c:otherwise>
                             <option value="${param.city}" selected>${param.city}</option>

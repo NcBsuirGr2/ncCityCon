@@ -26,7 +26,7 @@
                 <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
                         <c:when test="${not empty editRouter}">
-                            <option value="${editRouter.cityN.nme}" selected>${editRouter.city.name}</option>
+                            <option value="${editRouter.city.name}" selected>${editRouter.city.name}</option>
                         </c:when>
                         <c:otherwise>
                             <option value="${param.city}" selected>${param.city}</option>
@@ -51,7 +51,7 @@
     </div>
     <div class="form-group">
         <label for="group" class="col-xs-3 control-label">Ports:</label>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <select class="form-control" id="group" name="portsNum" form="form">
                 <option value="1" <c:if test="${param.editPortsNum == 1}">selected</c:if>>1</option>
                 <option value="2" <c:if test="${param.editPortsNum == 2}">selected</c:if>>2</option>

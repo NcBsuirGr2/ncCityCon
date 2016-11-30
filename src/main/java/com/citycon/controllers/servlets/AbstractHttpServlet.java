@@ -201,10 +201,10 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     	session.setAttribute("paginationParameters", paginationParameters);
     }
 
-    protected <T> String validate(T validateObj) {
+    protected <T> String validate(T validateObj, Class<?>... groups) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        Set<ConstraintViolation<T>> violations = validator.validate(validateObj);
+        Set<ConstraintViolation<T>> violations = validator.validate(validateObj, groups);
 
         String constraintMessage = null;
         for (ConstraintViolation<T> violation : violations) {

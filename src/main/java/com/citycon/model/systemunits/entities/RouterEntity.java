@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.citycon.model.systemunits.entities.validationgroups.RouterAddGroup;
+import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
+
 /**
  * Represents all necessary information about router. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -24,21 +27,20 @@ public class RouterEntity extends Entity {
 	private String name;
 
 	@NotBlank
-	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
-	@Pattern(regexp="^[-_#:a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid SN: ${validatedValue}")
+	@Size(min=3, max=30, message="Router name must be {min}..{max} in length", 
+		groups={RouterAddGroup.class, ConnectionGroup.class})
+	@Pattern(regexp="^[-_#:a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, 
+		message="Invalid SN: ${validatedValue}", groups={RouterAddGroup.class, ConnectionGroup.class})
 	private String SN;
 
-	@Min(value=0, message="Ports number of router must be positive")
-	@Max(value=4, message="Ports number of router must no higher then 4")
+	@Min(value=0, message="Ports number of router must be positive", groups={RouterAddGroup.class})
+	@Max(value=4, message="Ports number of router must no higher then 4", groups={RouterAddGroup.class})
 	private int portsNum;
 
-	@Min(value=0, message="Ports number of router must be positive")
-	@Max(value=4, message="Ports number of router must no higher then 4")
 	private int usedPortsNum;
 
 	private boolean isActive;
 
-	@NotNull
 	@Valid
 	private CityEntity city = new CityEntity();
 

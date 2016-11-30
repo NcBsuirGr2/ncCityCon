@@ -18,6 +18,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
+import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
 
 import java.util.Set;
 
@@ -123,7 +124,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
 
 	    			/*Validation*/
-					String validationMessage = validate(connection);
+					String validationMessage = validate(connection, ConnectionGroup.class);
 					if (validationMessage != null) {
 						forwardToErrorPage(validationMessage, req, res);
 						return;
@@ -158,7 +159,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			ORMRouterConnection updateConnection = new ORMRouterConnection();
 
 			/*Validation*/
-			String validationMessage = validate(connection);
+			String validationMessage = validate(connection, ConnectionGroup.class);
 			if (validationMessage != null) {
 				forwardToErrorPage(validationMessage, req, res);
 				return;

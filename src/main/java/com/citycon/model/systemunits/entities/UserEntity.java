@@ -40,14 +40,12 @@ public class UserEntity extends Entity {
 	@Email(message="Invalid user email: ${validatedValue}")
 	private String email;
 
-	@Valid
 	private Grant grant;
 
 	@NotBlank
 	@Pattern(regexp="^(Admin|Guest|Operator)$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user group: ${validatedValue}")
 	private String group;
 
-	@NotNull
 	private Date createDate;
 
 	// ----- Getters -----

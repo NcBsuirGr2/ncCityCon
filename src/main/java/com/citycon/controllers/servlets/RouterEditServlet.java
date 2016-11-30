@@ -17,6 +17,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
+import com.citycon.model.systemunits.entities.validationgroups.RouterAddGroup;
 
 import java.util.Set;
 import java.util.HashMap;
@@ -68,7 +69,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Not string id value", req, res);
                 return;
             } catch (Exception exception) {
-                logger.warn("Unexcepted exception");
+                logger.warn("Unexcepted exception", exception);
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
@@ -140,7 +141,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     forwardToErrorPage("Internal DAO exception", req, res);
                     return;
                 } catch (Exception exception) {
-                    logger.warn("Unexcepted exception");
+                    logger.warn("Unexcepted exception", exception);
                     forwardToErrorPage("Internal servler error", req, res);
                     return;
                 }
@@ -168,7 +169,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     router.getCity().setCountryName(countryName);
 
                     /*Validation*/
-                    String validationMessage = validate(router);
+                    String validationMessage = validate(router, RouterAddGroup.class);
                     if (validationMessage != null) {
                         forwardToErrorPage(validationMessage, req, res);
                         return;
@@ -194,7 +195,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 logger.warn("Internal DAO exception", cause);
                 forwardToErrorPage("Internal DAO exception", req, res);
             } catch (Exception exception) {
-                logger.warn("Unexcepted exception");
+                logger.warn("Unexcepted exception", exception);
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
@@ -218,7 +219,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             forwardToErrorPage("Not string id value", req, res);
             return;
         } catch (Exception exception) {
-            logger.warn("Unexcepted exception");
+            logger.warn("Unexcepted exception", exception);
             forwardToErrorPage("Internal servler error", req, res);
             return;
         }
