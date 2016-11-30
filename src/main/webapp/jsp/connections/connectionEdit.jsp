@@ -126,7 +126,7 @@
                                         <c:if test="${not empty connection or not empty param.secondCountry}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterCountryconnection.secondRouter.city.countryName}" selected>${connection.secondRouter.city.countryName}</option>
+                                                    <option value="${connection.secondRouter.city.countryName}" selected>${connection.secondRouter.city.countryName}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.secondCountry}" selected>${param.secondCountry}</option>
@@ -145,7 +145,7 @@
                                         <c:if test="${not empty connection or not empty param.secondCity}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterCityNameconnection.secondRouter.city.name}" selected>${connection.secondRouter.city.name}</option>
+                                                    <option value="${connection.secondRouter.city.name}" selected>${connection.secondRouter.city.name}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.secondCity}" selected>${param.secondCity}</option>
@@ -163,7 +163,7 @@
                                         <c:if test="${not empty connection or not empty param.SN2}">
                                             <c:choose>
                                                 <c:when test="${not empty connection}">
-                                                    <option value="${connection.secondRouterSNconnection.secondRouter}" selected>${connection.secondRouter}</option>
+                                                    <option value="${connection.secondRouter}" selected>${connection.secondRouter}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${param.SN2}" selected>${param.SN2}</option>
