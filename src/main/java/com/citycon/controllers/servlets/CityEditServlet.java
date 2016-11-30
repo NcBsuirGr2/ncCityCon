@@ -12,6 +12,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
+import java.util.Set;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.Date;
@@ -106,6 +113,14 @@ public class CityEditServlet extends AbstractHttpServlet {
                 city.setCountryName(countryName);
 
                 ORMCity newCity = new ORMCity();
+
+                /*Validation*/
+                String validationMessage = validate(city);
+                if (validationMessage != null) {
+                    forwardToErrorPage(validationMessage, req, res);
+                    return;
+                }
+
                 newCity.setEntity(city);
                 logger.trace("Creating city with name:{} countryName:{}", city.getName(), city.getCountryName());
                 try {      
@@ -113,13 +128,8 @@ public class CityEditServlet extends AbstractHttpServlet {
                 } catch(DublicateKeyDAOException cause) {
                     StringBuilder redirect = new StringBuilder();
                     redirect.append(CITY_EDIT_URL);
-<<<<<<< HEAD
                     redirect.append("?errorType=dublicate2&editName=");
                     redirect.append(city.getName());
-=======
-                    redirect.append("?errorType=dublicate&editName=");
-                    redirect.append(newCity.getName());
->>>>>>> 38b2e04735c69550366d28a2d9068e94d9b63e74
                     redirect.append("&editCountryName=");
                     redirect.append(city.getCountryName());
                     res.sendRedirect(redirect.toString());
@@ -154,6 +164,14 @@ public class CityEditServlet extends AbstractHttpServlet {
         city.setCountryName(countryName);
 
         ORMCity updateCity = new ORMCity();
+
+        /*Validation*/
+        String validationMessage = validate(city);
+        if (validationMessage != null) {
+            forwardToErrorPage(validationMessage, req, res);
+            return;
+        }
+
         updateCity.setEntity(city);
         logger.trace("Updating city with name:{} countryName:{}", city.getName(), city.getCountryName());
         try {
@@ -214,5 +232,17 @@ public class CityEditServlet extends AbstractHttpServlet {
             return;
         }
         res.sendRedirect(CITY_LIST_URL+"?success=delete");
+    }
+    protected String validate(CityEntity city) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<CityEntity>> violations = validator.validate(city);
+
+        String constraintMessage = null;
+        for (ConstraintViolation<CityEntity> violation : violations) {
+            logger.debug("There are violations for new city: {}", violation.getMessage());
+            constraintMessage = violation.getMessage();
+        }
+        return constraintMessage;
     }
 }

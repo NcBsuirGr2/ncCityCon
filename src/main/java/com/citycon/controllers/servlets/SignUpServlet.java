@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
+import java.util.Set;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
@@ -50,6 +57,14 @@ public class SignUpServlet extends AbstractHttpServlet {
             user.setCreateDate(timeNow);
 
             ORMUser newUser = new ORMUser(); 
+
+            /*Validation*/
+            String validationMessage = validate(user);
+            if (validationMessage != null) {
+                forwardToErrorPage(validationMessage, req, res);
+                return;
+            }
+
             newUser.setEntity(user); 
             try {
                 newUser.create();                  
@@ -87,5 +102,18 @@ public class SignUpServlet extends AbstractHttpServlet {
         redirect.append("&name=");
         redirect.append(name);
         return redirect;
+    }
+
+    protected String validate(UserEntity user) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+
+        String constraintMessage = null;
+        for (ConstraintViolation<UserEntity> violation : violations) {
+            logger.debug("There are violations for new user: {}", violation.getMessage());
+            constraintMessage = violation.getMessage();
+        }
+        return constraintMessage;
     }
 }

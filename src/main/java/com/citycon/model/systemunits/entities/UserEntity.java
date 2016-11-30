@@ -23,28 +23,28 @@ import java.sql.Date;
 public class UserEntity extends Entity {
 	@NotBlank
 	@Size(min=3, max=30, message="User name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z][-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")
 	private String name;
 
 	@NotBlank
 	@Size(min=3, max=15, message="User login must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z][-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user login: ${validatedValue}")
 	private String login;
 
 
 	@NotBlank
-	@Pattern(regexp="^[-a-z0-9!#$%&'*+/[]=?^_`{|}~]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp="^[-a-z0-9!#$%&'*+/=?^_`{|}~]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user password: ${validatedValue}")
 	private String password;	
 
 	@NotBlank
-	@Email
+	@Email(message="Invalid user email: ${validatedValue}")
 	private String email;
 
 	@Valid
 	private Grant grant;
 
 	@NotBlank
-	@Pattern(regexp="^(Admin|Guest|Operator)$", flags=Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp="^(Admin|Guest|Operator)$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user group: ${validatedValue}")
 	private String group;
 
 	@NotNull

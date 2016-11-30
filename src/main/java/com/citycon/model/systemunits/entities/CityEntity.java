@@ -1,7 +1,10 @@
 package com.citycon.model.systemunits.entities;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents all necessary information about city. It is the plain
@@ -13,10 +16,17 @@ import javax.validation.constraints.Size;
  */
 public class CityEntity extends Entity {
 
-	@Size(min=3, max=10)
+	@NotBlank(message="City name can not be empty")
+	@Size(min=3, max=20, message="City name must be {min}..{max} in length")
+	@Pattern(regexp="^[a-z- a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid city name: ${validatedValue}")
 	private String name;
 	
+	@NotBlank(message="Country name can not be empty")
+	@Size(min=3, max=20, message="Country name must be {min}..{max} in length")
+	@Pattern(regexp="^[a-z- a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid country name: ${validatedValue}")
 	private String countryName;
+
+	@Min(value=0, message="Routers num can not be negative")
 	private int routersNum;
 
 	// ----- Getters -----

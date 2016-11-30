@@ -1,5 +1,8 @@
 package com.citycon.model.systemunits.entities;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * Represents all necessary information about router connection. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -9,7 +12,12 @@ package com.citycon.model.systemunits.entities;
  * @version 1.1
  */
 public class RouterConnectionEntity extends Entity {
+	@NotNull
+	@Valid
 	private RouterEntity firstRouter = new RouterEntity();
+
+	@NotNull
+	@Valid
 	private RouterEntity secondRouter = new RouterEntity();
 
 	// ----- Getters -----

@@ -12,9 +12,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
+import java.util.Set;
 import java.util.HashMap;
+
+import java.io.IOException;
 
 /**
  * Used to perform CRUD operations with routers. On GET returns page for
@@ -105,6 +112,13 @@ public class RouterEditServlet extends AbstractHttpServlet {
                         router.getCity().setName(cityName);
                         router.getCity().setCountryName(countryName);
 
+                        /*Validation*/
+                        String validationMessage = validate(router);
+                        if (validationMessage != null) {
+                            forwardToErrorPage(validationMessage, req, res);
+                            return;
+                        }
+
                         newRouter.setEntity(router);
                     } catch (Exception exception) {
                         forwardToErrorPage("Invalid router parameters", req, res);
@@ -152,6 +166,13 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     router.setActive(active.equals("true"));
                     router.getCity().setName(cityName);
                     router.getCity().setCountryName(countryName);
+
+                    /*Validation*/
+                    String validationMessage = validate(router);
+                    if (validationMessage != null) {
+                        forwardToErrorPage(validationMessage, req, res);
+                        return;
+                    }
 
                     updateRouter.setEntity(router);
                 } catch (Exception exception) {
@@ -234,5 +255,18 @@ public class RouterEditServlet extends AbstractHttpServlet {
         redirect.append("&country=");
         redirect.append(countryName);
         return redirect;
+    }
+
+    protected String validate(RouterEntity router) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<RouterEntity>> violations = validator.validate(router);
+
+        String constraintMessage = null;
+        for (ConstraintViolation<RouterEntity> violation : violations) {
+            logger.debug("Violation for router: {}", violation.getMessage());
+            constraintMessage = violation.getMessage();
+        }
+        return constraintMessage;
     }
 }

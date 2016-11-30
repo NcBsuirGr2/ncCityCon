@@ -16,10 +16,10 @@ import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
+import java.util.Set;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.Set;
 
 
 /**
@@ -101,15 +101,13 @@ public class UserEditServlet extends AbstractHttpServlet {
 
 				ORMUser newUser = new ORMUser();
 				try {	
-					ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-					Validator validator = factory.getValidator();
-					Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
-					
-					logger.debug("Violations size: {}", violations.size());
-					for (ConstraintViolation<UserEntity> violation : violations) {
-						logger.debug("Violation");
-						logger.debug("There are violations for new user: {}", violation.getMessage());
-					}			
+
+					/*Validation*/
+					String validationMessage = validate(user);
+					if (validationMessage != null) {
+						forwardToErrorPage(validationMessage, req, res);
+						return;
+					}		
 
 					newUser.setEntity(user);
 					newUser.create();
@@ -168,8 +166,14 @@ public class UserEditServlet extends AbstractHttpServlet {
 			user.setEmail(email);
 			user.setGroup(group);
 
-			ORMUser updateUser = new ORMUser();
+			/*Validation*/
+			String validationMessage = validate(user);
+			if (validationMessage != null) {
+				forwardToErrorPage(validationMessage, req, res);
+				return;
+			}	
 
+			ORMUser updateUser = new ORMUser();
 			updateUser.setEntity(user);
 
 			logger.debug("Updating user with id:{} loging:{} password:{} name:{} email:{} group:{}", 
@@ -227,5 +231,17 @@ public class UserEditServlet extends AbstractHttpServlet {
 			return;
 		}
 		res.sendRedirect(USER_LIST_URL+"?success=delete");
+	}
+	protected String validate(UserEntity user) {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+
+		String constraintMessage = null;
+		for (ConstraintViolation<UserEntity> violation : violations) {
+			logger.debug("There are violations for new user: {}", violation.getMessage());
+			constraintMessage = violation.getMessage();
+		}
+		return constraintMessage;
 	}
 }

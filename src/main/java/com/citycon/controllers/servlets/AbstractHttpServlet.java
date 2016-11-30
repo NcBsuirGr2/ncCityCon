@@ -9,6 +9,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
+import java.util.Set;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -192,5 +199,18 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     	paginationParameters.put("connections", defaultConnectionsParameters);
 
     	session.setAttribute("paginationParameters", paginationParameters);
+    }
+
+    protected <T> String validate(T validateObj) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<T>> violations = validator.validate(validateObj);
+
+        String constraintMessage = null;
+        for (ConstraintViolation<T> violation : violations) {
+            logger.debug("Violations during validate: {}", violation.getMessage());
+            constraintMessage = violation.getMessage();
+        }
+        return constraintMessage;
     }
 }

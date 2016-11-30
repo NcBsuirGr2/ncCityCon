@@ -14,6 +14,13 @@ import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.orm.ORMRouter;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
+import javax.validation.ConstraintViolation;
+
+import java.util.Set;
+
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
@@ -114,6 +121,14 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			connection.getFirstRouter().setSN(SN1);
 	    			connection.getSecondRouter().setSN(SN2);
 	    			ORMRouterConnection newConnection = new ORMRouterConnection();
+
+	    			/*Validation*/
+					String validationMessage = validate(connection);
+					if (validationMessage != null) {
+						forwardToErrorPage(validationMessage, req, res);
+						return;
+					}
+
 	    			newConnection.setEntity(connection);
 	    			try {
 	    				newConnection.create();
@@ -141,6 +156,14 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			connection.getFirstRouter().setSN(SN1);			
 			connection.getSecondRouter().setSN(SN2);
 			ORMRouterConnection updateConnection = new ORMRouterConnection();
+
+			/*Validation*/
+			String validationMessage = validate(connection);
+			if (validationMessage != null) {
+				forwardToErrorPage(validationMessage, req, res);
+				return;
+			}
+
 			updateConnection.setEntity(connection);		
 			try {
 				updateConnection.update();
@@ -215,4 +238,16 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
         return redirect;
     }
 
+    protected String validate(RouterConnectionEntity connection) {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<RouterConnectionEntity>> violations = validator.validate(connection);
+
+		String constraintMessage = null;
+		for (ConstraintViolation<RouterConnectionEntity> violation : violations) {
+			logger.debug("There are violations for new connection: {}", violation.getMessage());
+			constraintMessage = violation.getMessage();
+		}
+		return constraintMessage;
+	}
 }

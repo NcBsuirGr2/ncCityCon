@@ -1,6 +1,8 @@
 package com.citycon.model.systemunits.entities;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.Valid;
@@ -18,12 +20,22 @@ import org.hibernate.validator.constraints.NotBlank;
 public class RouterEntity extends Entity {
 	@NotBlank
 	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z][-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")
 	private String name;
 
+	@NotBlank
+	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
+	@Pattern(regexp="^[-_#:a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid SN: ${validatedValue}")
 	private String SN;
+
+	@Min(value=0, message="Ports number of router must be positive")
+	@Max(value=4, message="Ports number of router must no higher then 4")
 	private int portsNum;
+
+	@Min(value=0, message="Ports number of router must be positive")
+	@Max(value=4, message="Ports number of router must no higher then 4")
 	private int usedPortsNum;
+
 	private boolean isActive;
 
 	@NotNull

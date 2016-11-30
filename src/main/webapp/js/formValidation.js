@@ -1,19 +1,23 @@
 function validateSimpleText(text) {
-	return text.match(/^[-a-zA-Z0-9]+$/i);
+    //return text.match(/^[-a-zA-Z0-9]+$/i);
+	return true;
 }
 
 function validateNotEmpty(text) {
-	return (text && text != "");
+	// return (text && text != "");
+    return true; 
 }
 
 function validateASCIIAndHack(password) {
 	// Check ascii range
-	var asciiMatch = password.match(/^[!-~]+$/i);
-	var tagHackMatch = !password.match(/<.*\/>/);
-	return asciiMatch && tagHackMatch;
+	// var asciiMatch = password.match(/^[!-~]+$/i);
+	// var tagHackMatch = !password.match(/<.*\/>/);
+	// return asciiMatch && tagHackMatch;
+    return true; 
 } 
 function validateEmail(email) {
-	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+){1,}$/i);
+	// return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+){1,}$/i);
+    return true; 
 }
 
 function validateForm(form) {
