@@ -47,7 +47,7 @@
                                         <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${editUser.name}">
                                     </c:when>
                                     <c:when test="${empty editUser}">
-                                        <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+                                        <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.editName}">
                                     </c:when>
                                     <c:otherwise>
                                         <div class="form-control-static">${editUser.name}</div>
@@ -64,7 +64,7 @@
                                          <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${editUser.login}">
                                      </c:when>
                                      <c:when test="${empty editUser}">
-                                         <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${param.login}">
+                                         <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${param.editLogin}">
                                      </c:when>
                                      <c:otherwise>
                                          <div class="form-control-static">${editUser.login}</div>
@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <label for="login" class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="password">
+                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="editPassword">
                                     </div>
                                 </div>
                             </c:when>
@@ -94,7 +94,7 @@
                                          <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
                                      </c:when>
                                      <c:when test="${empty editUser}">
-                                         <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${param.email}">
+                                         <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${param.editEmail}">
                                      </c:when>
                                      <c:otherwise>
                                          <div class="form-control-static">${editUser.email}</div>
@@ -132,7 +132,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="javascript:history.back()" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    

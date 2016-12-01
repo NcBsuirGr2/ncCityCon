@@ -21,6 +21,9 @@
 		<c:if test="${showUsersBtn}">
 			<a href="/users" class="btn btn-header btn-default pull-right">Users</a>
 		</c:if>
+		<c:if test="${not empty sessionScope.user}">
+			<a href="/user?action=edit&login=${sessionScope.user.login}" class="btn btn-header btn-default pull-right">Account</a>
+		</c:if>
 		</div>
 	</div>
 </header>

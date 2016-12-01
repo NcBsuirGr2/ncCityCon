@@ -17,7 +17,7 @@ function validateASCIIAndHack(password) {
 	return asciiMatch && tagHackMatch;
 } 
 function validateEmail(email) {
-	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w+(\.\w+){1,}$/i);
+	return email.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@\w{2,}(\.\w{2,}){1,3}$/i);
 }
 
 function validateForm(form) {

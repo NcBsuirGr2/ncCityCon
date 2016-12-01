@@ -79,17 +79,14 @@ public class SessionHolder implements HttpSessionListener {
     }
     public static void deleteUser(UserEntity userToDelete) {
         Iterator<HttpSession> i = sessions.iterator();
-        logger.debug("Deleting user sessions");
         try {
             while(i.hasNext()) {
                 HttpSession currentSession = i.next();
                 if (currentSession.getAttribute("user") != null) {
                     UserEntity user = (UserEntity)currentSession.getAttribute("user");
-                    logger.debug("Check delete for {}", user.getLogin());
                     if(user.getId() == userToDelete.getId()) {
                         boolean success = sessions.remove(currentSession);
                         currentSession.invalidate();
-                        logger.debug("Deleted session of {}", user.getLogin());
                         return;
                     }
                 }

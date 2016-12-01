@@ -163,7 +163,7 @@
 									<td>${router.name}</td>
 									<td>${router.portsNum}</td>
 									<td>${router.usedPortsNum}</td>
-									<td>${router.active}</td>
+									<td  <c:if test="${not router.active}">class="danger"</c:if> >${router.active}</td>
 									<td class="hidden idField">${router.id}</td>
 									</tr>
 								</c:forEach>

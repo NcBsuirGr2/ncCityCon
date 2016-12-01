@@ -114,7 +114,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 				} catch(DublicateKeyDAOException cause) {
 					StringBuilder redirect = new StringBuilder();
 					redirect.append(USER_EDIT_URL);
-					redirect.append("?errorType=dublicate&editName=");
+					redirect.append("?errorType=dublicate&action=add&editName=");
 					redirect.append(user.getName());
 					redirect.append("&editLogin=");
 					redirect.append(user.getLogin());
@@ -186,7 +186,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 		} catch(DublicateKeyDAOException cause) {
 			StringBuilder redirect = new StringBuilder();
 			redirect.append(USER_EDIT_URL);
-			redirect.append("?errorType=dublicate&editName=");
+			redirect.append("?errorType=dublicate&action=edit&editName=");
 			redirect.append(user.getName());
 			redirect.append("&editLogin=");
 			redirect.append(user.getLogin());
@@ -204,7 +204,16 @@ public class UserEditServlet extends AbstractHttpServlet {
 			forwardToErrorPage("Invalid id string", req, res);
 			return;
 		}
-		
+		UserEntity currentUser;
+		try {
+			currentUser = (UserEntity)req.getSession().getAttribute("user");
+			if (user.getLogin().equals(currentUser.getLogin())) {
+				res.sendRedirect("/");
+				return;
+			}	
+		} catch(Exception e) {
+			logger.warn("Unexcepted exception", e);
+		}	
 		res.sendRedirect(USER_LIST_URL+"?success=edit");
 	}
 
