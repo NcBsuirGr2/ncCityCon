@@ -56,19 +56,20 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				connection.setId(connectionId);
 				try {
 					ORMRouterConnection editConnection = new ORMRouterConnection();
+					editConnection.setEntity(connection);
 					editConnection.read();
 					req.setAttribute("connection", editConnection.getEntity());
 				} catch (DAOException cause) {
-					logger.warn("Error occured during reading {}", connection, cause);
-					forwardToErrorPage("Error occured during reading connection", req, res);
+					logger.warn("Error occurred during reading {}", connection, cause);
+					forwardToErrorPage("Error occurred during reading connection", req, res);
 					return;
 				}
 			} catch (NumberFormatException exception) {
 				forwardToErrorPage("Not string id value", req, res);
 				return;
 			} catch (Exception exception) {
-                logger.warn("Unexcepted exception");
-                forwardToErrorPage("Internal servler error", req, res);
+                logger.warn("Unexpected exception");
+                forwardToErrorPage("Internal server error", req, res);
                 return;
             }
 		} else if (req.getParameter("SN") != null) {
@@ -80,8 +81,8 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				connection.setFirstRouter(filledRouter.getEntity());
 				req.setAttribute("connection", connection);
 			} catch (DAOException cause) {
-				logger.warn("Error occured during reading router to fill connection", cause);
-				forwardToErrorPage("Error occured during reading connection", req, res);
+				logger.warn("Error occurred during reading router to fill connection", cause);
+				forwardToErrorPage("Error occurred during reading connection", req, res);
 				return;
 			}
 		} else if (req.getParameter("city") != null && req.getParameter("country") != null) {
