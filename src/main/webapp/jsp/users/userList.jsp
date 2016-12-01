@@ -183,7 +183,7 @@
 
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-											<input type=submit class="btn btn-primary" form="deleteForm" value="Delete"></input>
+											<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
 										</div>
 									</div>
 								</div>

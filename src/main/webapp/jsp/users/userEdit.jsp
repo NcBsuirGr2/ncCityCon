@@ -42,50 +42,83 @@
                     	<div class="form-group">
                         	<label for="name" class="col-xs-3 control-label">Name:</label>
                         	<div class="col-xs-7">
-                                <c:if test="${not empty editUser}">
-                                	<input class="form-control simpleText" maxlength="15" autofocus required placeholder="Name" name="name" type="text" value="${editUser.name}">
-                                </c:if>
-                                <c:if test="${empty editUser}">
-                                    <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.editName}">
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.login eq param.login}">
+                                        <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${editUser.name}">
+                                    </c:when>
+                                    <c:when test="${empty editUser}">
+                                        <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="form-control-static">${editUser.name}</div>
+                                        <input type="hidden" name="name" value="${editUser.name}">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>   
                         <div class="form-group">
-                            <label for="login" class="col-xs-3 control-label">Login:</label>
-                             <div class="col-xs-7">                                 
-                                <c:if test="${not empty editUser}">
-                                    <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${editUser.login}">
-                                </c:if>
-                                <c:if test="${empty editUser}">
-                                    <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${param.editLogin}">
-                                </c:if>
-                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="login" class="col-xs-3 control-label">Password:</label>
+                             <label for="login" class="col-xs-3 control-label">Login:</label>
                              <div class="col-xs-7">
-                                 <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="text" value="${editUser.password}">
+                                 <c:choose>
+                                     <c:when test="${sessionScope.user.login eq param.login}">
+                                         <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${editUser.login}">
+                                     </c:when>
+                                     <c:when test="${empty editUser}">
+                                         <input class="form-control simpleText" maxlength="15" required placeholder="Login" name="login" type="text" value="${param.login}">
+                                     </c:when>
+                                     <c:otherwise>
+                                         <div class="form-control-static">${editUser.login}</div>
+                                         <input type="hidden" name="login" value="${editUser.login}">
+                                     </c:otherwise>
+                                 </c:choose>
                              </div>
                         </div>
+                        <c:choose>
+                            <c:when test="${sessionScope.user.login eq param.login || param.action == 'add'}">
+                                <div class="form-group">
+                                    <label for="login" class="col-xs-3 control-label">Password:</label>
+                                    <div class="col-xs-7">
+                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="password">
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="hidden" name="password" value="${editUser.password}">
+                            </c:otherwise>
+                        </c:choose>
                         <div class="form-group">
-                            <label for="email" class="col-xs-3 control-label">E-mail:</label>
-                             <div class="col-xs-7">                                 
-                                <c:if test="${not empty editUser}">
-                                   <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
-                                </c:if>
-                                <c:if test="${empty editUser}">
-                                    <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${param.editEmail}">
-                                </c:if>
+                             <label for="email" class="col-xs-3 control-label">E-mail:</label>
+                             <div class="col-xs-7">
+                                 <c:choose>
+                                     <c:when test="${sessionScope.user.login eq param.login}">
+                                         <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${editUser.email}">
+                                     </c:when>
+                                     <c:when test="${empty editUser}">
+                                         <input class="form-control emailInput" maxlength="20" required placeholder="E-mail" name="email" type="text" value="${param.email}">
+                                     </c:when>
+                                     <c:otherwise>
+                                         <div class="form-control-static">${editUser.email}</div>
+                                         <input type="hidden" name="email" value="${editUser.email}">
+                                     </c:otherwise>
+                                 </c:choose>
                              </div>
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Group:</label>
                             <div class="col-xs-4">
-                                <select class="form-control" id="group" name="group" form="form">
-                                    <option value="admin" <c:if test="${editUser.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
-                                    <option value="operator" <c:if test="${editUser.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
-                                    <option value="guest" <c:if test="${editUser.group == 'guest' || param.editGroup == 'guest'}">selected</c:if>>Guest</option>
-                                </select>
+                                <c:choose>
+                                    <c:when test="${ sessionScope.user.group == 'admin' && sessionScope.user.login ne param.login}">
+                                        <select class="form-control" id="group" name="group" form="form">
+                                            <option value="admin" <c:if test="${editUser.group == 'admin' || param.editGroup == 'admin'}">selected</c:if>>Admin</option>
+                                            <option value="operator" <c:if test="${editUser.group == 'operator' || param.editGroup == 'operator'}">selected</c:if>>Operator</option>
+                                            <option value="guest" <c:if test="${editUser.group == 'guest' || param.editGroup == 'guest'}">selected</c:if>>Guest</option>
+                                        </select>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="form-control-static">${editUser.group}</div>
+                                        <input type="hidden" name="group" value="${editUser.group}">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <input type="hidden" name="type" value="${param.action}"/>
