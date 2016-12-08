@@ -1,5 +1,7 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.dao.interfaces.UsersOfGroup;
+import com.citycon.dao.interfaces.UsersStatistic;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.dao.interfaces.DAO;
@@ -9,6 +11,7 @@ import com.citycon.model.Grant;
 import javax.validation.Valid;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * ORM wrapper for the <code>UserEntity</code>. This class must be used in servlets to
@@ -89,5 +92,34 @@ public class ORMUser extends ORMEntity {
     	DAO staticDAO = daoFactory.getUserDAO();
         return staticDAO.count_element();
     }
+
+	/**
+	 * @param group
+	 * @return
+	 * @throws DAOException
+	 */
+	public static int getCount(String group) throws DAOException{
+		DAO staticDAO = daoFactory.getUserDAO();
+		UsersOfGroup usersOfGroup = (UsersOfGroup) staticDAO;
+		return usersOfGroup.count_element(group);
+	}
+
+	/**
+	 * @return
+	 * @throws DAOException
+	 */
+	public static ArrayList<UserEntity> first_users() throws DAOException {
+		DAO staticDAO = daoFactory.getUserDAO();
+		return ((UsersStatistic) daoFactory).first_users();
+	}
+
+	/**
+	 * @return
+	 * @throws DAOException
+	 */
+	public static ArrayList<UserEntity> last_users() throws DAOException {
+		DAO staticDAO = daoFactory.getUserDAO();
+		return ((UsersStatistic) daoFactory).last_users();
+	}
 
 }

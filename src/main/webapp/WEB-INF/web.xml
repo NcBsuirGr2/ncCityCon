@@ -140,6 +140,26 @@
 		<url-pattern>/connection</url-pattern>
 	</servlet-mapping>
 
+	<!-- Statistic branch -->
+	<servlet>
+		<servlet-name>StatisticServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>StatisticServlet</servlet-name>
+		<url-pattern>/statistic</url-pattern>
+		<url-pattern>/statistic/users</url-pattern>
+        <url-pattern>/statistic/cities</url-pattern>
+        <!--<url-pattern>/statistic/routers</url-pattern>-->
+        <!--<url-pattern>/statistic/connections</url-pattern>-->
+	</servlet-mapping>
+
 
     <!-- Filters -->
     <filter>

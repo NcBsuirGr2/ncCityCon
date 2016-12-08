@@ -46,9 +46,9 @@
 			</div>
 			<div class="col-sm-10">
 				<div class="panel panel-default">
-					<center class="panel-heading">
+					<div class="panel-heading" style="text-align: center;">
 						CityCon Users
-					</center>
+					</div>
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>
 								<tr>

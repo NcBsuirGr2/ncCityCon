@@ -84,7 +84,7 @@ public class MySQLDAOConnection {
 
     private ConnectionPool connectionPool;
 
-    private final String MYSQL_CONNECTOR_CLASS = "com.mysql.jdbc.Driver";
+    private static final String MYSQL_CONNECTOR_CLASS = "com.mysql.jdbc.Driver";
 
     private static final String URL = "jdbc:mysql://23.99.115.175:3306/nc2_cityCon";
     private static final String USERNAME = "root";

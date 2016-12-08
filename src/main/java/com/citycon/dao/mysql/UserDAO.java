@@ -3,21 +3,20 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
+import com.citycon.dao.interfaces.UsersOfGroup;
+import com.citycon.dao.interfaces.UsersStatistic;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class UserDAO extends MySQLDAO {
+public class UserDAO extends MySQLDAO implements UsersOfGroup, UsersStatistic {
 
     /**
      * @throws InternalDAOException
@@ -358,6 +357,78 @@ public class UserDAO extends MySQLDAO {
         }
     }
 
+
+    /**
+     * @param group
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
+    public int count_element(String group) throws InvalidDataDAOException, InternalDAOException {
+        int count = 0;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String search = "";
+
+        if (group != null){
+            search = "SELECT COUNT(ID) FROM `User` WHERE `GROUP` = ?";
+        }
+        else{
+            logger.info("For reading user incorrectly chosen field, try group");
+            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try group");
+        }
+
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(search);
+        } catch (SQLException e) {
+            logger.warn("PrepareStatement in get count wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
+        }
+
+        String log_parameters = "With parameters: Group(" + group + ")";
+
+        try {
+            preparedStatement.setString(1, group);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements. {}", log_parameters);
+            }
+        } catch (SQLException e) {
+            logger.info("Get count elements failed. {}", log_parameters, e);
+            throw new InternalDAOException("Get count elements failed.", e);
+        }
+        finally {
+            closeConnection();
+
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
     /**
      * @throws InternalDAOException
      */
@@ -420,5 +491,135 @@ public class UserDAO extends MySQLDAO {
         }
 
         return grant;
+    }
+
+    @Override
+    public ArrayList<UserEntity> first_users() throws InvalidDataDAOException, InternalDAOException {
+        Statement search_users = null;
+        ResultSet resultSet = null;
+
+        ArrayList<UserEntity> users = new ArrayList();
+
+        String search = "select * from User where create_date = (select min(create_date) from User)";
+
+        try {
+            connection = getConnection();
+
+            search_users = connection.createStatement();
+        }catch (SQLException e) {
+            logger.warn("Statement in first_users wasn't created");
+            throw new InternalDAOException("Statement in first_users wasn't created", e);
+        }
+
+        try {
+            resultSet =  search_users.executeQuery(search);
+
+            try {
+                while (resultSet.next()) {
+                    UserEntity user = new UserEntity();
+                    user.setLogin(resultSet.getString("Login"));
+                    user.setEmail(resultSet.getString("E-mail"));
+                    user.setName(resultSet.getString("Name"));
+                    user.setGroup(resultSet.getString("Group"));
+                    user.setCreateDate(resultSet.getDate("create_date"));
+                    users.add(user);
+                }
+
+                logger.trace("First_users");
+            }catch (SQLException e){
+                logger.info("First_users failed", e);
+                throw new InvalidDataDAOException("First_users failed", e);
+            }
+        }catch (SQLException e){
+            logger.info("Put data to Statement invalid. ", e);
+            throw new InvalidDataDAOException("Put data to Statement invalid. ", e);
+        }
+        finally {
+            closeConnection();
+
+            if (search_users!=null){
+                try {
+                    search_users.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in first_users failed", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in first_users failed", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return users;
+    }
+
+    @Override
+    public ArrayList<UserEntity> last_users() throws InvalidDataDAOException, InternalDAOException {
+        Statement search_users = null;
+        ResultSet resultSet = null;
+
+        ArrayList<UserEntity> users = new ArrayList();
+
+        String search = "select * from User where create_date = (select max(create_date) from User)";
+
+        try {
+            connection = getConnection();
+
+            search_users = connection.createStatement();
+        }catch (SQLException e) {
+            logger.warn("Statement in last_users wasn't created");
+            throw new InternalDAOException("Statement in last_users wasn't created", e);
+        }
+
+        try {
+            resultSet =  search_users.executeQuery(search);
+
+            try {
+                while (resultSet.next()) {
+                    UserEntity user = new UserEntity();
+                    user.setLogin(resultSet.getString("Login"));
+                    user.setEmail(resultSet.getString("E-mail"));
+                    user.setName(resultSet.getString("Name"));
+                    user.setGroup(resultSet.getString("Group"));
+                    user.setCreateDate(resultSet.getDate("create_date"));
+                    users.add(user);
+                }
+
+                logger.trace("Last_users");
+            }catch (SQLException e){
+                logger.info("Last_users failed", e);
+                throw new InvalidDataDAOException("First_users failed", e);
+            }
+        }catch (SQLException e){
+            logger.info("Put data to Statement invalid. ", e);
+            throw new InvalidDataDAOException("Put data to Statement invalid. ", e);
+        }
+        finally {
+            closeConnection();
+
+            if (search_users!=null){
+                try {
+                    search_users.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in last_users failed", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in last_users failed", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return users;
     }
 }
