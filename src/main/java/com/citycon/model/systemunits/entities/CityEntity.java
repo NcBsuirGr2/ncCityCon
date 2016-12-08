@@ -6,6 +6,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.io.Serializable;
+
 /**
  * Represents all necessary information about city. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -14,7 +16,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Mike
  * @version 1.2
  */
-public class CityEntity extends Entity {
+public class CityEntity extends Entity implements Serializable {
 
 	@NotBlank(message="City name can not be empty")
 	@Size(min=3, max=20, message="City name must be {min}..{max} in length")

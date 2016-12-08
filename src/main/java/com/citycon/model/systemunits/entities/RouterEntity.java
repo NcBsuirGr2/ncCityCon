@@ -13,6 +13,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.citycon.model.systemunits.entities.validationgroups.RouterAddGroup;
 import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
 
+import java.io.Serializable;
+
 /**
  * Represents all necessary information about router. It is the plain
  * java bean which must be obtained from DAO layer and be used in jsp-pages 
@@ -21,7 +23,7 @@ import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
  * @author Mike
  * @version 1.2
  */
-public class RouterEntity extends Entity {
+public class RouterEntity extends Entity implements Serializable {
 	@NotBlank(message="Router name can not be blank")
 	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
 	@Pattern(regexp="^[a-z-_a-z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")

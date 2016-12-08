@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "user")
+@XmlRootElement(name = "User")
 @XmlType(propOrder = {"login", "password", "email"})
 public class User {
     private String login;

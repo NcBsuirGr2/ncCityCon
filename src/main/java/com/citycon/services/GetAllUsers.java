@@ -30,6 +30,7 @@ public class GetAllUsers {
         user.setLogin("testuser");
         return user;
     }
+
     @WebMethod
     public User getUserWithLogin(String login){
         User user = new User();
@@ -38,9 +39,8 @@ public class GetAllUsers {
         user.setLogin(login);
         return user;
     }
-//
     @WebMethod
-    public @WebResult(name = "user") User[] getUsers(){
+    public @WebResult(name = "User") User[] getUsers(){
         User returnUsers[] = null;
         try {
             UserDAO dao = UserDAO.getInstance();
@@ -56,6 +56,5 @@ public class GetAllUsers {
             // TODO: return null
         }
         return returnUsers;
-//    Вадим
     }
 }

@@ -2,6 +2,7 @@ package com.citycon.model.systemunits.entities;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Represents all necessary information about router connection. It is the plain
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @author Mike
  * @version 1.1
  */
-public class RouterConnectionEntity extends Entity {
+public class RouterConnectionEntity extends Entity implements Serializable {
 	@NotNull
 	@Valid
 	private RouterEntity firstRouter = new RouterEntity();

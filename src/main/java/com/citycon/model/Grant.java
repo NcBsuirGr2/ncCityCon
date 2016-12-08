@@ -3,6 +3,7 @@ package com.citycon.model;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * Represents user grants for the app functionality. For every functionality
@@ -12,7 +13,7 @@ import javax.validation.constraints.Min;
  * @author  Mike
  * @version  1.0
  */
-public class Grant {
+public class Grant implements Serializable {
 	public final static int NONE = 0;
 	public final static int READ = 1;
 	public final static int EDIT = 2;

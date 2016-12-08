@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Email;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -20,7 +21,7 @@ import java.sql.Date;
  * @author Mike
  * @version 1.3
  */
-public class UserEntity extends Entity {
+public class UserEntity extends Entity implements Serializable {
 	@NotBlank(message="User name can not be blank")
 	@Size(min=3, max=30, message="User name must be {min}..{max} in length")
 	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")

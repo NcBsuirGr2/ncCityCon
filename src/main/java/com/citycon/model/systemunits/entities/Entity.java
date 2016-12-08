@@ -1,4 +1,7 @@
 package com.citycon.model.systemunits.entities;
+
+import java.io.Serializable;
+
 /**
  * Common interface for system entities. System entities are the plain
  * java beans. They must be obtained from DAO layer and be used in jsp-pages 
@@ -7,7 +10,7 @@ package com.citycon.model.systemunits.entities;
  * @author Mike
  * @version 1.1
  */
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 	protected int id;
 
 	public int getId() {

@@ -9,6 +9,8 @@ import com.citycon.dao.interfaces.ConnectionsOfRouter;
 import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.exceptions.DAOException;
 
+import java.io.Serializable;
+
 /**
  * ORM wrapper for the <code>RouterConnectionEntity</code>. This class must be used 
  * in servlets to manipulate CRUD operations for the plain entity through the concrete DAO.
