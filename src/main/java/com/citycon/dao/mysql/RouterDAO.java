@@ -4,6 +4,7 @@ import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.interfaces.RoutersOfCity;
+import com.citycon.dao.interfaces.RoutersStatistic;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterDAO extends MySQLDAO implements RoutersOfCity {
+public class RouterDAO extends MySQLDAO implements RoutersOfCity, RoutersStatistic {
 
     /**
      * @throws InternalDAOException
@@ -762,4 +763,63 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         return cityID;
     }
 
+    /**
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
+    public int countActiveRouters()  throws InvalidDataDAOException, InternalDAOException{
+        int count = 0;
+
+        String search = "select COUNT(ID) FROM Router WHERE In_Service = 1";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in countActiveRouters wasn't created", e);
+            throw new InternalDAOException("Statement in countActiveRouters wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("countActiveRouters elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("countActiveRouters failed", e);
+            throw new InternalDAOException("countActiveRouters failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in countActiveRouters false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in countActiveRouters false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
 }

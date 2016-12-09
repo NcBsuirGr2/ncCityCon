@@ -1,5 +1,6 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.dao.interfaces.RouterConnectionStatistic;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.entities.Entity;
@@ -141,4 +142,11 @@ public class ORMRouterConnection extends ORMEntity {
     	ConnectionsOfRouter staticDAO = (ConnectionsOfRouter)daoFactory.getRouterConnectionDAO();
         return staticDAO.count_element(router);
     }
+
+    public static int countPorts() throws DAOException {
+		DAO staticDAO = daoFactory.getRouterConnectionDAO();
+		RouterConnectionStatistic routerConnectionStatistic =
+				(RouterConnectionStatistic)staticDAO;
+		return routerConnectionStatistic.countPorts();
+	}
 }	

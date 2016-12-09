@@ -25,7 +25,10 @@
 			<a href="/user?action=edit&login=${sessionScope.user.login}" class="btn btn-header btn-default pull-right">Account</a>
 		</c:if>
 		<c:if test="${not empty sessionScope.user}">
-			<a href="/cityconstatistics/users" class="btn btn-header btn-default pull-right">Statistics</a>
+			<a href="/cityconstatistics/users" class="btn btn-header btn-default pull-right">Mike Statistic</a>
+		</c:if>
+		<c:if test="${not empty sessionScope.user}">
+			<a href="/statistic" class="btn btn-header btn-default pull-right">Alex Statistic</a>
 		</c:if>
 		</div>
 	</div>

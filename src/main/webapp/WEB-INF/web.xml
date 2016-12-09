@@ -156,8 +156,8 @@
 		<url-pattern>/statistic</url-pattern>
 		<url-pattern>/statistic/users</url-pattern>
         <url-pattern>/statistic/cities</url-pattern>
-        <!--<url-pattern>/statistic/routers</url-pattern>-->
-        <!--<url-pattern>/statistic/connections</url-pattern>-->
+        <url-pattern>/statistic/routers</url-pattern>
+        <url-pattern>/statistic/connections</url-pattern>
 	</servlet-mapping>
 
 

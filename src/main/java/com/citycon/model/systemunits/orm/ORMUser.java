@@ -110,7 +110,8 @@ public class ORMUser extends ORMEntity {
 	 */
 	public static ArrayList<UserEntity> first_users() throws DAOException {
 		DAO staticDAO = daoFactory.getUserDAO();
-		return ((UsersStatistic) daoFactory).first_users();
+		UsersStatistic usersStatistic = (UsersStatistic) staticDAO;
+		return usersStatistic.first_users();
 	}
 
 	/**
@@ -119,7 +120,8 @@ public class ORMUser extends ORMEntity {
 	 */
 	public static ArrayList<UserEntity> last_users() throws DAOException {
 		DAO staticDAO = daoFactory.getUserDAO();
-		return ((UsersStatistic) daoFactory).last_users();
+		UsersStatistic usersStatistic = (UsersStatistic) staticDAO;
+		return usersStatistic.last_users();
 	}
 
 }

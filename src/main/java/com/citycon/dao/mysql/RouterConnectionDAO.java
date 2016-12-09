@@ -4,6 +4,7 @@ import com.citycon.dao.exceptions.*;
 import com.citycon.dao.interfaces.CitiesOfCountry;
 import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.interfaces.ConnectionsOfRouter;
+import com.citycon.dao.interfaces.RouterConnectionStatistic;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter {
+public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, ConnectionsOfRouter, RouterConnectionStatistic {
 
     /**
      * @throws InternalDAOException
@@ -762,5 +763,59 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
      */
     public static RouterConnectionDAO getInstance() throws InternalDAOException {
         return new RouterConnectionDAO();
+    }
+
+    public int countPorts() throws InvalidDataDAOException, InternalDAOException{
+        int count = 0;
+
+        String search = "select sum(`Port`) from Router";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in countAvailablePorts wasn't created", e);
+            throw new InternalDAOException("Statement in countAvailablePorts wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("countAvailablePorts elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("countAvailablePorts failed", e);
+            throw new InternalDAOException("countAvailablePorts failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in countAvailablePorts false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in countAvailablePorts false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
     }
 }

@@ -196,9 +196,9 @@
 				</div>
 			</div>
 
-			<center class="before-footer">				
+			<div class="before-footer" style="text-align: center;">
 		    	<%@ include file="/include/pagination.jsp" %>
-			</center>
+			</div>
 
 			<%@ include file="/include/footer.html" %>
 		</div>

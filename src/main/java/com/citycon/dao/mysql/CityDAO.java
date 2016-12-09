@@ -4,20 +4,23 @@ import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.interfaces.CitiesOfCountry;
+import com.citycon.dao.interfaces.CitiesStatistic;
 import com.citycon.model.systemunits.entities.CityEntity;
+import com.citycon.model.systemunits.entities.CountryEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
 
-public class CityDAO extends MySQLDAO implements CitiesOfCountry {
+public class CityDAO extends MySQLDAO implements CitiesOfCountry, CitiesStatistic {
 
     /**
      * @throws InternalDAOException
@@ -419,6 +422,239 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
             }
         }
         return cities.toArray(new CityEntity[cities.size()]);
+    }
+
+    /**
+     * @return
+     * @throws InternalDAOException
+     */
+    public int getCountCountries() throws InternalDAOException {
+        int count = 0;
+
+        String search = "select count(distinct Country) from City";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in getCountCountries wasn't created", e);
+            throw new InternalDAOException("Statement in getCountCountries wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("getCountCountries elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("getCountCountries failed", e);
+            throw new InternalDAOException("getCountCountries failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in getCountCountries false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in getCountCountries false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public CountryEntity maxCityCountry() throws InternalDAOException {
+        CountryEntity countryEntity = null;
+
+        String search = "SELECT Country, COUNT(id) AS num FROM City GROUP BY Country ORDER BY num desc LIMIT 1";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in maxCityCountry wasn't created", e);
+            throw new InternalDAOException("Statement in maxCityCountry wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                countryEntity = new CountryEntity();
+
+                countryEntity.setName(resultSet.getString("Country"));
+                countryEntity.setCountCities(resultSet.getInt("num"));
+
+                logger.trace("maxCityCountry elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("maxCityCountry failed", e);
+            throw new InternalDAOException("maxCityCountry failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in maxCityCountry false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in maxCityCountry false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return countryEntity;
+    }
+
+    public CountryEntity minCityCountry() throws InternalDAOException {
+        CountryEntity countryEntity = null;
+
+        String search = "SELECT Country, COUNT(id) AS num FROM City GROUP BY Country ORDER BY num LIMIT 1";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in minCityCountry wasn't created", e);
+            throw new InternalDAOException("Statement in minCityCountry wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                countryEntity = new CountryEntity();
+
+                countryEntity.setName(resultSet.getString("Country"));
+                countryEntity.setCountCities(resultSet.getInt("num"));
+
+                logger.trace("minCityCountry elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("minCityCountry failed", e);
+            throw new InternalDAOException("minCityCountry failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in minCityCountry false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in minCityCountry false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return countryEntity;
+    }
+
+    public CityEntity maxRouterCity() throws InternalDAOException {
+        CityEntity cityEntity = null;
+
+        String search = "select `Name`, num, Country from " +
+                "((select City_id, COUNT(id) AS num from Router " +
+                "group by City_id order by num desc Limit 1) S) " +
+                "join City on City.ID = S.City_ID";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            logger.warn("Statement in maxRouterCity wasn't created", e);
+            throw new InternalDAOException("Statement in maxRouterCity wasn't created", e);
+        }
+
+        try {
+            resultSet = statement.executeQuery(search);
+
+
+            if (resultSet.first()) {
+                cityEntity = new CityEntity();
+
+                cityEntity.setName(resultSet.getString("Name"));
+                cityEntity.setCountryName(resultSet.getString("Country"));
+                cityEntity.setRoutersNum(resultSet.getInt("num"));
+
+                logger.trace("maxRouterCity elements");
+            }
+
+        } catch (SQLException e) {
+            logger.info("maxRouterCity failed", e);
+            throw new InternalDAOException("maxRouterCity failed", e);
+        }
+        finally {
+            closeConnection();
+
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close Statement in maxRouterCity false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in maxRouterCity false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return cityEntity;
     }
 
     /**

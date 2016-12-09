@@ -1,5 +1,7 @@
 package com.citycon.model.systemunits.orm;
 
+import com.citycon.dao.interfaces.CitiesStatistic;
+import com.citycon.model.systemunits.entities.CountryEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.dao.interfaces.DAO;
@@ -84,6 +86,27 @@ public class ORMCity extends ORMEntity {
 		return staticDAO.count_element();
 	}
 
+	public static int getCountCountries() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
+		return citiesStatistic.getCountCountries();
+	}
 
+	public static CountryEntity maxCityCountry() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
+		return citiesStatistic.maxCityCountry();
+	}
 
+	public static CountryEntity minCityCountry() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
+		return citiesStatistic.minCityCountry();
+	}
+
+	public static CityEntity maxRouterCity() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
+		return citiesStatistic.maxRouterCity();
+	}
 }

@@ -41,13 +41,33 @@ public class Statistic {
     @RequestMapping("/statistic/cities")
     public String CitiesStatistic(Model model) throws DAOException {
 
-        model.addAttribute("count_countries");
+        model.addAttribute("count_countries", ORMCity.getCountCountries());
         model.addAttribute("count_cities", ORMCity.getCount());
-        model.addAttribute("max_city_country");
-        model.addAttribute("min_city_country");
-        model.addAttribute("max_routers_city");
-        model.addAttribute("max_connection_city");
+        model.addAttribute("max_city_country", ORMCity.maxCityCountry());
+        model.addAttribute("min_city_country", ORMCity.minCityCountry());
+        model.addAttribute("max_routers_city", ORMCity.maxRouterCity());
 
-        return "users";
+        return "cities";
     }
+
+    @RequestMapping("/statistic/routers")
+    public String RoutersStatistic(Model model) throws DAOException{
+
+        model.addAttribute("count_routers", ORMRouter.getCount());
+        model.addAttribute("count_active_routers", ORMRouter.countActiveRouters());
+        model.addAttribute("count_connections", ORMRouterConnection.getCount());
+        model.addAttribute("count_ports", ORMRouterConnection.countPorts());
+
+        return "routers";
+    }
+
+    @RequestMapping("/statistic/connections")
+    public String ConnectionsStatistic(Model model) throws DAOException{
+
+        model.addAttribute("count_connections", ORMRouterConnection.getCount());
+        model.addAttribute("count_ports", ORMRouterConnection.countPorts());
+
+        return "connections";
+    }
+
 }
