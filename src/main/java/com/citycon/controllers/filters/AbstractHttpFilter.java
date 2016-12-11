@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *  Common abstract filter. Pvovied several methods for all filters in app.
+ *  Common abstract filter. Provides several methods for all filters in the app.
  * 
  * @author Tim, Mike
  * @version 1.3
@@ -41,6 +41,15 @@ public abstract class AbstractHttpFilter {
         return;
     }
 
+    /**
+     * Forwards to common error page with specific message.
+     *
+     * @param errorMessage          error message to show
+     * @param req                   req obj to forward
+     * @param res                   response obj to forward
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void forwardToErrorPage(String errorMessage, ServletRequest req,
                         ServletResponse res) throws ServletException, IOException {
 
@@ -51,12 +60,12 @@ public abstract class AbstractHttpFilter {
 
     /**
      * Used to compare required and current grant levels. Current grants lelel is
-     * obtaining form the user object on the session scope.
+     * obtaining form the user object from the session scope.
      * 
-     * @param  req                       used to obtain UserEnity from Session
+     * @param  req                       used to obtain UserEntity from session
      * @param  requiredUserRights        constant from Grant class
      * @param  requiredSystemUnitsRights constant from Grant class
-     * @return access                    if assotiated with this session user has required grats
+     * @return access                    if associated with session user has required grants
      * @throws NullPointerException      [If 
      */
     protected boolean checkRights(ServletRequest req, int requiredUserRights, 
@@ -78,7 +87,7 @@ public abstract class AbstractHttpFilter {
                 } catch (ClassCastException exception) {                    
                     logger.warn("Cannot cast user object to UserEntity", exception);
                 } catch (NullPointerException e) {
-                    logger.warn("Grant is null", e);
+                    logger.warn("Grant obj is null", e);
                 }
             }
         } catch (ClassCastException e) {

@@ -1,5 +1,6 @@
 package com.citycon.controllers.listeners;
 
+import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 
@@ -16,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *  Aimed to take control over all app sessions. Is used to update user immediately
+ *  Aimed to hold control over all app sessions. Is used to update user immediately
  *  after editing.
  * 
  * @author Mike
@@ -30,6 +31,7 @@ public class SessionHolder implements HttpSessionListener {
         logger = LoggerFactory.getLogger("com.citycon.controllers.listeners.SessionHolder");
         sessions = Collections.synchronizedSet(new HashSet<HttpSession>());
     }
+
     @Override
     public void sessionCreated(HttpSessionEvent event) {
         HttpSession newSession = event.getSession();
@@ -41,6 +43,7 @@ public class SessionHolder implements HttpSessionListener {
         sessions.add(newSession);
         return;
     }
+
     @Override
     public void sessionDestroyed(HttpSessionEvent event) {
         HttpSession deleteSession = event.getSession();
@@ -55,26 +58,26 @@ public class SessionHolder implements HttpSessionListener {
 
     public static void updateUser(UserEntity userToUpdate) {
         Iterator<HttpSession> i = sessions.iterator();
-        logger.debug("Updating user sessions");
         try {
             while(i.hasNext()) {
                 HttpSession currentSession = i.next();
                 if (currentSession.getAttribute("user") != null) {
                     UserEntity user = (UserEntity)currentSession.getAttribute("user");
 
-                    logger.debug("Check update for {}", user.getLogin());
                     if(user.getId() == userToUpdate.getId()) {
                         ORMUser updateWrapper = new ORMUser();
                         updateWrapper.setEntity(user);
-                        updateWrapper.read();
-                        logger.debug("Updated session of {}", user.getLogin());
-                        return;
+                        try {
+                            updateWrapper.read();
+                            logger.trace("Update session of {}", user.getLogin());
+                        } catch (DAOException e) {
+                            logger.error("Fault during updating session for user {}", user.getLogin());
+                        }
                     }
                 }
             }
-        //NullPointer and ClassCast can be thrown
         } catch (Exception e) {
-            logger.warn("Exception during updating user", e);
+            logger.error("Unexpected exception during updating user session", e);
         }
     }
     public static void deleteUser(UserEntity userToDelete) {
@@ -86,14 +89,11 @@ public class SessionHolder implements HttpSessionListener {
                     UserEntity user = (UserEntity)currentSession.getAttribute("user");
                     if(user.getId() == userToDelete.getId()) {
                         boolean success = sessions.remove(currentSession);
-                        currentSession.invalidate();
-                        return;
                     }
                 }
             }
-        //NullPointer and ClassCast can be thrown
         } catch (Exception e) {
-            logger.warn("Exception during updating user", e);
+            logger.error("Unexpected exception during deleting user session", e);
         }
     }
 }

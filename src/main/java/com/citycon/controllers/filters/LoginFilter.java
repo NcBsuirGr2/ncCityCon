@@ -70,11 +70,11 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				chain.doFilter(req, res);		
 			}
 		} catch (ClassCastException e) {
-			logger.info("Cannot cast: ", e);
+			logger.warn("Cannot cast: ", e);
 			forwardToErrorPage("Internal server error", req, res);
 			return;
 		} catch (Exception e) {
-			logger.info("Cannot cast: ", e);
+			logger.warn("Unexpected exception: ", e);
 			forwardToErrorPage("Internal server error", req, res);
 		}
 	}
