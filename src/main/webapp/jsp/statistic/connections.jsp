@@ -58,7 +58,7 @@
                 </form>
             </div>
 
-            <%@ include file="/include/statistic_footer.html" %>
+            <%@ include file="/include/statisticFooter.html" %>
         </div>
         <%@ include file="/html/footer.html" %>
     </div>

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Vojts
-  Date: 08.12.2016
-  Time: 15:27
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
@@ -34,25 +27,25 @@
             <div class="panel-body" style="width: 100%">
                 <form class="form-horizontal" action="/user" method="POST" role="form" id="form">
                     <div class="form-group">
-                        <div for="name" class="col-xs-4 test-right"><strong>Count users:</strong></div>
+                        <div for="name" class="col-xs-4 test-right"><strong>Total users count:</strong></div>
                         <div class="col-xs-7">
                             ${count_users}
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Count cities:</strong></div>
+                        <div class="col-xs-4 test-right"><strong>Total cities count:</strong></div>
                         <div class="col-xs-7">
                             ${count_cities}
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Count routers:</strong></div>
+                        <div class="col-xs-4 test-right"><strong>Total routers count:</strong></div>
                         <div class="col-xs-7">
                             ${count_routers}
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Count connections:</strong></div>
+                        <div class="col-xs-4 test-right"><strong>Total connections count:</strong></div>
                         <div class="col-xs-7">
                             ${count_connections}
                         </div>
@@ -60,7 +53,7 @@
                 </form>
             </div>
 
-            <%@ include file="/include/statistic_footer.html" %>
+            <%@ include file="/include/statisticFooter.html" %>
         </div>
         <%@ include file="/html/footer.html" %>
     </div>

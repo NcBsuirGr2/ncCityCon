@@ -142,7 +142,7 @@
 
 	<!-- Statistic branch -->
 	<servlet>
-		<servlet-name>StatisticServlet</servlet-name>
+		<servlet-name>DispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
 		<init-param>
@@ -152,12 +152,8 @@
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>StatisticServlet</servlet-name>
-		<url-pattern>/statistic</url-pattern>
-		<url-pattern>/statistic/users</url-pattern>
-        <url-pattern>/statistic/cities</url-pattern>
-        <url-pattern>/statistic/routers</url-pattern>
-        <url-pattern>/statistic/connections</url-pattern>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/statistic/*</url-pattern>
 	</servlet-mapping>
 
 
