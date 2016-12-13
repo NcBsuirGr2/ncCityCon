@@ -21,11 +21,13 @@ import java.util.Map;
 public class UserStatisticRepository extends  AbstractRepository {
     private final String TABLE_NAME = "User";
     private NamedParameterJdbcOperations namedParameterDao;
+    private Logger logger;
 
     @Autowired
     public UserStatisticRepository(NamedParameterJdbcOperations namedParameterDao, JdbcOperations dao) {
         super(dao);
         this.namedParameterDao = namedParameterDao;
+        logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.UserStatisticRepository");
     }
 
     public Long getCount() {

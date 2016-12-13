@@ -1,43 +1,47 @@
 package com.citycon.statistic.repositories;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Map;
 
 @Repository
 public class RouterStatisticRepository extends AbstractRepository {
     private final String TABLE_NAME = "Router";
+    private Logger logger;
 
     @Autowired
     public RouterStatisticRepository(JdbcOperations dao) {
         super(dao);
+        logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.RouterStatisticRepository");
     }
 
     public Long getCount() {
         return super.getCount(TABLE_NAME);
     }
 
-    public Long getCountriesCount() {
-        String query = "SELECT COUNT(DISTINCT Country) FROM "+TABLE_NAME;
-
-        Long count = dao.queryForObject(query, Long.class);
-        return count;
-    }
-
     public Long getCountInActiveRouters() {
-        String query = "SELECT COUNT(1) FROM Router WHERE In_Service=0";
+        try {
+            String query = "SELECT COUNT(1) FROM Router WHERE In_Service=0";
 
-        Long result = dao.queryForObject(query, Long.class);
-        return result;
+            Long result = dao.queryForObject(query, Long.class);
+            return result;
+        } catch(DataAccessException e) {
+            logger.warn("Cannot get count of inactive routers", e);
+            throw e;
+        }
     }
     public Long getCountPorts() {
-        String query = "SELECT SUM(Port) FROM Router";
+        try {
+            String query = "SELECT SUM(Port) FROM Router";
 
-        Long result = dao.queryForObject(query, Long.class);
-        return result;
+            Long result = dao.queryForObject(query, Long.class);
+            return result;
+        } catch(DataAccessException e) {
+            logger.warn("Cannot get total count of ports", e);
+            throw e;
+        }
     }
 }
