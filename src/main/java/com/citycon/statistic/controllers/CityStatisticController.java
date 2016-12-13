@@ -6,6 +6,7 @@ import com.citycon.statistic.repositories.CityStatisticRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +25,13 @@ public class CityStatisticController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String CityStatistic(Model model) throws DAOException {
-
-        model.addAttribute("count_countries", repo.getCountriesCount());
-        model.addAttribute("count_cities", repo.getCount());
-        model.addAttribute("max_city_countries", selectMaxCitiesCountries(repo.getDescCountryCities()));
-        model.addAttribute("min_city_countries", selectMinCitiesCountries(repo.getDescCountryCities()));
-        model.addAttribute("max_router_cities", selectMaxRoutersCities(repo.getDescCountryRouters()));
-
-        return "cities";
+    public String CityStatistic(Model model) {
+            model.addAttribute("count_countries", repo.getCountriesCount());
+            model.addAttribute("count_cities", repo.getCount());
+            model.addAttribute("max_city_countries", selectMaxCitiesCountries(repo.getDescCountryCities()));
+            model.addAttribute("min_city_countries", selectMinCitiesCountries(repo.getDescCountryCities()));
+            model.addAttribute("max_router_cities", selectMaxRoutersCities(repo.getDescCountryRouters()));
+        return "statistic/cities";
     }
 
 

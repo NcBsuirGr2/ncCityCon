@@ -30,6 +30,6 @@ public class ConnectionStatisticController {
         model.addAttribute("count_inactive_connections", count_inactive_connections);
         model.addAttribute("inactive_connections_percent", inactive_connections_percent);
 
-        return "connections";
+        return "statistic/connections";
     }
 }

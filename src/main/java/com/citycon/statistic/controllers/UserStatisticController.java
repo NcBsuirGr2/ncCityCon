@@ -28,6 +28,6 @@ public class UserStatisticController {
         model.addAttribute("first_users", repo.getFirstUsers());
         model.addAttribute("last_users", repo.getLastUsers());
 
-        return "users";
+        return "statistic/users";
     }
 }

@@ -10,10 +10,14 @@ import com.citycon.statistic.repositories.ConnectionStatisticRepository;
 import com.citycon.statistic.repositories.RouterStatisticRepository;
 import com.citycon.statistic.repositories.UserStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/")
@@ -42,15 +46,12 @@ public class CommonStatisticController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showCommonStatistics(Model model) {
-        try {
             model.addAttribute("count_users", userRepo.getCount());
-            model.addAttribute("count_cities", ORMCity.getCount());
-            model.addAttribute("count_routers", ORMRouter.getCount());
-            model.addAttribute("count_connections", ORMRouterConnection.getCount());
-        } catch (DAOException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "errorPage";
-        }
-        return "common";
+            model.addAttribute("count_cities", cityRepo.getCount());
+            model.addAttribute("count_routers", routerRepo.getCount());
+            model.addAttribute("count_connections", connectionRepo.getCount());
+        return "statistic/common";
     }
+
+
 }

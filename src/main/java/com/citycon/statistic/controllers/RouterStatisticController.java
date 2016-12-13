@@ -42,6 +42,6 @@ public class RouterStatisticController {
         model.addAttribute("connections_per_router", connections_per_router);
         model.addAttribute("used_ports_percent", used_ports_percent);
 
-        return "routers";
+        return "statistic/routers";
     }
 }
