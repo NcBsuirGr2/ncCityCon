@@ -19,8 +19,8 @@ import java.util.Map;
 
 @Repository
 public class UserStatisticRepository extends  AbstractRepository {
-    private final String tableName = "User";
-    protected NamedParameterJdbcOperations namedParameterDao;
+    private final String TABLE_NAME = "User";
+    private NamedParameterJdbcOperations namedParameterDao;
 
     @Autowired
     public UserStatisticRepository(NamedParameterJdbcOperations namedParameterDao, JdbcOperations dao) {
@@ -29,7 +29,7 @@ public class UserStatisticRepository extends  AbstractRepository {
     }
 
     public int getCount() {
-        return super.getCount(tableName);
+        return super.getCount(TABLE_NAME);
     }
 
     public int getCount(String group) {
