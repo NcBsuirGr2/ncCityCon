@@ -25,32 +25,33 @@
                 <h4>Common statistic</h4>
             </div>
             <div class="panel-body" style="width: 100%">
-                <form class="form-horizontal" action="/user" method="POST" role="form" id="form">
-                    <div class="form-group">
-                        <div for="name" class="col-xs-4 test-right"><strong>Total users count:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_users}
-                        </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Total users count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_users}
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Total cities count:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_cities}
-                        </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Total cities count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_cities}
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Total routers count:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_routers}
-                        </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Total routers count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_routers}
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Total connections count:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_connections}
-                        </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Total connections count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_connections}
                     </div>
-                </form>
+                </div>
             </div>
 
             <%@ include file="/include/statisticFooter.html" %>

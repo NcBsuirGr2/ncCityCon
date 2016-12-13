@@ -1,6 +1,7 @@
 package com.citycon.statistic.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
@@ -22,10 +23,13 @@ public class CityStatisticRepository extends AbstractRepository {
     }
 
     public Long getCountriesCount() {
-        String query = "SELECT COUNT(DISTINCT Country) FROM "+TABLE_NAME;
-
-        Long count = dao.queryForObject(query, Long.class);
-        return count;
+        try {
+            String query = "SELECT COUNT(DISTINCT Country) FROM "+TABLE_NAME;
+            Long count = dao.queryForObject(query, Long.class);
+            return count;
+        } catch (DataAccessException e) {
+            throw e;
+        }
     }
 
     public List<Map<String, Object>> getDescCountryCities() {
