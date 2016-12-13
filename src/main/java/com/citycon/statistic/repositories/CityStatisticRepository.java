@@ -10,14 +10,11 @@ import java.util.Map;
 
 @Repository
 public class CityStatisticRepository extends AbstractRepository {
-    private NamedParameterJdbcOperations namedParameterDao;
     private final String TABLE_NAME = "City";
 
     @Autowired
-    public CityStatisticRepository(NamedParameterJdbcOperations namedParameterDao,
-                                   JdbcOperations dao) {
+    public CityStatisticRepository(JdbcOperations dao) {
         super(dao);
-        this.namedParameterDao = namedParameterDao;
     }
 
     public Long getCount() {

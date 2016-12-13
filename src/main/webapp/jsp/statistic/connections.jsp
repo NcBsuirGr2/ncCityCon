@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Vojts
-  Date: 08.12.2016
-  Time: 15:26
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -33,29 +26,20 @@
                 <h4>Connections statistic</h4>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" action="${pageContext.request.contextPath}/user" method="POST" role="form" id="form">
-                    <div class="form-group">
-                        <div for="name" class="col-xs-4 test-right"><strong>Count connections:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_connections}
-                        </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Connections count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_connections}
                     </div>
-
-                    <div class="form-group">
-                        <div for="name" class="col-xs-4 test-right"><strong>Count ports:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_ports}
-                        </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 text-right"><strong>Inactive connections count:</strong></div>
+                    <div class="col-xs-6">
+                        ${count_inactive_connections} (<fmt:formatNumber type="percent" minFractionDigits="2"
+                                                                  value="${inactive_connections_percent}"/>)
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-4 test-right"><strong>Using ports of routers:</strong></div>
-                        <div class="col-xs-7">
-                            ${count_connections*2} (<fmt:formatNumber type="percent" minFractionDigits="2"
-                                                                      value="${(count_connections*2)/count_ports}"/>)
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <%@ include file="/include/statisticFooter.html" %>

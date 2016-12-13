@@ -10,14 +10,11 @@ import java.util.Map;
 
 @Repository
 public class RouterStatisticRepository extends AbstractRepository {
-    private NamedParameterJdbcOperations namedParameterDao;
     private final String TABLE_NAME = "Router";
 
     @Autowired
-    public RouterStatisticRepository(NamedParameterJdbcOperations namedParameterDao,
-                                   JdbcOperations dao) {
+    public RouterStatisticRepository(JdbcOperations dao) {
         super(dao);
-        this.namedParameterDao = namedParameterDao;
     }
 
     public Long getCount() {
