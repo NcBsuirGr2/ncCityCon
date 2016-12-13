@@ -20,19 +20,19 @@ public class RouterStatisticRepository extends AbstractRepository {
         this.namedParameterDao = namedParameterDao;
     }
 
-    public int getCount() {
+    public Long getCount() {
         return super.getCount(TABLE_NAME);
     }
 
-    public int getCountriesCount() {
+    public Long getCountriesCount() {
         String query = "SELECT COUNT(DISTINCT Country) FROM "+TABLE_NAME;
 
-        int count = dao.queryForObject(query, Integer.class);
+        Long count = dao.queryForObject(query, Long.class);
         return count;
     }
 
-    public Long getCountActiveRouters() {
-        String query = "SELECT COUNT(1) FROM Router WHERE In_Service=1";
+    public Long getCountInActiveRouters() {
+        String query = "SELECT COUNT(1) FROM Router WHERE In_Service=0";
 
         Long result = dao.queryForObject(query, Long.class);
         return result;

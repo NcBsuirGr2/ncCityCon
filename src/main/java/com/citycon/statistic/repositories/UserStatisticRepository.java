@@ -28,16 +28,16 @@ public class UserStatisticRepository extends  AbstractRepository {
         this.namedParameterDao = namedParameterDao;
     }
 
-    public int getCount() {
+    public Long getCount() {
         return super.getCount(TABLE_NAME);
     }
 
-    public int getCount(String group) {
+    public Long getCount(String group) {
         String query = "SELECT COUNT(*) FROM User WHERE User.Group=:group";
 
         Map<String,String> queryParams = Collections.singletonMap("group", group);
 
-        int count = namedParameterDao.queryForObject(query, queryParams, Integer.class);
+        Long count = namedParameterDao.queryForObject(query, queryParams, Long.class);
         return count;
     }
     public UserEntity[] getFirstUsers() {

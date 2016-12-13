@@ -69,7 +69,8 @@
               <div class="col-xs-4 text-right"><strong>City with max routers count:</strong></div>
               <div class="col-xs-6">
                 <c:forEach items="${max_router_cities}" var="cityMap" varStatus="loopStatus">
-                    ${cityMap["country"]}, ${cityMap["city"]}<c:if test="${!loopStatus.last}">,</c:if> (${cityMap["citiesCount"]} cities)
+                    ${cityMap["country"]}, ${cityMap["city"]}
+                    <c:if test="${!loopStatus.last}">,</c:if> (${cityMap["routersCount"]} routers)
               </c:forEach>
               </div>
           </div>

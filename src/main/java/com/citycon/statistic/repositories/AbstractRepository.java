@@ -15,10 +15,10 @@ public abstract class AbstractRepository {
         this.dao = dao;
     }
 
-    protected int getCount(String tableName) {
-        String query = "SELECT COUNT(*) FROM "+tableName;
+    protected Long getCount(String tableName) {
+        String query = "SELECT COUNT(1) FROM "+tableName;
 
-        int count = dao.queryForObject(query, Integer.class);
+        Long count = dao.queryForObject(query, Long.class);
         return count;
     }
 }

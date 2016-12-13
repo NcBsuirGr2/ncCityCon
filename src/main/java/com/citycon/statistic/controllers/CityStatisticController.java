@@ -38,37 +38,30 @@ public class CityStatisticController {
 
     private List<Map<String, Object>> selectMaxCitiesCountries(List<Map<String, Object>> descCountryList) {
         long requiredCitiesCount = (Long)descCountryList.get(0).get("citiesCount");
-
         List<Map<String, Object>> maxCityCountries = new LinkedList<>();
-        Logger logger = LoggerFactory.getLogger("com.citycon.statistic.controllers.CityStatisticController");
+
         for (Map<String, Object> countryMap : descCountryList) {
             if ((Long)countryMap.get("citiesCount") < requiredCitiesCount) {
                 break;
             }
-
-            logger.debug("have {}, need {}", (Long)countryMap.get("citiesCount"), requiredCitiesCount);
             maxCityCountries.add(countryMap);
         }
-        logger.debug("list size: {}", maxCityCountries.size());
+
         return maxCityCountries;
     }
 
     private List<Map<String, Object>> selectMinCitiesCountries(List<Map<String, Object>> descCountryList) {
         Long requiredCitiesCount = (Long)descCountryList.get(descCountryList.size()-1).get("citiesCount");
-
         List<Map<String, Object>> minCityCountries = new LinkedList<>();
-        Logger logger = LoggerFactory.getLogger("com.citycon.statistic.controllers.CityStatisticController");
+
         for (int i = descCountryList.size()-1; i > 0; i--) {
             Map<String, Object> element = descCountryList.get(i);
-
-            logger.debug("---min cities logs----");
-            logger.debug("have {}, need {}", (Long)element.get("citiesCount"), requiredCitiesCount);
             if ((Long)element.get("citiesCount") > requiredCitiesCount) {
                 break;
             }
             minCityCountries.add(element);
         }
-        logger.debug("list size: {}", minCityCountries.size());
+
         return minCityCountries;
     }
 
@@ -76,19 +69,13 @@ public class CityStatisticController {
         long requiredRoutersCount = (Long)descCityList.get(0).get("routersCount");
 
         List<Map<String, Object>> maxRouterCities = new LinkedList<>();
-        Logger logger = LoggerFactory.getLogger("com.citycon.statistic.controllers.CityStatisticController");
         for (Map<String, Object> cityMap : descCityList) {
-
-            logger.debug("---max routers logs----");
-            logger.debug("have {}, need {}", (Long)cityMap.get("routersCount"), requiredRoutersCount);
-            logger.debug("Country {}, city {}", cityMap.get("country"), cityMap.get("city"));
-
             if ((Long)cityMap.get("routersCount") < requiredRoutersCount) {
                 break;
             }
             maxRouterCities.add(cityMap);
         }
-        logger.debug("list size: {}", maxRouterCities.size());
+
         return maxRouterCities;
     }
 }
