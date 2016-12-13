@@ -1,5 +1,6 @@
 package com.citycon.statistic.controllers;
 
+import com.citycon.controllers.listeners.SessionHolder;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.model.systemunits.orm.ORMUser;
 import com.citycon.statistic.repositories.UserStatisticRepository;
@@ -27,6 +28,8 @@ public class UserStatisticController {
         model.addAttribute("count_guests", repo.getCount("guest"));
         model.addAttribute("first_users", repo.getFirstUsers());
         model.addAttribute("last_users", repo.getLastUsers());
+
+        model.addAttribute("users_online_logins", SessionHolder.getUsersOnline());
 
         return "statistic/users";
     }

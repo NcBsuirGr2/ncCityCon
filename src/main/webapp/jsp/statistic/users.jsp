@@ -87,6 +87,20 @@
                   </div>
               </div>
           </c:if>
+
+          <br>
+
+          <c:if test="${not empty users_online_logins}">
+              <div class="row">
+                  <div class="col-xs-4 text-right"><strong>Users online:</strong></div>
+
+                  <div class="col-xs-7">
+                      <c:forEach items="${users_online_logins}" var="user" varStatus="loopStatus">
+                          ${user} <c:if test="${!loopStatus.last}">,</c:if>
+                      </c:forEach>
+                  </div>
+              </div>
+          </c:if>
       </div>
 
         <%@ include file="/include/statisticFooter.html" %>

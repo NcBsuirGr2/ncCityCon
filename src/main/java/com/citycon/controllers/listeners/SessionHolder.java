@@ -8,10 +8,7 @@ import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSession;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Collections;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,5 +92,21 @@ public class SessionHolder implements HttpSessionListener {
         } catch (Exception e) {
             logger.error("Unexpected exception during deleting user session", e);
         }
+    }
+    public static List<String> getUsersOnline() {
+        List<String> usersOnline = new LinkedList<>();
+        Iterator<HttpSession> sessionsIterator = sessions.iterator();
+        while(sessionsIterator.hasNext()) {
+            HttpSession nextSession = sessionsIterator.next();
+            if (nextSession.getAttribute("user") != null) {
+                try {
+                    UserEntity user = (UserEntity)nextSession.getAttribute("user");
+                    usersOnline.add(user.getLogin());
+                } catch (ClassCastException e) {
+                    logger.warn("Cannot cast session \"user\" object to UserEntity", e);
+                }
+            }
+        }
+        return usersOnline;
     }
 }
