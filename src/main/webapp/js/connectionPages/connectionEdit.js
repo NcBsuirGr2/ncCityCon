@@ -8,6 +8,7 @@ function updateSelect(selected, url) {
 			var repeated = false;
 			
 			for (var i in suggestions) {
+                console.log(suggestions[i]);
 				if (suggestions[i] == $(selected).val()) {
 					repeated = true;
 					break;
@@ -69,7 +70,7 @@ $(document).ready(function() {
 	});
 
 
-	$("#country2").on("click", function() {
+	$("#country2").on("change", function() {
 		updCity2($(this).val());
 		updSN2($(this).val(), $("#city2").val());
 	});
