@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * ORM wrapper for the <code>UserEntity</code>. This class must be used in servlets to
@@ -64,6 +65,11 @@ public class ORMUser extends ORMEntity {
 		}
 		dao.delete(user);
     }
+
+	public static Set<String> getSortingParameters() throws DAOException {
+		DAO staticDAO = daoFactory.getUserDAO();
+		return staticDAO.getSortingParameters();
+	}
 
     /**
 	 * Get any page of users from DAO layer. 

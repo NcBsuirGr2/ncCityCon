@@ -2,7 +2,7 @@ package com.citycon.dao.interfaces;
 import com.citycon.dao.exceptions.*;
 import com.citycon.model.systemunits.entities.Entity;
 
-import java.util.DuplicateFormatFlagsException;
+import java.util.Set;
 
 /**
  * Created by Vojts on 09.11.2016.
@@ -22,5 +22,7 @@ public interface DAO {
 		throws InvalidDataDAOException, InternalDAOException;
 
     int count_element() throws InternalDAOException;
+
+    Set<String> getSortingParameters();
 
 }

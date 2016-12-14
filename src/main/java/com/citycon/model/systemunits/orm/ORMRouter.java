@@ -9,6 +9,8 @@ import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.mysql.RouterDAO;
 import com.citycon.dao.exceptions.DAOException;
 
+import java.util.Set;
+
 /**
  * ORM wrapper for the <code>RouterEntity</code>. This class must be used in servlets to
  * manipulate CRUD operations for the plain entity through the concrete DAO. DAO object
@@ -58,6 +60,11 @@ public class ORMRouter extends ORMEntity {
 		}
 		dao.delete(router);
     }
+
+	public static Set<String> getSortingParameters() throws DAOException {
+		DAO staticDAO = daoFactory.getRouterDAO();
+		return staticDAO.getSortingParameters();
+	}
 
      /**
 	 * Get any page of routers from DAO layer. 

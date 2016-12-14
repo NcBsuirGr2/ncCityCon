@@ -7,6 +7,8 @@ import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.exceptions.DAOException;
 
+import java.util.Set;
+
 /**
  * ORM wrapper for the <code>CityEntity</code>. This class must be used in servlets to
  * manipulate CRUD operations for the plain entity through the concrete DAO. DAO object
@@ -58,6 +60,11 @@ public class ORMCity extends ORMEntity {
 		}
 		dao.delete(city);
     }
+
+    public static Set<String> getSortingParameters() throws DAOException {
+		DAO staticDAO = daoFactory.getCityDAO();
+		return staticDAO.getSortingParameters();
+	}
 
      /**
 	 * Get any page of cities from DAO layer. 
