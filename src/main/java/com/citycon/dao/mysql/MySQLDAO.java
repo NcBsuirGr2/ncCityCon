@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Vojts on 09.11.2016.
@@ -143,6 +144,11 @@ public abstract class MySQLDAO implements DAO {
                 }
             }
         }
+    }
+
+    @Override
+    public Set<String> getSortingParameters() {
+        return hashMap.keySet();
     }
 
 }

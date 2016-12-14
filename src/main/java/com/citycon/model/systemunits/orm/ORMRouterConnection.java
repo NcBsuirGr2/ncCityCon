@@ -11,6 +11,7 @@ import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.exceptions.DAOException;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * ORM wrapper for the <code>RouterConnectionEntity</code>. This class must be used 
@@ -62,6 +63,11 @@ public class ORMRouterConnection extends ORMEntity {
 		}
 		dao.delete(routerConnection);
     }
+
+	public static Set<String> getSortingParameters() throws DAOException {
+		DAO staticDAO = daoFactory.getRouterConnectionDAO();
+		return staticDAO.getSortingParameters();
+	}
 
 
     /**
