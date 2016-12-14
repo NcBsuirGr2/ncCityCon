@@ -145,10 +145,10 @@ public class UserEditServlet extends AbstractHttpServlet {
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
 		String group = req.getParameter("group");
-		logger.info("New user {}", login);
+		logger.info("Edit user {}", login);
 		if (name == null || login == null || password == null || group == null) {
 			logger.info("Something is null {},{},{},{},{}", name, login, password, email, group);
-			forwardToErrorPage("Not enough info to create new user", req, res);
+			forwardToErrorPage("Not enough info to update user", req, res);
 			return;
 		}
 		if (idString == null) {
@@ -176,7 +176,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			ORMUser updateUser = new ORMUser();
 			updateUser.setEntity(user);
 
-			logger.debug("Updating user with id:{} loging:{} password:{} name:{} email:{} group:{}", 
+			logger.debug("Updating user with id:{} name:{} loging:{} password:{} email:{} group:{}",
 				user.getId(), user.getName(), user.getLogin(), user.getPassword(),
 				user.getEmail(), user.getGroup());
 
