@@ -38,6 +38,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         
         RouterConnectionEntity[] connections;
         HashMap<String, String> paginationParameters;
+
         try {
             paginationParameters = ((HashMap<String, HashMap<String, String>>)(req
                                             .getSession().getAttribute("paginationParameters"))).get("connections");
@@ -46,22 +47,19 @@ public class ConnectionListServlet extends AbstractHttpServlet {
             forwardToErrorPage(req, res);
             return;
         }
-        
-        
+
         try {
+            if (updatePaginationVariables(req, paginationParameters, ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount())) {
+                setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount());
+            } else {
+                forwardToErrorPage("Invalid search input", req, res);
+                return;
+            }
             // Getting page for concrete router
             if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(router), 
-                                                                paginationParameters, req, res);
-                if (redirect != null) {
-                    redirect.append("&SN=");
-                    redirect.append(req.getParameter("SN"));
-                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
-                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -79,17 +77,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(city), 
-                                                                            paginationParameters, req, res);
-                if (redirect != null) {
-                    redirect.append("&country=");
-                    redirect.append(req.getParameter("country"));
-                    redirect.append("&city=");
-                    redirect.append(req.getParameter("city"));
-                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
-                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -102,13 +90,6 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
             // Getting all connections
             } else {
-                StringBuilder redirect = setPaginationVariables(ORMRouterConnection.getCount(), 
-                                                                    paginationParameters, req, res);
-                if (redirect != null) {
-                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
-                }
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -122,7 +103,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
             req.setAttribute("entityArray", connections);
             req.getRequestDispatcher(CONNECTION_LIST_PAGE).forward(req, res);
-        } catch (InvalidDataDAOException | NumberFormatException exception) {
+
+        } catch (InvalidDataDAOException | IllegalArgumentException exception) {
             forwardToErrorPage("Invalid search input", req, res);
             logger.debug("Invalid getPage data", exception);
         } catch (DAOException exception) {

@@ -36,6 +36,12 @@ public class RouterListServlet  extends AbstractHttpServlet {
                                             .getSession().getAttribute("paginationParameters")).get("routers");
 
         try {
+            if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
+                setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount());
+            } else {
+                forwardToErrorPage("Invalid search input", req, res);
+                return;
+            }
             // Getting page for concrete city
             if (req.getParameter("country") != null && req.getParameter("city") != null 
                      && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
@@ -43,17 +49,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
-                StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(city), 
-                                                                paginationParameters, req, res);
-                if (redirect != null) {
-                    redirect.append("&country=");
-                    redirect.append(req.getParameter("country"));
-                    redirect.append("&city=");
-                    redirect.append(req.getParameter("city"));
-                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
-                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -65,13 +61,6 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
             // Getting all routers
             } else {
-                StringBuilder redirect = setPaginationVariables(ORMRouter.getCount(), 
-                                                                paginationParameters, req, res);
-                if (redirect != null) {
-                    logger.trace("Incorrect page, redirect to the "+redirect.toString());
-                    res.sendRedirect(redirect.toString());
-                    return;
-                }
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -84,7 +73,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
             req.setAttribute("entityArray", routers);
             req.getRequestDispatcher(ROUTER_LIST_PAGE).forward(req, res);
-        } catch (InvalidDataDAOException | NumberFormatException exception) {
+        } catch (InvalidDataDAOException | IllegalArgumentException exception) {
             forwardToErrorPage("Invalid search input", req, res);
             logger.debug("Invalid getPage data", exception);
         } catch (DAOException exception) {

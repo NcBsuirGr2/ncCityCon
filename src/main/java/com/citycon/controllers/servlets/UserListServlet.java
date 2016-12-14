@@ -39,23 +39,12 @@ public class UserListServlet extends AbstractHttpServlet {
 			HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
 											.getSession().getAttribute("paginationParameters")).get("users");
 
-			//If page must be normalized (negative or too large)
-			if (setPaginationVariables(ORMUser.getCount(), paginationParameters, req, res) != null) {
-				StringBuilder redirect = new StringBuilder();
-					redirect.append(paginationParameters.get("path"));
-					redirect.append("?page=");
-					redirect.append(paginationParameters.get("page")); // normalized page
-					redirect.append("&itemsPerPage=");
-					redirect.append(paginationParameters.get("itemsPerPage"));
-					redirect.append("&sortBy=");
-					redirect.append(paginationParameters.get("sortBy"));
-					redirect.append("&asc=");
-					redirect.append(paginationParameters.get("asc"));
-					logger.debug("Incorrect page, redirect to the "+redirect.toString());
-					res.sendRedirect(redirect.toString());
-					return;
+			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount())) {
+				setPaginationBlockVariables(req, paginationParameters, ORMUser.getCount());
+			} else {
+				forwardToErrorPage("Invalid search input", req, res);
+				return;
 			}
-
 
 			int page = Integer.parseInt(paginationParameters.get("page"));
 			int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
@@ -68,9 +57,9 @@ public class UserListServlet extends AbstractHttpServlet {
 			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
-		} catch (InvalidDataDAOException | NumberFormatException exception) {
+		} catch (InvalidDataDAOException | IllegalArgumentException exception) {
 			forwardToErrorPage("Invalid search input", req, res);
-			logger.debug("Invalid getPage data", exception);
+			logger.trace("Invalid getPage data", exception);
 		} catch (DAOException exception) {
 			forwardToErrorPage("Internal DAO exception", req, res);
 		} catch (ClassCastException exception) {
