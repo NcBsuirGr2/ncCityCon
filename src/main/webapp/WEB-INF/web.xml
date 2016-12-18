@@ -211,6 +211,7 @@
 	 	<filter-mapping>
 	 		<filter-name>UserEditFilter</filter-name>
 	 		<url-pattern>/user</url-pattern>
+			<url-pattern>/statistic/merge</url-pattern>
 	 	</filter-mapping>
 
 	 	<filter>

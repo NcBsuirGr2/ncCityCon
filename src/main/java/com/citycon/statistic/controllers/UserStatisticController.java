@@ -2,7 +2,6 @@ package com.citycon.statistic.controllers;
 
 import com.citycon.controllers.listeners.SessionHolder;
 import com.citycon.dao.exceptions.DAOException;
-import com.citycon.model.systemunits.orm.ORMUser;
 import com.citycon.statistic.repositories.UserStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

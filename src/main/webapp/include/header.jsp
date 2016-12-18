@@ -27,6 +27,9 @@
 		<c:if test="${not empty sessionScope.user}">
 			<a href="/statistic/" class="btn btn-header btn-default pull-right">Statistic</a>
 		</c:if>
+		<c:if test="${showUsersBtn}">
+			<a href="/statistic/merge" class="btn btn-header btn-default pull-right">Merge Users</a>
+		</c:if>
 		</div>
 	</div>
 </header>
