@@ -23,6 +23,17 @@ function validateEmail(email) {
 function validateForm(form) {
 	var valid = true;
 	$(".formAlert").html("Sorry, your form data is invalid");
+
+    var $notEmptyInputs = $(form).find(".notEmptyInput");
+    $notEmptyInputs.each(function() {
+        if(!validateNotEmpty($(this).val())) {
+            $(".formAlert").html("Please fill out required fields");
+            valid = false;
+            return;
+        }
+    });
+    if (!valid) return false;
+
 	var names = $("input[name='name']");
 	names.each(function () {
 		if(!validateTextLength(this.value, 3)) {
@@ -31,6 +42,8 @@ function validateForm(form) {
 			return;
 		}
 	});
+	if (!valid) return false;
+
 	var login = $("input[name='login']");
 	login.each(function () {
 		if(!validateTextLength(this.value, 4)) {
@@ -39,6 +52,8 @@ function validateForm(form) {
 			return;
 		}
 	});
+    if (!valid) return false;
+
 	var password = $("input[name='password']");
 	password.each(function () {
 		if(!validateTextLength(this.value, 6)) {
@@ -47,39 +62,28 @@ function validateForm(form) {
 			return;
 		}
 	});
-	var email = $("input[name='email']");
-	email.each(function () {
-		if(!validateTextLength(this.value, 6)) {
-			$(".formAlert").html("Email is too short. Minimum 6 characters");
-			valid = false;
-			return;
-		}
-	});
+    if (!valid) return false;
 
     var $textInputs = $(form).find(".simpleText");
     $textInputs.each(function() {
     	if(!validateSimpleText($(this).val())) {
-			$(".formAlert").html("Your input \"" + $(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;") + "\" is invalid"); //напиши это по-человечески
+			$(".formAlert").html("Your input \"" + $(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;") + "\" is invalid");
 			valid = false;
 			return;
 		}
     });
-    var $notEmptyInputs = $(form).find(".notEmptyInput");
-    $notEmptyInputs.each(function() {
-    	if(!validateNotEmpty($(this).val())) {
-    		$(".formAlert").html("Please fill out required fields");
-			valid = false;
-			return;
-    	}
-    });
+    if (!valid) return false;
+
     var $asciiInput = $(form).find(".asciiInput");
     $asciiInput.each(function() {
     	if(!validateASCIIAndHack($(this).val())) {
-    		$(".formAlert").html("Your password is invalid");
+    		$(".formAlert").html("Your input \"" + $(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;") + "\" is invalid");
 			valid = false;
 			return;
     	}
     });
+    if (!valid) return false;
+
     var $emailInputs = $(form).find(".emailInput");
     $emailInputs.each(function() {
     	if(!validateEmail($(this).val())) {
@@ -106,7 +110,7 @@ $(document).ready(function() {
 		$(".formAlert").addClass("hide");
 	})
 	$("#form").submit(function(event) {
-		if (s = !validateForm($('#form'))) {
+		if (!validateForm($('#form'))) {
 			event.preventDefault();
 			$(".formAlert").removeClass("hide");
 		}

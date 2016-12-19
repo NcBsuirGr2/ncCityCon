@@ -166,8 +166,6 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		int currentPage = page;
 
 		int beginPage = (page/PAGINATION_BUTTONS_NUM)*PAGINATION_BUTTONS_NUM;
-		logger.debug("page:{}, pagesNum:{}, itemsPerPage:{}, itemsCount:{}, page/10: {}, beginPage: {}",
-				page, pagesNum, itemsPerPage, itemsCount, page/PAGINATION_BUTTONS_NUM, beginPage);
 		int endPage = beginPage+PAGINATION_BUTTONS_NUM-1;
 		if(beginPage < 1) beginPage = 1;
 		if(endPage > pagesNum) endPage = pagesNum;
@@ -251,6 +249,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
         }
         return constraintMessage;
     }
+    protected boolean notEmpty(String stringToValidate) {
+    	return (stringToValidate != null && !stringToValidate.trim().equals(""));
+	}
 
     private boolean validateIntString(String intString) {
         if(intString != null && !intString.equals("")) {

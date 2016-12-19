@@ -85,7 +85,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				forwardToErrorPage("Error occurred during reading connection", req, res);
 				return;
 			}
-		} else if (req.getParameter("city") != null && req.getParameter("country") != null) {
+		} else if (notEmpty(req.getParameter("city")) && notEmpty(req.getParameter("country"))) {
 			RouterConnectionEntity connection = new RouterConnectionEntity();
 			CityEntity city = new CityEntity();
 			city.setName(req.getParameter("city"));
