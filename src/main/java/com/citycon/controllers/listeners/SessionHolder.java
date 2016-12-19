@@ -101,7 +101,7 @@ public class SessionHolder implements HttpSessionListener {
             logger.error("Unexpected exception during updating user session", e);
         }
     }
-    public static void deleteUser(UserEntity userToDelete) {
+    public static boolean deleteUser(UserEntity userToDelete) {
         Iterator<HttpSession> i = sessions.iterator();
         try {
             while(i.hasNext()) {
@@ -109,13 +109,16 @@ public class SessionHolder implements HttpSessionListener {
                 if (currentSession.getAttribute("user") != null) {
                     UserEntity user = (UserEntity)currentSession.getAttribute("user");
                     if(user.getId() == userToDelete.getId()) {
-                        boolean success = sessions.remove(currentSession);
+                        currentSession.invalidate();
+                        logger.trace("Delete session for user with id {}", user.getId());
+                        return true;
                     }
                 }
             }
         } catch (Exception e) {
             logger.error("Unexpected exception during deleting user session", e);
         }
+        return false;
     }
     public static List<String> getUsersOnline() {
         List<String> usersOnline = new LinkedList<>();
