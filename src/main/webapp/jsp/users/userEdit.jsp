@@ -132,7 +132,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="javascript:history.back()" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    

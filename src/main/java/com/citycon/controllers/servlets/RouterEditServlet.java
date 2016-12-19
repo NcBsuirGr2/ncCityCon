@@ -146,8 +146,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                     forwardToErrorPage("Internal servler error", req, res);
                     return;
                 }
-                res.sendRedirect(ROUTER_LIST_URL+"?success=add&country="+req.getParameter("country") 
-                                                                + "&city="+req.getParameter("city"));
+                res.sendRedirect(ROUTER_LIST_URL+"?success=add&"+req.getParameter("sameSelect"));
             }
         }
     }
@@ -200,8 +199,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
                 forwardToErrorPage("Internal servler error", req, res);
                 return;
             }
-        res.sendRedirect(ROUTER_LIST_URL+"?success=edit&country="+req.getParameter("country") 
-                                                                + "&city="+req.getParameter("city"));
+        res.sendRedirect(ROUTER_LIST_URL+"?success=edit&"+req.getParameter("sameSelect"));
     }
     protected void doDelete(HttpServletRequest req, HttpServletResponse res) 
                                                         throws ServletException, IOException {
@@ -225,8 +223,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             return;
         }
 
-        res.sendRedirect(ROUTER_LIST_URL+"?success=delete&country="+req.getParameter("country") 
-                                                                + "&city="+req.getParameter("city"));
+        res.sendRedirect(ROUTER_LIST_URL+"?success=delete&"+req.getParameter("sameSelect"));
         return;
         }
 
@@ -238,9 +235,12 @@ public class RouterEditServlet extends AbstractHttpServlet {
         String active = req.getParameter("active");
         String cityName = req.getParameter("cityName");
         String countryName = req.getParameter("countryName");
+        String sameSelect = req.getParameter("sameSelect");
         StringBuilder redirect = new StringBuilder();
         redirect.append(ROUTER_EDIT_URL);
-        redirect.append("?action=");
+        redirect.append("?");
+        redirect.append(sameSelect);
+        redirect.append("&action=");
         redirect.append(action);
         redirect.append("&errorType=");
         redirect.append(errorType);
