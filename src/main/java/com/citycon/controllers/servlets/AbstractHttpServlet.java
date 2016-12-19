@@ -96,6 +96,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 					if (itemsCount > 0) {
 						totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
 					}
+					logger.trace("page: {}, totalPagesNum: {}", page, totalPagesNum);
 					if (page > totalPagesNum) {
 						paginationVariables.put("page", String.valueOf(totalPagesNum));
 					}
@@ -116,6 +117,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				if (itemsCount > 0) {
 					totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
 				}
+				logger.trace("page: {}, totalPagesNum: {}, itemsNum: {}", page, totalPagesNum, itemsCount);
 				if (page > 0 && page <= totalPagesNum) {
 					paginationVariables.put("page", pageReqString);
 				} else {

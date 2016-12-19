@@ -554,10 +554,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity, RoutersStatist
         String search = "";
 
         if (city.getName() != null && city.getCountryName() != null){
-            search = "SELECT COUNT(ID) " +
-                    "FROM (SELECT DISTINCT Router.ID AS ID FROM Router " +
-                    "INNER JOIN `City` ON (`Router`.`City_id` = `City`.`ID`) " +
-                    "WHERE (`City`.`Name` = ? AND `City`.`Country` = ?)) E";
+            search = "SELECT COUNT(distinct Router.ID) FROM Router INNER JOIN `City` ON " +
+                    "(`Router`.`City_id` = `City`.`ID`) WHERE (`City`.`Name` = ? AND `City`.`Country` = ?)";
         }
         else{
             logger.info("For reading router incorrectly chosen field, try name and country");
@@ -585,7 +583,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity, RoutersStatist
             if (resultSet.first()) {
                 count = resultSet.getInt(1);
 
-                logger.trace("Get count elements. {}", log_parameters);
+                logger.trace("Get count elements: {} elements", count);
             }
         } catch (SQLException e) {
             logger.info("Get count elements failed. {}", log_parameters, e);

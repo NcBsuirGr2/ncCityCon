@@ -47,7 +47,7 @@
             <div class="col-xs-4 text-right"><strong>Country with max cities count:</strong></div>
             <div class="col-xs-6">
               <c:forEach items="${max_city_countries}" var="countryMap" varStatus="loopStatus">
-                ${countryMap["country"]} <c:if test="${!loopStatus.last}">,</c:if>(${countryMap["citiesCount"]} cities)
+                ${countryMap["country"]} (${countryMap["citiesCount"]} cities)<c:if test="${!loopStatus.last}">, </c:if>
               </c:forEach>
             </div>
           </div>
@@ -58,7 +58,7 @@
             <div class="col-xs-4 text-right"><strong>Country with min cities count:</strong></div>
             <div class="col-xs-6">
               <c:forEach items="${min_city_countries}" var="countryMap" varStatus="loopStatus">
-                ${countryMap["country"]}<c:if test="${!loopStatus.last}">,</c:if> (${countryMap["citiesCount"]} cities)
+                ${countryMap["country"]} (${countryMap["citiesCount"]} cities)<c:if test="${!loopStatus.last}">, </c:if>
               </c:forEach>
             </div>
           </div>
@@ -69,8 +69,8 @@
               <div class="col-xs-4 text-right"><strong>City with max routers count:</strong></div>
               <div class="col-xs-6">
                 <c:forEach items="${max_router_cities}" var="cityMap" varStatus="loopStatus">
-                    ${cityMap["country"]}, ${cityMap["city"]}
-                    <c:if test="${!loopStatus.last}">,</c:if> (${cityMap["routersCount"]} routers)
+                    ${cityMap["country"]}, ${cityMap["city"]} (${cityMap["routersCount"]} routers)
+                    <c:if test="${!loopStatus.last}">, </c:if>
               </c:forEach>
               </div>
           </div>
