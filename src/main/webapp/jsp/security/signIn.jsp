@@ -14,6 +14,7 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/common.js"></script>
+        <script src="js/formValidation.js"></script>
 
         <link href="favicon.ico" rel="icon"/>
     </head>
@@ -36,7 +37,10 @@
                         </c:when>
                     </c:choose>
                 </div>
-            </c:if> 
+            </c:if>
+                <div class="alert alert-warning formAlert hide">
+                    You input is invalid.
+                </div>
 
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -51,7 +55,7 @@
                                     <label class="col-xs-3 control-label">Login:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" maxlength="15" class="form-control" autofocus placeholder="Login" name="login">
+                                            <input type="text" maxlength="15" class="form-control simpleText notEmptyInput" autofocus placeholder="Login" name="login">
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +63,7 @@
                                     <label class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="password" maxlength="15" class="form-control asciiInput" placeholder="Password" name="password">
+                                            <input type="password" maxlength="15" class="form-control asciiInput notEmptyInput" placeholder="Password" name="password">
                                         </div>
                                     </div>
                                 </div>
