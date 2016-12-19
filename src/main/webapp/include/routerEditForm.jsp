@@ -38,7 +38,7 @@
     </div>
 
     <div class="form-group">
-        <label for="SN" class="col-xs-3 control-label">SN:</label>
+        <label class="col-xs-3 control-label">SN:</label>
         <div class="col-xs-7">
             <c:if test="${not empty editRouter}">
                 <input type="text" class="form-control" readonly name="SN" value="${editRouter.SN}"/>
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="name" class="col-xs-3 control-label">Name:</label>
+        <label class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-7">
         <c:if test="${not empty editRouter}">
             <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
@@ -61,7 +61,7 @@
         </div>
     </div>  
     <div class="form-group">
-        <label for="group" class="col-xs-3 control-label">Active:</label>
+        <label class="col-xs-3 control-label">Active:</label>
         <div class="col-xs-2">
             <select class="form-control" id="group" name="active" form="form">
                 <option value="true" <c:if test="${param.active eq 'true' || editRouter.active eq 'true'}">selected</c:if>>true</option>

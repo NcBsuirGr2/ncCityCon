@@ -170,7 +170,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 			try {
 				updateConnection.update();
 			} catch (DublicateKeyDAOException exception) {
-				res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
+				res.sendRedirect(getRedirectPathToSamePage("noFreePorts", req, res).toString());
 				return;
 			} catch (InvalidDataDAOException exception) {
 				// No routers with such SN, redirect to add/edit page
