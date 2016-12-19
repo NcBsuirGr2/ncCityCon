@@ -12,6 +12,7 @@ import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  *  Aimed to hold control over all app sessions. Is used to update user immediately
@@ -27,6 +28,29 @@ public class SessionHolder implements HttpSessionListener {
     public SessionHolder() {
         logger = LoggerFactory.getLogger("com.citycon.controllers.listeners.SessionHolder");
         sessions = Collections.synchronizedSet(new HashSet<HttpSession>());
+    }
+
+    /**
+     * Allows to get existing user session by user login. Aimed to unite all user interaction.
+     *
+     * @param userLogin         String representing user login
+     * @return HttpSession      if there is one and <code>null</code> otherwise
+     */
+    public static HttpSession getUserSession(String userLogin) {
+        for (HttpSession session : sessions) {
+            if (session.getAttribute("user") != null) {
+                try {
+
+                    UserEntity user = (UserEntity) session.getAttribute("user");
+                    if (user.getLogin().equals(userLogin)) {
+                        return session;
+                    }
+                } catch (Exception e) {
+                    logger.warn("Cannot get session by user login: unexpected exception", e);
+                }
+            }
+        }
+        return null;
     }
 
     @Override

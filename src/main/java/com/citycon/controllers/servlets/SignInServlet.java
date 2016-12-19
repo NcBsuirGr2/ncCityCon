@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import com.citycon.controllers.listeners.SessionHolder;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.Grant;
@@ -8,10 +9,7 @@ import com.citycon.model.systemunits.orm.ORMUser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
@@ -47,9 +45,17 @@ public class SignInServlet extends AbstractHttpServlet {
         logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
         try {                 
             enteredUser.read();
-            HttpSession session = req.getSession();
-            session.setAttribute("user", enteredUser.getEntity());
-            initializePaginationData(session);
+            HttpSession session = SessionHolder.getUserSession(enteredUser.getEntity().getLogin());
+            if (session == null) {
+                session = req.getSession();
+                session.setAttribute("user", enteredUser.getEntity());
+                initializePaginationData(session);
+            } else {
+                Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
+                logger.trace("Added session cookie {} for user {}", session.getId(), enteredUser.getEntity().getLogin());
+                sessionCookie.setMaxAge(60*30);
+                res.addCookie(sessionCookie);
+            }
             res.sendRedirect("/");
         } catch(InvalidDataDAOException exception) {
             res.sendRedirect("/signin?errorType=invalidData");
