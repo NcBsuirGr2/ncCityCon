@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
  *  
  * @author Mike
- * @version 0.3
+ * @version 1.0
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
@@ -49,16 +49,18 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         }
 
         try {
-            if (updatePaginationVariables(req, paginationParameters, ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount())) {
-                setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount());
-            } else {
-                forwardToErrorPage("Invalid search input", req, res);
-                return;
-            }
             // Getting page for concrete router
             if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
+
+                if (updatePaginationVariables(req, paginationParameters,
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(router))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(router));
+                } else {
+                    forwardToErrorPage("Invalid search input", req, res);
+                    return;
+                }
 
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
@@ -78,6 +80,14 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
 
+                if (updatePaginationVariables(req, paginationParameters,
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(city))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(city));
+                } else {
+                    forwardToErrorPage("Invalid search input", req, res);
+                    return;
+                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");
@@ -90,6 +100,14 @@ public class ConnectionListServlet extends AbstractHttpServlet {
 
             // Getting all connections
             } else {
+                if (updatePaginationVariables(req, paginationParameters,
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount())) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount());
+                } else {
+                    forwardToErrorPage("Invalid search input", req, res);
+                    return;
+                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");

@@ -36,12 +36,6 @@ public class RouterListServlet  extends AbstractHttpServlet {
                                             .getSession().getAttribute("paginationParameters")).get("routers");
 
         try {
-            if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
-                setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount());
-            } else {
-                forwardToErrorPage("Invalid search input", req, res);
-                return;
-            }
             // Getting page for concrete city
             if (req.getParameter("country") != null && req.getParameter("city") != null 
                      && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
@@ -49,6 +43,13 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
+
+                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount(city));
+                } else {
+                    forwardToErrorPage("Invalid search input", req, res);
+                    return;
+                }
 
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
@@ -61,6 +62,13 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
             // Getting all routers
             } else {
+                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount());
+                } else {
+                    forwardToErrorPage("Invalid search input", req, res);
+                    return;
+                }
+
                 int page = Integer.parseInt(paginationParameters.get("page"));
                 int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
                 boolean asc = paginationParameters.get("asc").equals("true");

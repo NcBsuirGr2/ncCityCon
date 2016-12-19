@@ -392,7 +392,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     "routers " +
                     "on (`RouterConnection`.`ID_From` = `routers`.`ID` " +
                     "or `RouterConnection`.`ID_To` = `routers`.`ID`) " +
-                    ") E";
+                    ")";
         } else {
             logger.info("For reading router connection incorrectly chosen field, try name and country");
             throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
@@ -480,21 +480,17 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         String search = "";
 
         if (router.getSN() != null) {
-            search = "select count(ID) from " +
-                    "(SELECT distinct `RouterConnection`.`ID` " +
-                    "FROM RouterConnection INNER JOIN `Router` " +
-                    "ON (`RouterConnection`.`ID_From` = `Router`.`ID` " +
-                    "OR `RouterConnection`.`ID_To` = `Router`.`ID`) " +
-                    "WHERE `Router`.`SN` = ?) E";
+            search = "select count(distinct rc.ID) FROM RouterConnection rc " +
+                    "INNER JOIN Router r ON (rc.ID_From = r.ID OR rc.ID_To = r.ID) WHERE r.SN = ?";
         } else {
             logger.info("For reading router connection incorrectly chosen field, try SN");
             throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
                     " try SN");
         }
-
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(search);
+            preparedStatement.setString(1, router.getSN());
         } catch (SQLException e) {
             logger.warn("PrepareStatement in get count wasn't created", e);
             throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
@@ -510,7 +506,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
             if (resultSet.first()) {
                 count = resultSet.getInt(1);
 
-                logger.trace("Get count elements. {}", log_parameters);
+                logger.trace("Get count elements, got {}", count);
             }
         } catch (SQLException e) {
             logger.info("Get count elements failed. {}", log_parameters, e);

@@ -9,6 +9,8 @@ import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.interfaces.ConnectionsOfRouter;
 import com.citycon.dao.interfaces.ConnectionsOfCity;
 import com.citycon.dao.exceptions.DAOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -146,7 +148,10 @@ public class ORMRouterConnection extends ORMEntity {
      */
     public static int getCount(RouterEntity router) throws DAOException {
     	ConnectionsOfRouter staticDAO = (ConnectionsOfRouter)daoFactory.getRouterConnectionDAO();
-        return staticDAO.count_element(router);
+    	int connectionsCount = staticDAO.count_element(router);
+    	Logger logger = LoggerFactory.getLogger("citycon.com.orm");
+    	logger.debug("got {} connections from dao", connectionsCount);
+        return connectionsCount;
     }
 
     public static int countPorts() throws DAOException {

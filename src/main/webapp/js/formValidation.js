@@ -1,4 +1,4 @@
-function validateLenghtText(text, col) {
+function validateTextLength(text, col) {
 	return text.length >= col;
 }
 
@@ -25,7 +25,7 @@ function validateForm(form) {
 	$(".formAlert").html("Sorry, your form data is invalid");
 	var names = $("input[name='name']");
 	names.each(function () {
-		if(!validateLenghtText(this.value, 3)) {
+		if(!validateTextLength(this.value, 3)) {
 			$(".formAlert").html("Name is too short. Minimum 3 characters");
 			valid = false;
 			return;
@@ -33,7 +33,7 @@ function validateForm(form) {
 	});
 	var login = $("input[name='login']");
 	login.each(function () {
-		if(!validateLenghtText(this.value, 4)) {
+		if(!validateTextLength(this.value, 4)) {
 			$(".formAlert").html("Login is too short. Minimum 4 characters");
 			valid = false;
 			return;
@@ -41,7 +41,7 @@ function validateForm(form) {
 	});
 	var password = $("input[name='password']");
 	password.each(function () {
-		if(!validateLenghtText(this.value, 6)) {
+		if(!validateTextLength(this.value, 6)) {
 			$(".formAlert").html("Password is too short. Minimum 6 characters");
 			valid = false;
 			return;
@@ -49,7 +49,7 @@ function validateForm(form) {
 	});
 	var email = $("input[name='email']");
 	email.each(function () {
-		if(!validateLenghtText(this.value, 6)) {
+		if(!validateTextLength(this.value, 6)) {
 			$(".formAlert").html("Email is too short. Minimum 6 characters");
 			valid = false;
 			return;

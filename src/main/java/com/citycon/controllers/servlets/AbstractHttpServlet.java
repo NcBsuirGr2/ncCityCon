@@ -90,9 +90,11 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				if (itemsPerPage > 1) {
 					paginationVariables.put("itemsPerPage", itemsPerPageReqString);
 				} else {
+					logger.trace("itemsPerPage is less then 1");
 					return false;
 				}
 			} else {
+				logger.trace("itemsPerPage is not a string");
 				return false;
 			}
 		}
@@ -100,13 +102,18 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		if (pageReqString != null && !pageReqString.equals("")) {
 			if (validateIntString(pageReqString)) {
 				int page = Integer.parseInt(pageReqString);
-				int totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+				int totalPagesNum = 1;
+				if (itemsCount > 0) {
+					totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+				}
 				if (page > 0 && page <= totalPagesNum) {
 					paginationVariables.put("page", pageReqString);
 				} else {
+					logger.trace("Invalid page num: too big(greater then {}) or less then 1", totalPagesNum);
 					return false;
 				}
 			} else {
+				logger.trace("page is not a string");
 				return false;
 			}
 		}
@@ -115,6 +122,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
             if (ascReqString.equals("true") || ascReqString.equals("false")) {
 				paginationVariables.put("asc", ascReqString);
             } else {
+				logger.trace("Invalid asc: not true nor false");
             	return false;
 			}
         }
@@ -123,6 +131,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
             if (validSortBy.contains(sortByReqString)) {
 				paginationVariables.put("sortBy", sortByReqString);
             } else {
+				logger.trace("Invalid sort by: {}", sortByReqString);
             	return false;
 			}
         }
@@ -145,16 +154,20 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
 		int page = Integer.parseInt(pageReqString);
 		int itemsPerPage = Integer.parseInt(itemsPerPageReqString);
-
-		int pagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
-
+		int pagesNum = 1;
+		if (itemsCount > 0) {
+			pagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+		}
 		if (page < 1) throw new IllegalArgumentException("required page is lesser then 1");
 		if (page > pagesNum) throw new IllegalArgumentException("required page is greater than it can be");
 
 		int PAGINATION_BUTTONS_NUM = 10;
 
 		int currentPage = page;
+
 		int beginPage = (page/PAGINATION_BUTTONS_NUM)*PAGINATION_BUTTONS_NUM;
+		logger.debug("page:{}, pagesNum:{}, itemsPerPage:{}, itemsCount:{}, page/10: {}, beginPage: {}",
+				page, pagesNum, itemsPerPage, itemsCount, page/PAGINATION_BUTTONS_NUM, beginPage);
 		int endPage = beginPage+PAGINATION_BUTTONS_NUM-1;
 		if(beginPage < 1) beginPage = 1;
 		if(endPage > pagesNum) endPage = pagesNum;
