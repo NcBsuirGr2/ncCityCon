@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <header id="header">
 	<div class="row">
 		<div class="col-sm-4">
@@ -25,9 +26,6 @@
 		</c:if>
 		<c:if test="${not empty sessionScope.user}">
 			<a href="/statistic/" class="btn btn-header btn-default pull-right">Statistic</a>
-		</c:if>
-		<c:if test="${showUsersBtn}">
-			<a href="/statistic/merge" class="btn btn-header btn-default pull-right">Merge Users</a>
 		</c:if>
 		</div>
 	</div>

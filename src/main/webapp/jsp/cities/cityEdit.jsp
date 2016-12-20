@@ -36,7 +36,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
-				<h4>Edit city</h4>
+				Edit city
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">

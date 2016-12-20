@@ -63,7 +63,7 @@
     <div class="form-group">
         <label for="group" class="col-xs-3 control-label">Active:</label>
         <div class="col-xs-3">
-            <select class="form-control" name="active" form="form">
+            <select class="form-control notEmptyInput" name="active" form="form">
                 <option value="true" <c:if test="${param.editActive == 'true'}">selected</c:if> >true</option>
                 <option value="false" <c:if test="${param.editActive == 'false'}">selected</c:if>>false</option>
             </select>

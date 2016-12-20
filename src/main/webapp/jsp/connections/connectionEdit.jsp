@@ -19,15 +19,13 @@
             <title>Edit connection</title>
         </head> 
     <body>
-
         <c:choose>
             <c:when test="${not empty param.SN}">
                 <c:set var="sameSelect" value="SN=${param.SN}"/>
             </c:when>
-
-            <c:otherwise>
+            <c:when test="${not empty param.city and not empty param.country}">
                 <c:set var="sameSelect" value="country=${param.country}&city=${param.city}"/>
-            </c:otherwise>
+            </c:when>
         </c:choose>
 
         <div class="content-wrapper">
@@ -53,7 +51,7 @@
             <div class="before-footer">
                 <div class="panel panel-default">
                 	<div class="panel-heading text-center">
-                        <h4>Setup connection</h4>
+                        Setup connection
                     </div>
                     <div class="panel-body">
                     	<form class="form-horizontal" id="form" method="POST" action="/connection" >

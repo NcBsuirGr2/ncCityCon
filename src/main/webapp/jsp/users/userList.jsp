@@ -141,31 +141,35 @@
 					<div class="panel-footer">
 						<div class="row">
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<c:if test="${showUsersOperationBtns}">
-									<a href="/user?action=add">
-										<button class="btn btn-primary center-block">Add</button>
-									</a>
+									<a href="/user?action=add" class="btn btn-primary center-block editHref">Add</a>
 								</c:if>
 							</div>
 
-							<div class="col-sm-4"> 
+							<div class="col-sm-3">
 								<c:if test="${showUsersOperationBtns}">
-									<a class="editHref" href="#"> 
-										<button class="btn btn-primary center-block">Edit</button>
-									</a>
+									<a href="#" class="btn btn-primary center-block editHref">Edit</a>
 								</c:if>
 							</div>
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 							<c:if test="${showUsersOperationBtns}">
 								<form action="/user" id="deleteForm" method="POST">
 									<input type="hidden" id="deleteId" name="id" value="-1">
 									<input type="hidden" name="type" value="delete">
-									<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+									<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 						    	</form>	
 					    	</c:if>	
 							</div>
+
+							<div class="col-sm-3">
+								<c:if test="${showUsersOperationBtns}">
+									<%--<a href="#" class="btn btn-primary center-block editHref">Edit</a>--%>
+									<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
+								</c:if>
+							</div>
+
 							<!-- Delete dialog modal -->
 							<div class="modal fade deleteDialog">
 								<div class="modal-dialog" role="document">

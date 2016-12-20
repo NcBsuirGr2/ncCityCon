@@ -48,7 +48,7 @@
 
             <div class="panel panel-default">
                 <center class="panel-heading text-center">
-                    Edit router
+                    Setup router
                 </center>
                 <div class="panel-body">
                 <c:choose>

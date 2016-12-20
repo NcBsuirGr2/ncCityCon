@@ -106,7 +106,7 @@ $(document).ready(function() {
  	// 	document.selectedUnique = $(this).find("td.unique").text();
  	// 	selected.addClass("info");
     // });
-	$("input").focus(function() {
+	$("input, select").focus(function() {
 		$(".formAlert").addClass("hide");
 	})
 	$("#form").submit(function(event) {

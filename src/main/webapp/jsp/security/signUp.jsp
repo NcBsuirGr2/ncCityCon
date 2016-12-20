@@ -78,7 +78,7 @@
                                     <label class="col-xs-3 control-label">E-mail:</label>
                                     <div class="col-xs-7">
                                         <div class="form-group">
-                                            <input type="text" maxlength="20" class="form-control emailInput" required placeholder="E-mail" name="email" value="${param.email}">
+                                            <input type="text" maxlength="30" class="form-control emailInput" required placeholder="E-mail" name="email" value="${param.email}">
                                         </div>
                                     </div>
                                 </div>

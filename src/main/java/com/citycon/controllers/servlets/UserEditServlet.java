@@ -16,6 +16,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
+import java.net.URLEncoder;
 import java.util.Set;
 import java.io.IOException;
 import java.sql.Date;
@@ -119,7 +120,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 					redirect.append("&editLogin=");
 					redirect.append(user.getLogin());
 					redirect.append("&editEmail=");
-					redirect.append(user.getEmail());
+					redirect.append(URLEncoder.encode(user.getEmail(), "UTF-8"));
 					redirect.append("&editGroup=");
 					redirect.append(user.getGroup());
 					res.sendRedirect(redirect.toString());
@@ -191,7 +192,7 @@ public class UserEditServlet extends AbstractHttpServlet {
 			redirect.append("&editLogin=");
 			redirect.append(user.getLogin());
 			redirect.append("&editEmail=");
-			redirect.append(user.getEmail());
+			redirect.append(URLEncoder.encode(user.getEmail(), "UTF-8"));
 			redirect.append("&editGroup=");
 			redirect.append(user.getGroup());
 			res.sendRedirect(redirect.toString());

@@ -20,6 +20,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.groups.Default;
 import com.citycon.model.systemunits.entities.validationgroups.RouterAddGroup;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -247,7 +249,12 @@ public class RouterEditServlet extends AbstractHttpServlet {
         redirect.append("&portsNum=");
         redirect.append(portsNum);
         redirect.append("&SN=");
-        redirect.append(SN);
+        try {
+            redirect.append(URLEncoder.encode(SN, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("The router SN has unexpected encoding", e);
+            redirect.append(SN);
+        }
         redirect.append("&name=");
         redirect.append(name);
         redirect.append("&active=");

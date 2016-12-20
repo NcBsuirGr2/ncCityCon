@@ -35,7 +35,7 @@
 
             <div class="panel panel-default">
             	<div class="panel-heading text-center">
-                    <h4>Edit user</h4>
+                    Edit user
                 </div>
                 <div class="panel-body">
                 	<form class="form-horizontal" action="/user" method="POST" role="form" id="form">
@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <label for="login" class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="editPassword">
+                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="password" value="${editUser.password}">
                                     </div>
                                 </div>
                             </c:when>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="form-group">
                             <label for="group" class="col-xs-3 control-label">Group:</label>
-                            <div class="col-xs-4">
+                            <div class="col-xs-3">
                                 <c:choose>
                                     <c:when test="${ sessionScope.user.group == 'admin' && sessionScope.user.login ne param.login}">
                                         <select class="form-control" id="group" name="group" form="form">

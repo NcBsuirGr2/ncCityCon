@@ -17,18 +17,15 @@
 		
 		<title>Connections</title>
 	</head>
-
 	
 	<c:choose>
 		<c:when test="${not empty param.SN}">
 			<c:set var="sameSelect" value="SN=${param.SN}"/>
 		</c:when>
-
-		<c:otherwise>
+		<c:when test="${not empty param.city and not empty param.country}">
 			<c:set var="sameSelect" value="country=${param.country}&city=${param.city}"/>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
-
 
 	<body>
 		<div class="content-wrapper">
@@ -144,17 +141,13 @@
 
 								<div class="col-sm-4">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a href="/connection?${sameSelect}&action=add&">
-											<button class="btn btn-primary center-block">Add</button>
-										</a>
+										<a href="/connection?${sameSelect}&action=add" class="btn btn-primary center-block">Add</a>
 									</c:if>
 								</div>
 
 								<div class="col-sm-4"> 
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a class="editHref" href="#"> 
-											<button class="btn btn-primary editBtn center-block">Edit</button>
-										</a>
+										<a href="#" class="btn btn-primary center-block editHref">Edit</a>
 									</c:if>
 								</div>
 
@@ -164,7 +157,7 @@
 											<input type="hidden" id="deleteId" name="id" value="-1">
 											<input type="hidden" name="action" value="delete">
 											<input type="hidden" id="sameSelect" name="sameSelect" value="${sameSelect}">
-											<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+											<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 								    	</form>		
 								    </c:if>
 								</div>

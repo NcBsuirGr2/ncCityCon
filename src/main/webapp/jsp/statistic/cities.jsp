@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/statistic/statisticList.css">
-  <link rel="icon" href="favicon.ico" />
+  <link rel="icon" href="/favicon.ico" />
 </head>
 <body>
 <div class="content-wrapper">

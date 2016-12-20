@@ -16,8 +16,9 @@
 		<title>Router List</title>
 	</head>
 
-
-	<c:set var="samePath" value="country=${param.country}&city=${param.city}"/>
+	<c:if test="${not empty param.country and not empty param.city}">
+		<c:set var="samePath" value="country=${param.country}&city=${param.city}"/>
+	</c:if>
 
 	<body>
 		<div class="content-wrapper">
@@ -175,24 +176,18 @@
 
 								<div class="col-sm-3">
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a href="/router?${samePath}&action=add">
-											<button class="btn btn-primary center-block">Add</button>
-										</a>
+										<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
 									</c:if>
 								</div>
 
 								<div class="col-sm-3"> 
 									<c:if test="${showSystemUnitsOperationBtns}">
-										<a class="editHref" href="#"> 
-											<button class="btn btn-primary editBtn center-block">Edit</button>
-										</a>
+										<a href=# class="btn btn-primary center-block editHref">Setup</a>
 									</c:if>
 								</div>
 
-								<div class="col-sm-3"> 
-									<a class="connectionsHref" href="#"> 
-										<button class="btn btn-primary editBtn center-block">Connections</button>
-									</a>
+								<div class="col-sm-3">
+									<a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
 								</div>
 
 								<div class="col-sm-3">
@@ -202,7 +197,7 @@
 											<input type="hidden" name="action" value="delete">
 										    <input type="hidden" id="city" name="city" value="${param.city}"/>
 											<input type="hidden" id="country" name="country" value="${param.country}"/>
-											<button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+											<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
 								    	</form>		
 								    </c:if>
 								</div>

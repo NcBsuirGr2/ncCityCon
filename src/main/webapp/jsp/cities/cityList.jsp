@@ -123,17 +123,13 @@
 
                         <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a href="/city?action=add">
-                                    <button class="btn btn-primary center-block">Add</button>
-                                </a>
+                                <a href="/city?action=add" class="btn btn-primary center-block routersHref">Add</a>
                             </c:if>
                         </div>
 
                         <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a class="editHref" href="#">
-                                    <button class="btn btn-primary center-block">Edit</button>
-                                </a>
+                                <a href="#" class="btn btn-primary center-block editHref">Edit</a>
                             </c:if>
                         </div>
 
@@ -142,28 +138,23 @@
                                 <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
                                     <input type="hidden" name="action" value="delete">
-                                    <button type="button" class="btn btn-primary center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+                                    <button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
                                 </form>
                             </c:if>
                         </div>
 
                         <div class="col-sm-2">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a class="routersHref" href="#">
-                                    <button class="btn btn-primary center-block">Routers</button>
-                                </a>
+                                <a href="#" class="btn btn-primary center-block routersHref">Routers</a>
                             </c:if>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a class="connectionsHref" href="#">
-                                    <button class="btn btn-primary center-block">Connections</button>
-                                </a>
+                                <a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
                             </c:if>
                         </div>
                     </div>
-
                         <!-- Delete dialog modal -->
                     <div class="modal fade deleteDialog">
                         <div class="modal-dialog" role="document">

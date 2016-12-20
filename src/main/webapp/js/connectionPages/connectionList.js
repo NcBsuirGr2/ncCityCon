@@ -1,7 +1,11 @@
 $(document).ready(function() {
 	$( ".selectable tbody tr" ).on( "click", function() {
         var sameSelect = $("#sameSelect").val();
-		$(".editHref").attr("href", "/connection?action=edit&id="+document.selectedUnique+"&"+sameSelect);
+        if (sameSelect) {
+            $(".editHref").attr("href", "/connection?action=edit&id="+document.selectedUnique+"&"+sameSelect);
+        } else {
+            $(".editHref").attr("href", "/connection?action=edit&id="+document.selectedUnique);
+        }
 		$("#deleteId").val(document.selectedId);
 		console.log(document.selectedId);
     });

@@ -2,7 +2,7 @@
     <div class="form-group">
         <label class="col-xs-3 control-label">Country:</label>
         <div class="col-xs-7">
-            <select class="form-control" id="country" name="countryName" form="form">
+            <select class="form-control notEmptyInput" id="country" name="countryName" form="form">
                 <option label=" "></option>
                 <c:if test="${not empty editRouter or not empty param.country}">
                     <c:choose>
@@ -21,7 +21,7 @@
     <div class="form-group row">
         <label class="col-xs-3 control-label">City:</label>
         <div class="col-xs-7">
-            <select class="form-control" id="city" name="cityName" form="form">
+            <select class="form-control notEmptyInput" id="city" name="cityName" form="form">
                 <option label=" "></option>
                 <c:if test="${not empty editRouter or not empty param.city}">
                     <c:choose>
@@ -53,17 +53,17 @@
         <label class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-7">
         <c:if test="${not empty editRouter}">
-            <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
+            <input class="form-control simpleText notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
         </c:if>
         <c:if test="${empty editRouter}">
-            <input class="form-control simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+            <input class="form-control simpleText notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
         </c:if>
         </div>
     </div>  
     <div class="form-group">
         <label class="col-xs-3 control-label">Active:</label>
         <div class="col-xs-2">
-            <select class="form-control" id="group" name="active" form="form">
+            <select class="form-control notEmptyInput" id="group" name="active" form="form">
                 <option value="true" <c:if test="${param.active eq 'true' || editRouter.active eq 'true'}">selected</c:if>>true</option>
                 <option value="false" <c:if test="${param.active eq 'false' || editRouter.active eq 'false'}">selected</c:if>>false</option>
             </select>
