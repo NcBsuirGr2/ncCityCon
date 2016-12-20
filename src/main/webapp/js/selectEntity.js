@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var selected;
-	$(".selectable tbody tr" ).on("click", function() {
+	$(".selectable tbody tr:not(.notSelectable)" ).on("click", function() {
  		if(selected != null) {
  			selected.removeClass("info");
  		}

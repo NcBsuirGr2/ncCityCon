@@ -78,11 +78,7 @@
                                 <div class="form-group">
                                     <label for="login" class="col-xs-3 control-label">Password:</label>
                                     <div class="col-xs-7">
-<<<<<<< HEAD
                                         <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="password" value="${editUser.password}">
-=======
-                                        <input class="form-control asciiInput" maxlength="15" required placeholder="Password" name="password" type="password">
->>>>>>> 63238d9ff611550cba83fcbdb547d8a519b589e0
                                     </div>
                                 </div>
                             </c:when>

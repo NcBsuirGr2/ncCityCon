@@ -147,17 +147,10 @@
 								</c:if>
 							</div>
 
-<<<<<<< HEAD
 							<div class="col-sm-3">
 								<c:if test="${showUsersOperationBtns}">
 									<a href="#" class="btn btn-primary center-block editHref">Edit</a>
-=======
-							<div class="col-sm-4">
-								<c:if test="${showUsersOperationBtns}">
-									<a class="editHref" href="#">
-										<button class="btn btn-primary center-block">Edit</button>
-									</a>
->>>>>>> 63238d9ff611550cba83fcbdb547d8a519b589e0
+
 								</c:if>
 							</div>
 
