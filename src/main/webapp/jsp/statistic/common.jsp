@@ -22,7 +22,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h4>Common statistic</h4>
+                Common statistic
             </div>
             <div class="panel-body" style="width: 100%">
                 <div class="row">

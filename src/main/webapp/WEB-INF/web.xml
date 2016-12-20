@@ -198,10 +198,10 @@
  		<filter-name>LoginFilter</filter-name>
  		<url-pattern>/connection</url-pattern>
  	</filter-mapping>
-	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/statistic/*</url-pattern>
-	</filter-mapping>
+	<!--<filter-mapping>-->
+		<!--<filter-name>LoginFilter</filter-name>-->
+		<!--<url-pattern>/statistic/*</url-pattern>-->
+	<!--</filter-mapping>-->
 
 	<!-- User branch filters -->
 	 	<filter>

@@ -30,7 +30,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h4>Merge users statistic</h4>
+                Merge users statistic
             </div>
             <div class="panel-body">
                 <div class="row">
