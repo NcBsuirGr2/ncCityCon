@@ -60,7 +60,6 @@
 							Connections
 						</center>
 						<c:if test="${not empty entityArray}">
-
 							<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 								<thead>
 									<tr>

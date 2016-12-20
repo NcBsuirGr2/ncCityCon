@@ -24,7 +24,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h4>Connections statistic</h4>
+                Connections statistic
             </div>
             <div class="panel-body">
                 <div class="row">

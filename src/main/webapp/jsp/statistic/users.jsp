@@ -24,7 +24,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading text-center">
-        <h4>Users statistic</h4>
+        Users statistic
       </div>
       <div class="panel-body">
           <div class="row">

@@ -1,5 +1,6 @@
 package com.citycon.statistic.repositories;
 
+import com.citycon.model.systemunits.entities.CityEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +9,18 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class CityStatisticRepository extends AbstractRepository {
     private final String TABLE_NAME = "City";
     private Logger logger;
+    private NamedParameterJdbcOperations namedDao;
 
     @Autowired
-    public CityStatisticRepository(JdbcOperations dao) {
+    public CityStatisticRepository(JdbcOperations dao, NamedParameterJdbcOperations namedDao) {
         super(dao);
+        this.namedDao = namedDao;
         logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.CityStatisticRepository");
     }
 
@@ -59,6 +61,66 @@ public class CityStatisticRepository extends AbstractRepository {
             return result;
         } catch(DataAccessException e) {
             logger.warn("Cannot get cities with routers count", e);
+            throw e;
+        }
+    }
+    public int countRouters(CityEntity city) {
+        try {
+            String query = "SELECT COUNT(*) FROM Router WHERE City_id = " +
+                    "(SELECT ID FROM City WHERE City.Name = :cityName AND City.Country = :countryName)";
+            Map<String, String> namedParameters = new HashMap<>();
+            namedParameters.put("cityName", city.getName());
+            namedParameters.put("countryName", city.getCountryName());
+            int routersCount = namedDao.queryForObject(query, namedParameters, Integer.class);
+            logger.debug("Routers count for city {}:{}", city, routersCount);
+            return routersCount;
+
+        } catch(DataAccessException e) {
+            logger.warn("Cannot get routers of city {}", city, e);
+            throw e;
+        }
+    }
+    public int countConnections(CityEntity city) {
+        try {
+            String query = "SELECT count(*) FROM RouterConnection LEFT JOIN Router ON " +
+                    "(RouterConnection.ID_from = Router.ID OR RouterConnection.ID_to = Router.ID) " +
+                    "WHERE Router.ID IN (SELECT Router.ID FROM Router " +
+                    "WHERE City_id = (SELECT ID FROM City WHERE City.Name=:cityName AND City.Country=:countryName))";
+            Map<String, String> namedParameters = new HashMap<>();
+            namedParameters.put("cityName", city.getName());
+            namedParameters.put("countryName", city.getCountryName());
+            int connectionsCount = namedDao.queryForObject(query, namedParameters, Integer.class);
+            return connectionsCount;
+
+        } catch(DataAccessException e) {
+            logger.warn("Cannot get connections of city {}", city, e);
+            throw e;
+        }
+    }
+    public List<Map<String, Object>> getConnectedCities(CityEntity city, boolean active) {
+        try {
+
+            String query = "SELECT c.Country, c.Name, c2.Country AS country,c2.Name AS city,COUNT(*) AS connectionsCount FROM (City c " +
+                    "JOIN Router r ON r.City_id=c.ID) " +
+                    "JOIN RouterConnection rc ON (rc.ID_From = r.ID OR rc.ID_To = r.ID) " +
+                    "JOIN Router r2 ON (r.ID<>r2.ID and (r2.ID=rc.ID_From OR r2.ID=rc.ID_To)) " +
+                    "JOIN City c2 ON c2.ID=r2.City_id";
+
+            if (active) {
+                query += " WHERE (r.In_Service=1 and r2.In_Service=1) " +
+                        "GROUP BY c.Country,c.Name,c2.Country,c2.Name HAVING c.Country=:countryName and c.Name=:cityName";
+            } else {
+                query += " WHERE (r.In_Service=0 or r2.In_Service=0) " +
+                        "GROUP BY c.Country,c.Name,c2.Country,c2.Name HAVING c.Country=:countryName and c.Name=:cityName";
+            }
+            Map<String, String> namedParameters = new HashMap<>();
+            namedParameters.put("cityName", city.getName());
+            namedParameters.put("countryName", city.getCountryName());
+            List<Map<String, Object>> connectedCities = namedDao.queryForList(query, namedParameters);
+            return connectedCities;
+
+        } catch(DataAccessException e) {
+            logger.warn("Cannot get connections of city {}", city ,e);
             throw e;
         }
     }

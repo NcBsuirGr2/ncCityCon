@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/statistic/statisticList.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
   <link rel="icon" href="/favicon.ico" />
 </head>
 <body>
@@ -23,7 +24,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading text-center">
-        <h4>Cities statistic</h4>
+        Cities statistic
       </div>
       <div class="panel-body">
           <div class="row">

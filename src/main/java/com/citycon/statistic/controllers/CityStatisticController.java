@@ -1,11 +1,14 @@
 package com.citycon.statistic.controllers;
 
+import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.statistic.repositories.CityStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,13 +25,30 @@ public class CityStatisticController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String CityStatistic(Model model) {
+    public String CitiesStatistic(Model model) {
             model.addAttribute("count_countries", repo.getCountriesCount());
             model.addAttribute("count_cities", repo.getCount());
             model.addAttribute("max_city_countries", selectMaxCitiesCountries(repo.getDescCountryCities()));
             model.addAttribute("min_city_countries", selectMinCitiesCountries(repo.getDescCountryCities()));
             model.addAttribute("max_router_cities", selectMaxRoutersCities(repo.getDescCountryRouters()));
         return "statistic/cities";
+    }
+    @RequestMapping(value="/{country}/{city}", method = RequestMethod.GET)
+    public String CityStatistic(
+            @PathVariable("country") String country,
+            @PathVariable("city") String city,
+            Model model) {
+
+        model.addAttribute("country", country);
+        model.addAttribute("city", city);
+        CityEntity cityEntity = new CityEntity();
+        cityEntity.setName(city);
+        cityEntity.setCountryName(country);
+        model.addAttribute("routersNum", repo.countRouters(cityEntity));
+        model.addAttribute("connectionsNum", repo.countConnections(cityEntity));
+        model.addAttribute("connectedActiveCities", repo.getConnectedCities(cityEntity, true));
+        model.addAttribute("connectedInactiveCities", repo.getConnectedCities(cityEntity, false));
+        return "statistic/city";
     }
 
 

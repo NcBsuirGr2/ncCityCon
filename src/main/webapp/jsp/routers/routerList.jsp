@@ -144,13 +144,12 @@
 											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'isActive'}">
 												<c:set var="newAsc" value="false"/>
 											</c:if>
-
-												<a href="?${samePath}&sortBy=isActive&asc=${newAsc}">
-												Active
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'isActive'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
+											<a href="?${samePath}&sortBy=isActive&asc=${newAsc}">
+											Active
+											<c:if test="${paginationParameters['routers']['sortBy'] == 'isActive'}">
+												<c:if test="${newAsc == true}">&#9660;</c:if>
+												<c:if test="${newAsc == false}">&#9650;</c:if>
+											</c:if>
 											</a>
 										</th>
 										<th class="hidden">id</th>
