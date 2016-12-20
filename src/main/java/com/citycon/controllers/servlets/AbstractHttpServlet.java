@@ -15,6 +15,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
+import java.util.Properties;
 import java.util.Set;
 
 import java.io.IOException;
@@ -203,39 +204,69 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     protected void initializePaginationData(HttpSession session) {
     	HashMap<String, HashMap<String, String>> paginationParameters = new HashMap<>();
 
-    	HashMap<String, String> defaultUsersParameters = new HashMap<>();
-    	defaultUsersParameters.put("path", "/users");
-    	defaultUsersParameters.put("page", "1");
-    	defaultUsersParameters.put("itemsPerPage", "10");
-    	defaultUsersParameters.put("sortBy", "name");
-    	defaultUsersParameters.put("asc", "true");
+		HashMap<String, String> defaultUsersParameters = new HashMap<>();
+		HashMap<String, String> defaultCitiesParameters = new HashMap<>();
+		HashMap<String, String> defaultRoutersParameters = new HashMap<>();
+		HashMap<String, String> defaultConnectionsParameters = new HashMap<>();
 
-    	HashMap<String, String> defaultCitiesParameters = new HashMap<>();
-    	defaultCitiesParameters.put("path", "/cities");
-    	defaultCitiesParameters.put("page", "1");
-    	defaultCitiesParameters.put("itemsPerPage", "10");
-    	defaultCitiesParameters.put("sortBy", "name");
-    	defaultCitiesParameters.put("asc", "true");
+		paginationParameters.put("users", defaultUsersParameters);
+		paginationParameters.put("cities", defaultCitiesParameters);
+		paginationParameters.put("routers", defaultRoutersParameters);
+		paginationParameters.put("connections", defaultConnectionsParameters);
 
-    	HashMap<String, String> defaultRoutersParameters = new HashMap<>();
-    	defaultRoutersParameters.put("path", "/routers");
-    	defaultRoutersParameters.put("page", "1");
-    	defaultRoutersParameters.put("itemsPerPage", "10");
-    	defaultRoutersParameters.put("sortBy", "SN");
-    	defaultRoutersParameters.put("asc", "true");
+    	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		Properties properties = new Properties();
+		try {
+			properties.load(classLoader.getResourceAsStream("pagination.properties"));
+			defaultUsersParameters.put("path", properties.getProperty("users.path"));
+			defaultUsersParameters.put("page", properties.getProperty("users.page"));
+			defaultUsersParameters.put("itemsPerPage", properties.getProperty("users.itemsPerPage"));
+			defaultUsersParameters.put("sortBy", properties.getProperty("users.sortBy"));
+			defaultUsersParameters.put("asc", properties.getProperty("users.asc"));
 
-    	HashMap<String, String> defaultConnectionsParameters = new HashMap<>();
-    	defaultConnectionsParameters.put("path", "/connections");
-    	defaultConnectionsParameters.put("page", "1");
-    	defaultConnectionsParameters.put("itemsPerPage", "10");
-    	defaultConnectionsParameters.put("sortBy", "SN1");
-    	defaultConnectionsParameters.put("asc", "true");
+			defaultCitiesParameters.put("path", properties.getProperty("cities.path"));
+			defaultCitiesParameters.put("page", properties.getProperty("cities.page"));
+			defaultCitiesParameters.put("itemsPerPage", properties.getProperty("cities.itemsPerPage"));
+			defaultCitiesParameters.put("sortBy", properties.getProperty("cities.sortBy"));
+			defaultCitiesParameters.put("asc", properties.getProperty("cities.asc"));
 
-    	paginationParameters.put("users", defaultUsersParameters);
-    	paginationParameters.put("cities", defaultCitiesParameters);
-    	paginationParameters.put("routers", defaultRoutersParameters);
-    	paginationParameters.put("connections", defaultConnectionsParameters);
+			defaultRoutersParameters.put("path", properties.getProperty("routers.path"));
+			defaultRoutersParameters.put("page", properties.getProperty("routers.page"));
+			defaultRoutersParameters.put("itemsPerPage", properties.getProperty("routers.itemsPerPage"));
+			defaultRoutersParameters.put("sortBy", properties.getProperty("routers.sortBy"));
+			defaultRoutersParameters.put("asc", properties.getProperty("routers.asc"));
 
+			defaultConnectionsParameters.put("path", properties.getProperty("connections.path"));
+			defaultConnectionsParameters.put("page", properties.getProperty("connections.page"));
+			defaultConnectionsParameters.put("itemsPerPage", properties.getProperty("connections.itemsPerPage"));
+			defaultConnectionsParameters.put("sortBy", properties.getProperty("connections.sortBy"));
+			defaultConnectionsParameters.put("asc", properties.getProperty("connections.asc"));
+		} catch (IOException e) {
+			logger.warn("Cannot open pagination.properties, setting defaults ", e);
+			defaultUsersParameters.put("path", "/users");
+			defaultUsersParameters.put("page", "1");
+			defaultUsersParameters.put("itemsPerPage", "10");
+			defaultUsersParameters.put("sortBy", "name");
+			defaultUsersParameters.put("asc", "true");
+
+			defaultCitiesParameters.put("path", "/cities");
+			defaultCitiesParameters.put("page", "1");
+			defaultCitiesParameters.put("itemsPerPage", "10");
+			defaultCitiesParameters.put("sortBy", "name");
+			defaultCitiesParameters.put("asc", "true");
+
+			defaultRoutersParameters.put("path", "/routers");
+			defaultRoutersParameters.put("page", "1");
+			defaultRoutersParameters.put("itemsPerPage", "10");
+			defaultRoutersParameters.put("sortBy", "SN");
+			defaultRoutersParameters.put("asc", "true");
+
+			defaultConnectionsParameters.put("path", "/connections");
+			defaultConnectionsParameters.put("page", "1");
+			defaultConnectionsParameters.put("itemsPerPage", "10");
+			defaultConnectionsParameters.put("sortBy", "SN1");
+			defaultConnectionsParameters.put("asc", "true");
+		}
     	session.setAttribute("paginationParameters", paginationParameters);
     }
 

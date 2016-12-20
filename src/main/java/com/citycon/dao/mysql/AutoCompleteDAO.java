@@ -4,8 +4,10 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Provides interface for autocompete functionality. 
@@ -17,21 +19,23 @@ public class AutoCompleteDAO {
 
     protected Connection connection;
     protected static AutoCompleteDAO instance;
-    private static final String URL = "jdbc:mysql://23.99.115.175:3306/nc2_cityCon";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "nc_2groupDB";
     Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.AutoCompleteDAO");
 
     private AutoCompleteDAO() throws InternalDAOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
+            ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+            Properties dbProp = new Properties();
+            dbProp.load(systemClassLoader.getResourceAsStream("database.properties"));
+            String url = dbProp.getProperty("url");
+            String username = dbProp.getProperty("username");
+            String password = dbProp.getProperty("password");
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             //Logger logger = LoggerFactory.getLogger("com.citycon.dao.mysql.AutoCompleteDAO");
             logger.error("Cannot create connection", e);
             throw new InternalDAOException("Critical error", e);
         }
-        //connection = MySQLDAOConnection.getInstance().getConnection();
     }
 
     public static AutoCompleteDAO getInstance() throws InternalDAOException {
