@@ -121,37 +121,37 @@
                 <div class="panel-footer">
                     <div class="row">
 
-                        <div class="col-sm-2">
+                        <div class="col-md-1-5">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a href="/city?action=add" class="btn btn-primary center-block routersHref">Add</a>
+                                <a href="/city?action=add" class="btn btn-primary btn-block btn-group-md center-block routersHref">Add</a>
                             </c:if>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-md-1-5">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a href="#" class="btn btn-primary center-block editHref">Edit</a>
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block editHref">Edit</a>
                             </c:if>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-md-1-5">
                             <c:if test="${showSystemUnitsOperationBtns}">
                                 <form action="/city" id="deleteForm" method="POST">
                                     <input type="hidden" id="deleteId" name="id" value="-1">
                                     <input type="hidden" name="action" value="delete">
-                                    <button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+                                    <button type="button" class="btn btn-primary btn-block btn-group-md center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
                                 </form>
                             </c:if>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-md-1-5">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a href="#" class="btn btn-primary center-block routersHref">Routers</a>
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block routersHref">Routers</a>
                             </c:if>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-md-1-5">
                             <c:if test="${showSystemUnitsOperationBtns}">
-                                <a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block connectionsHref">Connections</a>
                             </c:if>
                         </div>
                     </div>

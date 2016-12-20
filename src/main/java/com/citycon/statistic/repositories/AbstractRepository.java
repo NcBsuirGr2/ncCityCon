@@ -21,8 +21,16 @@ public abstract class AbstractRepository {
     }
 
     protected Long getCount(String tableName) {
+        return getCount(tableName, 0);
+    }
+
+    protected Long getCount(String tableName, int id){
         try {
             String query = "SELECT COUNT(1) FROM "+tableName;
+
+            if(id > 0){
+                query += " WHERE id= " + id;
+            }
 
             Long count = dao.queryForObject(query, Long.class);
             return count;

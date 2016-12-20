@@ -5,7 +5,7 @@
 			<a href="/"><img alt="logo" id="menu" src="/img/logo.png"/></a>
 		</div>
 
-		<div class="col-sm-8" >
+		<div class="col-sm-8">
 		<c:if test="${showLogoutBtn}">
 			<a href='/logout' class='btn btn-header btn-default pull-right'>Logout</a>
 		</c:if>
