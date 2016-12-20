@@ -51,7 +51,7 @@
 						<div>
 							<form action="/statistic/" method="get" name="form" onsubmit="return true;">
 								<img src="/img/search.png">
-								<input name="search" type="text" id="search">
+								<input class="panel-search" name="search" type="text" id="search" size="10">
 							</form>
 						</div>
 					</div>
