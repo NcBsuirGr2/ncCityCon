@@ -19,131 +19,13 @@ public abstract class MySQLDAO implements DAO {
     protected String nameTable;
     protected Connection connection;
     protected Logger logger;
+    protected MySQLDAOConnection connections;
 
     protected Map<String, String> hashMap = new HashMap<>();
 
-    /**
-     * @throws InternalDAOException
-     */
+
     protected MySQLDAO() throws InternalDAOException {
-    }
-
-    protected Connection getConnection() throws InternalDAOException {
-        logger.trace("Get connection");
-        return MySQLDAOConnection.getInstance().getConnection();
-    }
-
-
-    protected void closeConnection() throws InternalDAOException {
-        try {
-            if(!connection.isClosed()){
-                connection.close();
-            }
-        } catch (SQLException e) {
-            logger.error("Close Connection failed", e);
-            throw new InternalDAOException(e);
-        }
-    }
-
-    /**
-     * @return
-     * @throws InternalDAOException
-     */
-    public int count_element() throws InternalDAOException {
-        int count = 0;
-
-        String search = String.format("select count(`id`) from %s", nameTable);
-
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = getConnection();
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            logger.warn("Statement in get count wasn't created", e);
-            throw new InternalDAOException("Statement in get count wasn't created", e);
-        }
-
-        try {
-            resultSet = statement.executeQuery(search);
-
-
-            if (resultSet.first()) {
-                count = resultSet.getInt(1);
-
-                logger.trace("Get count elements");
-            }
-
-        } catch (SQLException e) {
-            logger.info("Get count elements failed", e);
-            throw new InternalDAOException("Get count elements failed", e);
-        }
-        finally {
-            closeConnection();
-
-            if (statement!=null){
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close Statement in get count false", e);
-                    throw new InternalDAOException(e);
-                }
-            }
-            if (resultSet!= null){
-                try{
-                    resultSet.close();
-                }catch (SQLException e){
-                    logger.warn("Close ResultSet in get count false",e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
-
-        return count;
-    }
-
-    /**
-     * @param deleteElement
-     * @throws InternalDAOException
-     * @throws InvalidDataDAOException
-     */
-    public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
-
-        PreparedStatement preparedStatement = null;
-
-        String delete = "delete from" + nameTable + "where `id`=?";
-
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(delete);
-        }catch (SQLException e) {
-            logger.warn("Prepare statement in delete wasn't created", e);
-            throw new InternalDAOException("Prepare statement in delete wasn't created", e);
-        }
-
-        try {
-            preparedStatement.setInt(1, deleteElement.getId());
-
-            preparedStatement.executeUpdate();
-
-            logger.trace("Delete was successful");
-        } catch (SQLException e) {
-            logger.info("Delete failed", e);
-            throw new InvalidDataDAOException("Delete failed", e);
-        }
-        finally {
-            closeConnection();
-
-            if (preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    logger.warn("Close PrepareStatement in delete false", e);
-                    throw new InternalDAOException(e);
-                }
-            }
-        }
+        connections = MySQLDAOConnection.getInstance();
     }
 
     @Override
@@ -151,4 +33,52 @@ public abstract class MySQLDAO implements DAO {
         return hashMap.keySet();
     }
 
+    public int count_element() throws InternalDAOException, InvalidDataDAOException {
+        String search ="select count(`id`) from " + nameTable;
+
+        return count_element(search);
+    }
+
+    protected int count_element(String search) throws InternalDAOException, InvalidDataDAOException {
+        int count = 0;
+        try(
+                Connection connection = connections.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(search);
+        ){
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.debug("Get count elements in {}", nameTable);
+            }
+        } catch (SQLException e) {
+            logger.warn("Resources wasn't created for count_element in {}", nameTable,e);
+            throw new InternalDAOException("Resources wasn't created for count_element in " + nameTable, e);
+        }
+
+        return count;
+    }
+
+    public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
+        String delete = "delete from " + nameTable + " where `id`=?";
+
+        try(
+                Connection connection = connections.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(delete)
+        ){
+            try {
+                preparedStatement.setInt(1, deleteElement.getId());
+
+                preparedStatement.executeUpdate();
+
+                logger.debug("Delete was successful in {}", nameTable);
+            } catch (SQLException e) {
+                logger.info("Delete failed in {}", nameTable, e);
+                throw new InvalidDataDAOException("Delete failed in " + nameTable, e);
+            }
+        } catch (SQLException e) {
+            logger.warn("Resources wasn't created for delete in {}", nameTable,e);
+            throw new InternalDAOException("Resources wasn't created for delete in " + nameTable, e);
+        }
+    }
 }

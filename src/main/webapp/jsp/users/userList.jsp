@@ -59,11 +59,11 @@
 										</c:if>
 
 										<a href="?asc=${newAsc}&sortBy=name">
-											Name 
+											Name
 											<c:if test="${paginationParameters['users']['sortBy'] == 'name'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>											
+											</c:if>
 										</a>
 									</th>
 									<th>
@@ -72,7 +72,7 @@
 											<c:set var="newAsc" value="false"/>
 										</c:if>
 										<a href="?asc=${newAsc}&sortBy=login">
-											Login 
+											Login
 											<c:if test="${paginationParameters['users']['sortBy'] == 'login'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
@@ -86,7 +86,7 @@
 										</c:if>
 
 										<a href="?asc=${newAsc}&sortBy=group">
-											Group 
+											Group
 											<c:if test="${paginationParameters['users']['sortBy'] == 'group'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
@@ -100,7 +100,7 @@
 										</c:if>
 
 										<a href="?asc=${newAsc}&sortBy=email">
-											E-mail 
+											E-mail
 											<c:if test="${paginationParameters['users']['sortBy'] == 'email'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
@@ -114,14 +114,14 @@
 										</c:if>
 
 										<a href="?asc=${newAsc}&sortBy=createDate">
-											Join date 
+											Join date
 											<c:if test="${paginationParameters['users']['sortBy'] == 'createDate'}">
 												<c:if test="${newAsc == true}">&#9660;</c:if>
 												<c:if test="${newAsc == false}">&#9650;</c:if>
 											</c:if>
 										</a>
 									</th>
-							        <th class="hidden">id</th>								
+							        <th class="hidden">id</th>
 				        		</tr>
 				        	</thead>
 				        	<tbody>
@@ -149,9 +149,9 @@
 								</c:if>
 							</div>
 
-							<div class="col-sm-4"> 
+							<div class="col-sm-4">
 								<c:if test="${showUsersOperationBtns}">
-									<a class="editHref" href="#"> 
+									<a class="editHref" href="#">
 										<button class="btn btn-primary center-block">Edit</button>
 									</a>
 								</c:if>
@@ -188,6 +188,13 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="row">
+							<c:if test="${showUsersOperationBtns}">
+								<a href="/statistic/merge">
+									<button class="btn btn-primary center-block">Merge Users</button>
+								</a>
+							</c:if>
 						</div>
 					</div>
 					</div>

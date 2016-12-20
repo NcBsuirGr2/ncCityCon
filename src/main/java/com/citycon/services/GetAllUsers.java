@@ -43,7 +43,7 @@ public class GetAllUsers {
     public @WebResult(name = "User") User[] getUsers(){
         User returnUsers[] = null;
         try {
-            UserDAO dao = UserDAO.getInstance();
+            UserDAO dao = new UserDAO();
             UserEntity users[] = dao.getPage(1, 999, "login", true);
             returnUsers = new User[users.length];
             for (int i = 0; i < users.length; ++i) {
