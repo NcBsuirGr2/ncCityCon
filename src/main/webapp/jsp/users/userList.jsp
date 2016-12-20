@@ -138,71 +138,65 @@
 							</tbody>
 						</table>
 
-					<div class="panel-footer">
-						<div class="row">
+						<div class="panel-footer">
+							<div class="row">
 
-							<div class="col-sm-3">
+								<div class="col-sm-3">
+									<c:if test="${showUsersOperationBtns}">
+										<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
+									</c:if>
+								</div>
+
+								<div class="col-sm-3">
+									<c:if test="${showUsersOperationBtns}">
+										<a href="#" class="btn btn-primary center-block editHref">Edit</a>
+
+									</c:if>
+								</div>
+
+								<div class="col-sm-3">
 								<c:if test="${showUsersOperationBtns}">
-									<a href="/user?action=add" class="btn btn-primary center-block editHref">Add</a>
+									<form action="/user" id="deleteForm" method="POST">
+										<input type="hidden" id="deleteId" name="id" value="-1">
+										<input type="hidden" name="type" value="delete">
+										<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+									</form>
 								</c:if>
-							</div>
+								</div>
 
-							<div class="col-sm-3">
-								<c:if test="${showUsersOperationBtns}">
-									<a href="#" class="btn btn-primary center-block editHref">Edit</a>
+								<div class="col-sm-3">
+									<c:if test="${showUsersOperationBtns}">
+										<%--<a href="#" class="btn btn-primary center-block editHref">Edit</a>--%>
+										<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
+									</c:if>
+								</div>
 
-								</c:if>
-							</div>
+								<!-- Delete dialog modal -->
+								<div class="modal fade deleteDialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<h4 class="modal-title">Confirm deletion</h4>
+											</div>
 
-							<div class="col-sm-3">
-							<c:if test="${showUsersOperationBtns}">
-								<form action="/user" id="deleteForm" method="POST">
-									<input type="hidden" id="deleteId" name="id" value="-1">
-									<input type="hidden" name="type" value="delete">
-									<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-						    	</form>	
-					    	</c:if>	
-							</div>
+											<div class="modal-body">
+												<p>Are you sure you want to delete selected user?</p>
+											</div>
 
-							<div class="col-sm-3">
-								<c:if test="${showUsersOperationBtns}">
-									<%--<a href="#" class="btn btn-primary center-block editHref">Edit</a>--%>
-									<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
-								</c:if>
-							</div>
-
-							<!-- Delete dialog modal -->
-							<div class="modal fade deleteDialog">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-											<h4 class="modal-title">Confirm deletion</h4>
-										</div>
-
-										<div class="modal-body">
-											<p>Are you sure you want to delete selected user?</p>
-										</div>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-											<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+												<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<c:if test="${showUsersOperationBtns}">
-								<a href="/statistic/merge">
-									<button class="btn btn-primary center-block">Merge Users</button>
-								</a>
-							</c:if>
-						</div>
 					</div>
-					</div>
+
 					<div class="col-sm-1">
 					</div>
 				</div>

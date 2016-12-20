@@ -59,9 +59,7 @@ public class LoginFilter extends AbstractHttpFilter implements Filter {
 				}
 
 				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.NONE) {
-					req.setAttribute("showConnectionsBtn", true);
-					req.setAttribute("showRoutersBtn", true);
-					req.setAttribute("showCitiesBtn", true);
+					req.setAttribute("showSystemUnitsBtns", true);
 				}
 				if (user.getGrant().getSystemUnitsBranchLevel() > Grant.READ) {
 					req.setAttribute("showSystemUnitsOperationBtns", true);					
