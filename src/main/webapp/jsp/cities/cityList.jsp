@@ -51,9 +51,15 @@
         </div>
         <div class="col-sm-10">
             <div class="panel panel-default">
-                <center class="panel-heading">
-                    CityCon Cities
-                </center>
+                <div class="panel-heading" style="text-align: center;">
+                    <div>Cities</div>
+                    <div>
+                        <form action="/cities" method="get" name="form" onsubmit="return true;">
+                            <img src="/img/search.png">
+                            <input class="panel-search" name="search" type="text" id="search" size="10" maxlength="15">
+                        </form>
+                    </div>
+                </div>
 
                 <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
                     <thead>

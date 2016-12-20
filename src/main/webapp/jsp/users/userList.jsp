@@ -47,11 +47,11 @@
 			<div class="col-sm-10">
 				<div class="panel panel-default">
 					<div class="panel-heading" style="text-align: center;">
-						<div>CityCon Users</div>
+						<div>Users</div>
 						<div>
-							<form action="/statistic/" method="get" name="form" onsubmit="return true;">
+							<form action="/users" method="get" name="form" onsubmit="return true;">
 								<img src="/img/search.png">
-								<input name="search" type="text" id="search">
+								<input class="panel-search" name="search" type="text" id="search" size="10" maxlength="15">
 							</form>
 						</div>
 					</div>

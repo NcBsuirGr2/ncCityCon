@@ -58,7 +58,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
                 logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
-                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, city);
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, "", city);
 
             // Getting all routers
             } else {
@@ -76,7 +76,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
                 logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
-                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc);
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, "");
             }   
 
             req.setAttribute("entityArray", routers);

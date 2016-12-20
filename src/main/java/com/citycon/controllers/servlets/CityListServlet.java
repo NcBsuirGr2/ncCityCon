@@ -57,7 +57,7 @@ public class CityListServlet extends AbstractHttpServlet {
             logger.trace("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                     page, itemsPerPage, sortBy, asc);
 
-            CityEntity[] cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc);
+            CityEntity[] cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc, "");
             req.setAttribute("entityArray", cities);
             req.getRequestDispatcher(CITY_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | IllegalArgumentException exception) {

@@ -75,9 +75,9 @@ public class ORMRouter extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static RouterEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws DAOException {
+    							String sortBy, boolean asc, String search_input) throws DAOException {
         DAO staticDAO = daoFactory.getRouterDAO();
-        return (RouterEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        return (RouterEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input);
     }
 
 	/**
@@ -91,10 +91,10 @@ public class ORMRouter extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
 	public static RouterEntity[] getPage(int page, int itemsPerPage,
-				 String sortBy, boolean asc, CityEntity city) throws DAOException {
+				 String sortBy, boolean asc, String search_input, CityEntity city) throws DAOException {
 
 		RoutersOfCity staticDAORouters = (RoutersOfCity) daoFactory.getRouterDAO();
-		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, city);
+		return staticDAORouters.getPage(page, itemsPerPage, sortBy, asc, search_input, city);
 	}
 
 	 /**

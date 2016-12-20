@@ -2,7 +2,6 @@ package com.citycon.model.systemunits.orm;
 
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.interfaces.DAO;
-import com.citycon.dao.interfaces.UsersOfGroup;
 import com.citycon.model.systemunits.entities.UserEntity;
 
 import javax.validation.Valid;
@@ -76,10 +75,10 @@ public class ORMUser extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static UserEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws DAOException {
+    							String sortBy, boolean asc, String search_input) throws DAOException {
 
     	DAO staticDAO = daoFactory.getUserDAO();
-        return (UserEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        return (UserEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input);
     }
     
     /**
@@ -92,15 +91,4 @@ public class ORMUser extends ORMEntity {
     	DAO staticDAO = daoFactory.getUserDAO();
         return staticDAO.count_element();
     }
-
-	/**
-	 * @param group
-	 * @return
-	 * @throws DAOException
-	 */
-	public static int getCount(String group) throws DAOException{
-		DAO staticDAO = daoFactory.getUserDAO();
-		UsersOfGroup usersOfGroup = (UsersOfGroup) staticDAO;
-		return usersOfGroup.count_element(group);
-	}
 }

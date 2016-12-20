@@ -37,9 +37,9 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("usedPortsNum", "`UsedPortsNum`");
     }
 
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
             throws InvalidDataDAOException, InternalDAOException {
-        return this.getPage(page, itemsPerPage, sortBy, asc, null);
+        return this.getPage(page, itemsPerPage, sortBy, asc, search_input, null);
     }
 
     public void create(Entity newElement)
@@ -225,7 +225,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
     }
 
     @Override
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
         ArrayList<RouterEntity> routers = new ArrayList();
 

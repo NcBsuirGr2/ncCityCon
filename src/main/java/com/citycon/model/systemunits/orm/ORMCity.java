@@ -74,9 +74,9 @@ public class ORMCity extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static CityEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws DAOException {
+    							String sortBy, boolean asc, String search_input) throws DAOException {
         DAO staticDAO = daoFactory.getCityDAO();
-        return (CityEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        return (CityEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input);
     }
 
 	/**

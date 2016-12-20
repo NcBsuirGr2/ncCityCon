@@ -44,7 +44,7 @@ public class GetAllUsers {
         User returnUsers[] = null;
         try {
             UserDAO dao = new UserDAO();
-            UserEntity users[] = dao.getPage(1, 999, "login", true);
+            UserEntity users[] = dao.getPage(1, 999, "login", true, "");
             returnUsers = new User[users.length];
             for (int i = 0; i < users.length; ++i) {
                 returnUsers[i] = new User();

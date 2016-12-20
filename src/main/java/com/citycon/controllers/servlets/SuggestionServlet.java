@@ -101,7 +101,7 @@ public class SuggestionServlet extends HttpServlet {
                     CityEntity tmpCity = new CityEntity();
                     tmpCity.setCountryName(country);
                     tmpCity.setName(city);
-                    RouterEntity[] routers = dao.getPage(1, 9999, "SN", true, tmpCity);
+                    RouterEntity[] routers = dao.getPage(1, 9999, "SN", true, "", tmpCity);
                     //--------------------------------
                     
                     Writer writer = res.getWriter();

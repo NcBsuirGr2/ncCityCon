@@ -35,9 +35,26 @@ public class UserListServlet extends AbstractHttpServlet {
 	protected void doGet(HttpServletRequest req, 
 		HttpServletResponse res) throws ServletException, IOException {
 
+		HashMap<String, String> paginationParameters = null;
+		UserEntity[] users;
+		String search;
+
 		try {
-			HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
-											.getSession().getAttribute("paginationParameters")).get("users");
+			paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+					.getSession().getAttribute("paginationParameters")).get("users");
+
+		} catch (ClassCastException e) {
+			logger.warn("Cannot cast paginationParameters to HashMap: ", e);
+			forwardToErrorPage(req, res);
+		}
+
+		try {
+			if(req.getParameter("search") == null){
+				search = "";
+			}
+			else {
+				search = req.getParameter("search");
+			}
 
 			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount())) {
 				setPaginationBlockVariables(req, paginationParameters, ORMUser.getCount());
@@ -52,21 +69,19 @@ public class UserListServlet extends AbstractHttpServlet {
 			String sortBy = paginationParameters.get("sortBy");
 
 			logger.trace("getPage of users with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
-																page, itemsPerPage, sortBy, asc);
+					page, itemsPerPage, sortBy, asc);
 
-			UserEntity[] users = ORMUser.getPage(page, itemsPerPage, sortBy, asc);
+			users = ORMUser.getPage(page, itemsPerPage, sortBy, asc, search);
+
 			req.setAttribute("entityArray", users);
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException | IllegalArgumentException exception) {
 			forwardToErrorPage("Invalid search input", req, res);
-			logger.trace("Invalid getPage data", exception);
+			logger.debug("Invalid getPage data", exception);
 		} catch (DAOException exception) {
 			forwardToErrorPage("Internal DAO exception", req, res);
-		} catch (ClassCastException exception) {
-			logger.warn("Cannot cast", exception);
-			forwardToErrorPage("Internal server error", req, res);
 		} catch (Exception exception) {
-			logger.warn("Unexpected exception", exception);
+			logger.warn("Exception", exception);
 			forwardToErrorPage("Internal server error", req, res);
 		}
 	}

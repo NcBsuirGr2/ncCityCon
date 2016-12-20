@@ -56,9 +56,15 @@
 				</div>
 				<div class="col-sm-10">
 					<div class="panel panel-default">
-						<center class="panel-heading">
-							Connections
-						</center>
+						<div class="panel-heading" style="text-align: center;">
+						<div>Connections</div>
+						<div>
+							<form action="/connections" method="get" name="form" onsubmit="return true;">
+								<img src="/img/search.png">
+								<input class="panel-search" name="search" type="text" id="search" size="10" maxlength="15">
+							</form>
+						</div>
+					</div>
 						<c:if test="${not empty entityArray}">
 							<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 								<thead>

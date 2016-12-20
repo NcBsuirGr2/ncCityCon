@@ -30,7 +30,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         hashMap.put("routersNum", "`RoutersNum`");
     }
 
-    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
+    public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
 
         ArrayList<CityEntity> cities = new ArrayList();
