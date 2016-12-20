@@ -47,7 +47,13 @@
 			<div class="col-sm-10">
 				<div class="panel panel-default">
 					<div class="panel-heading" style="text-align: center;">
-						CityCon Users
+						<div>CityCon Users</div>
+						<div>
+							<form action="/statistic/" method="get" name="form" onsubmit="return true;">
+								<img src="/img/search.png">
+								<input name="search" type="text" id="search">
+							</form>
+						</div>
 					</div>
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 				     		<thead>

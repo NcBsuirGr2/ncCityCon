@@ -22,6 +22,10 @@ public class RouterStatisticRepository extends AbstractRepository {
         return super.getCount(TABLE_NAME);
     }
 
+    public Long getCount(int id) {
+        return super.getCount(TABLE_NAME, id);
+    }
+
     public Long getCountInActiveRouters() {
         try {
             String query = "SELECT COUNT(1) FROM Router WHERE In_Service=0";
