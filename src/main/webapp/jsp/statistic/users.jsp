@@ -10,6 +10,7 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/statistic/statisticList.css">
     <link rel="icon" href="/favicon.ico" />
@@ -36,7 +37,7 @@
             <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Admins count:</strong></div>
+            <div class="col-xs-4 text-right"><strong>Count admins:</strong></div>
             <div class="col-xs-7">
               ${count_admins} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_admins/count_users}"/>)
             </div>
@@ -45,7 +46,7 @@
             <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Operators count:</strong></div>
+            <div class="col-xs-4 text-right"><strong>Count operators:</strong></div>
             <div class="col-xs-6">
               ${count_operators} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_operators/count_users}"/>)
             </div>
@@ -68,7 +69,7 @@
 
                     <div class="col-xs-6">
                       <c:forEach items="${first_users}" var="user" varStatus="loopStatus">
-                        ${user.name} <c:if test="${!loopStatus.last}">,</c:if>
+                        ${user.login} <c:if test="${!loopStatus.last}">,</c:if>
                       </c:forEach>
                     </div>
               </div>
@@ -82,7 +83,7 @@
 
                   <div class="col-xs-7">
                     <c:forEach items="${last_users}" var="user" varStatus="loopStatus">
-                        ${user.name} <c:if test="${!loopStatus.last}">,</c:if>
+                        ${user.login} <c:if test="${!loopStatus.last}">,</c:if>
                     </c:forEach>
                   </div>
               </div>

@@ -14,7 +14,7 @@ public class MySQLDAOFactory extends DAOAbstractFactory {
      * @throws InternalDAOException
      */
     public DAO getUserDAO() throws InternalDAOException {
-        return UserDAO.getInstance();
+        return new UserDAO();
     }
 
     /**
@@ -22,7 +22,7 @@ public class MySQLDAOFactory extends DAOAbstractFactory {
      * @throws InternalDAOException
      */
     public DAO getCityDAO() throws InternalDAOException {
-        return CityDAO.getInstance();
+        return new CityDAO();
     }
 
     /**
@@ -30,7 +30,7 @@ public class MySQLDAOFactory extends DAOAbstractFactory {
      * @throws InternalDAOException
      */
     public DAO getRouterDAO() throws InternalDAOException {
-        return RouterDAO.getInstance();
+        return new RouterDAO();
     }
 
     /**
@@ -38,6 +38,6 @@ public class MySQLDAOFactory extends DAOAbstractFactory {
      * @throws InternalDAOException
      */
     public DAO getRouterConnectionDAO() throws InternalDAOException {
-        return RouterConnectionDAO.getInstance();
+        return new RouterConnectionDAO();
     }
 }

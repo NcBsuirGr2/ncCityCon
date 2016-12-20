@@ -1,11 +1,8 @@
 package com.citycon.model.systemunits.orm;
 
-import com.citycon.dao.interfaces.CitiesStatistic;
-import com.citycon.model.systemunits.entities.CountryEntity;
-import com.citycon.model.systemunits.entities.Entity;
-import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.dao.interfaces.DAO;
 import com.citycon.dao.exceptions.DAOException;
+import com.citycon.dao.interfaces.DAO;
+import com.citycon.model.systemunits.entities.CityEntity;
 
 import java.util.Set;
 
@@ -91,29 +88,5 @@ public class ORMCity extends ORMEntity {
 	public static int getCount() throws DAOException {
 		DAO staticDAO = daoFactory.getCityDAO();
 		return staticDAO.count_element();
-	}
-
-	public static int getCountCountries() throws DAOException {
-		DAO staticDAO = daoFactory.getCityDAO();
-		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
-		return citiesStatistic.getCountCountries();
-	}
-
-	public static CountryEntity maxCityCountry() throws DAOException {
-		DAO staticDAO = daoFactory.getCityDAO();
-		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
-		return citiesStatistic.maxCityCountry();
-	}
-
-	public static CountryEntity minCityCountry() throws DAOException {
-		DAO staticDAO = daoFactory.getCityDAO();
-		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
-		return citiesStatistic.minCityCountry();
-	}
-
-	public static CityEntity maxRouterCity() throws DAOException {
-		DAO staticDAO = daoFactory.getCityDAO();
-		CitiesStatistic citiesStatistic = (CitiesStatistic) staticDAO;
-		return citiesStatistic.maxRouterCity();
 	}
 }
