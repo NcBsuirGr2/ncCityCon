@@ -12,6 +12,7 @@ import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  *  Aimed to hold control over all app sessions. Is used to update user immediately
@@ -27,6 +28,29 @@ public class SessionHolder implements HttpSessionListener {
     public SessionHolder() {
         logger = LoggerFactory.getLogger("com.citycon.controllers.listeners.SessionHolder");
         sessions = Collections.synchronizedSet(new HashSet<HttpSession>());
+    }
+
+    /**
+     * Allows to get existing user session by user login. Aimed to unite all user interaction.
+     *
+     * @param userLogin         String representing user login
+     * @return HttpSession      if there is one and <code>null</code> otherwise
+     */
+    public static HttpSession getUserSession(String userLogin) {
+        for (HttpSession session : sessions) {
+            if (session.getAttribute("user") != null) {
+                try {
+
+                    UserEntity user = (UserEntity) session.getAttribute("user");
+                    if (user.getLogin().equals(userLogin)) {
+                        return session;
+                    }
+                } catch (Exception e) {
+                    logger.warn("Cannot get session by user login: unexpected exception", e);
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -77,7 +101,7 @@ public class SessionHolder implements HttpSessionListener {
             logger.error("Unexpected exception during updating user session", e);
         }
     }
-    public static void deleteUser(UserEntity userToDelete) {
+    public static boolean deleteUser(UserEntity userToDelete) {
         Iterator<HttpSession> i = sessions.iterator();
         try {
             while(i.hasNext()) {
@@ -85,13 +109,16 @@ public class SessionHolder implements HttpSessionListener {
                 if (currentSession.getAttribute("user") != null) {
                     UserEntity user = (UserEntity)currentSession.getAttribute("user");
                     if(user.getId() == userToDelete.getId()) {
-                        boolean success = sessions.remove(currentSession);
+                        currentSession.invalidate();
+                        logger.trace("Delete session for user with id {}", user.getId());
+                        return true;
                     }
                 }
             }
         } catch (Exception e) {
             logger.error("Unexpected exception during deleting user session", e);
         }
+        return false;
     }
     public static List<String> getUsersOnline() {
         List<String> usersOnline = new LinkedList<>();

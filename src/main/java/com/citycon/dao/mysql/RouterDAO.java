@@ -4,20 +4,27 @@ import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.interfaces.RoutersOfCity;
+import com.citycon.dao.interfaces.RoutersStatistic;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class RouterDAO extends MySQLDAO implements RoutersOfCity {
+public class RouterDAO extends MySQLDAO implements RoutersOfCity, RoutersStatistic {
 
-    public RouterDAO() throws InternalDAOException {
+    /**
+     * @throws InternalDAOException
+     */
+    private RouterDAO() throws InternalDAOException {
         super();
         nameTable = " `Router` ";
         logger = LoggerFactory.getLogger("com.citycon.dao.mysql.RouterDAO");
@@ -423,7 +430,131 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                     " try name and country");
         }
 
+<<<<<<< .merge_file_a15016
         return count_element(search);
+=======
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(search);
+        } catch (SQLException e) {
+            logger.warn("PrepareStatement in get count wasn't created", e);
+            throw new InternalDAOException("PrepareStatement in get count wasn't created", e);
+        }
+
+        String log_parameters = "With parameters: City(" + city.getName() + "), Country(" +
+                city.getCountryName() + ")";
+
+        try {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryName());
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.first()) {
+                count = resultSet.getInt(1);
+
+                logger.trace("Get count elements: {} elements", count);
+            }
+        } catch (SQLException e) {
+            logger.info("Get count elements failed. {}", log_parameters, e);
+            throw new InternalDAOException("Get count elements failed.", e);
+        }
+        finally {
+            closeConnection();
+
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in get count false", e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in get count false",e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    /**
+     * @param id
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    private int getUsedPortsNum(int id) throws InternalDAOException, InvalidDataDAOException {
+
+        int UsedPortsNum = 0;
+
+        PreparedStatement preparedStatement = null;
+
+        ResultSet resultSet= null;
+
+        if (id == 0){
+            logger.info("For getUsedPortsNum incorrectly chosen field, try ID");
+            throw new InvalidDataDAOException("For getUsedPortsNum incorrectly chosen field, try ID");
+        }
+
+        String log_parameters = "With parameters: ID(" + id + ")";
+
+        String search = "select count(ID_From)+count(ID_To) as num from RouterConnection where ID=?";
+
+        try{
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(search);
+        }catch (SQLException e) {
+            logger.warn("PreparedStatement in read wasn't created", e);
+            throw new InternalDAOException("PreparedStatement in read wasn't created", e);
+        }
+
+        try {
+            preparedStatement.setInt(1, id);
+
+            resultSet = preparedStatement.executeQuery(search);
+
+            if(resultSet.first()) {
+                UsedPortsNum = resultSet.getInt("num");
+
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
+            }
+            else{
+                logger.info("{} in read not found.\n {}", nameTable, log_parameters);
+                throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
+            }
+        } catch (SQLException e) {
+            logger.info("Read {} failed.\n {}", nameTable, log_parameters, e);
+            throw new InternalDAOException(String.format("Read %s failed", nameTable), e);
+        }
+        finally {
+            closeConnection();
+
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Close PrepareStatement in getUsedPortsNum {} failed", nameTable, e);
+                    throw new InternalDAOException(e);
+                }
+            }
+            if (resultSet!= null){
+                try{
+                    resultSet.close();
+                }catch (SQLException e){
+                    logger.warn("Close ResultSet in getUsedPortsNum {} failed", nameTable,e);
+                    throw new InternalDAOException(e);
+                }
+            }
+        }
+
+        return UsedPortsNum;
+>>>>>>> .merge_file_a14844
     }
 
     private int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {

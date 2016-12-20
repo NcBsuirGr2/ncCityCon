@@ -17,6 +17,11 @@
         <title>Edit router</title>
     </head>
 <body>
+
+    <c:if test="${not empty param.city and not empty param.country}">
+        <c:set var="sameSelect" value="country=${param.country}&city=${param.city}"/>
+    </c:if>
+
     <div class="content-wrapper">
 
     <%@ include file="/include/header.jsp" %>
@@ -63,7 +68,7 @@
                             <button type="button" class="btn btn-primary btn-block center-block " data-toggle="modal" data-target=".changesDialog">Apply</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="/routers" class="btn btn-primary btn-block center-block">Back</a>
+                            <a href="/routers?${sameSelect}" class="btn btn-primary btn-block center-block">Back</a>
                         </div>
                     </div>
                 </div>    
@@ -84,6 +89,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <input type="hidden" name="sameSelect" form="form" value="${sameSelect}"/>
                                 <input type="submit" class="btn btn-primary" form="form" value="Yes"/> 
                             </div>
                         </div>

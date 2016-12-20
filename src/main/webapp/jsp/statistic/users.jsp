@@ -28,7 +28,7 @@
       </div>
       <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Count users:</strong></div>
+            <div class="col-xs-4 text-right"><strong>Total users count:</strong></div>
             <div class="col-xs-7">
               ${count_users}
             </div>
@@ -55,7 +55,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Count guests:</strong></div>
+            <div class="col-xs-4 text-right"><strong>Guests count:</strong></div>
             <div class="col-xs-6">
               ${count_guests} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_guests/count_users}"/>)
             </div>

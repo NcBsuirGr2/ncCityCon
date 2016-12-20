@@ -89,6 +89,17 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				itemsPerPage = Integer.parseInt(itemsPerPageReqString);
 				if (itemsPerPage > 1) {
 					paginationVariables.put("itemsPerPage", itemsPerPageReqString);
+
+					// now page can become invalid, correct it if required
+					int page = Integer.parseInt(paginationVariables.get("page"));
+					int totalPagesNum = 1;
+					if (itemsCount > 0) {
+						totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+					}
+					logger.trace("page: {}, totalPagesNum: {}", page, totalPagesNum);
+					if (page > totalPagesNum) {
+						paginationVariables.put("page", String.valueOf(totalPagesNum));
+					}
 				} else {
 					logger.trace("itemsPerPage is less then 1");
 					return false;
@@ -106,6 +117,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				if (itemsCount > 0) {
 					totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
 				}
+				logger.trace("page: {}, totalPagesNum: {}, itemsNum: {}", page, totalPagesNum, itemsCount);
 				if (page > 0 && page <= totalPagesNum) {
 					paginationVariables.put("page", pageReqString);
 				} else {
@@ -159,7 +171,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 			pagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
 		}
 		if (page < 1) throw new IllegalArgumentException("required page is lesser then 1");
-		if (page > pagesNum) throw new IllegalArgumentException("required page is greater than it can be");
+		if (page > pagesNum) page = pagesNum;
 
 		int PAGINATION_BUTTONS_NUM = 10;
 

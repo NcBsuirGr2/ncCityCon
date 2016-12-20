@@ -44,7 +44,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
 
-                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
+                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount(city))) {
                     setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount(city));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);

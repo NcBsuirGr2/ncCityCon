@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-xs-4 text-right"><strong>Average connections per router:</strong></div>
                     <div class="col-xs-6">
-                        ${connections_per_router}
+                        <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${connections_per_router}"/>
                     </div>
                 </div>
 

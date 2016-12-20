@@ -38,21 +38,21 @@
     </div>
 
     <div class="form-group">
-        <label for="name" class="col-xs-3 control-label">Name:</label>
+        <label class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-7">
-            <input class="form-control notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+            <input class="form-control notEmptyInput simpleText" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
         </div>
     </div>   
     <div class="form-group">
-        <label for="login" class="col-xs-3 control-label">SN:</label>
+        <label class="col-xs-3 control-label">SN:</label>
          <div class="col-xs-7">                                 
                 <input class="form-control notEmptyInput asciiInput" maxlength="15" required placeholder="SN" name="SN" type="text" value="${param.SN}">
          </div>
     </div>
     <div class="form-group">
-        <label for="group" class="col-xs-3 control-label">Ports:</label>
+        <label class="col-xs-3 control-label">Ports:</label>
         <div class="col-xs-3">
-            <select class="form-control" id="group" name="portsNum" form="form">
+            <select class="form-control notEmptyInput" id="group" name="portsNum" form="form">
                 <option value="1" <c:if test="${param.editPortsNum == 1}">selected</c:if>>1</option>
                 <option value="2" <c:if test="${param.editPortsNum == 2}">selected</c:if>>2</option>
                 <option value="3" <c:if test="${param.editPortsNum == 3}">selected</c:if>>3</option>
