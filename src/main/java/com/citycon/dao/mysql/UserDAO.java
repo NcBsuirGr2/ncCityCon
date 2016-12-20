@@ -3,7 +3,6 @@ package com.citycon.dao.mysql;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
 import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
-import com.citycon.dao.interfaces.UsersOfGroup;
 import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.Entity;
 import com.citycon.model.systemunits.entities.UserEntity;
@@ -18,7 +17,7 @@ import static java.util.Calendar.getInstance;
 /**
  * Created by Vojts on 09.11.2016.
  */
-public class UserDAO extends MySQLDAO implements UsersOfGroup {
+public class UserDAO extends MySQLDAO{
 
     public UserDAO() throws InternalDAOException {
         super();
@@ -34,7 +33,8 @@ public class UserDAO extends MySQLDAO implements UsersOfGroup {
         hashMap.put("createDate", "`create_date`");
     }
 
-    public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
+    @Override
+    public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
 
         ArrayList<UserEntity> users = new ArrayList();
@@ -56,7 +56,9 @@ public class UserDAO extends MySQLDAO implements UsersOfGroup {
                 sorting_direction = " desc ";
             }
 
-            search = "select * from " + nameTable + " order by " + sorter + sorting_direction +
+            search = "select * from " + nameTable + " where Login LIKE '%" + search_input + "%' OR `Name` LIKE '%" +
+                    search_input + "%' " +
+                    "order by " + sorter + sorting_direction +
                     " limit " + ((page-1)*itemsPerPage) + "," + itemsPerPage;
         }
         else {
@@ -97,6 +99,7 @@ public class UserDAO extends MySQLDAO implements UsersOfGroup {
         return users.toArray(new UserEntity[users.size()]);
     }
 
+    @Override
     public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
         UserEntity user = null;
 
@@ -144,6 +147,7 @@ public class UserDAO extends MySQLDAO implements UsersOfGroup {
         }
     }
 
+    @Override
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
         UserEntity user = null;
 
@@ -235,40 +239,6 @@ public class UserDAO extends MySQLDAO implements UsersOfGroup {
             logger.warn("Resources wasn't created for update in {}", nameTable,e);
             throw new InternalDAOException("Resources wasn't created for update in " + nameTable, e);
         }
-    }
-
-    @Override
-    public int count_element(String group) throws InternalDAOException, InvalidDataDAOException {
-        int count = 0;
-
-        String search = "";
-
-        if (group != null){
-            search = "SELECT COUNT(ID) FROM `User` WHERE `GROUP` = '" + group + "'";
-        }
-        else{
-            logger.info("For reading user incorrectly chosen field, try group");
-            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try group");
-        }
-
-        String log_parameters = "With parameters: Group(" + group + ")";
-
-        try(
-                Connection connection = connections.getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(search);
-        ) {
-            if (resultSet.first()) {
-                count = resultSet.getInt(1);
-
-                logger.trace("Get count elements. {}", log_parameters);
-            }
-        } catch (SQLException e) {
-            logger.warn("Resources wasn't created for count_element in {}", nameTable,e);
-            throw new InternalDAOException("Resources wasn't created for count_element in " + nameTable, e);
-        }
-
-        return count;
     }
 
     private Grant getGrantFromDB(String group) throws InternalDAOException, InvalidDataDAOException {

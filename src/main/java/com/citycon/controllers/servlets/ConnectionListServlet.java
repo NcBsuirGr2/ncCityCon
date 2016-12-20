@@ -70,7 +70,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, router);
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "", router);
                 
             // Getting page for concrete city
             } else if (req.getParameter("country") != null && req.getParameter("city") != null 
@@ -96,7 +96,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, city);
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "", city);
 
             // Getting all connections
             } else {
@@ -116,7 +116,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc);
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "");
             }   
 
             req.setAttribute("entityArray", connections);

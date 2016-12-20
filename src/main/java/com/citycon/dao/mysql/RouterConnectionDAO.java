@@ -34,10 +34,10 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         hashMap.put("ID2", "`Id2`");
     }
 
-    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc)
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
             throws InvalidDataDAOException, InternalDAOException {
 
-        return getPage(page, itemsPerPage, sortBy, asc, null, null);
+        return getPage(page, itemsPerPage, sortBy, asc, null, null, search_input);
     }
 
     public void create(Entity newElement)
@@ -263,21 +263,21 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
     }
 
     @Override
-    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, CityEntity city)
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input , CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
 
-        return getPage(page, itemsPerPage, sortBy, asc, null, city);
+        return getPage(page, itemsPerPage, sortBy, asc, null, city, search_input);
     }
 
     @Override
-    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, RouterEntity router)
+    public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input , RouterEntity router)
             throws InvalidDataDAOException, InternalDAOException {
 
-        return getPage(page, itemsPerPage, sortBy, asc, router, null);
+        return getPage(page, itemsPerPage, sortBy, asc, router, null, search_input);
     }
 
     private RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc,
-                                             RouterEntity router, CityEntity city)
+                                             RouterEntity router, CityEntity city, String search_input)
             throws InvalidDataDAOException, InternalDAOException {
         ArrayList<RouterConnectionEntity> routerConnections = new ArrayList();
 

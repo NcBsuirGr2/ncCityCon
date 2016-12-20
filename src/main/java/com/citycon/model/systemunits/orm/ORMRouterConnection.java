@@ -77,10 +77,10 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, 
-    							String sortBy, boolean asc) throws DAOException {
+    							String sortBy, boolean asc, String search_input) throws DAOException {
 
         DAO staticDAO = daoFactory.getRouterConnectionDAO();
-        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc);
+        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input);
     }
     /**
 	 * Get any page of connections for concrete city from DAO layer. 
@@ -93,10 +93,10 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, 
-						String sortBy, boolean asc, CityEntity city) throws DAOException {
+						String sortBy, boolean asc, String search_input, CityEntity city) throws DAOException {
 
         ConnectionsOfCity staticDAO = (ConnectionsOfCity)daoFactory.getRouterConnectionDAO();
-        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, city);
+        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input, city);
     }
     /**
 	 * Get any page of routers for concrete router from DAO layer. 
@@ -109,10 +109,10 @@ public class ORMRouterConnection extends ORMEntity {
 	 * @throws DAOException 	if any DAO error occurs
 	 */
     public static RouterConnectionEntity[] getPage(int page, int itemsPerPage, 
-						String sortBy, boolean asc, RouterEntity router) throws DAOException {
+						String sortBy, boolean asc, String search_input, RouterEntity router) throws DAOException {
 
         ConnectionsOfRouter staticDAO = (ConnectionsOfRouter)daoFactory.getRouterConnectionDAO();
-        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, router);
+        return (RouterConnectionEntity[])staticDAO.getPage(page, itemsPerPage, sortBy, asc, search_input, router);
     }
     /**
      *	Retrieves total number of connetions from DAO layer.

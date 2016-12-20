@@ -6,3 +6,4 @@ src/main/java/com/citycon/dao/mysql/Testcode.java
 src/main/main.iml
 .metadata/
 src/main/java/com/citycon/dao/mysql/TestSQL.java
+src/main/java/com/citycon/dao/mysql/Tester.java
