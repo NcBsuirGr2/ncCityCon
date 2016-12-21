@@ -141,7 +141,7 @@
 							</table>
 						</c:if>
 						<c:if test="${empty entityArray}">
-							<h4 class="text-center">There is no routers in this city</h4>
+							<h4 class="text-center">Empty routers set</h4>
 						</c:if>
 
 						<div class="panel-footer">

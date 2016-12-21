@@ -86,8 +86,8 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		int itemsPerPage = Integer.parseInt(paginationVariables.get("itemsPerPage"));
 
 		if (itemsPerPageReqString != null && !itemsPerPageReqString.equals("")) {
-			if (validateIntString(itemsPerPageReqString)) {
-				logger.trace("itemsPerPage is not a string");
+			if (!validatePositiveIntString(itemsPerPageReqString)) {
+				logger.trace("Illegal itemsPerPage value");
 				return false;
 			}
 			itemsPerPage = Integer.parseInt(itemsPerPageReqString);
@@ -110,7 +110,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		}
 
 		if (pageReqString != null && !pageReqString.equals("")) {
-			if (!validateIntString(pageReqString)) {
+			if (!validatePositiveIntString(pageReqString)) {
 				logger.trace("page is not a string");
 				return false;
 			}
@@ -295,7 +295,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     	return (stringToValidate != null && !stringToValidate.trim().equals(""));
 	}
 
-    protected boolean validateIntString(String intString) {
+    protected boolean validatePositiveIntString(String intString) {
         if(intString != null && !intString.trim().equals("")) {
             try {
                 if (Integer.parseInt(intString) < 0) {

@@ -38,7 +38,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
-		if (validateIntString(req.getParameter("id"))) {
+		if (validatePositiveIntString(req.getParameter("id"))) {
 			try {
 				int connectionId = Integer.parseInt(req.getParameter("id"));
 				RouterConnectionEntity connection = new RouterConnectionEntity();
