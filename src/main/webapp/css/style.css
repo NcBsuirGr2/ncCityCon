@@ -70,7 +70,7 @@ h2 {
 	margin-bottom:0px;
 }
 
-.pagination + .row {
+.itemsPerPage {
 	margin-top: 20px;
 }
 .col-xs-1-5,

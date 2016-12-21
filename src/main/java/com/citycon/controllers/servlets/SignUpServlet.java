@@ -160,13 +160,13 @@ public class SignUpServlet extends AbstractHttpServlet {
                 message.setFrom(new InternetAddress("cityconteam@gmail.com"));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
                 message.setSubject("Welcome to CityCon!");
-                String reglink = RandomStringUtils.random(20, true, true);
+                String reglink = RandomStringUtils.random(30, true, true);
                 message.setContent("You received this email because you tried to register at <a href=http://citycon.ml>citycon.ml</a>." +
                                 " Go <a href=http://citycon.ml/registration?reglink=" + reglink + ">here</a>" +
                                 //" or <a href=http://localhost:8080/registration?reglink=" + reglink + "> here </a>" +
                                 " to complete your registration." +
                                 "<br><br>If you didn't ask for registration, just ignore this message." +
-                                "<br><br><hr><br>With love,<br>your CityCon team",
+                                "<br><br><hr>With love,<br>your CityCon team.",
                         "text/html; charest=utf-8");
                 Transport.send(message);
                 logger.trace("Sent reglink {}", reglink);

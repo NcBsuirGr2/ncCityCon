@@ -71,53 +71,52 @@
                         </div>
                     </div>
                 </div>
+                <c:if test="${not empty entityArray}">
+                    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                                    sortByIs="${paginationParameters['cities']['sortBy']}"
+                                                    sortByNeed="name"
+                                                    value="Name"
+                                                    search="${param.search}"/>
+                                </th>
 
-                <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
-                    <thead>
-                    <tr>
-                        <th>
-                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
-                                            sortByIs="${paginationParameters['cities']['sortBy']}"
-                                            sortByNeed="name"
-                                            value="Name"
-                                            search="${param.search}"
-                            />
-                        </th>
+                                <th>
+                                    <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                                    sortByIs="${paginationParameters['cities']['sortBy']}"
+                                                    sortByNeed="countryName"
+                                                    value="Country"
+                                                    search="${param.search}"/>
+                                </th>
 
-                        <th>
-                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
-                                            sortByIs="${paginationParameters['cities']['sortBy']}"
-                                            sortByNeed="countryName"
-                                            value="Country"
-                                            search="${param.search}"
-                            />
-                        </th>
+                                <th>
+                                    <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                                    sortByIs="${paginationParameters['cities']['sortBy']}"
+                                                    sortByNeed="routersNum"
+                                                    value="Routers number"
+                                                    search="${param.search}"/>
+                                </th>
 
-                        <th>
-                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
-                                            sortByIs="${paginationParameters['cities']['sortBy']}"
-                                            sortByNeed="routersNum"
-                                            value="Routers number"
-                                            search="${param.search}"
-                            />
-                        </th>
+                                <th class="hidden">id</th>
+                            </tr>
+                        </thead>
 
-                        <th class="hidden">id</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${entityArray}" var="city">
-                        <tr>
-                            <td class="uniqueCity"><a href="/statistic/cities/${city.countryName}/${city.name}">${city.name}</a></td>
-                            <td class="uniqueCountry">${city.countryName}</td>
-                            <td>${city.routersNum}</td>
-                            <td class="hidden idField">${city.id}</td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        <tbody>
+                            <c:forEach items="${entityArray}" var="city">
+                                <tr>
+                                    <td class="uniqueCity"><a href="/statistic/cities/${city.countryName}/${city.name}">${city.name}</a></td>
+                                    <td class="uniqueCountry">${city.countryName}</td>
+                                    <td>${city.routersNum}</td>
+                                    <td class="hidden idField">${city.id}</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
                 <c:if test="${empty entityArray}">
-                    <h4 class="text-center">Empty city set</h4>
+                    <h4 class="text-center">Empty cities set</h4>
                 </c:if>
 
                 <div class="panel-footer">
@@ -215,8 +214,6 @@
                         </li>
                     </c:if>
 
-
-
                     <c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
                         <c:if test="${i.index == currentPage}">
                                 <c:set var="isActive" value="active"/>
@@ -242,7 +239,7 @@
                 </ul>
             </c:if>
 
-            <div class="row">
+            <div class="row itemsPerPage">
                 <div class="col-sm-3">
                 </div>
 

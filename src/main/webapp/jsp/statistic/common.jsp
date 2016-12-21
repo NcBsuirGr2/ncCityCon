@@ -27,28 +27,28 @@
             </div>
             <div class="panel-body" style="width: 100%">
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Total users count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total users count:</strong></div>
                     <div class="col-xs-6">
                         ${count_users}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Total cities count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total cities count:</strong></div>
                     <div class="col-xs-6">
                         ${count_cities}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Total routers count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total routers count:</strong></div>
                     <div class="col-xs-6">
                         ${count_routers}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Total connections count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total connections count:</strong></div>
                     <div class="col-xs-6">
                         ${count_connections}
                     </div>

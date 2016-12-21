@@ -28,7 +28,7 @@
       </div>
       <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Countries count:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Countries count:</strong></div>
             <div class="col-xs-6">
               ${count_countries}
             </div>
@@ -37,7 +37,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Cities count:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Cities count:</strong></div>
             <div class="col-xs-6">
               ${count_cities}
             </div>
@@ -46,7 +46,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Country with max cities count:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Country with max cities count:</strong></div>
             <div class="col-xs-6">
               <c:forEach items="${max_city_countries}" var="countryMap" varStatus="loopStatus">
                 ${countryMap["country"]} (${countryMap["citiesCount"]} cities)<c:if test="${!loopStatus.last}">, </c:if>
@@ -57,7 +57,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Country with min cities count:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Country with min cities count:</strong></div>
             <div class="col-xs-6">
               <c:forEach items="${min_city_countries}" var="countryMap" varStatus="loopStatus">
                 ${countryMap["country"]} (${countryMap["citiesCount"]} cities)<c:if test="${!loopStatus.last}">, </c:if>
@@ -68,11 +68,13 @@
           <br>
 
           <div class="row">
-              <div class="col-xs-4 text-right"><strong>City with max routers count:</strong></div>
+              <div class="col-xs-6 text-right"><strong>City with max routers count:</strong></div>
               <div class="col-xs-6">
                 <c:forEach items="${max_router_cities}" var="cityMap" varStatus="loopStatus">
-                    ${cityMap["country"]}, ${cityMap["city"]} (${cityMap["routersCount"]} routers)
-                    <c:if test="${!loopStatus.last}">, </c:if>
+                    <a href="/statistic/cities/${cityMap["country"]}/${cityMap["city"]}">
+                        ${cityMap["country"]}, ${cityMap["city"]}
+                    </a>
+                    (<a href="/routers?country=${cityMap["country"]}&city=${cityMap["city"]}">${cityMap["routersCount"]} routers</a>)<c:if test="${!loopStatus.last}">, </c:if>
               </c:forEach>
               </div>
           </div>

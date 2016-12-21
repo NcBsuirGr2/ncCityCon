@@ -35,7 +35,17 @@
 
             <div class="panel panel-default">
             	<div class="panel-heading text-center">
-                    Edit user
+                    <c:choose>
+                        <c:when test="${sessionScope.user.login eq param.login}">
+                            Edit your account
+                        </c:when>
+                        <c:when test="${param.action == 'edit'}">
+                            Edit user
+                        </c:when>
+                        <c:when test="${param.action == 'add' || empty param.action}">
+                            Add user
+                        </c:when>
+                    </c:choose>
                 </div>
                 <div class="panel-body">
                 	<form class="form-horizontal" action="/user" method="POST" role="form" id="form">

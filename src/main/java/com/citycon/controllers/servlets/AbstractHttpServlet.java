@@ -84,6 +84,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
         String sortByReqString = req.getParameter("sortBy");
 
 		int itemsPerPage = Integer.parseInt(paginationVariables.get("itemsPerPage"));
+		logger.debug("items count: {}", itemsCount);
+		logger.debug("items per page: {}", itemsPerPage);
+
 
 		if (itemsPerPageReqString != null && !itemsPerPageReqString.equals("")) {
 			if (!validatePositiveIntString(itemsPerPageReqString)) {
@@ -96,19 +99,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				return false;
 			}
 			paginationVariables.put("itemsPerPage", itemsPerPageReqString);
-
-			// now page can become invalid, correct it if required
-			int page = Integer.parseInt(paginationVariables.get("page"));
-			int totalPagesNum = 1;
-			if (itemsCount > 0) {
-				totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
-			}
-			logger.trace("Updated page because of itemsPerPage update. page: {}, totalPagesNum: {}", page, totalPagesNum);
-			if (page > totalPagesNum) {
-				paginationVariables.put("page", String.valueOf(totalPagesNum));
-			}
 		}
-
 		if (pageReqString != null && !pageReqString.equals("")) {
 			if (!validatePositiveIntString(pageReqString)) {
 				logger.trace("page is not a string");
@@ -125,7 +116,21 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 				logger.trace("Invalid page num: too big(greater then {}) or less then 1", totalPagesNum);
 				return false;
 			}
+		} else {
+			// page can become invalid due to search or itemsPerPage change,
+			// then need correct it
+			int page = Integer.parseInt(paginationVariables.get("page"));
+			int totalPagesNum = 1;
+			if (itemsCount > 0) {
+				totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+			}
+			logger.trace("Updated page because of itemsPerPage update. page: {}, totalPagesNum: {}", page, totalPagesNum);
+			if (page > totalPagesNum) {
+				paginationVariables.put("page", String.valueOf(totalPagesNum));
+			}
 		}
+
+
 
         if (ascReqString != null && !ascReqString.equals("")) {
             if (ascReqString.equals("true") || ascReqString.equals("false")) {
@@ -161,7 +166,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		String pageReqString = paginationVariables.get("page");
 		String itemsPerPageReqString = paginationVariables.get("itemsPerPage");
 
-
+		logger.debug("items count: {}", itemsCount);
 		int page = Integer.parseInt(pageReqString);
 		int itemsPerPage = Integer.parseInt(itemsPerPageReqString);
 		int pagesNum = 1;

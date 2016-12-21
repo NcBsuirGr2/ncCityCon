@@ -27,35 +27,35 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Router SN:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Router SN:</strong></div>
                     <div class="col-xs-6">
                         ${SN}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Router name:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Router name:</strong></div>
                     <div class="col-xs-6">
                         ${name}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Router status:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Router status:</strong></div>
                     <div class="col-xs-6">
                         ${active}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Total connections num:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total connections num:</strong></div>
                     <div class="col-xs-6">
                         <a href="/connections?SN=${SN}">${connectionsNum}</a>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Inactive connections num:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Inactive connections num:</strong></div>
                     <div class="col-xs-6">
                         ${inactiveConnectionsNum}
                     </div>
@@ -63,7 +63,7 @@
                 <c:if test="${not empty connectedRoutersActive}">
                     <br>
                     <div class="row">
-                        <div class="col-xs-5 text-right"><strong>Connected routers (active connection):</strong></div>
+                        <div class="col-xs-6 text-right"><strong>Connected routers (active connection):</strong></div>
                         <div class="col-xs-6">
                             <c:forEach var="router" items="${connectedRoutersActive}" varStatus="loopStatus">
                                 <a href="/statistic/routers/${router.SN}">
@@ -77,7 +77,7 @@
                 <c:if test="${not empty connectedRoutersInactive}">
                     <br>
                     <div class="row">
-                        <div class="col-xs-5 text-right"><strong>Connected routers (inactive connection):</strong></div>
+                        <div class="col-xs-6 text-right"><strong>Connected routers (inactive connection):</strong></div>
                         <div class="col-xs-6">
                             <c:forEach var="router" items="${connectedRoutersInactive}" varStatus="loopStatus">
                                 <a href="/statistic/routers/${router.SN}">

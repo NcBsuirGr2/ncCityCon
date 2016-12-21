@@ -51,7 +51,14 @@
             <div class="before-footer">
                 <div class="panel panel-default">
                 	<div class="panel-heading text-center">
-                        Setup connection
+                        <c:choose>
+                            <c:when test="${param.action == 'edit'}">
+                                Edit connection
+                            </c:when>
+                            <c:when test="${param.action == 'add' || empty param.action}">
+                                Add connection
+                            </c:when>
+                        </c:choose>
                     </div>
                     <div class="panel-body">
                     	<form class="form-horizontal" id="form" method="POST" action="/connection" >
