@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import com.citycon.controllers.ConfirmationHolder;
 import com.citycon.controllers.listeners.SessionHolder;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
@@ -13,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +43,24 @@ public class SignInServlet extends AbstractHttpServlet {
         user.setLogin(req.getParameter("login"));
         user.setPassword(req.getParameter("password"));
         ORMUser enteredUser = new ORMUser(); 
-        enteredUser.setEntity(user); 
-        logger.debug("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
+        enteredUser.setEntity(user);
+        logger.trace("SignIn reqest with login:{} and password:{}", user.getLogin(), user.getPassword());
         try {                 
             enteredUser.read();
+            /*Check if email confirmation required*/
+            try {
+                Properties registrationProperties = new Properties();
+                registrationProperties.load(getClass().getResourceAsStream("/registration.properties"));
+                if ("true".equals(registrationProperties.getProperty("enabled"))) {
+                    if (ConfirmationHolder.getInstance().contains(enteredUser.getEntity())) {
+                        res.sendRedirect("/signin?errorType=notConfirmed");
+                        return;
+                    }
+                }
+            } catch (IOException e) {
+                logger.warn("Cannot open registration properties file:", e);
+            }
+
             HttpSession session = SessionHolder.getUserSession(enteredUser.getEntity().getLogin());
             if (session == null) {
                 session = req.getSession();
@@ -62,6 +78,9 @@ public class SignInServlet extends AbstractHttpServlet {
         } catch (DAOException exception) {
             // Internal DAOException
             forwardToErrorPage(exception.getMessage(), req, res);             
-        }       
+        } catch (Exception e) {
+            logger.warn("Unexpected exception ", e);
+            forwardToErrorPage(e.getMessage(), req, res);
+        }
     }
 }

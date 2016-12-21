@@ -38,7 +38,8 @@ public class UserEditFilter extends AbstractHttpFilter implements Filter {
             	HttpSession session = httpReq.getSession(false);
             	if(session != null && session.getAttribute("user") != null) {
 		        	UserEntity user = (UserEntity)session.getAttribute("user");
-		        	if (user.getLogin().equals(req.getParameter("login"))) {
+		        	if (user.getLogin().equals(req.getParameter("login")) ||
+							user.getId() == Integer.valueOf(req.getParameter("id"))) {
 		        		chain.doFilter(req, res);
 		        		return;
 		        	} 

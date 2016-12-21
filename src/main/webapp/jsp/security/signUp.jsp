@@ -29,7 +29,7 @@
                 <c:if test="${not empty param.errorType}">
                     <div class="alert alert-warning alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Error</strong> 
+                        <strong>Error.</strong><br>
                         <c:choose>
                             <c:when test="${param.errorType == 'invalidData'}">
                                 Wrong login or password.
@@ -39,7 +39,15 @@
                             </c:when>
                         </c:choose>
                     </div>
-                </c:if> 
+                </c:if>
+                <c:if test="${param.success eq 'registration'}">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Success.</strong><br>
+                        You have almost registered in our system. To complete registration, check your email for
+                        confirmation link.
+                    </div>
+                </c:if>
 
                 <div class="modal-dialog" style="margin-bottom: 10px">
                     <div class="modal-content">

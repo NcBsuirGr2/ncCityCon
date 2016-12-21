@@ -35,6 +35,9 @@
                         <c:when test="${param.errorType == 'invalidData'}">
                             Wrong login or password.
                         </c:when>
+                        <c:when test="${param.errorType == 'notConfirmed'}">
+                            Please, check your email for confirmation
+                        </c:when>
                     </c:choose>
                 </div>
             </c:if>

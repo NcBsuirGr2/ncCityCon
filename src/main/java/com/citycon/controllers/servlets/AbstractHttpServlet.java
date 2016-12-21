@@ -1,5 +1,6 @@
 package com.citycon.controllers.servlets;
 
+import com.citycon.model.systemunits.entities.UserEntity;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -15,6 +16,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
+import java.io.File;
 import java.util.Properties;
 import java.util.Set;
 
@@ -215,9 +217,24 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		paginationParameters.put("connections", defaultConnectionsParameters);
 
     	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    	ClassLoader classLoader2 = UserEntity.class.getClassLoader();
 		Properties properties = new Properties();
+		if (properties == null) {
+			logger.warn("Properties is null");
+		}
+		if (classLoader == null) {
+			logger.warn("classLoader is null");
+		}
+		if (classLoader2 == null) {
+			logger.warn("classLoader2 is null");
+		}
+		File file = new File("./");
+		Logger logger = LoggerFactory.getLogger("com.citycon.testing");
+		for (File f : file.listFiles()) {
+			logger.debug(f.getAbsolutePath());
+		}
 		try {
-			properties.load(classLoader.getResourceAsStream("pagination.properties"));
+			properties.load(classLoader.getResourceAsStream("/pagination.properties"));
 			defaultUsersParameters.put("path", properties.getProperty("users.path"));
 			defaultUsersParameters.put("page", properties.getProperty("users.page"));
 			defaultUsersParameters.put("itemsPerPage", properties.getProperty("users.itemsPerPage"));
@@ -241,7 +258,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 			defaultConnectionsParameters.put("itemsPerPage", properties.getProperty("connections.itemsPerPage"));
 			defaultConnectionsParameters.put("sortBy", properties.getProperty("connections.sortBy"));
 			defaultConnectionsParameters.put("asc", properties.getProperty("connections.asc"));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.warn("Cannot open pagination.properties, setting defaults ", e);
 			defaultUsersParameters.put("path", "/users");
 			defaultUsersParameters.put("page", "1");

@@ -128,14 +128,34 @@
 
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
-                        </div>
-                    </div>
-                </div>    
+                        <c:choose>
+                            <c:when test="${sessionScope.user.login eq param.login}">
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <form action="/user" id="deleteForm" method="POST">
+                                        <input type="hidden" id="deleteId" name="id" value="${editUser.id}">
+                                        <input type="hidden" name="type" value="delete">
+                                        <button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete account</button>
+                                    </form>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary btn-block center-block" data-toggle="modal" data-target=".changesDialog">Apply</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a href="/users" class="btn btn-primary btn-block center-block">Back</a>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
+                </div>
+
                 <!-- Save dialog modal -->
                 <div class="modal fade changesDialog">
                     <div class="modal-dialog" role="document">
@@ -158,7 +178,28 @@
                         </div>
                     </div>
                 </div>
+                <!-- Delete dialog modal -->
+                <div class="modal fade deleteDialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Confirm deletion</h4>
+                            </div>
 
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete your account?</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         

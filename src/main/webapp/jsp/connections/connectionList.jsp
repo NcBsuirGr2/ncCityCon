@@ -71,42 +71,13 @@
 									<tr>
 										<th>
 											<c:set var="newAsc" value="true"/>
-
-											<c:if test="${paginationParameters['connections']['asc'] == 'true' and paginationParameters['connections']['sortBy'] == 'SN1'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${sameSelect}&sortBy=SN1&asc=${newAsc}">
-												SN-1
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN1'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
-													<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
-												</c:if>
-											</a>
-										</th>
-										<th>
-											<c:set var="newAsc" value="true"/>
 											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'City1'}">
 												<c:set var="newAsc" value="false"/>
 											</c:if>
 
 												<a href="?${sameSelect}&sortBy=City1&asc=${newAsc}">
-												City-1
+												Left city
 												<c:if test="${paginationParameters['connections']['sortBy'] == 'City1'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
-										</th>
-										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'SN2'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${sameSelect}&sortBy=SN2&asc=${newAsc}">
-												SN-2
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN2'}">
 													<c:if test="${newAsc == true}">&#9660;</c:if>
 													<c:if test="${newAsc == false}">&#9650;</c:if>
 												</c:if>
@@ -118,24 +89,70 @@
 												<c:set var="newAsc" value="false"/>
 											</c:if>
 
-												<a href="?${sameSelect}&sortBy=City2&asc=${newAsc}">
-												City-2
+											<a href="?${sameSelect}&sortBy=City2&asc=${newAsc}">
+												Right city
 												<c:if test="${paginationParameters['connections']['sortBy'] == 'City2'}">
 													<c:if test="${newAsc == true}">&#9660;</c:if>
 													<c:if test="${newAsc == false}">&#9650;</c:if>
 												</c:if>
 											</a>
 										</th>
+										<th>
+											<c:set var="newAsc" value="true"/>
+
+											<c:if test="${paginationParameters['connections']['asc'] == 'true' and paginationParameters['connections']['sortBy'] == 'SN1'}">
+												<c:set var="newAsc" value="false"/>
+											</c:if>
+
+											<a href="?${sameSelect}&sortBy=SN1&asc=${newAsc}">
+												Left city router SN
+												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN1'}">
+													<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
+													<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
+												</c:if>
+											</a>
+										</th>
+										<th>
+											<c:set var="newAsc" value="true"/>
+											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'SN2'}">
+												<c:set var="newAsc" value="false"/>
+											</c:if>
+
+												<a href="?${sameSelect}&sortBy=SN2&asc=${newAsc}">
+												Right city router SN
+												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN2'}">
+													<c:if test="${newAsc == true}">&#9660;</c:if>
+													<c:if test="${newAsc == false}">&#9650;</c:if>
+												</c:if>
+											</a>
+										</th>
+
 										<th class="hidden">id</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${entityArray}" var="connection">
 										<tr>
-											<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >${connection.firstRouter.SN}</td>
-											<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >${connection.firstRouter.city.name}</td>
-											<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>${connection.secondRouter.SN}</td>
-											<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>${connection.secondRouter.city.name}</td>
+											<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >
+												<a href="/statistic/cities/${connection.firstRouter.city.countryName}/${connection.firstRouter.city.name}">
+													${connection.firstRouter.city.name}
+												</a>
+											</td>
+											<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>
+												<a href="/statistic/cities/${connection.secondRouter.city.countryName}/${connection.secondRouter.city.name}">
+													${connection.secondRouter.city.name}
+												</a>
+											</td>
+											<td <c:if test="${not connection.firstRouter.active}">class="danger"</c:if> >
+												<a href="/statistic/routers/${connection.firstRouter.SN}">
+													${connection.firstRouter.SN}
+												</a>
+											</td>
+											<td <c:if test="${not connection.secondRouter.active}">class="danger"</c:if>>
+												<a href="/statistic/routers/${connection.secondRouter.SN}">
+														${connection.secondRouter.SN}
+												</a>
+											</td>
 											<td class="hidden unique idField">${connection.id}</td>
 										</tr>
 									</c:forEach>

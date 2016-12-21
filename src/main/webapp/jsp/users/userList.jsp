@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="citycon"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -59,18 +60,7 @@
 				     		<thead>
 								<tr>
 									<th>
-										<c:set var="newAsc" value="true"/>
-										<c:if test="${paginationParameters['users']['asc'] == true and paginationParameters['users']['sortBy'] == 'name'}">
-											<c:set var="newAsc" value="false"/>
-										</c:if>
-
-										<a href="?asc=${newAsc}&sortBy=name">
-											Name
-											<c:if test="${paginationParameters['users']['sortBy'] == 'name'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-										</a>
+										<citycon:sortyBy asc="${paginationParameters['users']['asc']}" sortByIs="${paginationParameters['users']['sortBy']}" sortByNeed="name"/>
 									</th>
 									<th>
 										<c:set var="newAsc" value="true"/>
