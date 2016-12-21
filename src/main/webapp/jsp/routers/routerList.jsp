@@ -153,7 +153,7 @@
 										</div>
 
 										<div class="col-sm-3">
-											<a href=# class="btn btn-primary center-block editHref">Setup</a>
+											<a href=# class="btn btn-primary center-block editHref">Edit</a>
 										</div>
 
 										<div class="col-sm-3">
@@ -273,7 +273,7 @@
 						</ul>
 					</c:if>
 
-					<div class="row">
+					<div class="row itemsPerPage">
 						<div class="col-sm-3">
 						</div>
 

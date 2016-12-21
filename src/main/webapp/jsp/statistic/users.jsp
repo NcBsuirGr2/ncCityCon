@@ -28,8 +28,8 @@
       </div>
       <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Total users count:</strong></div>
-            <div class="col-xs-7">
+            <div class="col-xs-6 text-right"><strong>Total users count:</strong></div>
+            <div class="col-xs-6">
               ${count_users}
             </div>
           </div>
@@ -37,8 +37,8 @@
             <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Count admins:</strong></div>
-            <div class="col-xs-7">
+            <div class="col-xs-6 text-right"><strong>Count admins:</strong></div>
+            <div class="col-xs-6">
               ${count_admins} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_admins/count_users}"/>)
             </div>
           </div>
@@ -46,7 +46,7 @@
             <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Count operators:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Count operators:</strong></div>
             <div class="col-xs-6">
               ${count_operators} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_operators/count_users}"/>)
             </div>
@@ -55,7 +55,7 @@
           <br>
 
           <div class="row">
-            <div class="col-xs-4 text-right"><strong>Guests count:</strong></div>
+            <div class="col-xs-6 text-right"><strong>Guests count:</strong></div>
             <div class="col-xs-6">
               ${count_guests} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_guests/count_users}"/>)
             </div>
@@ -65,7 +65,7 @@
 
           <c:if test="${not empty first_users}">
               <div class="row">
-                  <div class="col-xs-4 text-right"><strong>First users (${first_users[0].createDate}):</strong></div>
+                  <div class="col-xs-6 text-right"><strong>First users (${first_users[0].createDate}):</strong></div>
 
                     <div class="col-xs-6">
                       <c:forEach items="${first_users}" var="user" varStatus="loopStatus">
@@ -79,9 +79,9 @@
 
           <c:if test="${not empty last_users}">
               <div class="row">
-                  <div class="col-xs-4 text-right"><strong>Last users (${last_users[0].createDate}):</strong></div>
+                  <div class="col-xs-6 text-right"><strong>Last users (${last_users[0].createDate}):</strong></div>
 
-                  <div class="col-xs-7">
+                  <div class="col-xs-6">
                     <c:forEach items="${last_users}" var="user" varStatus="loopStatus">
                         ${user.login} <c:if test="${!loopStatus.last}">,</c:if>
                     </c:forEach>
@@ -93,9 +93,9 @@
 
           <c:if test="${not empty users_online_logins}">
               <div class="row">
-                  <div class="col-xs-4 text-right"><strong>Users online:</strong></div>
+                  <div class="col-xs-6 text-right"><strong>Users online:</strong></div>
 
-                  <div class="col-xs-7">
+                  <div class="col-xs-6">
                       <c:forEach items="${users_online_logins}" var="user" varStatus="loopStatus">
                           ${user} <c:if test="${!loopStatus.last}">,</c:if>
                       </c:forEach>

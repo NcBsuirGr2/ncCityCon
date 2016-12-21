@@ -28,14 +28,14 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Connections count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Connections count:</strong></div>
                     <div class="col-xs-6">
                         ${count_connections}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Inactive connections count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Inactive connections count:</strong></div>
                     <div class="col-xs-6">
                         ${count_inactive_connections} (<fmt:formatNumber type="percent" minFractionDigits="2"
                                                                   value="${inactive_connections_percent}"/>)

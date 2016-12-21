@@ -64,115 +64,122 @@
 							</div>
 						</div>
 					</div>
-					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
-				     		<thead>
-								<tr>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-														sortByIs="${paginationParameters['users']['sortBy']}"
-														sortByNeed="name"
-														value="Name"/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-														sortByIs="${paginationParameters['users']['sortBy']}"
-														sortByNeed="login"
-														value="Login"/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-														sortByIs="${paginationParameters['users']['sortBy']}"
-														sortByNeed="group"
-														value="Group"/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-														sortByIs="${paginationParameters['users']['sortBy']}"
-														sortByNeed="email"
-														value="Email"/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-														sortByIs="${paginationParameters['users']['sortBy']}"
-														sortByNeed="createDate"
-														value="Joined on"/>
-									</th>
-							        <th class="hidden">id</th>
-				        		</tr>
-				        	</thead>
-				        	<tbody>
-								<c:forEach items="${entityArray}" var="user">
+						<c:if test="${not empty entityArray}">
+							<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
+								<thead>
 									<tr>
-										<td>${user.name}</td>
-										<td class="unique">${user.login}</td>
-										<td>${user.group}</td>
-										<td>${user.email}</td>
-										<td>${user.createDate}</td>
-										<td class="hidden idField">${user.id}</td>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+															sortByIs="${paginationParameters['users']['sortBy']}"
+															sortByNeed="name"
+															value="Name"/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+															sortByIs="${paginationParameters['users']['sortBy']}"
+															sortByNeed="login"
+															value="Login"/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+															sortByIs="${paginationParameters['users']['sortBy']}"
+															sortByNeed="group"
+															value="Group"/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+															sortByIs="${paginationParameters['users']['sortBy']}"
+															sortByNeed="email"
+															value="Email"/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+															sortByIs="${paginationParameters['users']['sortBy']}"
+															sortByNeed="createDate"
+															value="Joined on"/>
+										</th>
+										<th class="hidden">id</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach items="${entityArray}" var="user">
+										<tr>
+											<td>${user.name}</td>
+											<td class="unique">${user.login}</td>
+											<td>${user.group}</td>
+											<td>${user.email}</td>
+											<td>${user.createDate}</td>
+											<td class="hidden idField">${user.id}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:if>
 						<c:if test="${empty entityArray}">
 							<h4 class="text-center">Empty user set</h4>
 						</c:if>
 
 						<div class="panel-footer">
-							<div class="row">
-
-								<div class="col-sm-3">
-									<c:if test="${showUsersOperationBtns}">
+							<c:if test="${showUsersOperationBtns and not empty entityArray}">
+								<div class="row">
+									<div class="col-sm-3">
 										<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
-									</c:if>
-								</div>
+									</div>
 
-								<div class="col-sm-3">
-									<c:if test="${showUsersOperationBtns}">
+									<div class="col-sm-3">
 										<a href="#" class="btn btn-primary center-block editHref">Edit</a>
+									</div>
 
-									</c:if>
-								</div>
+									<div class="col-sm-3">
+										<form action="/user" id="deleteForm" method="POST">
+											<input type="hidden" id="deleteId" name="id" value="-1">
+											<input type="hidden" name="type" value="delete">
+											<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+										</form>
+									</div>
 
-								<div class="col-sm-3">
-								<c:if test="${showUsersOperationBtns}">
-									<form action="/user" id="deleteForm" method="POST">
-										<input type="hidden" id="deleteId" name="id" value="-1">
-										<input type="hidden" name="type" value="delete">
-										<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-									</form>
-								</c:if>
-								</div>
-
-								<div class="col-sm-3">
-									<c:if test="${showUsersOperationBtns}">
-										<%--<a href="#" class="btn btn-primary center-block editHref">Edit</a>--%>
+									<div class="col-sm-3">
 										<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
-									</c:if>
-								</div>
+									</div>
 
-								<!-- Delete dialog modal -->
-								<div class="modal fade deleteDialog">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-												<h4 class="modal-title">Confirm deletion</h4>
-											</div>
+									<!-- Delete dialog modal -->
+									<div class="modal fade deleteDialog">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h4 class="modal-title">Confirm deletion</h4>
+												</div>
 
-											<div class="modal-body">
-												<p>Are you sure you want to delete selected user?</p>
-											</div>
+												<div class="modal-body">
+													<p>Are you sure you want to delete selected user?</p>
+												</div>
 
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-												<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+													<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</c:if>
+							<c:if test="${empty entityArray}">
+								<c:if test="${showUsersOperationBtns}">
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
+										</div>
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/users" class="btn btn-primary center-block">Back</a>
+										</div>
+									</div>
+								</c:if>
+							</c:if>
 						</div>
 					</div>
 
@@ -182,7 +189,9 @@
 			</div>
 
 			<div class="before-footer" style="text-align: center;">
-		    	<%@ include file="/include/pagination.jsp" %>
+				<c:if test="${not empty entityArray}">
+					<%@ include file="/include/pagination.jsp" %>
+				</c:if>
 			</div>
 
 			<%@ include file="/include/footer.html" %>

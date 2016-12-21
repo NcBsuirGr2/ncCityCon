@@ -48,7 +48,14 @@
 
             <div class="panel panel-default">
                 <center class="panel-heading text-center">
-                    Setup router
+                    <c:choose>
+                        <c:when test="${param.action == 'edit'}">
+                            Setup router
+                        </c:when>
+                        <c:when test="${param.action == 'add' || empty param.action}">
+                            Add router
+                        </c:when>
+                    </c:choose>
                 </center>
                 <div class="panel-body">
                 <c:choose>

@@ -30,7 +30,7 @@
             <c:if test="${not empty param.errorType}">
                 <div class="alert alert-warning alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Error</strong> 
+                    <strong>Error!</strong>
                     <c:choose>
                         <c:when test="${param.errorType == 'invalidData'}">
                             Wrong login or password.
@@ -70,8 +70,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" style="text-align: center;">
-                                    <input type="submit" class="btn btn-primary" value="Sign In">
+                                <div class="row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group" style="margin-bottom: 5px; text-align: center;">
+                                            <input style="font-size:16px" type="submit" class="btn center-block btn-primary" value="Sign in">
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

@@ -27,21 +27,21 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Full city name:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Full city name:</strong></div>
                     <div class="col-xs-6">
                         ${country}, ${city}
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Total routers num:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total routers num:</strong></div>
                     <div class="col-xs-6">
                         <a href="/routers?country=${country}&city=${city}">${routersNum}</a>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-xs-5 text-right"><strong>Total connections num:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total connections num:</strong></div>
                     <div class="col-xs-6">
                         <a href="/connections?country=${country}&city=${city}">${connectionsNum}</a>
                     </div>
@@ -49,7 +49,7 @@
                 <c:if test="${not empty connectedActiveCities}">
                     <br>
                     <div class="row">
-                        <div class="col-xs-5 text-right"><strong>Connected cities (active connection):</strong></div>
+                        <div class="col-xs-6 text-right"><strong>Connected cities (active connection):</strong></div>
                         <div class="col-xs-6">
                             <c:forEach var="city" items="${connectedActiveCities}" varStatus="loopStatus">
                                 <a href="/statistic/cities/${city.country}/${city.city}">
@@ -63,7 +63,7 @@
                 <c:if test="${not empty connectedInactiveCities}">
                     <br>
                     <div class="row">
-                        <div class="col-xs-5 text-right"><strong>Connected cities (inactive connection):</strong></div>
+                        <div class="col-xs-6 text-right"><strong>Connected cities (inactive connection):</strong></div>
                         <div class="col-xs-6">
                             <c:forEach var="city" items="${connectedInactiveCities}" varStatus="loopStatus">
                                 <a href="/statistic/cities/${city.country}/${city.city}">

@@ -28,7 +28,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Routers count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Routers count:</strong></div>
                     <div class="col-xs-6">
                         ${count_routers}
                     </div>
@@ -36,7 +36,7 @@
 
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Inactive routers count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Inactive routers count:</strong></div>
                     <div class="col-xs-6">
                         ${count_inactive_routers} (<fmt:formatNumber type="percent" minFractionDigits="2"
                                                          value="${inactive_routers_percent}"/>)
@@ -45,7 +45,7 @@
 
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Average connections per router:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Average connections per router:</strong></div>
                     <div class="col-xs-6">
                         <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${connections_per_router}"/>
                     </div>
@@ -53,7 +53,7 @@
 
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Total ports count:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Total ports count:</strong></div>
                     <div class="col-xs-6">
                         ${count_routers_ports}
                     </div>
@@ -61,7 +61,7 @@
 
                 <br>
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Using ports of routers:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Using ports of routers:</strong></div>
                     <div class="col-xs-6">
                         <fmt:formatNumber type="percent" minFractionDigits="2" value="${used_ports_percent}"/>
                     </div>

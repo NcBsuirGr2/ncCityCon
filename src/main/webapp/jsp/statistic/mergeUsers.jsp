@@ -35,8 +35,8 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count users before merge:</strong></div>
-                    <div class="col-xs-7">
+                    <div class="col-xs-6 text-right"><strong>Count users before merge:</strong></div>
+                    <div class="col-xs-6">
                         ${mergeStatistic.count_users_from_database}
                     </div>
                 </div>
@@ -44,8 +44,8 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count users after merge:</strong></div>
-                    <div class="col-xs-7">
+                    <div class="col-xs-6 text-right"><strong>Count users after merge:</strong></div>
+                    <div class="col-xs-6">
                         ${mergeStatistic.count_users_from_database + mergeStatistic.count_merged_users_from_service}
                             (+ <fmt:formatNumber type="percent" minFractionDigits="2"
                                                value="${mergeStatistic.count_merged_users_from_service/
@@ -56,7 +56,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count users from service:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Count users from service:</strong></div>
                     <div class="col-xs-6">
                         ${mergeStatistic.count_users_from_service}
                     </div>
@@ -65,7 +65,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count successful added users from service:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Count successful added users from service:</strong></div>
                     <div class="col-xs-6">
                         ${mergeStatistic.count_merged_users_from_service}
                             (<fmt:formatNumber type="percent" minFractionDigits="2"
@@ -77,7 +77,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count already exist users  from service:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Count already exist users  from service:</strong></div>
                     <div class="col-xs-6">
                         ${mergeStatistic.count_valid_users_from_service-mergeStatistic.count_merged_users_from_service}
                             (<fmt:formatNumber type="percent" minFractionDigits="2"
@@ -89,7 +89,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-xs-4 text-right"><strong>Count users  from service with invalid data:</strong></div>
+                    <div class="col-xs-6 text-right"><strong>Count users  from service with invalid data:</strong></div>
                     <div class="col-xs-6">
                         ${mergeStatistic.count_users_from_service-mergeStatistic.count_valid_users_from_service}
                             (<fmt:formatNumber type="percent" minFractionDigits="2"

@@ -38,7 +38,7 @@
 	</ul>
 </c:if>	
 
-<div class="row">
+<div class="row itemsPerPage">
 	<div class="col-sm-3">
 	</div>
 

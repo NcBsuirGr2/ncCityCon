@@ -36,7 +36,14 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
-				Edit city
+				<c:choose>
+					<c:when test="${param.action == 'edit'}">
+						Edit city
+					</c:when>
+					<c:when test="${param.action == 'add' || empty param.action}">
+						Add city
+					</c:when>
+				</c:choose>
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">
