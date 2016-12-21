@@ -2,15 +2,15 @@ package com.citycon.statistic.repositories;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * Provides common functionality for statistic repositories.
+ *
+ * @author Mike, Alex
+ * @version 1.2
+ */
 public abstract class AbstractRepository {
     protected JdbcOperations dao;
     private Logger logger;
@@ -20,6 +20,12 @@ public abstract class AbstractRepository {
         logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.AbstractRepository");
     }
 
+    /**
+     * Returns count of elements in concrete table.
+     *
+     * @param tableName     table name
+     * @return count        Long count of elements
+     */
     protected Long getCount(String tableName) {
         return getCount(tableName, 0);
     }

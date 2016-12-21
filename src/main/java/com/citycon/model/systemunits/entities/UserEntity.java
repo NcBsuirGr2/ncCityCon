@@ -24,17 +24,17 @@ import java.sql.Date;
 public class UserEntity extends Entity implements Serializable {
 	@NotBlank(message="User name can not be blank")
 	@Size(min=3, max=30, message="User name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")
+	@Pattern(regexp="^[a-z-_A-Z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")
 	private String name;
 
 	@NotBlank(message="User login can not be blank")
 	@Size(min=3, max=15, message="User login must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user login: ${validatedValue}")
+	@Pattern(regexp="^[a-z-_A-Z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user login: ${validatedValue}")
 	private String login;
 
 
 	@NotBlank(message="User password can not be blank")
-	@Pattern(regexp="^[-a-z0-9!#$%&'*+/=?^_`{|}~]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user password: ${validatedValue}")
+	@Pattern(regexp="^[-a-zA-Z0-9!#$%&'*+/=?^_`{|}~]{6,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user password: ${validatedValue}")
 	private String password;	
 
 	@NotBlank(message="User email can not be blank")

@@ -296,7 +296,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 	}
 
     protected boolean validateIntString(String intString) {
-        if(intString != null && !intString.equals("")) {
+        if(intString != null && !intString.trim().equals("")) {
             try {
                 if (Integer.parseInt(intString) < 0) {
                     return false;
@@ -304,7 +304,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
             } catch (NumberFormatException e) {
                 return false;
             }
-        }
+        } else {
+        	return false;
+		}
         return true;
     }
 }

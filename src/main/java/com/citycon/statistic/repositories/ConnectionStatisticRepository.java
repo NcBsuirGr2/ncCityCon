@@ -8,6 +8,12 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Provides statistic about connections in CityCon system
+ *
+ * @author Mike
+ * @version 1.1
+ */
 @Repository
 public class ConnectionStatisticRepository extends AbstractRepository {
     private final String TABLE_NAME = "RouterConnection";
@@ -23,6 +29,10 @@ public class ConnectionStatisticRepository extends AbstractRepository {
         return super.getCount(TABLE_NAME);
     }
 
+    /**
+     *
+     * @return Long count of inactive connections
+     */
     public Long getInacitveConnectionsCount() {
         try {
             String query = "SELECT COUNT(1) FROM RouterConnection WHERE ID_From IN (SELECT ID FROM Router WHERE In_Service = 0) " +

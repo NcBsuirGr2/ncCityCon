@@ -20,12 +20,12 @@ public class CityEntity extends Entity implements Serializable {
 
 	@NotBlank(message="City name can not be empty")
 	@Size(min=3, max=20, message="City name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z- a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid city name: ${validatedValue}")
+	@Pattern(regexp="^[a-z- A-Z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid city name: ${validatedValue}")
 	private String name;
 	
 	@NotBlank(message="Country name can not be empty")
 	@Size(min=3, max=20, message="Country name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z- a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid country name: ${validatedValue}")
+	@Pattern(regexp="^[a-z- A-Z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid country name: ${validatedValue}")
 	private String countryName;
 
 	@Min(value=0, message="Routers num can not be negative")

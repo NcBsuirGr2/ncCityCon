@@ -14,6 +14,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Provides statistic for all cities and for concrete city.
+ *
+ * @author Mike
+ * @version 1.2
+ */
 @Controller
 @RequestMapping("/cities")
 public class CityStatisticController {
@@ -24,6 +30,12 @@ public class CityStatisticController {
         this.repo = repo;
     }
 
+    /**
+     * Provides common cities statistics.
+     *
+     * @param model     model to set attributes
+     * @return          view name
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String CitiesStatistic(Model model) {
             model.addAttribute("count_countries", repo.getCountriesCount());
@@ -33,6 +45,15 @@ public class CityStatisticController {
             model.addAttribute("max_router_cities", selectMaxRoutersCities(repo.getDescCountryRouters()));
         return "statistic/cities";
     }
+
+    /**
+     * Provides statistics from concrete city.
+     *
+     * @param country   country name
+     * @param city      city name
+     * @param model     model to set attributes
+     * @return          view name
+     */
     @RequestMapping(value="/{country}/{city}", method = RequestMethod.GET)
     public String CityStatistic(
             @PathVariable("country") String country,
@@ -51,7 +72,12 @@ public class CityStatisticController {
         return "statistic/city";
     }
 
-
+    /**
+     * Selects sublist of countries with max cities num from asc sorted list.
+     *
+     * @param descCountryList        list to find from
+     * @return  minCityCountries     list of countries
+     */
     private List<Map<String, Object>> selectMaxCitiesCountries(List<Map<String, Object>> descCountryList) {
         long requiredCitiesCount = (Long)descCountryList.get(0).get("citiesCount");
         List<Map<String, Object>> maxCityCountries = new LinkedList<>();
@@ -66,6 +92,12 @@ public class CityStatisticController {
         return maxCityCountries;
     }
 
+    /**
+     * Selects sublist of countries with min cities num from desc sorted list.
+     *
+     * @param descCountryList        list to find from
+     * @return  minCityCountries     list of countries
+     */
     private List<Map<String, Object>> selectMinCitiesCountries(List<Map<String, Object>> descCountryList) {
         Long requiredCitiesCount = (Long)descCountryList.get(descCountryList.size()-1).get("citiesCount");
         List<Map<String, Object>> minCityCountries = new LinkedList<>();
@@ -81,6 +113,12 @@ public class CityStatisticController {
         return minCityCountries;
     }
 
+    /**
+     * Selects sublist of cities with max routers num.
+     *
+     * @param descCityList          list to find from
+     * @return  maxRouterCities     list of cities
+     */
     private List<Map<String, Object>> selectMaxRoutersCities(List<Map<String, Object>> descCityList) {
         long requiredRoutersCount = (Long)descCityList.get(0).get("routersCount");
 

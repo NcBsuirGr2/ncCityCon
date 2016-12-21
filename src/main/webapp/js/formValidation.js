@@ -46,8 +46,8 @@ function validateForm(form) {
 
 	var login = $("input[name='login']");
 	login.each(function () {
-		if(!validateTextLength(this.value, 4)) {
-			$(".formAlert").html("Login is too short. Minimum 4 characters");
+		if(!validateTextLength(this.value, 3)) {
+			$(".formAlert").html("Login is too short. Minimum 3 characters");
 			valid = false;
 			return;
 		}

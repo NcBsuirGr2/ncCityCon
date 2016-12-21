@@ -54,10 +54,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 					return;
 				}
 			} catch (NumberFormatException exception) {
+				logger.warn("Not string id value", exception);
 				forwardToErrorPage("Not string id value", req, res);
 				return;
 			} catch (Exception exception) {
-                logger.warn("Unexpected exception");
+                logger.warn("Unexpected exception", exception);
                 forwardToErrorPage("Internal server error", req, res);
                 return;
             }

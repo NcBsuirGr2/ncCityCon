@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+/**
+ * Provides access to city statistics
+ *
+ * @author Mike
+ * @version 1.2
+ */
 @Repository
 public class CityStatisticRepository extends AbstractRepository {
     private final String TABLE_NAME = "City";
@@ -28,6 +34,10 @@ public class CityStatisticRepository extends AbstractRepository {
         return super.getCount(TABLE_NAME);
     }
 
+    /**
+     *
+     * @return total count of countries
+     */
     public Long getCountriesCount() {
         try {
             String query = "SELECT COUNT(DISTINCT Country) FROM "+TABLE_NAME;
@@ -39,6 +49,10 @@ public class CityStatisticRepository extends AbstractRepository {
         }
     }
 
+    /**
+     *
+     * @return list of contries in desc order
+     */
     public List<Map<String, Object>> getDescCountryCities() {
         try {
             String query = "SELECT Country AS country, COUNT(Name) AS citiesCount FROM City " +
@@ -52,6 +66,10 @@ public class CityStatisticRepository extends AbstractRepository {
         }
     }
 
+    /**
+     *
+     * @return list of countries in desc order of their routers
+     */
     public List<Map<String, Object>> getDescCountryRouters() {
         try {
             String query = "SELECT C.Country AS country, C.Name AS city, count(R.ID) AS routersCount FROM City C " +
@@ -64,14 +82,21 @@ public class CityStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
-    public int countRouters(CityEntity city) {
+
+    /**
+     * Counts routers in concrete city
+     *
+     * @param city      city to count routers
+     * @return          Long count of routers
+     */
+    public Long countRouters(CityEntity city) {
         try {
             String query = "SELECT COUNT(*) FROM Router WHERE City_id = " +
                     "(SELECT ID FROM City WHERE City.Name = :cityName AND City.Country = :countryName)";
             Map<String, String> namedParameters = new HashMap<>();
             namedParameters.put("cityName", city.getName());
             namedParameters.put("countryName", city.getCountryName());
-            int routersCount = namedDao.queryForObject(query, namedParameters, Integer.class);
+            Long routersCount = namedDao.queryForObject(query, namedParameters, Long.class);
             logger.debug("Routers count for city {}:{}", city, routersCount);
             return routersCount;
 
@@ -80,7 +105,14 @@ public class CityStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
-    public int countConnections(CityEntity city) {
+
+    /**
+     * Count connections in concrete city
+     *
+     * @param city      city to count connections
+     * @return             Long count of connections
+     */
+    public Long countConnections(CityEntity city) {
         try {
             String query = "SELECT count(*) FROM RouterConnection LEFT JOIN Router ON " +
                     "(RouterConnection.ID_from = Router.ID OR RouterConnection.ID_to = Router.ID) " +
@@ -89,7 +121,7 @@ public class CityStatisticRepository extends AbstractRepository {
             Map<String, String> namedParameters = new HashMap<>();
             namedParameters.put("cityName", city.getName());
             namedParameters.put("countryName", city.getCountryName());
-            int connectionsCount = namedDao.queryForObject(query, namedParameters, Integer.class);
+            Long connectionsCount = namedDao.queryForObject(query, namedParameters, Long.class);
             return connectionsCount;
 
         } catch(DataAccessException e) {
@@ -97,6 +129,15 @@ public class CityStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     * Return list of cities, that are connected with concrete city. Also returns the count
+     * of connections between cities.
+     *
+     * @param city      city to find connections
+     * @param active    find only active or inactive connections
+     * @return          list on connected cities
+     */
     public List<Map<String, Object>> getConnectedCities(CityEntity city, boolean active) {
         try {
 

@@ -1,24 +1,22 @@
 package com.citycon.statistic.controllers;
 
-import com.citycon.dao.exceptions.DAOException;
-import com.citycon.model.systemunits.orm.ORMCity;
-import com.citycon.model.systemunits.orm.ORMRouter;
-import com.citycon.model.systemunits.orm.ORMRouterConnection;
-import com.citycon.model.systemunits.orm.ORMUser;
+
 import com.citycon.statistic.repositories.CityStatisticRepository;
 import com.citycon.statistic.repositories.ConnectionStatisticRepository;
 import com.citycon.statistic.repositories.RouterStatisticRepository;
 import com.citycon.statistic.repositories.UserStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Provides common statistic for the CityCon app
+ *
+ * @author Mike
+ * @version 1.2
+ */
 @Controller
 @RequestMapping("/")
 public class CommonStatisticController {

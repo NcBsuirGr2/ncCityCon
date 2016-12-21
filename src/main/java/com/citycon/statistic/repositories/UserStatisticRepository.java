@@ -9,14 +9,18 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Provides statistic about CityCon users.
+ *
+ * @author Mike
+ * @version 1.1
+ */
 @Repository
 public class UserStatisticRepository extends  AbstractRepository {
     private final String TABLE_NAME = "User";
@@ -34,6 +38,12 @@ public class UserStatisticRepository extends  AbstractRepository {
         return super.getCount(TABLE_NAME);
     }
 
+    /**
+     * Returns the count of users in concrete group
+     *
+     * @param group     to find users
+     * @return          Long amount of users in group
+     */
     public Long getCount(String group) {
         String query = "SELECT COUNT(*) FROM User WHERE User.Group=:group";
 
@@ -42,6 +52,11 @@ public class UserStatisticRepository extends  AbstractRepository {
         Long count = namedParameterDao.queryForObject(query, queryParams, Long.class);
         return count;
     }
+
+    /**
+     *
+     * @return array of users, that registered firsts in the system
+     */
     public UserEntity[] getFirstUsers() {
         String query = "SELECT Name, Login, `E-mail`, create_date, User.Group from User WHERE " +
                 "create_date = (SELECT MIN(create_date) FROM User)";
@@ -51,6 +66,10 @@ public class UserStatisticRepository extends  AbstractRepository {
         return firstUsersList.toArray(firstUsersArray);
     }
 
+    /**
+     *
+     * @return array of users that registered last
+     */
     public UserEntity[] getLastUsers() {
         String query = "SELECT Name, Login, `E-mail`, create_date, User.Group from User WHERE " +
                 "create_date = (SELECT MAX(create_date) FROM User)";
