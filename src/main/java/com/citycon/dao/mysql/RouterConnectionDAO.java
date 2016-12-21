@@ -227,39 +227,66 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
     }
 
-    public int count_element(CityEntity city) throws InternalDAOException, InvalidDataDAOException {
-        String search = "";
-
-        if (city.getName() != null && city.getCountryName() != null) {
-            search = "select * from RouterConnection, Router " +
-                    "where (RouterConnection.ID_From=Router.ID " +
-                    "or RouterConnection.ID_To = Router.ID) " +
-                    "and Router.City_id=(select ID from City " +
-                    "where Name='" + city.getName() +
-                    "' and Country='" + city.getCountryName() + "')";
-        } else {
-            logger.info("For reading router connection incorrectly chosen field, try name and country");
-            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
-                    " try name and country");
-        }
-
-        return count_element(search);
+    @Override
+    public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
+        return count_element(search_input, null, null);
     }
 
-    public int count_element(RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
-        String search = "";
+    public int count_element(String search_input, CityEntity city) throws InternalDAOException, InvalidDataDAOException {
+        return count_element(search_input, null, city);
+    }
 
-        if (router.getSN() != null) {
-            search = "select count(distinct rc.ID) FROM RouterConnection rc " +
-                    "INNER JOIN Router r ON (rc.ID_From = r.ID OR rc.ID_To = r.ID) WHERE r.SN = '" +
-                    router.getSN() + "'";
+    public int count_element(String search_input, RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
+        return count_element(search_input, router, null);
+    }
+
+    private int count_element(String search_input, RouterEntity router, CityEntity city) throws InvalidDataDAOException, InternalDAOException {
+        String search = "";
+        String add_table = "";
+
+        String log_parameters = "";
+
+        if (router != null) {
+            if (router.getSN() == null) {
+                logger.info("For count_element connection of SN connection incorrectly, " +
+                        "chosen field, try SN");
+                throw new InvalidDataDAOException("For count_element connection router connection incorrectly," +
+                        " chosen field, try SN");
+            } else {
+                log_parameters += ", SN(" + router.getSN() + ")";
+
+                add_table = "(select * from RouterConnection where ID_From=(select id from Router where SN = '" +
+                        router.getSN() + "') OR ID_To = (select id from Router where SN = '" +
+                        router.getSN() + "'))";
+            }
+        } else if (city != null) {
+            if (city.getName() == null || city.getCountryName() == null) {
+                logger.info("For count_element connection of City connection incorrectly" +
+                        " chosen field, try Name and CountryName");
+                throw new InvalidDataDAOException("For count_element connection of City connection incorrectly" +
+                        " chosen field, try Name and CountryName");
+            } else {
+                log_parameters += ", City(" + city.getName() + "), Country(" + city.getCountryName() + ")";
+
+                add_table = "(select distinct R.ID as ID, R.ID_From, R.ID_To from RouterConnection R " +
+                        "join (select ID from Router where City_id = (select id from City where `Name` = '" +
+                        city.getName() + "' and `Country` = '" + city.getCountryName() + "')) " +
+                        "Ro on Ro.id=R.id_from or Ro.id=R.id_to)";
+            }
         } else {
-            logger.info("For reading router connection incorrectly chosen field, try SN");
-            throw new InvalidDataDAOException("For reading router connection incorrectly chosen field," +
-                    " try SN");
+            add_table = "RouterConnection";
         }
 
-        return count_element(search);
+        search = "SELECT COUNT(1) " +
+                "FROM (select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_From " +
+                "from " + add_table + " T, CitySN C, Router R where T.ID_From = C.id and R.SN = C.SN) C1 " +
+                "JOIN (select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_To " +
+                "from " + add_table + " T, CitySN C, Router R where T.ID_To = C.id and R.SN = C.SN) C2 " +
+                "ON C1.ID = C2.ID " +
+                "WHERE C1.`Name` LIKE '%" + search_input + "%' OR C1.SN LIKE '%" + search_input + "%' OR " +
+                "C2.`Name` LIKE '%" + search_input + "%' OR C2.SN LIKE '%" + search_input + "%' ";
+
+        return count_search(search);
     }
 
     @Override

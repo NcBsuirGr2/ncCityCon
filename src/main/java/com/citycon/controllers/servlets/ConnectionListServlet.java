@@ -55,8 +55,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 router.setSN(req.getParameter("SN"));
 
                 if (updatePaginationVariables(req, paginationParameters,
-                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(router))) {
-                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(router));
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(search, router))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(search, router));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);
                     return;
@@ -79,8 +79,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 city.setName(req.getParameter("city"));
 
                 if (updatePaginationVariables(req, paginationParameters,
-                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(city))) {
-                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(city));
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(search, city))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(search, city));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);
                     return;
@@ -99,8 +99,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
             // Getting all connections
             } else {
                 if (updatePaginationVariables(req, paginationParameters,
-                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount())) {
-                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount());
+                        ORMRouterConnection.getSortingParameters(), ORMRouterConnection.getCount(search))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouterConnection.getCount(search));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);
                     return;

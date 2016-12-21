@@ -15,6 +15,6 @@ public interface RoutersOfCity {
     RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException;
 
-    int count_element(CityEntity city)
+    int count_element(String search_input, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException;
 }

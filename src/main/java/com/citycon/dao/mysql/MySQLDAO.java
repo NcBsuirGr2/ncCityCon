@@ -33,13 +33,7 @@ public abstract class MySQLDAO implements DAO {
         return hashMap.keySet();
     }
 
-    public int count_element() throws InternalDAOException, InvalidDataDAOException {
-        String search ="select count(`id`) from " + nameTable;
-
-        return count_element(search);
-    }
-
-    protected int count_element(String search) throws InternalDAOException, InvalidDataDAOException {
+    protected int count_search(String search) throws InternalDAOException, InvalidDataDAOException {
         int count = 0;
         try(
                 Connection connection = connections.getConnection();

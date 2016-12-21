@@ -85,8 +85,8 @@ public class ORMCity extends ORMEntity {
 	 * @return int number of Cities
 	 * @throws DAOException if any DAO internal error occur
 	 */
-	public static int getCount() throws DAOException {
+	public static int getCount(String search) throws DAOException {
 		DAO staticDAO = daoFactory.getCityDAO();
-		return staticDAO.count_element();
+		return staticDAO.count_element(search);
 	}
 }

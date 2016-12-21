@@ -414,23 +414,32 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
     }
 
     @Override
-    public int count_element(CityEntity city) throws InvalidDataDAOException, InternalDAOException {
-        String search = "";
+    public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
+        return count_element(search_input, null);
+    }
 
-        if (city.getName() != null && city.getCountryName() != null){
-            search = "SELECT COUNT(ID) " +
-                    "FROM (SELECT DISTINCT Router.ID AS ID FROM Router " +
-                    "INNER JOIN `City` ON (`Router`.`City_id` = `City`.`ID`) " +
-                    "WHERE (`City`.`Name` = '" + city.getName() + "' AND `City`.`Country` = '" +
-                    city.getCountryName() + "')) E";
-        }
-        else{
-            logger.info("For reading router incorrectly chosen field, try name and country");
-            throw new InvalidDataDAOException("For reading router incorrectly chosen field," +
-                    " try name and country");
+    @Override
+    public int count_element(String search_input, CityEntity city) throws InvalidDataDAOException, InternalDAOException {
+        String search = null;
+        String add_search;
+
+        if (city != null) {
+            if (city.getName() == null || city.getCountryName() == null) {
+                logger.info("For reading router incorrectly chosen field, try name and country");
+                throw new InvalidDataDAOException("For reading router incorrectly chosen field," +
+                        " try name and country");
+            } else {
+                add_search = "(Router.SN LIKE '%" + search_input + "%' OR Router.`Name` LIKE '%" + search_input + "%') " +
+                        "AND City.`Name` = '" + city.getName() + "' AND City.Country = '" + city.getCountryName() + "'";
+            }
+        } else {
+            add_search = "(City.`Name` LIKE '%" + search_input + "%' OR Router.SN LIKE '%" + search_input +
+                    "%' OR Router.`Name` LIKE '%" + search_input + "%')";
         }
 
-        return count_element(search);
+        search = "select count(1) from Router, City where City.id = Router.City_id AND " + add_search;
+
+        return count_search(search);
     }
 
     private int getCityID(CityEntity city) throws InvalidDataDAOException, InternalDAOException {

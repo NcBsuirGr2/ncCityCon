@@ -87,8 +87,8 @@ public class ORMUser extends ORMEntity {
      * @return int 				nuber of Users
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount() throws DAOException {
+    public static int getCount(String search) throws DAOException {
     	DAO staticDAO = daoFactory.getUserDAO();
-        return staticDAO.count_element();
+        return staticDAO.count_element(search);
     }
 }
