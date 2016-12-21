@@ -4,6 +4,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Simple bean class to return within web service.
+ *
+ * @author Mike
+ * @version 1.1
+ */
 @XmlRootElement(name = "User")
 @XmlType(propOrder = {"login", "password", "email"})
 public class User {

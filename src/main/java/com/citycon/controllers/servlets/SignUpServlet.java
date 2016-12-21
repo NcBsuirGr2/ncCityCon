@@ -4,13 +4,10 @@ import com.citycon.controllers.ConfirmationHolder;
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.exceptions.DublicateKeyDAOException;
-import com.citycon.model.Grant;
 import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMUser;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.mail.*;
 
@@ -18,48 +15,41 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import javax.validation.Validator;
-import javax.validation.ConstraintViolation;
-
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Properties;
-import java.util.Set;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.Calendar;
 
 
 /**
  * Allows users to signup into the system. On GET returns html page to sign up,
  * on POST try to create new user. On error shows sign up page again with attribute
- * errorType. 
+ * errorType. Default user group is <code>guest</code>. If flag 'enabled' in
+ * <code>registration.properties</code> is <code>true</code>, sends confirmation email.
  *
  * @author Tim, Mike
- * @version  1.3
+ * @version  1.5
  */
 public class SignUpServlet extends AbstractHttpServlet {
 
     private static final String SIGN_UP_PAGE = "/jsp/security/signUp.jsp";
     private static final String SIGN_UP_URL = "/signup";
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) 
-                                        throws ServletException, IOException {
-        RequestDispatcher signUpPage = req.getRequestDispatcher(SIGN_UP_PAGE);
-        signUpPage.forward(req, res);
+    public SignUpServlet() {
         logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.SignUpServlet");
     }
 
-    protected void doPost(HttpServletRequest req,
-                          HttpServletResponse res) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)  throws ServletException, IOException {
+        RequestDispatcher signUpPage = req.getRequestDispatcher(SIGN_UP_PAGE);
+        signUpPage.forward(req, res);
+    }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
             UserEntity user = new UserEntity();
             user.setLogin(req.getParameter("login"));
@@ -102,9 +92,9 @@ public class SignUpServlet extends AbstractHttpServlet {
                 initializePaginationData(session);
                 res.sendRedirect("/");
             } catch(DublicateKeyDAOException exception) {
-                res.sendRedirect(getRedirectPathToSamePage("dublicate", req, res).toString());
+                res.sendRedirect(getRedirectPathToSamePage("dublicate", req));
             } catch(InvalidDataDAOException exception) {
-                res.sendRedirect(getRedirectPathToSamePage("invalidData", req, res).toString());
+                res.sendRedirect(getRedirectPathToSamePage("invalidData", req));
             } 
         } catch (DAOException exception) {
             forwardToErrorPage(exception.getMessage(), req, res);             
@@ -113,27 +103,32 @@ public class SignUpServlet extends AbstractHttpServlet {
             forwardToErrorPage(e.getMessage(), req, res);
         }
     }
-    private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String name = req.getParameter("name");
-
+    private String getRedirectPathToSamePage(String errorType, HttpServletRequest req) {
         StringBuilder redirect = new StringBuilder();
         redirect.append(SIGN_UP_URL);
         redirect.append("?errorType=");
         redirect.append(errorType);
         redirect.append("&login=");
-        redirect.append(login);
-        redirect.append("&password=");
-        redirect.append(password);
+        redirect.append(req.getParameter("login"));
         redirect.append("&email=");
-        redirect.append(email);
+        try {
+            redirect.append(URLEncoder.encode(req.getParameter("email"), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("The user email has unexpected encoding", e);
+            redirect.append(req.getParameter("&email"));
+        }
         redirect.append("&name=");
-        redirect.append(name);
-        return redirect;
+        redirect.append(req.getParameter("name"));
+        return redirect.toString();
     }
 
+    /**
+     * Sends confirmation email to user. Gets account credentials from <code>registration.properties</code>
+     * file. Uses the gmail SMTP service.
+     *
+     * @param user          user to send email to
+     * @return  reglink     null if any error occurs during sending
+     */
     private String sendConfirmationEmail(UserEntity user) {
         try {
             Properties emailAccountProperties = new Properties();
@@ -166,18 +161,19 @@ public class SignUpServlet extends AbstractHttpServlet {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
                 message.setSubject("Welcome to CityCon!");
                 String reglink = RandomStringUtils.random(20, true, true);
-                message.setContent("You received this email because you tried to register at <a href=http://citycom.ml>citycom.ml</a>." +
+                message.setContent("You received this email because you tried to register at <a href=http://citycon.ml>citycon.ml</a>." +
                                 " Go <a href=http://citycon.ml/registration?reglink=" + reglink + ">here</a>" +
-//                                " or <a href=http://localhost:8080/registration?reglink=" + reglink + "> here </a>" +
-                                " to complete registration" +
+                                //" or <a href=http://localhost:8080/registration?reglink=" + reglink + "> here </a>" +
+                                " to complete your registration." +
                                 "<br><br>If you didn't ask for registration, just ignore this message." +
-                                "<br><br>----------<br>With love,<br>your CityCon team",
+                                "<br><br><hr><br>With love,<br>your CityCon team",
                         "text/html; charest=utf-8");
                 Transport.send(message);
-                logger.trace("Sended reglink with id {}", reglink);
+                logger.trace("Sent reglink {}", reglink);
                 return reglink;
             } catch (MessagingException e) {
-                throw new RuntimeException(e);
+                logger.warn("Exception during sending email", e);
+                return null;
             }
         } catch (Exception e) {
             logger.warn("Unexpected exception", e);

@@ -1,57 +1,45 @@
 package com.citycon.controllers.servlets;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.UserEntity;
 import com.citycon.model.systemunits.orm.ORMCity;
-import com.citycon.model.systemunits.orm.ORMUser;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
 /**
- * Used to show the list of users. Support pagination. Redirects to the last available
- * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
+ * Used to show the list of cities. Updates pagination variables if need.
  *
- * @author Dima
- * @version 0.4
+ * @author Dima, Mike
+ * @version 1.5
  */
 public class CityListServlet extends AbstractHttpServlet {
-    private static String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
-    private String CITY_LIST_URL = "/cities";
+    private static final String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
 
-    public CityListServlet(){
-        super();
+    public CityListServlet() {
         logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.CityListServlet");
     }
 
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse res) throws ServletException, IOException {
-
-        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
-                                            .getSession().getAttribute("paginationParameters")).get("cities");
-
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String search;
-
         try {
-            if(req.getParameter("search") == null){
+            HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+                    .getSession().getAttribute("paginationParameters")).get("cities");
+
+            search = req.getParameter("search");
+            if(search == null){
                 search = "";
             }
-            else {
-                search = req.getParameter("search");
-            }
 
-            if (updatePaginationVariables(req, paginationParameters, ORMCity.getSortingParameters(), ORMCity.getCount())) {
-                setPaginationBlockVariables(req, paginationParameters, ORMCity.getCount());
+            if (updatePaginationVariables(req, paginationParameters,
+                ORMCity.getSortingParameters(), ORMCity.getCount())) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMCity.getCount());
             } else {
                 forwardToErrorPage("Invalid search input", req, res);
                 return;
@@ -79,8 +67,7 @@ public class CityListServlet extends AbstractHttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest req,
-                          HttpServletResponse res) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doGet(req, res);
     }
 }

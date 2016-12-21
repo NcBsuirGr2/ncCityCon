@@ -21,7 +21,7 @@ public class SystemListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-         if (checkRights(req, Grant.NONE, Grant.READ)) {
+        if (checkRights(req, Grant.NONE, Grant.READ)) {
             chain.doFilter(req, res);
         } else {
             forwardToSecurityErrorPage(req,res);

@@ -12,7 +12,6 @@ import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  *  Aimed to hold control over all app sessions. Is used to update user immediately
@@ -77,6 +76,11 @@ public class SessionHolder implements HttpSessionListener {
         return;
     }
 
+    /**
+     * Aimed to update user session immediately after editing.
+     *
+     * @param userToUpdate     used to get user by id
+     */
     public static void updateUser(UserEntity userToUpdate) {
         Iterator<HttpSession> i = sessions.iterator();
         try {
@@ -101,6 +105,11 @@ public class SessionHolder implements HttpSessionListener {
             logger.error("Unexpected exception during updating user session", e);
         }
     }
+    /**
+     * Aimed to delte user session immediately after deleting.
+     *
+     * @param userToDelete      used to select user by id
+     */
     public static boolean deleteUser(UserEntity userToDelete) {
         Iterator<HttpSession> i = sessions.iterator();
         try {
@@ -120,6 +129,12 @@ public class SessionHolder implements HttpSessionListener {
         }
         return false;
     }
+
+    /**
+     * Allows to get all users, that are online
+     *
+     * @return usersOnline      online users
+     */
     public static List<String> getUsersOnline() {
         List<String> usersOnline = new LinkedList<>();
         Iterator<HttpSession> sessionsIterator = sessions.iterator();

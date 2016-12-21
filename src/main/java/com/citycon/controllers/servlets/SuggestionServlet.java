@@ -12,15 +12,12 @@ import com.citycon.model.systemunits.entities.RouterEntity;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /**
@@ -95,7 +92,7 @@ public class SuggestionServlet extends HttpServlet {
                     }
 
                     RoutersOfCity dao = (RoutersOfCity)factory.getRouterDAO();
-                    
+
 
                     // TODO: fix hack, waiting for DAO
                     CityEntity tmpCity = new CityEntity();
