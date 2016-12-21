@@ -128,7 +128,7 @@
 								<tbody>
 									<c:forEach items="${entityArray}" var="router">
 										<td>${router.city.countryName}</td>
-										<td>${router.city.name}</td>
+										<td><a href="/statistic/cities/${router.city.countryName}/${router.city.name}">${router.city.name}</a></td>
 										<td class="unique"><a href="/statistic/routers/${router.SN}">${router.SN}</a></td>
 										<td>${router.name}</td>
 										<td>${router.portsNum}</td>
@@ -141,7 +141,7 @@
 							</table>
 						</c:if>
 						<c:if test="${empty entityArray}">
-							<h4 class="text-center">There is no routers in this city</h4>
+							<h4 class="text-center">Empty routers set</h4>
 						</c:if>
 
 						<div class="panel-footer">
@@ -149,15 +149,11 @@
 								<div class="row">
 									<c:if test="${showSystemUnitsOperationBtns}">
 										<div class="col-sm-3">
-											<c:if test="${showSystemUnitsOperationBtns}">
-												<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
-											</c:if>
+											<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
 										</div>
 
 										<div class="col-sm-3">
-											<c:if test="${showSystemUnitsOperationBtns}">
-												<a href=# class="btn btn-primary center-block editHref">Setup</a>
-											</c:if>
+											<a href=# class="btn btn-primary center-block editHref">Setup</a>
 										</div>
 
 										<div class="col-sm-3">
@@ -165,15 +161,13 @@
 										</div>
 
 										<div class="col-sm-3">
-
-												<form action="/router" id="deleteForm" method="POST">
-													<input type="hidden" id="deleteId" name="id" value="-1">
-													<input type="hidden" name="action" value="delete">
-													<input type="hidden" id="city" name="city" value="${param.city}"/>
-													<input type="hidden" id="country" name="country" value="${param.country}"/>
-													<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-												</form>
-
+											<form action="/router" id="deleteForm" method="POST">
+												<input type="hidden" id="deleteId" name="id" value="-1">
+												<input type="hidden" name="action" value="delete">
+												<input type="hidden" id="city" name="city" value="${param.city}"/>
+												<input type="hidden" id="country" name="country" value="${param.country}"/>
+												<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+											</form>
 										</div>
 									</c:if>
 									<c:if test="${not showSystemUnitsOperationBtns}">
@@ -209,13 +203,27 @@
 								</div>
 							</c:if>
 							<c:if test="${empty entityArray}">
-								<div class="row">
-									<div class="col-sm-4"></div>
-									<div class="col-sm-4">
-										<a href="/routers" class="btn btn-primary center-block">Back</a>
+								<c:if test="${showSystemUnitsOperationBtns}">
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
+										</div>
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/routers" class="btn btn-primary center-block">Back</a>
+										</div>
 									</div>
-									<div class="col-sm-4"></div>
-								</div>
+								</c:if>
+								<c:if test="${not showSystemUnitsOperationBtns}">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<a href="/routers" class="btn btn-primary center-block">Back</a>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+								</c:if>
 							</c:if>
 						</div> <!-- Panel footer end -->
 

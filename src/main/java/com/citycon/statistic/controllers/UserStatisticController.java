@@ -9,6 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Provides statistic about all users in the CityCon system.
+ *
+ * @author Mike
+ * @version 1.1
+ */
 @Controller
 @RequestMapping("/users")
 public class UserStatisticController {

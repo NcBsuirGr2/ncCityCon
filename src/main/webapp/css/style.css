@@ -66,6 +66,13 @@ h2 {
 	padding: 4px 6px;
 }
 
+.pagination {
+	margin-bottom:0px;
+}
+
+.pagination + .row {
+	margin-top: 20px;
+}
 .col-xs-1-5,
 .col-sm-1-5,
 .col-md-1-5,

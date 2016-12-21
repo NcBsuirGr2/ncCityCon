@@ -14,6 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Provides statistic data about routers in CityCon
+ *
+ * @author Mike
+ * @version 1.3
+ */
 @Repository
 public class RouterStatisticRepository extends AbstractRepository {
     private final String TABLE_NAME = "Router";
@@ -35,6 +41,10 @@ public class RouterStatisticRepository extends AbstractRepository {
         return super.getCount(TABLE_NAME, id);
     }
 
+    /**
+     *
+     * @return Long count of inactive routers
+     */
     public Long getCountInActiveRouters() {
         try {
             String query = "SELECT COUNT(1) FROM Router WHERE In_Service=0";
@@ -46,6 +56,11 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     *
+     * @return Long total count of ports
+     */
     public Long getCountPorts() {
         try {
             String query = "SELECT SUM(Port) FROM Router";
@@ -57,6 +72,13 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     * Returns count of connections for concrete router
+     *
+     * @param router    to get connections count
+     * @return          Long count of connections
+     */
     public Long getConnectionsCount(RouterEntity router) {
         try {
             String query = "SELECT COUNT(1) FROM RouterConnection rc " +
@@ -70,6 +92,12 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+    /**
+     * Returns count of inactive connections for concrete router
+     *
+     * @param router    to get inactive connections count
+     * @return          Long count of connections
+     */
     public Long getInactiveConnectionsCount(RouterEntity router) {
         try {
             String query = "SELECT COUNT(DISTINCT rc.ID) FROM RouterConnection rc " +
@@ -83,6 +111,15 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     * Return list of routers, that are connected with concrete router. Also returns the count
+     * of connections between them.
+     *
+     * @param router        router to find connected routers
+     * @param active        find only active or inactive connections
+     * @return              list of connected routers
+     */
     public List<Map<String, Object>> getConnectedRouters(RouterEntity router, boolean active) {
         try {
             String query = "SELECT r.SN, r2.SN as SN, count(*) AS connectionsCount FROM Router r " +
@@ -102,6 +139,12 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     *
+     * @param router    router to check if it active
+     * @return          if router is active
+     */
     public boolean isActive(RouterEntity router) {
         try {
             String query = "SELECT Router.In_Service FROM Router where SN=:SN";
@@ -114,6 +157,12 @@ public class RouterStatisticRepository extends AbstractRepository {
             throw e;
         }
     }
+
+    /**
+     *
+     * @param router       router to get name
+     * @return             String name of router
+     */
     public String getName(RouterEntity router) {
         try {
             String query = "SELECT Router.Name FROM Router where SN=:SN";

@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Aimed to handle all related with data access exceptions.
+ *
+ * @author Mike
+ * @version 1.0
+ */
 @ControllerAdvice
 public class StatisticControllerAdvice {
     @ExceptionHandler(DataAccessException.class)

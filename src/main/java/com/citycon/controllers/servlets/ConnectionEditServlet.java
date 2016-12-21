@@ -38,7 +38,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
-		if (validateIntString(req.getParameter("id"))) {
+		if (validatePositiveIntString(req.getParameter("id"))) {
 			try {
 				int connectionId = Integer.parseInt(req.getParameter("id"));
 				RouterConnectionEntity connection = new RouterConnectionEntity();
@@ -54,10 +54,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 					return;
 				}
 			} catch (NumberFormatException exception) {
+				logger.warn("Not string id value", exception);
 				forwardToErrorPage("Not string id value", req, res);
 				return;
 			} catch (Exception exception) {
-                logger.warn("Unexpected exception");
+                logger.warn("Unexpected exception", exception);
                 forwardToErrorPage("Internal server error", req, res);
                 return;
             }

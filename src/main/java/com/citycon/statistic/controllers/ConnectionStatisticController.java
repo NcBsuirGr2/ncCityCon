@@ -9,6 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Provides common statistic about connections.
+ *
+ * @author Mike
+ * @version 1.2
+ */
 @Controller
 @RequestMapping("/connections")
 public class ConnectionStatisticController {

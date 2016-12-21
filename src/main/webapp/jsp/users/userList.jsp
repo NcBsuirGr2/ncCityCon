@@ -113,6 +113,9 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<c:if test="${empty entityArray}">
+							<h4 class="text-center">Empty user set</h4>
+						</c:if>
 
 						<div class="panel-footer">
 							<div class="row">

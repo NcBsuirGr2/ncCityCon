@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Provides common statistic about routers and statistic
+ * for the concrete router
+ *
+ * @author Mike
+ * @version 1.3
+ */
 @Controller
 @RequestMapping("/routers")
 public class RouterStatisticController {
@@ -24,6 +31,12 @@ public class RouterStatisticController {
         this.connectionRepo = connectionRepo;
     }
 
+    /**
+     * Provides common routers statistic.
+     *
+     * @param model     model to set attributes
+     * @return          name of view
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String routersStatistic(Model model) {
 
@@ -46,6 +59,14 @@ public class RouterStatisticController {
 
         return "statistic/routers";
     }
+
+    /**
+     * Provides statistic for the concrete router.
+     *
+     * @param model     model to set attributes
+     * @param SN        SN of router to get statistic about
+     * @return          name of view
+     */
     @RequestMapping(value="/{SN}", method=RequestMethod.GET)
     public String routerStatistic(
             @PathVariable("SN") String SN,

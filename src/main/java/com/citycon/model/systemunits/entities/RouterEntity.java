@@ -26,13 +26,13 @@ import java.io.Serializable;
 public class RouterEntity extends Entity implements Serializable {
 	@NotBlank(message="Router name can not be blank")
 	@Size(min=3, max=30, message="Router name must be {min}..{max} in length")
-	@Pattern(regexp="^[a-z-_a-z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")
+	@Pattern(regexp="^[a-z-_A-Z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid router name: ${validatedValue}")
 	private String name;
 
 	@NotBlank(message="Router SN can not be blank", groups={RouterAddGroup.class, ConnectionGroup.class})
 	@Size(min=3, max=30, message="Router SN must be {min}..{max} in length", 
 		groups={RouterAddGroup.class, ConnectionGroup.class})
-	@Pattern(regexp="^[-_#:a-z0-9]+$", flags=Pattern.Flag.CASE_INSENSITIVE, 
+	@Pattern(regexp="^[!-~]+$", flags=Pattern.Flag.CASE_INSENSITIVE,
 		message="Invalid SN: ${validatedValue}", groups={RouterAddGroup.class, ConnectionGroup.class})
 	private String SN;
 

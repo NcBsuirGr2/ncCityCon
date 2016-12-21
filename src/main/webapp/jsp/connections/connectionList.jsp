@@ -141,7 +141,7 @@
 							</table>
 						</c:if>
 						<c:if test="${empty entityArray}">
-							<h4 class="text-center">There is no connections in this router</h4>
+							<h4 class="text-center">Empty connections set</h4>
 						</c:if>
 
 						<div class="panel-footer">
@@ -196,13 +196,27 @@
 								</div>
 							</c:if>
 							<c:if test="${empty entityArray}">
-								<div class="row">
-									<div class="col-sm-4"></div>
-									<div class="col-sm-4">
-										<a href="/connections" class="btn btn-primary center-block">Back</a>
+								<c:if test="${showSystemUnitsOperationBtns}">
+									<div class="row">
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/connection?${sameSelect}&action=add" class="btn btn-primary center-block">Add</a>
+										</div>
+										<div class="col-sm-2"></div>
+										<div class="col-sm-3">
+											<a href="/connections" class="btn btn-primary center-block">Back</a>
+										</div>
 									</div>
-									<div class="col-sm-4"></div>
-								</div>
+								</c:if>
+								<c:if test="${not showSystemUnitsOperationBtns}">
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<a href="/routers" class="btn btn-primary center-block">Back</a>
+										</div>
+										<div class="col-sm-4"></div>
+									</div>
+								</c:if>
 							</c:if>
 						</div>
 					</div>	<!-- Panel end -->
@@ -214,7 +228,7 @@
 			</div> <!-- End of panel row -->
 			
 			<center class="before-footer">
-				<c:if test="${not empty enityArray}">
+				<c:if test="${not empty entityArray}">
 					<!-- Pagination block -->
 					<c:choose>
 						<c:when test="${not empty param.SN}">

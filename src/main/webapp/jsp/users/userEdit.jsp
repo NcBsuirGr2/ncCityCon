@@ -153,7 +153,7 @@
                                 </div>
                             </c:otherwise>
                         </c:choose>
-
+                    </div>
                 </div>
 
                 <!-- Save dialog modal -->
