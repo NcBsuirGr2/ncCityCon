@@ -22,26 +22,20 @@ import java.util.HashMap;
 public class CityListServlet extends AbstractHttpServlet {
     private static final String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";
 
-    public CityListServlet() {
+    public CityListServlet() throws IOException, ServletException {
         logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.CityListServlet");
     }
 
-<<<<<<< HEAD
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse res) throws ServletException, IOException {
-
-        HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
-                                            .getSession().getAttribute("paginationParameters")).get("cities");
-
-        CityEntity[] cities = null;
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        CityEntity[] cities;
         String search;
-
         try {
-            if(req.getParameter("search") == null){
+            HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
+                    .getSession().getAttribute("paginationParameters")).get("cities");
+
+            search = req.getParameter("search");
+            if(search == null){
                 search = "";
-            }
-            else {
-                search = req.getParameter("search");
             }
 
             if (updatePaginationVariables(req, paginationParameters, ORMCity.getSortingParameters(), ORMCity.getCount(search))) {
@@ -63,13 +57,16 @@ public class CityListServlet extends AbstractHttpServlet {
 
             req.setAttribute("entityArray", cities);
             req.getRequestDispatcher(CITY_LIST_PAGE).forward(req, res);
-        } catch (InvalidDataDAOException | IllegalArgumentException exception) {
-            forwardToErrorPage("Invalid search input", req, res);
-            logger.debug("Invalid getPage data", exception);
+        } catch (InvalidDataDAOException | IllegalArgumentException exception){
+                forwardToErrorPage("Invalid search input", req, res);
+                logger.debug("Invalid getPage data", exception);
         } catch (DAOException exception) {
             forwardToErrorPage("Internal DAO exception", req, res);
         } catch (ClassCastException exception) {
             logger.warn("Cannot cast", exception);
+            forwardToErrorPage("Internal server error", req, res);
+        } catch (Exception exception) {
+            logger.warn("Unexpected exception", exception);
             forwardToErrorPage("Internal server error", req, res);
         }
     }
