@@ -216,25 +216,9 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		paginationParameters.put("routers", defaultRoutersParameters);
 		paginationParameters.put("connections", defaultConnectionsParameters);
 
-    	ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-    	ClassLoader classLoader2 = UserEntity.class.getClassLoader();
-		Properties properties = new Properties();
-		if (properties == null) {
-			logger.warn("Properties is null");
-		}
-		if (classLoader == null) {
-			logger.warn("classLoader is null");
-		}
-		if (classLoader2 == null) {
-			logger.warn("classLoader2 is null");
-		}
-		File file = new File("./");
-		Logger logger = LoggerFactory.getLogger("com.citycon.testing");
-		for (File f : file.listFiles()) {
-			logger.debug(f.getAbsolutePath());
-		}
 		try {
-			properties.load(classLoader.getResourceAsStream("/pagination.properties"));
+			Properties properties = new Properties();
+			properties.load(getClass().getResourceAsStream("/pagination.properties"));
 			defaultUsersParameters.put("path", properties.getProperty("users.path"));
 			defaultUsersParameters.put("page", properties.getProperty("users.page"));
 			defaultUsersParameters.put("itemsPerPage", properties.getProperty("users.itemsPerPage"));

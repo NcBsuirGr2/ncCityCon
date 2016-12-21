@@ -16,12 +16,7 @@ public class ResourceTest {
     public void TestResource() throws IOException{
         ClassLoader cl = ClassLoader.getSystemClassLoader();
         Properties properties = new Properties();
-        //properties.load(cl.getResourceAsStream("/database.properties"));
-        File file = new File("./");
-        Logger logger = LoggerFactory.getLogger("testing");
-        for (File f : file.listFiles()) {
-            logger.debug(f.getAbsolutePath());
-        }
-        //assertEquals(properties.get("username"), "root");
+        properties.load(getClass().getResourceAsStream("/registration.properties"));
+        assertEquals(properties.get("username"), "cityconteam@gmail.com");
     }
 }
