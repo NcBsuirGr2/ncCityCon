@@ -32,10 +32,18 @@ public class RouterListServlet  extends AbstractHttpServlet {
                                                     throws ServletException, IOException {
 
         RouterEntity[] routers;
+        String search;
         HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
                                             .getSession().getAttribute("paginationParameters")).get("routers");
 
         try {
+            if(req.getParameter("search") == null){
+                search = "";
+            }
+            else {
+                search = req.getParameter("search");
+            }
+
             // Getting page for concrete city
             if (req.getParameter("country") != null && req.getParameter("city") != null 
                      && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
@@ -58,7 +66,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
                 logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
-                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, "", city);
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, search, city);
 
             // Getting all routers
             } else {
@@ -76,7 +84,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
                 logger.trace("getPage of routers with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
-                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, "");
+                routers = ORMRouter.getPage(page, itemsPerPage, sortBy, asc, search);
             }   
 
             req.setAttribute("entityArray", routers);

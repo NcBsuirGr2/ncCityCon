@@ -225,7 +225,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
     }
 
     @Override
-    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input, CityEntity city)
+    public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc,
+                                  String search_input, CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
         ArrayList<RouterEntity> routers = new ArrayList();
 
@@ -306,7 +307,9 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                         "    ORDER BY Ro.ID) R\n" +
                         "    JOIN City C ON R.City_id = C.ID) RTo ON RFrom.ID = RTo.ID " +
                         "where RFrom.CityName='"+ city.getName() +"' and RFrom.Country='" + city.getCountryName() +
-                        "' order by " + sorter + sorting_direction + " limit " +
+                        "' AND (RFrom.SN LIKE '%" + search_input +
+                        "%' OR RFrom.`Name` LIKE '%" + search_input + "%')  " +
+                        "order by " + sorter + sorting_direction + " limit " +
                         ((page-1)*itemsPerPage) + "," + itemsPerPage;
             }
             else {
@@ -360,7 +363,8 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
                         "    GROUP BY Ro.ID\n" +
                         "    ORDER BY Ro.ID) R\n" +
                         "    JOIN City C ON R.City_id = C.ID) RTo ON RFrom.ID = RTo.ID " +
-                        "order by " + sorter + sorting_direction + " limit " +
+                        "WHERE RFrom.CityName LIKE '%" + search_input + "%' OR RFrom.SN LIKE '%" + search_input +
+                        "%' OR RFrom.`Name` LIKE '%" + search_input + "%' order by " + sorter + sorting_direction + " limit " +
                         ((page-1)*itemsPerPage) + "," + itemsPerPage;
             }
         }

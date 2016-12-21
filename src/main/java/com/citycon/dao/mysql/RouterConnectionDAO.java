@@ -337,7 +337,10 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     "from " + add_table + " T, CitySN C, Router R where T.ID_From = C.id and R.SN = C.SN) C1 " +
                     "JOIN (select distinct T.ID as ID, R.In_Service, C.`Name`, C.Country, C.SN, T.ID_To " +
                     "from " + add_table + " T, CitySN C, Router R where T.ID_To = C.id and R.SN = C.SN) C2 " +
-                    "ON C1.ID = C2.ID order by " + sorter + sorting_direction +
+                    "ON C1.ID = C2.ID " +
+                    "WHERE C1.`Name` LIKE '%" + search_input + "%' OR C1.SN LIKE '%" + search_input + "%' OR " +
+                    "C2.`Name` LIKE '%" + search_input + "%' OR C2.SN LIKE '%" + search_input + "%' " +
+                    "order by " + sorter + sorting_direction +
                     " limit " + ((page-1)*itemsPerPage) + "," + itemsPerPage;
         } else {
             logger.info("Enter parameter to sort in read {} are invalid.\n {}", nameTable, log_parameters);

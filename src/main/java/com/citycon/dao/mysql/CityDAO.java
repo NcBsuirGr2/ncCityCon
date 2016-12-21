@@ -54,7 +54,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
 
             search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
                      "from Router R Right outer join City C on R.City_id=C.ID " +
-                     "group by C.ID " +
+                     "where C.`Name` LIKE '%" + search_input + "%' " +
+                     "group by C.ID "+
                      "order by " + sorter + sorting_direction + " limit " +
                     ((page-1)*itemsPerPage) + "," + itemsPerPage;
         }
