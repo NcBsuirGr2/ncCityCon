@@ -30,6 +30,13 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         hashMap.put("routersNum", "`RoutersNum`");
     }
 
+    @Override
+    public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
+        String search = "select count(1) from " + nameTable + " where `Name` LIKE '%" + search_input + "%' ";
+
+        return count_search(search);
+    }
+
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
 

@@ -56,8 +56,8 @@ public class UserListServlet extends AbstractHttpServlet {
 				search = req.getParameter("search");
 			}
 
-			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount())) {
-				setPaginationBlockVariables(req, paginationParameters, ORMUser.getCount());
+			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount(search))) {
+				setPaginationBlockVariables(req, paginationParameters, ORMUser.getCount(search));
 			} else {
 				forwardToErrorPage("Invalid search input", req, res);
 				return;

@@ -9,8 +9,9 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
-   <script type="text/javascript" src="/js/cityPages/selectEntityCity.js"></script>
+    <script type="text/javascript" src="/js/cityPages/selectEntityCity.js"></script>
     <script type="text/javascript" src="/js/cityPages/cityList.js"></script>
+    <script type="text/javascript" src="/js/formValidation.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -53,12 +54,22 @@
         <div class="col-sm-10">
             <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center;">
-                    <div>Cities</div>
-                    <div>
-                        <form action="/cities" method="get" name="form" onsubmit="return true;">
-                            <img src="/img/search.png">
-                            <input class="panel-search" name="search" type="text" id="search" size="10" maxlength="15">
-                        </form>
+                    <div class="row">
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-2">
+                            Cities
+                        </div>
+                        <div class="col-md-5">
+                            <c:if test="${not empty entityArray}">
+                                <div class="pull-right">
+                                    <form action="/cities" method="get" name="form" onsubmit="return true;">
+                                        <img src="/img/search.png" height="25px">
+                                        <input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+                                    </form>
+                                </div>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
 
@@ -184,63 +195,82 @@
     </div>
 
     <center class="before-footer">
-        <c:if test="${endPage > 1}">
-            <ul class="pagination">
-                <c:if test="${beginPage > previousPage}">
-                    <li class="page-item">
-                        <a class="page-link" href="?page=${previousPage}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                </c:if>
-
-                
-                
-                <c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
-                    <c:if test="${i.index == currentPage}">
-                            <c:set var="isActive" value="active"/>
+        <c:if test="${not empty entityArray}">
+            <c:if test="${endPage > 1}">
+                <ul class="pagination">
+                    <c:if test="${beginPage > previousPage}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${previousPage}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
                     </c:if>
-                    <c:if test="${i.index != currentPage}">
-                            <c:set var="isActive" value=""/>
+
+
+
+                    <c:forEach begin="${beginPage}" end="${endPage}" varStatus="i">
+                        <c:if test="${i.index == currentPage}">
+                                <c:set var="isActive" value="active"/>
+                        </c:if>
+                        <c:if test="${i.index != currentPage}">
+                                <c:set var="isActive" value=""/>
+                        </c:if>
+                        <li class="page-item ${isActive}">
+                            <a class="page-link" href="?page=${i.index}">
+                                ${i.index}
+                            </a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${endPage < nextPage}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${nextPage}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
                     </c:if>
-                    <li class="page-item ${isActive}">
-                        <a class="page-link" href="?page=${i.index}">
-                            ${i.index}
-                        </a>
-                    </li>
-                </c:forEach>
+                </ul>
+            </c:if>
 
-                <c:if test="${endPage < nextPage}">
-                    <li class="page-item">
-                        <a class="page-link" href="?page=${nextPage}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </c:if>
-            </ul>
-        </c:if> 
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
 
-        <div class="row">
-            <div class="col-sm-3">
+                <div class="col-sm-3">
+                    <label class="pull-right control-label">Items per page:</label>
+                </div>
+
+                <div class="col-sm-2">
+                    <select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
+                        <option
+                                <c:if test="${paginationParameters['cities']['itemsPerPage'] == 5}">
+                                    selected
+                                </c:if>
+                                <c:choose>
+                                    <c:when test="${not empty param.search}">
+                                        value="?itemsPerPage=5">
+                                    </c:when>
+                                    <c:otherwise>
+                                        value="?itemsPerPage=5">
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${not empty param.country and not empty param.city}">
+                                    <c:set var="samePath" value="country=${param.country}&city=${param.city}"/>
+                                </c:if>
+                                value="?itemsPerPage=5">
+                            5
+                        </option>
+                        <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
+                        <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                </div>
             </div>
-
-            <div class="col-sm-3">
-                <label class="pull-right control-label">Items per page:</label>
-            </div>
-
-            <div class="col-sm-2">
-                <select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 5}">selected</c:if>  value="?itemsPerPage=5">5</option>
-                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
-                    <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
-                </select>
-            </div>
-
-            <div class="col-sm-4">
-            </div>
-        </div>
+        </c:if>
     </center>
 
     <%@ include file="/include/footer.html" %>

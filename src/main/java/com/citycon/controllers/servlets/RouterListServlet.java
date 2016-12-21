@@ -39,6 +39,7 @@ public class RouterListServlet  extends AbstractHttpServlet {
         try {
             if(req.getParameter("search") == null){
                 search = "";
+
             }
             else {
                 search = req.getParameter("search");
@@ -52,8 +53,8 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
 
-                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount(city))) {
-                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount(city));
+                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount(search, city))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount(search, city));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);
                     return;
@@ -70,8 +71,8 @@ public class RouterListServlet  extends AbstractHttpServlet {
 
             // Getting all routers
             } else {
-                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount())) {
-                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount());
+                if (updatePaginationVariables(req, paginationParameters, ORMRouter.getSortingParameters(), ORMRouter.getCount(search))) {
+                    setPaginationBlockVariables(req, paginationParameters, ORMRouter.getCount(search));
                 } else {
                     forwardToErrorPage("Invalid search input", req, res);
                     return;

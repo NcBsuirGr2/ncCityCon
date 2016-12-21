@@ -40,6 +40,7 @@ public class CityListServlet extends AbstractHttpServlet {
         HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
                                             .getSession().getAttribute("paginationParameters")).get("cities");
 
+        CityEntity[] cities = null;
         String search;
 
         try {
@@ -50,8 +51,8 @@ public class CityListServlet extends AbstractHttpServlet {
                 search = req.getParameter("search");
             }
 
-            if (updatePaginationVariables(req, paginationParameters, ORMCity.getSortingParameters(), ORMCity.getCount())) {
-                setPaginationBlockVariables(req, paginationParameters, ORMCity.getCount());
+            if (updatePaginationVariables(req, paginationParameters, ORMCity.getSortingParameters(), ORMCity.getCount(search))) {
+                setPaginationBlockVariables(req, paginationParameters, ORMCity.getCount(search));
             } else {
                 forwardToErrorPage("Invalid search input", req, res);
                 return;
@@ -65,7 +66,8 @@ public class CityListServlet extends AbstractHttpServlet {
             logger.trace("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                     page, itemsPerPage, sortBy, asc);
 
-            CityEntity[] cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc, search);
+            cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc, search);
+
             req.setAttribute("entityArray", cities);
             req.getRequestDispatcher(CITY_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | IllegalArgumentException exception) {

@@ -48,12 +48,20 @@
 			<div class="col-sm-10">
 				<div class="panel panel-default">
 					<div class="panel-heading" style="text-align: center;">
-						<div>Users</div>
-						<div>
-							<form action="/users" method="get" name="form" onsubmit="return true;">
-								<img src="/img/search.png">
-								<input class="panel-search" name="search" type="text" id="search" size="10" maxlength="15">
-							</form>
+						<div class="row">
+							<div class="col-md-5">
+							</div>
+							<div class="col-md-2">
+								Users
+							</div>
+							<div class="col-md-5">
+								<div class="pull-right">
+									<form action="/users" method="get" name="form" onsubmit="return true;">
+										<img src="/img/search.png" height="25px">
+										<input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">

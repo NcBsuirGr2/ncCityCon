@@ -103,9 +103,9 @@ public class ORMRouter extends ORMEntity {
      * @return int 				number of connections
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount() throws DAOException {
+    public static int getCount(String search) throws DAOException {
     	DAO staticDAO = daoFactory.getRouterDAO();
-        return staticDAO.count_element();
+        return staticDAO.count_element(search);
     }
 
      /**
@@ -114,8 +114,8 @@ public class ORMRouter extends ORMEntity {
      * @return int 				number of connections
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount(CityEntity city) throws DAOException {
+    public static int getCount(String search, CityEntity city) throws DAOException {
     	RouterDAO staticDAO = (RouterDAO)daoFactory.getRouterDAO();
-        return staticDAO.count_element(city);
+        return staticDAO.count_element(search, city);
     }
 }

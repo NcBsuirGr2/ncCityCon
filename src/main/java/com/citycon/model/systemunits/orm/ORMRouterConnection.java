@@ -120,9 +120,9 @@ public class ORMRouterConnection extends ORMEntity {
      * @return int 				nuber of connections
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount() throws DAOException {
+    public static int getCount(String search) throws DAOException {
     	DAO staticDAO = daoFactory.getRouterConnectionDAO();
-        return staticDAO.count_element();
+        return staticDAO.count_element(search);
     }
     /**
      *	Retrieves total number of connetions for concrete city from DAO layer.
@@ -130,9 +130,9 @@ public class ORMRouterConnection extends ORMEntity {
      * @return int 				nuber of connections
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount(CityEntity city) throws DAOException {
+    public static int getCount(String search, CityEntity city) throws DAOException {
     	ConnectionsOfCity staticDAO = (ConnectionsOfCity)daoFactory.getRouterConnectionDAO();
-        return staticDAO.count_element(city);
+        return staticDAO.count_element(search, city);
     }
     /**
      *	Retrieves total nuber of connetions for concrete router from DAO layer.
@@ -140,8 +140,8 @@ public class ORMRouterConnection extends ORMEntity {
      * @return int 				number of connections
      * @throws DAOException 	if any DAO internal error occur
      */
-    public static int getCount(RouterEntity router) throws DAOException {
+    public static int getCount(String search, RouterEntity router) throws DAOException {
     	ConnectionsOfRouter staticDAO = (ConnectionsOfRouter)daoFactory.getRouterConnectionDAO();
-        return staticDAO.count_element(router);
+        return staticDAO.count_element(search, router);
     }
 }	

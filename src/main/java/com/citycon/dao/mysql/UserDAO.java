@@ -34,6 +34,14 @@ public class UserDAO extends MySQLDAO{
     }
 
     @Override
+    public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
+        String search = "select count(1) from " + nameTable + " where Login LIKE '%" + search_input + "%' OR `Name` LIKE '%" +
+                search_input + "%' ";
+
+        return count_search(search);
+    }
+
+    @Override
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
 
@@ -158,18 +166,24 @@ public class UserDAO extends MySQLDAO{
             throw new InvalidDataDAOException("Cast Entity in read failed.", e);
         }
 
-        String search = "select * from " + nameTable + " where `Login`= '" + user.getLogin() + "'";
+        String log_parameters = "With parameters: ";
 
-        String log_parameters = "With parameters: Login("+ user.getLogin() + ")";
+        String search = "select * from " + nameTable + " where ";
 
-        if (user.getPassword() != null){
-            search += " and `Pass`='" + user.getPassword() + "'";
-            log_parameters += ", Password("+ user.getPassword()+")";
+        if(user.getId() != 0){
+            search += " Id= " + user.getId();
         }
-
-        if (user.getLogin() == null){
-            logger.info("For reading user incorrectly chosen field, try Login with Password or only Login");
-            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Login with Password or only Login");
+        else if (user.getPassword() != null){
+            search += " Login='" + user.getLogin() + "' and `Pass`='" + user.getPassword() + "'";
+            log_parameters += "Login("+ user.getLogin() + "), Password("+ user.getPassword()+")";
+        }
+        else if (user.getLogin() != null){
+            search += " Login='" + user.getLogin() + "'";
+            log_parameters += "Login("+ user.getLogin() + ")";
+        }
+        else{
+            logger.info("For reading user incorrectly chosen field, try Id or Login with Password or only Login");
+            throw new InvalidDataDAOException("For reading user incorrectly chosen field, try Id or Login with Password or only Login");
         }
 
         try(
