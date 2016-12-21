@@ -60,62 +60,34 @@
 				     		<thead>
 								<tr>
 									<th>
-										<citycon:sortyBy asc="${paginationParameters['users']['asc']}" sortByIs="${paginationParameters['users']['sortBy']}" sortByNeed="name"/>
+										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														sortByIs="${paginationParameters['users']['sortBy']}"
+														sortByNeed="name"
+														value="Name"/>
 									</th>
 									<th>
-										<c:set var="newAsc" value="true"/>
-										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'login'}">
-											<c:set var="newAsc" value="false"/>
-										</c:if>
-										<a href="?asc=${newAsc}&sortBy=login">
-											Login
-											<c:if test="${paginationParameters['users']['sortBy'] == 'login'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-										</a>
+										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														sortByIs="${paginationParameters['users']['sortBy']}"
+														sortByNeed="login"
+														value="Login"/>
 									</th>
 									<th>
-										<c:set var="newAsc" value="true"/>
-										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'group'}">
-											<c:set var="newAsc" value="false"/>
-										</c:if>
-
-										<a href="?asc=${newAsc}&sortBy=group">
-											Group
-											<c:if test="${paginationParameters['users']['sortBy'] == 'group'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-										</a>
+										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														sortByIs="${paginationParameters['users']['sortBy']}"
+														sortByNeed="group"
+														value="Group"/>
 									</th>
 									<th>
-										<c:set var="newAsc" value="true"/>
-										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'email'}">
-											<c:set var="newAsc" value="false"/>
-										</c:if>
-
-										<a href="?asc=${newAsc}&sortBy=email">
-											E-mail
-											<c:if test="${paginationParameters['users']['sortBy'] == 'email'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-										</a>
+										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														sortByIs="${paginationParameters['users']['sortBy']}"
+														sortByNeed="email"
+														value="Email"/>
 									</th>
 									<th>
-										<c:set var="newAsc" value="true"/>
-										<c:if test="${paginationParameters['users']['asc'] == true && paginationParameters['users']['sortBy'] == 'createDate'}">
-											<c:set var="newAsc" value="false"/>
-										</c:if>
-
-										<a href="?asc=${newAsc}&sortBy=createDate">
-											Join date
-											<c:if test="${paginationParameters['users']['sortBy'] == 'createDate'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-										</a>
+										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														sortByIs="${paginationParameters['users']['sortBy']}"
+														sortByNeed="createDate"
+														value="Joined on"/>
 									</th>
 							        <th class="hidden">id</th>
 				        		</tr>

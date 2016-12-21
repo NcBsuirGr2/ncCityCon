@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="citycon"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -70,61 +71,33 @@
 								<thead>
 									<tr>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'City1'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${sameSelect}&sortBy=City1&asc=${newAsc}">
-												Left city
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'City1'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['connections']['asc']}"
+															sortByIs="${paginationParameters['connections']['sortBy']}"
+															sortByNeed="City1"
+															value="Left city"
+															prefix="${sameSelect}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'City2'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
+											<citycon:sortBy asc="${paginationParameters['connections']['asc']}"
+															sortByIs="${paginationParameters['connections']['sortBy']}"
+															sortByNeed="City2"
+															value="Right city"
+															prefix="${sameSelect}"/>
 
-											<a href="?${sameSelect}&sortBy=City2&asc=${newAsc}">
-												Right city
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'City2'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-
-											<c:if test="${paginationParameters['connections']['asc'] == 'true' and paginationParameters['connections']['sortBy'] == 'SN1'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-											<a href="?${sameSelect}&sortBy=SN1&asc=${newAsc}">
-												Left city router SN
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN1'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
-													<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['connections']['asc']}"
+															sortByIs="${paginationParameters['connections']['sortBy']}"
+															sortByNeed="SN1"
+															value="Left SN"
+															prefix="${sameSelect}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['connections']['asc'] == true and paginationParameters['connections']['sortBy'] == 'SN2'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${sameSelect}&sortBy=SN2&asc=${newAsc}">
-												Right city router SN
-												<c:if test="${paginationParameters['connections']['sortBy'] == 'SN2'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['connections']['asc']}"
+															sortByIs="${paginationParameters['connections']['sortBy']}"
+															sortByNeed="SN2"
+															value="Right SN"
+															prefix="${sameSelect}"/>
 										</th>
 
 										<th class="hidden">id</th>

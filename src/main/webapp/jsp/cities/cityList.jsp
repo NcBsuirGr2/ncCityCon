@@ -1,4 +1,5 @@
 ﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="citycon"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,46 +66,24 @@
                     <thead>
                     <tr>
                         <th>
-                            <c:set var="newAsc" value="true"/>
-                            <c:if test="${paginationParameters['cities']['asc'] == true and paginationParameters['cities']['sortBy'] == 'name'}">
-                            <c:set var="newAsc" value="false"/>
-                            </c:if>
-
-                            <a href="?sortBy=name&asc=${newAsc}">
-                                City
-                                <c:if test="${paginationParameters['cities']['sortBy'] == 'name'}">
-                                <c:if test="${newAsc == true}">&#9660;</c:if>
-                                <c:if test="${newAsc == false}">&#9650;</c:if>
-                                </c:if>
-                            </a>
+                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                            sortByIs="${paginationParameters['cities']['sortBy']}"
+                                            sortByNeed="name"
+                                            value="Name"/>
                         </th>
 
                         <th>
-                            <c:set var="newAsc" value="true"/>
-                            <c:if test="${paginationParameters['cities']['asc'] == true && paginationParameters['cities']['sortBy'] == 'countryName'}">
-                            <c:set var="newAsc" value="false"/>
-                            </c:if>
-                            <a href="?sortBy=countryName&asc=${newAsc}">
-                                Country
-                                <c:if test="${paginationParameters['cities']['sortBy'] == 'countryName'}">
-                                <c:if test="${newAsc == true}">&#9660;</c:if>
-                                <c:if test="${newAsc == false}">&#9650;</c:if>
-                                </c:if>
-                            </a>
+                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                            sortByIs="${paginationParameters['cities']['sortBy']}"
+                                            sortByNeed="countryName"
+                                            value="Country"/>
                         </th>
 
                         <th>
-                            <c:set var="newAsc" value="true"/>
-                            <c:if test="${paginationParameters['cities']['asc'] == true && paginationParameters['cities']['sortBy'] == 'routersNum'}">
-                            <c:set var="newAsc" value="false"/>
-                            </c:if>
-                            <a href="?sortBy=routersNum&asc=${newAsc}">
-                                Routers Number
-                                <c:if test="${paginationParameters['cities']['sortBy'] == 'routersNum'}">
-                                    <c:if test="${newAsc == true}">&#9660;</c:if>
-                                    <c:if test="${newAsc == false}">&#9650;</c:if>
-                                </c:if>
-                            </a>
+                            <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
+                                            sortByIs="${paginationParameters['cities']['sortBy']}"
+                                            sortByNeed="routersNum"
+                                            value="Routers number"/>
                         </th>
 
                         <th class="hidden">id</th>
@@ -122,8 +101,6 @@
                     </tbody>
                 </table>
 
-
-
                 <div class="panel-footer">
                     <div class="row">
                         <c:if test="${showSystemUnitsOperationBtns}">
@@ -134,21 +111,32 @@
                             <div class="col-md-1-5">
                                 <a href="#" class="btn btn-primary btn-block btn-group-md center-block editHref">Edit</a>
                             </div>
-                        </c:if>
-                        <div class="col-md-1-5">
-                                <form action="/city" id="deleteForm" method="POST">
-                                    <input type="hidden" id="deleteId" name="id" value="-1">
-                                    <input type="hidden" name="action" value="delete">
-                                    <button type="button" class="btn btn-primary btn-block btn-group-md center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-                                </form>
-                            </div>
-                        <div class="col-md-1-5">
-                            <a href="#" class="btn btn-primary btn-block btn-group-md center-block routersHref">Routers</a>
-                        </div>
 
-                        <div class="col-md-1-5">
-                            <a href="#" class="btn btn-primary btn-block btn-group-md center-block connectionsHref">Connections</a>
-                        </div>
+                            <div class="col-md-1-5">
+                                    <form action="/city" id="deleteForm" method="POST">
+                                        <input type="hidden" id="deleteId" name="id" value="-1">
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="button" class="btn btn-primary btn-block btn-group-md center-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+                                    </form>
+                                </div>
+                            <div class="col-md-1-5">
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block routersHref">Routers</a>
+                            </div>
+
+                            <div class="col-md-1-5">
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block connectionsHref">Connections</a>
+                            </div>
+                        </c:if>
+                        <c:if test="${not showSystemUnitsOperationBtns}">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block routersHref">Routers</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="btn btn-primary btn-block btn-group-md center-block connectionsHref">Connections</a>
+                            </div>
+                        </c:if>
                     </div>
                     <!-- Delete dialog modal -->
                     <div class="modal fade deleteDialog">

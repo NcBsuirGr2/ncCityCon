@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="citycon"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -64,99 +65,53 @@
 
 									<tr>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == 'true' and paginationParameters['routers']['sortBy'] == 'country'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${samePath}&sortBy=country&asc=${newAsc}">
-												Country
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'country'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if> <!-- Down -->
-													<c:if test="${newAsc == false}">&#9650;</c:if> <!-- Up -->
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="country"
+															value="Country"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'city'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${samePath}&sortBy=city&asc=${newAsc}">
-												City
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'city'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="city"
+															value="City"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'SN'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${samePath}&sortBy=SN&asc=${newAsc}">
-												SN
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'SN'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="SN"
+															value="SN"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'name'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-
-												<a href="?${samePath}&sortBy=name&asc=${newAsc}">
-												Name
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'name'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="name"
+															value="Name"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'portsNum'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-												<a href="?${samePath}&sortBy=portsNum&asc=${newAsc}">
-												Ports num
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'portsNum'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="portsNum"
+															value="Ports num"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-												<a href="?${samePath}&sortBy=usedPortsNum&asc=${newAsc}">
-												Used ports
-												<c:if test="${paginationParameters['routers']['sortBy'] == 'usedPortsNum'}">
-													<c:if test="${newAsc == true}">&#9660;</c:if>
-													<c:if test="${newAsc == false}">&#9650;</c:if>
-												</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="usedPortsNum"
+															value="Used ports"
+															prefix="${samePath}"/>
 										</th>
 										<th>
-											<c:set var="newAsc" value="true"/>
-											<c:if test="${paginationParameters['routers']['asc'] == true and paginationParameters['routers']['sortBy'] == 'isActive'}">
-												<c:set var="newAsc" value="false"/>
-											</c:if>
-											<a href="?${samePath}&sortBy=isActive&asc=${newAsc}">
-											Active
-											<c:if test="${paginationParameters['routers']['sortBy'] == 'isActive'}">
-												<c:if test="${newAsc == true}">&#9660;</c:if>
-												<c:if test="${newAsc == false}">&#9650;</c:if>
-											</c:if>
-											</a>
+											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
+															sortByIs="${paginationParameters['routers']['sortBy']}"
+															sortByNeed="isActive"
+															value="Active"
+															prefix="${samePath}"/>
 										</th>
 										<th class="hidden">id</th>
 									</tr>
@@ -184,34 +139,43 @@
 						<div class="panel-footer">
 							<c:if test="${not empty entityArray}">
 								<div class="row">
+									<c:if test="${showSystemUnitsOperationBtns}">
+										<div class="col-sm-3">
+											<c:if test="${showSystemUnitsOperationBtns}">
+												<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
+											</c:if>
+										</div>
 
-									<div class="col-sm-3">
-										<c:if test="${showSystemUnitsOperationBtns}">
-											<a href="/router?${samePath}&action=add" class="btn btn-primary center-block">Add</a>
-										</c:if>
-									</div>
+										<div class="col-sm-3">
+											<c:if test="${showSystemUnitsOperationBtns}">
+												<a href=# class="btn btn-primary center-block editHref">Setup</a>
+											</c:if>
+										</div>
 
-									<div class="col-sm-3">
-										<c:if test="${showSystemUnitsOperationBtns}">
-											<a href=# class="btn btn-primary center-block editHref">Setup</a>
-										</c:if>
-									</div>
+										<div class="col-sm-3">
+											<a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
+										</div>
 
-									<div class="col-sm-3">
-										<a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
-									</div>
+										<div class="col-sm-3">
 
-									<div class="col-sm-3">
-										<c:if test="${showSystemUnitsOperationBtns}">
-											<form action="/router" id="deleteForm" method="POST">
-												<input type="hidden" id="deleteId" name="id" value="-1">
-												<input type="hidden" name="action" value="delete">
-												<input type="hidden" id="city" name="city" value="${param.city}"/>
-												<input type="hidden" id="country" name="country" value="${param.country}"/>
-												<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-											</form>
-										</c:if>
-									</div>
+												<form action="/router" id="deleteForm" method="POST">
+													<input type="hidden" id="deleteId" name="id" value="-1">
+													<input type="hidden" name="action" value="delete">
+													<input type="hidden" id="city" name="city" value="${param.city}"/>
+													<input type="hidden" id="country" name="country" value="${param.country}"/>
+													<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+												</form>
+
+										</div>
+									</c:if>
+									<c:if test="${not showSystemUnitsOperationBtns}">
+										<div class="col-sm-4">
+										</div>
+
+										<div class="col-sm-4">
+											<a href="#" class="btn btn-primary center-block connectionsHref">Connections</a>
+										</div>
+									</c:if>
 									<!-- Delete dialog modal -->
 									<div class="modal fade deleteDialog">
 										<div class="modal-dialog" role="document">
