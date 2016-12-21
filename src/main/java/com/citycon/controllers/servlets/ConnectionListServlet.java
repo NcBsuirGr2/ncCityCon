@@ -37,6 +37,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         HttpServletResponse res) throws ServletException, IOException {
         
         RouterConnectionEntity[] connections;
+        String search;
         HashMap<String, String> paginationParameters;
 
         try {
@@ -49,6 +50,13 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         }
 
         try {
+            if(req.getParameter("search") == null){
+                search = "";
+            }
+            else {
+                search = req.getParameter("search");
+            }
+
             // Getting page for concrete router
             if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
                 RouterEntity router = new RouterEntity();
@@ -70,7 +78,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "", router);
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, search, router);
                 
             // Getting page for concrete city
             } else if (req.getParameter("country") != null && req.getParameter("city") != null 
@@ -96,7 +104,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "", city);
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, search, city);
 
             // Getting all connections
             } else {
@@ -116,7 +124,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 logger.trace("getPage of connections with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                                                                 page, itemsPerPage, sortBy, asc);
 
-                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, "");
+                connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, search);
             }   
 
             req.setAttribute("entityArray", connections);
