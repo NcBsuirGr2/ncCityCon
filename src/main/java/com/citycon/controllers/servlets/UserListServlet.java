@@ -50,6 +50,8 @@ public class UserListServlet extends AbstractHttpServlet {
 				search = "";
 			}
 
+			search = search.trim();
+
 			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount(search))) {
 				setPaginationBlockVariables(req, paginationParameters, ORMUser.getCount(search));
 			} else {

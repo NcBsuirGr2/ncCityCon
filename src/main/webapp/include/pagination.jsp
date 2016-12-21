@@ -4,7 +4,7 @@
 	<ul class="pagination">
 		<c:if test="${beginPage > previousPage}">
 			<li class="page-item">
-				<a class="page-link" href="?page=${previousPage}" aria-label="Previous">
+				<a class="page-link" href="?page=${previousPage}&search=${param.search}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 					<span class="sr-only">Previous</span>
 				</a>
@@ -21,7 +21,7 @@
 					<c:set var="isActive" value=""/>
 			</c:if>
 			<li class="page-item ${isActive}">
-				<a class="page-link" href="?page=${i.index}">
+				<a class="page-link" href="?page=${i.index}&search=${param.search}">
 					${i.index}
 				</a>
 			</li>
@@ -29,7 +29,7 @@
 
 		<c:if test="${endPage < nextPage}">
 			<li class="page-item">
-				<a class="page-link" href="?page=${nextPage}" aria-label="Next">
+				<a class="page-link" href="?page=${nextPage}&search=${param.search}" aria-label="Next">
 					<span aria-hidden="true">&raquo;</span>
 					<span class="sr-only">Next</span>
 				</a>
@@ -48,10 +48,49 @@
 
 	<div class="col-sm-2">
 		<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 5}">selected</c:if>  value="?itemsPerPage=5">5</option>
-            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 10 || empty paginationParameters['users']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
-            <option <c:if test="${paginationParameters['users']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
-        </select>
+			<option
+					<c:if test="${paginationParameters['users']['itemsPerPage'] == 5}">
+						selected
+					</c:if>
+					<c:choose>
+						<c:when test="${not empty param.search}">
+							value="?itemsPerPage=5&search=${param.search}">
+						</c:when>
+						<c:otherwise>
+							value="?itemsPerPage=5">
+						</c:otherwise>
+					</c:choose>
+					5
+			</option>
+			<option
+					<c:if test="${paginationParameters['users']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">
+						selected
+					</c:if>
+					<c:choose>
+						<c:when test="${not empty param.search}">
+							value="?itemsPerPage=10&search=${param.search}">
+						</c:when>
+						<c:otherwise>
+							value="?itemsPerPage=10">
+						</c:otherwise>
+					</c:choose>
+					10
+			</option>
+			<option
+					<c:if test="${paginationParameters['users']['itemsPerPage'] == 15}">
+						selected
+					</c:if>
+					<c:choose>
+						<c:when test="${not empty param.search}">
+							value="?itemsPerPage=15&search=${param.search}">
+						</c:when>
+						<c:otherwise>
+							value="?itemsPerPage=15">
+						</c:otherwise>
+					</c:choose>
+					15
+			</option>
+		</select>
     </div>
 
     <div class="col-sm-4">

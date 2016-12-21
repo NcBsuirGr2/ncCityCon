@@ -58,7 +58,8 @@
 								<div class="pull-right">
 									<form action="/users" method="get" name="form" onsubmit="return true;">
 										<img src="/img/search.png" height="25px">
-										<input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+										<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+											   maxlength="15" value="${param.search}" placeholder="search..." title="search by Name or Login" required>
 									</form>
 								</div>
 							</div>
@@ -71,19 +72,25 @@
 										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="name"
-														value="Name"/>
+														value="Name"
+														search="${param.search}"
+										/>
 									</th>
 									<th>
 										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="login"
-														value="Login"/>
+														value="Login"
+														search="${param.search}"
+										/>
 									</th>
 									<th>
 										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="group"
-														value="Group"/>
+														value="Group"
+														search="${param.search}"
+										/>
 									</th>
 									<th>
 										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
@@ -95,7 +102,9 @@
 										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="createDate"
-														value="Joined on"/>
+														value="Joined on"
+														search="${param.search}"
+										/>
 									</th>
 							        <th class="hidden">id</th>
 				        		</tr>

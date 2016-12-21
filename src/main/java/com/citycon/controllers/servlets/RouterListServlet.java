@@ -37,6 +37,9 @@ public class RouterListServlet  extends AbstractHttpServlet {
                 search = "";
 
             }
+
+            search = search.trim();
+
             // Getting page for concrete city
             if (notEmpty(req.getParameter("country")) && notEmpty(req.getParameter("city"))) {
                 CityEntity city = new CityEntity();

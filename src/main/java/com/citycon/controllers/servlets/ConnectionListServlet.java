@@ -49,6 +49,8 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 search = "";
             }
 
+            search = search.trim();
+
             // Getting page for concrete router
             if (notEmpty(req.getParameter("SN"))) {
                 RouterEntity router = new RouterEntity();
