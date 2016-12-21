@@ -65,7 +65,8 @@
                                 <div class="pull-right">
                                     <form action="/cities" method="get" name="form" onsubmit="return true;">
                                         <img src="/img/search.png" height="25px">
-                                        <input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+                                        <input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+                                               maxlength="15" value="${param.search}" required>
                                     </form>
                                 </div>
                             </c:if>
@@ -80,21 +81,27 @@
                             <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
                                             sortByIs="${paginationParameters['cities']['sortBy']}"
                                             sortByNeed="name"
-                                            value="Name"/>
+                                            value="Name"
+                                            search="${param.search}"
+                            />
                         </th>
 
                         <th>
                             <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
                                             sortByIs="${paginationParameters['cities']['sortBy']}"
                                             sortByNeed="countryName"
-                                            value="Country"/>
+                                            value="Country"
+                                            search="${param.search}"
+                            />
                         </th>
 
                         <th>
                             <citycon:sortBy asc="${paginationParameters['cities']['asc']}"
                                             sortByIs="${paginationParameters['cities']['sortBy']}"
                                             sortByNeed="routersNum"
-                                            value="Routers number"/>
+                                            value="Routers number"
+                                            search="${param.search}"
+                            />
                         </th>
 
                         <th class="hidden">id</th>
@@ -203,7 +210,7 @@
                 <ul class="pagination">
                     <c:if test="${beginPage > previousPage}">
                         <li class="page-item">
-                            <a class="page-link" href="?page=${previousPage}" aria-label="Previous">
+                            <a class="page-link" href="?page=${previousPage}&search=${param.search}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
@@ -220,7 +227,7 @@
                                 <c:set var="isActive" value=""/>
                         </c:if>
                         <li class="page-item ${isActive}">
-                            <a class="page-link" href="?page=${i.index}">
+                            <a class="page-link" href="?page=${i.index}&search=${param.search}">
                                 ${i.index}
                             </a>
                         </li>
@@ -228,7 +235,7 @@
 
                     <c:if test="${endPage < nextPage}">
                         <li class="page-item">
-                            <a class="page-link" href="?page=${nextPage}" aria-label="Next">
+                            <a class="page-link" href="?page=${nextPage}&search=${param.search}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Next</span>
                             </a>
@@ -276,18 +283,18 @@
                             10
                         </option>
                         <option
-                                <c:if test="${paginationParameters['cities']['itemsPerPage'] == 5}">
+                                <c:if test="${paginationParameters['cities']['itemsPerPage'] == 15}">
                                     selected
                                 </c:if>
                                 <c:choose>
                                     <c:when test="${not empty param.search}">
-                                        value="?itemsPerPage=5&search=${param.search}">
+                                        value="?itemsPerPage=15&search=${param.search}">
                                     </c:when>
                                     <c:otherwise>
-                                        value="?itemsPerPage=5">
+                                        value="?itemsPerPage=15">
                                     </c:otherwise>
                                 </c:choose>
-                                5
+                                15
                         </option>
                     </select>
                 </div>

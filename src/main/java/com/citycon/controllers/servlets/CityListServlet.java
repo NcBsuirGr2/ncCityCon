@@ -29,6 +29,7 @@ public class CityListServlet extends AbstractHttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         CityEntity[] cities;
         String search;
+
         try {
             HashMap<String, String> paginationParameters = ((HashMap<String, HashMap<String, String>>)req
                     .getSession().getAttribute("paginationParameters")).get("cities");
@@ -38,19 +39,21 @@ public class CityListServlet extends AbstractHttpServlet {
                 search = "";
             }
 
+            search = search.trim();
+
             if (updatePaginationVariables(req, paginationParameters, ORMCity.getSortingParameters(), ORMCity.getCount(search))) {
                 setPaginationBlockVariables(req, paginationParameters, ORMCity.getCount(search));
             } else {
                 forwardToErrorPage("Invalid search input", req, res);
                 return;
             }
+                int page = Integer.parseInt(paginationParameters.get("page"));
+                int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
 
-            int page = Integer.parseInt(paginationParameters.get("page"));
-            int itemsPerPage = Integer.parseInt(paginationParameters.get("itemsPerPage"));
-            boolean asc = paginationParameters.get("asc").equals("true");
-            String sortBy = paginationParameters.get("sortBy");
+                boolean asc = paginationParameters.get("asc").equals("true");
+                String sortBy = paginationParameters.get("sortBy");
 
-            logger.trace("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+            logger.warn("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                     page, itemsPerPage, sortBy, asc);
 
             cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc, search);
@@ -58,15 +61,15 @@ public class CityListServlet extends AbstractHttpServlet {
             req.setAttribute("entityArray", cities);
             req.getRequestDispatcher(CITY_LIST_PAGE).forward(req, res);
         } catch (InvalidDataDAOException | IllegalArgumentException exception){
-                forwardToErrorPage("Invalid search input", req, res);
-                logger.debug("Invalid getPage data", exception);
+            forwardToErrorPage("Invalid search input", req, res);
+            logger.debug("Invalid getPage data", exception);
         } catch (DAOException exception) {
             forwardToErrorPage("Internal DAO exception", req, res);
         } catch (ClassCastException exception) {
             logger.warn("Cannot cast", exception);
             forwardToErrorPage("Internal server error", req, res);
         } catch (Exception exception) {
-            logger.warn("Unexpected exception", exception);
+            logger.warn("Unexpected exception",exception);
             forwardToErrorPage("Internal server error", req, res);
         }
     }
