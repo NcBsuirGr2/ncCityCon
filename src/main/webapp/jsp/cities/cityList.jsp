@@ -250,20 +250,42 @@
                                 </c:if>
                                 <c:choose>
                                     <c:when test="${not empty param.search}">
-                                        value="?itemsPerPage=5">
+                                        value="?itemsPerPage=5&search=${param.search}">
                                     </c:when>
                                     <c:otherwise>
                                         value="?itemsPerPage=5">
                                     </c:otherwise>
                                 </c:choose>
-                                <c:if test="${not empty param.country and not empty param.city}">
-                                    <c:set var="samePath" value="country=${param.country}&city=${param.city}"/>
-                                </c:if>
-                                value="?itemsPerPage=5">
                             5
                         </option>
-                        <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">selected</c:if> value="?itemsPerPage=10">10</option>
-                        <option <c:if test="${paginationParameters['cities']['itemsPerPage'] == 15}">selected</c:if> value="?itemsPerPage=15">15</option>
+                        <option
+                                <c:if test="${paginationParameters['cities']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">
+                                    selected
+                                </c:if>
+                                <c:choose>
+                                    <c:when test="${not empty param.search}">
+                                        value="?itemsPerPage=10&search=${param.search}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        value="?itemsPerPage=10">
+                                    </c:otherwise>
+                                </c:choose>
+                            10
+                        </option>
+                        <option
+                                <c:if test="${paginationParameters['cities']['itemsPerPage'] == 5}">
+                                    selected
+                                </c:if>
+                                <c:choose>
+                                    <c:when test="${not empty param.search}">
+                                        value="?itemsPerPage=5&search=${param.search}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        value="?itemsPerPage=5">
+                                    </c:otherwise>
+                                </c:choose>
+                                5
+                        </option>
                     </select>
                 </div>
 
