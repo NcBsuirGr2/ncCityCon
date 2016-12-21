@@ -58,7 +58,7 @@
 								<div class="pull-right">
 									<form action="/users" method="get" name="form" onsubmit="return true;">
 										<img src="/img/search.png" height="25px">
-										<input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+										<input class="panel-search simpleText" name="search" type="text" id="search" size="25" maxlength="15" required>
 									</form>
 								</div>
 							</div>
