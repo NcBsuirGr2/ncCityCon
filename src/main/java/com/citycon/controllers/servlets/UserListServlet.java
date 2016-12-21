@@ -77,12 +77,14 @@ public class UserListServlet extends AbstractHttpServlet {
 			req.getRequestDispatcher(USER_LIST_PAGE).forward(req, res);
 		} catch (InvalidDataDAOException | IllegalArgumentException exception) {
 			forwardToErrorPage("Invalid search input", req, res);
-			logger.debug("Invalid getPage data", exception);
+			logger.trace("Invalid getPage data", exception);
 		} catch (DAOException exception) {
 			forwardToErrorPage("Internal DAO exception", req, res);
-		} catch (Exception exception) {
-			logger.warn("Exception", exception);
+		} catch (ClassCastException exception) {
+			logger.warn("Cannot cast", exception);
 			forwardToErrorPage("Internal server error", req, res);
+		} catch (Exception exception) {
+			logger.warn("Unexpected exception", exception);
 		}
 	}
 	
