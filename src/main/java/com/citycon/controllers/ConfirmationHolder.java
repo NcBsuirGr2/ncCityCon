@@ -4,11 +4,12 @@ import com.citycon.model.systemunits.entities.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfirmationHolder {
+public class ConfirmationHolder implements Serializable {
     private Map<String, UserEntity> users;
     private static ConfirmationHolder instance;
     private static Logger logger;

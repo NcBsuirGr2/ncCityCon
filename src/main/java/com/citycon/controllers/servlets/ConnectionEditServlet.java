@@ -1,8 +1,6 @@
 package com.citycon.controllers.servlets;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
@@ -11,16 +9,8 @@ import java.io.IOException;
 import com.citycon.model.systemunits.orm.ORMRouterConnection;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.orm.ORMRouter;
-
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import javax.validation.Validator;
-import javax.validation.ConstraintViolation;
 import com.citycon.model.systemunits.entities.validationgroups.ConnectionGroup;
-
-import java.util.Set;
 
 import com.citycon.dao.exceptions.DAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
@@ -30,26 +20,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Used to perform CRUD operations with connections. On GET returns page for
- * editing or adding new connection. POST must contain 'type' parameter with values
- * 'add', 'delete' or 'edit'. Redirects to the main connections page on success 
- * POST.
+ * editing or adding new connection. Tries fill as much field as it can. POST must
+ * contain 'type' parameter with values 'add', 'delete' or 'edit'. Redirects to
+ * the main connections page on success POST.
  * 
  * @author Mike
- * @version 0.3
+ * @version 1.5
  */
 public class ConnectionEditServlet extends AbstractHttpServlet {
-	private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";	 
     private static String CONNECTION_EDIT_PAGE = "/jsp/connections/connectionEdit.jsp";
     private static String CONNECTION_LIST_URL = "/connections";
     private static String CONNECTION_EDIT_URL = "/connection";
 
     public ConnectionEditServlet() {
-    	logger = LoggerFactory.getLogger("com.citycon.controllers.servlets");
+    	logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.ConnectionEditServlet");
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
-		if (req.getParameter("id") != null) {
+		if (validateIntString(req.getParameter("id"))) {
 			try {
 				int connectionId = Integer.parseInt(req.getParameter("id"));
 				RouterConnectionEntity connection = new RouterConnectionEntity();
@@ -100,11 +89,11 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
-    	String action = req.getParameter("action");
-    	if (action == null) {
-    		forwardToErrorPage("action parameter is null", req, res);
-    		return;
-    	}
+		String action = req.getParameter("action");
+		if (!notEmpty(action)) {
+			forwardToErrorPage("action parameter cannot be empty", req, res);
+			return;
+		}
     	switch (action) {
     		case "edit" : {
     			doPut(req, res);
@@ -122,7 +111,6 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			RouterConnectionEntity connection = new RouterConnectionEntity();
 	    			connection.getFirstRouter().setSN(SN1);
 	    			connection.getSecondRouter().setSN(SN2);
-	    			ORMRouterConnection newConnection = new ORMRouterConnection();
 
 	    			/*Validation*/
 					String validationMessage = validate(connection, ConnectionGroup.class);
@@ -131,6 +119,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 						return;
 					}
 
+					ORMRouterConnection newConnection = new ORMRouterConnection();
 	    			newConnection.setEntity(connection);
 	    			try {
 	    				newConnection.create();
@@ -140,49 +129,56 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 	    			}
 	    		} catch (DAOException exception) {
 	    			logger.warn("DAO error during adding new connection", exception);
-	    			forwardToErrorPage("Internal DAO exception", req, res);
-	    		}
+	    			forwardToErrorPage("Internal DAO error.", req, res);
+	    		} catch (Exception e) {
+    				logger.warn("Unexpected exception", e);
+					forwardToErrorPage("Internal server error.", req, res);
+				}
     			res.sendRedirect(CONNECTION_LIST_URL+"?success=add&"+req.getParameter("sameSelect"));
     		}
     	}
     }
     protected void doPut(HttpServletRequest req, HttpServletResponse res) 
     													throws ServletException, IOException {
+		int connectionId = -1;
     	try {
-			int connectionId = Integer.parseInt(req.getParameter("id"));
-			String SN1 = req.getParameter("SN1");
-			String SN2 = req.getParameter("SN2");
-
-			RouterConnectionEntity connection = new RouterConnectionEntity();
-			connection.setId(connectionId);
-			connection.getFirstRouter().setSN(SN1);			
-			connection.getSecondRouter().setSN(SN2);
-			ORMRouterConnection updateConnection = new ORMRouterConnection();
-
-			/*Validation*/
-			String validationMessage = validate(connection, ConnectionGroup.class);
-			if (validationMessage != null) {
-				forwardToErrorPage(validationMessage, req, res);
-				return;
-			}
-
-			updateConnection.setEntity(connection);		
-			try {
-				updateConnection.update();
-			} catch (DublicateKeyDAOException exception) {
-				res.sendRedirect(getRedirectPathToSamePage("noFreePorts", req, res).toString());
-				return;
-			} catch (InvalidDataDAOException exception) {
-				// No routers with such SN, redirect to add/edit page
-				res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
-				return;
-			}catch (DAOException cause) {
-				logger.warn("Internal DAO exception", cause);
-				forwardToErrorPage("Internal DAO exception", req, res);
-			}
+			connectionId = Integer.parseInt(req.getParameter("id"));
 		} catch (NumberFormatException exception) {
 			forwardToErrorPage("Not string id value", req, res);
 			return;
+		}
+		String SN1 = req.getParameter("SN1");
+		String SN2 = req.getParameter("SN2");
+
+		RouterConnectionEntity connection = new RouterConnectionEntity();
+		connection.setId(connectionId);
+		connection.getFirstRouter().setSN(SN1);
+		connection.getSecondRouter().setSN(SN2);
+
+		/*Validation*/
+		String validationMessage = validate(connection, ConnectionGroup.class);
+		if (validationMessage != null) {
+			forwardToErrorPage(validationMessage, req, res);
+			return;
+		}
+
+		ORMRouterConnection updateConnection = new ORMRouterConnection();
+		updateConnection.setEntity(connection);
+		try {
+			updateConnection.update();
+		} catch (DublicateKeyDAOException exception) {
+			res.sendRedirect(getRedirectPathToSamePage("noFreePorts", req, res).toString());
+			return;
+		} catch (InvalidDataDAOException exception) {
+			// No routers with such SN, redirect to add/edit page
+			res.sendRedirect(getRedirectPathToSamePage("invalidSN", req, res).toString());
+			return;
+		}catch (DAOException cause) {
+			logger.warn("Internal DAO exception", cause);
+			forwardToErrorPage("Internal DAO exception", req, res);
+		} catch (Exception e) {
+			logger.warn("Unexpected exception", e);
+			forwardToErrorPage("Internal server", req, res);
 		}
 		res.sendRedirect(CONNECTION_LIST_URL+"?success=edit&"+req.getParameter("sameSelect"));
 	}
@@ -196,6 +192,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 				ORMRouterConnection connection = new ORMRouterConnection();
 				connection.getEntity().setId(connectionId);
 				connection.delete();
+				logger.trace("Deleted connection: {}", connection.getEntity());
 			} catch (DAOException cause) {
 				logger.warn("Error occured during deleting connection", cause);
 				forwardToErrorPage("Error occured during deleting connection", req, res);
@@ -208,6 +205,7 @@ public class ConnectionEditServlet extends AbstractHttpServlet {
 		res.sendRedirect(CONNECTION_LIST_URL+"?success=delete&"+req.getParameter("sameSelect"));
 		return;
 	}
+
 	private StringBuilder getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
         String action = req.getParameter("action");
         String country1 = req.getParameter("country1");

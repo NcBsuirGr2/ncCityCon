@@ -1,9 +1,7 @@
 package com.citycon.controllers.servlets;
 
-import com.citycon.model.systemunits.entities.UserEntity;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,18 +14,18 @@ import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
 import javax.validation.ConstraintViolation;
 
-import java.io.File;
 import java.util.Properties;
 import java.util.Set;
+import java.util.HashMap;
 
 import java.io.IOException;
-import java.util.HashMap;
+
 
 /**
  * Common abstract servlet. Provides several methods for all servlets in the app.
  * 
  * @author Mike
- * @version 1.0
+ * @version 1.3
  */
 public abstract class AbstractHttpServlet extends HttpServlet {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";
@@ -89,46 +87,42 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
 		if (itemsPerPageReqString != null && !itemsPerPageReqString.equals("")) {
 			if (validateIntString(itemsPerPageReqString)) {
-				itemsPerPage = Integer.parseInt(itemsPerPageReqString);
-				if (itemsPerPage > 1) {
-					paginationVariables.put("itemsPerPage", itemsPerPageReqString);
-
-					// now page can become invalid, correct it if required
-					int page = Integer.parseInt(paginationVariables.get("page"));
-					int totalPagesNum = 1;
-					if (itemsCount > 0) {
-						totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
-					}
-					logger.trace("page: {}, totalPagesNum: {}", page, totalPagesNum);
-					if (page > totalPagesNum) {
-						paginationVariables.put("page", String.valueOf(totalPagesNum));
-					}
-				} else {
-					logger.trace("itemsPerPage is less then 1");
-					return false;
-				}
-			} else {
 				logger.trace("itemsPerPage is not a string");
 				return false;
+			}
+			itemsPerPage = Integer.parseInt(itemsPerPageReqString);
+			if (itemsPerPage < 1) {
+				logger.trace("itemsPerPage is less then 1");
+				return false;
+			}
+			paginationVariables.put("itemsPerPage", itemsPerPageReqString);
+
+			// now page can become invalid, correct it if required
+			int page = Integer.parseInt(paginationVariables.get("page"));
+			int totalPagesNum = 1;
+			if (itemsCount > 0) {
+				totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+			}
+			logger.trace("Updated page because of itemsPerPage update. page: {}, totalPagesNum: {}", page, totalPagesNum);
+			if (page > totalPagesNum) {
+				paginationVariables.put("page", String.valueOf(totalPagesNum));
 			}
 		}
 
 		if (pageReqString != null && !pageReqString.equals("")) {
-			if (validateIntString(pageReqString)) {
-				int page = Integer.parseInt(pageReqString);
-				int totalPagesNum = 1;
-				if (itemsCount > 0) {
-					totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
-				}
-				logger.trace("page: {}, totalPagesNum: {}, itemsNum: {}", page, totalPagesNum, itemsCount);
-				if (page > 0 && page <= totalPagesNum) {
-					paginationVariables.put("page", pageReqString);
-				} else {
-					logger.trace("Invalid page num: too big(greater then {}) or less then 1", totalPagesNum);
-					return false;
-				}
-			} else {
+			if (!validateIntString(pageReqString)) {
 				logger.trace("page is not a string");
+				return false;
+			}
+			int page = Integer.parseInt(pageReqString);
+			int totalPagesNum = 1;
+			if (itemsCount > 0) {
+				totalPagesNum = (int)Math.ceil(itemsCount / (double)itemsPerPage);
+			}
+			if (page > 0 && page <= totalPagesNum) {
+				paginationVariables.put("page", pageReqString);
+			} else {
+				logger.trace("Invalid page num: too big(greater then {}) or less then 1", totalPagesNum);
 				return false;
 			}
 		}
@@ -154,7 +148,8 @@ public abstract class AbstractHttpServlet extends HttpServlet {
     }
 
 	/**
-	 * Sets variables for jsp pagination block. Throws exception on errors.
+	 * Sets variables for jsp pagination block. Assumes that pagination variables are valid,
+	 * throws exception if no.
 	 *
 	 * @param req						request object to set pagination data
 	 * @param paginationVariables		map to get pagination data for calculations
@@ -196,10 +191,12 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		req.setAttribute("previousPage", previousPage);
 		req.setAttribute("nextPage", nextPage);
 	}
+
     /**
      * Aimed to initialize pagination data. Pagination data is represented as
-     * <code>HasMap</code> of <code>HapMaps</code>. Each of nested <code>HasMap</code>
-     * represents pagination data for one app html table.
+     * <code>HashMap</code> of <code>HashMaps</code>. Each of nested <code>HashMap</code>
+     * represents pagination data for one app html table. Tries to load defaults from
+	 * <code>pagination.properties</code>, sets another defaults on fail.
      * 
      * @param session           object to set data
      */
@@ -286,18 +283,19 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 
         String constraintMessage = null;
         for (ConstraintViolation<T> violation : violations) {
-            logger.debug("Violation during validation: {}", violation.getMessage());
+            logger.trace("Violation during validation: {}", violation.getMessage());
             if (constraintMessage == null ) {
               constraintMessage = violation.getMessage();
             }            
         }
         return constraintMessage;
     }
+
     protected boolean notEmpty(String stringToValidate) {
     	return (stringToValidate != null && !stringToValidate.trim().equals(""));
 	}
 
-    private boolean validateIntString(String intString) {
+    protected boolean validateIntString(String intString) {
         if(intString != null && !intString.equals("")) {
             try {
                 if (Integer.parseInt(intString) < 0) {

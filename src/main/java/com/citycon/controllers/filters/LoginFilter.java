@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Checks if user loggined into system. After login UserEntity object must be
+ * Checks if user has loggined into system. After login UserEntity object must be
  * created in session scope. If there is no user object on the session scope, 
  * filter should not pass request futher. 
  *

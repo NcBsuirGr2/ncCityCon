@@ -17,23 +17,19 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 
 /**
- * Used to show the list of users. Support pagination. Redirects to the last available
- * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
+ * Used to show the list of users. Updates pagination variables if need.
  * 	
  * @author Mike
- * @version 0.3
+ * @version 1.4
  */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";
-	private static String USER_LIST_URL = "/users";
 
 	public UserListServlet(){
-		super();
 		logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.UserListServlet");
 	}
 
-	protected void doGet(HttpServletRequest req, 
-		HttpServletResponse res) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		HashMap<String, String> paginationParameters = null;
 		UserEntity[] users;
@@ -49,11 +45,9 @@ public class UserListServlet extends AbstractHttpServlet {
 		}
 
 		try {
-			if(req.getParameter("search") == null){
+			search = req.getParameter("search");
+			if(search == null){
 				search = "";
-			}
-			else {
-				search = req.getParameter("search");
 			}
 
 			if (updatePaginationVariables(req, paginationParameters, ORMUser.getSortingParameters(), ORMUser.getCount(search))) {
@@ -88,8 +82,7 @@ public class UserListServlet extends AbstractHttpServlet {
 		}
 	}
 	
-	protected void doPost(HttpServletRequest req,
-			HttpServletResponse res) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doGet(req, res);
 	}
 }

@@ -1,41 +1,35 @@
 package com.citycon.controllers.servlets;
 
 import com.citycon.dao.exceptions.DAOException;
-import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 import com.citycon.model.systemunits.entities.CityEntity;
 import com.citycon.model.systemunits.orm.ORMRouterConnection;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.HashMap;
 import org.slf4j.LoggerFactory;
 
 /**
- * Used to show the list of connections. Support pagination. Redirects to the last available
- * page if some pagination data is invlaid and redirects to the error page if DAOException occurs.
+ * Used to show the list of connections. Updates pagination variables if need.
+ * Can return list of all connection, connections of specific city or connections
+ * of specific router.
  *  
  * @author Mike
- * @version 1.0
+ * @version 1.1
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";
-    private static String CONNECTION_LIST_URL = "/connections";
 
-    public ConnectionListServlet(){
-        super();
+    public ConnectionListServlet() {
         logger = LoggerFactory.getLogger("com.citycon.controllers.servlets.ConnectionListServlet");
     }
 
-    protected void doGet(HttpServletRequest req, 
-        HttpServletResponse res) throws ServletException, IOException {
-        
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         RouterConnectionEntity[] connections;
         String search;
         HashMap<String, String> paginationParameters;
@@ -50,15 +44,13 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         }
 
         try {
-            if(req.getParameter("search") == null){
+            search = req.getParameter("search");
+            if(search == null){
                 search = "";
-            }
-            else {
-                search = req.getParameter("search");
             }
 
             // Getting page for concrete router
-            if (req.getParameter("SN") != null && !req.getParameter("SN").equals("")) {
+            if (notEmpty(req.getParameter("SN"))) {
                 RouterEntity router = new RouterEntity();
                 router.setSN(req.getParameter("SN"));
 
@@ -81,9 +73,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
                 connections = ORMRouterConnection.getPage(page, itemsPerPage, sortBy, asc, search, router);
                 
             // Getting page for concrete city
-            } else if (req.getParameter("country") != null && req.getParameter("city") != null 
-                     && !req.getParameter("country").equals("")  && !req.getParameter("city").equals("")) {
-                
+            } else if (notEmpty(req.getParameter("country")) && notEmpty(req.getParameter("city"))) {
                 CityEntity city = new CityEntity();
                 city.setCountryName(req.getParameter("country"));
                 city.setName(req.getParameter("city"));
@@ -136,7 +126,7 @@ public class ConnectionListServlet extends AbstractHttpServlet {
         } catch (DAOException exception) {
             forwardToErrorPage("Internal DAO exception", req, res);
         } catch (Exception exception) {
-            logger.warn("Exception", exception);
+            logger.warn("Unexpected exception", exception);
             forwardToErrorPage("Internal server error", req, res);
         }
     }

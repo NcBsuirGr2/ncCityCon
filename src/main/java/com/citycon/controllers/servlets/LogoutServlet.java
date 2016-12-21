@@ -1,15 +1,13 @@
 package com.citycon.controllers.servlets;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Aimed to kill current HttpSession.
+ * Allows user to logout.
  * 
  * @author Mike
  * @veriosn 1.0

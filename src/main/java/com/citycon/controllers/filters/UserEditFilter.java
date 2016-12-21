@@ -32,7 +32,7 @@ public class UserEditFilter extends AbstractHttpFilter implements Filter {
             chain.doFilter(req, res);
             return;
         } else {
-        	//Allow user to modifu himself even if he is not admin
+        	//Allow user to modify himself even if he is not admin
         	try {
         		HttpServletRequest httpReq = (HttpServletRequest) req;
             	HttpSession session = httpReq.getSession(false);
