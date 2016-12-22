@@ -4,7 +4,7 @@ package com.citycon.dao.exceptions;
  * Is thrown when trying to add new element that already exists.
  *
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 public class DublicateKeyDAOException extends DAOException {
 	public DublicateKeyDAOException(String message, Throwable cause) {

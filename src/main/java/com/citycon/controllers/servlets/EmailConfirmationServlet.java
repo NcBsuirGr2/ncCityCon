@@ -13,7 +13,7 @@ import java.io.IOException;
  * correct registration link.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 public class EmailConfirmationServlet extends AbstractHttpServlet {
 

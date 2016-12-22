@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * for the concrete router
  *
  * @author Mike
- * @version 1.3
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/routers")

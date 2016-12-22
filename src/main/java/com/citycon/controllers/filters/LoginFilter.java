@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * filter should not pass request futher. 
  *
  * @author Mike
- * @version 0.2
+ * @version 2.0
  */
 public class LoginFilter extends AbstractHttpFilter implements Filter {
 

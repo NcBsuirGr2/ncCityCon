@@ -14,8 +14,8 @@ import java.util.*;
 /**
  * Provides access to city statistics
  *
- * @author Mike
- * @version 1.2
+ * @author Mike, Alex
+ * @version 2.0
  */
 @Repository
 public class CityStatisticRepository extends AbstractRepository {

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *  Common abstract filter. Provides several methods for all filters in the app.
  * 
  * @author Tim, Mike
- * @version 1.3
+ * @version 2.0
  */
 public abstract class AbstractHttpFilter {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";

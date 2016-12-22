@@ -16,7 +16,7 @@ import javax.jws.soap.SOAPBinding;
  * Web service to get all CityCon users.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)

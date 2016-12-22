@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Provides statistic about all users in the CityCon system.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/users")

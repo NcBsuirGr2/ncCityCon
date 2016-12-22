@@ -25,7 +25,7 @@ import java.io.IOException;
  * Common abstract servlet. Provides several methods for all servlets in the app.
  * 
  * @author Mike
- * @version 1.3
+ * @version 2.0
  */
 public abstract class AbstractHttpServlet extends HttpServlet {
     private static final String ERROR_PAGE = "/jsp/errors/error.jsp";

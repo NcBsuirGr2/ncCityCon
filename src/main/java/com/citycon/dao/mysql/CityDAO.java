@@ -5,7 +5,6 @@ import com.citycon.dao.exceptions.InternalDAOException;
 import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.dao.interfaces.CitiesOfCountry;
 import com.citycon.model.systemunits.entities.CityEntity;
-import com.citycon.model.systemunits.entities.CountryEntity;
 import com.citycon.model.systemunits.entities.Entity;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +12,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Created by Vojts on 09.11.2016.
+ * DAO wrapper for the <code>ORMCity</code>. This class must be used in business logic for
+ * deliver CRUD operations for the plain ORMEntity. DAO object
+ * is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass
+ * <code>MySQLDAO</code>.
+ *
+ * @author Alex
+ * @version 2.0
  */
-
 public class CityDAO extends MySQLDAO implements CitiesOfCountry {
 
     public CityDAO() throws InternalDAOException {
@@ -102,7 +106,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
 
     public void create(Entity newElement) throws DublicateKeyDAOException,
             InternalDAOException, InvalidDataDAOException {
-        CityEntity city = null;
+
+        CityEntity city;
 
         String insert = "insert into " + nameTable +
                 "(`Name`, `Country`)" +
@@ -126,7 +131,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
                 preparedStatement.setString(2, city.getCountryName());
 
                 preparedStatement.executeUpdate();
-                logger.debug("Create {}.\n {}", nameTable, log_parameters);
+                logger.trace("Create {}.\n {}", nameTable, log_parameters);
             } catch (SQLException e) {
                 logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
                 throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
@@ -138,7 +143,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
     }
 
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
-        CityEntity city = null;
+
+        CityEntity city;
 
         try {
             city = (CityEntity)readElement;

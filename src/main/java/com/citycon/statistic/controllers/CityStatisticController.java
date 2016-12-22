@@ -18,7 +18,7 @@ import java.util.Map;
  * Provides statistic for all cities and for concrete city.
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/cities")

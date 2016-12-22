@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * the main connections page on success POST.
  * 
  * @author Mike
- * @version 1.5
+ * @version 2.0
  */
 public class ConnectionEditServlet extends AbstractHttpServlet {
     private static String CONNECTION_EDIT_PAGE = "/jsp/connections/connectionEdit.jsp";

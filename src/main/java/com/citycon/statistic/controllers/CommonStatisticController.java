@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Provides common statistic for the CityCon app
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/")

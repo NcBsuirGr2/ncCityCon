@@ -24,7 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Vojts on 17.12.2016.
+ * Provides access to merge users statistics.
+ *
+ * @author Alex
+ * @version 2.0
  */
 @Repository
 public class UserMergeRepository extends AbstractRepository {
@@ -38,6 +41,11 @@ public class UserMergeRepository extends AbstractRepository {
         logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.UserMergeRepository");
     }
 
+    /**
+     * Merge users from OrderExpress and return information for statistic of merge
+     *
+     * @return          Map of information for statistic of merge
+     */
     public Map<String, Integer> merge(){
         Map<String, Integer> statistic = new HashMap<>();
         UserModel[] users_from_service = ClientService.getServiceUsers();

@@ -15,7 +15,7 @@ import java.io.IOException;
  * entities as cities, routers and connections
  * 
  * @author Tim, Mike
- * @version 1.1
+ * @version 2.0
  */
 public class SystemListFilter extends AbstractHttpFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)

@@ -3,6 +3,9 @@
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ *
+ * @author Alex
+ * @version 2.0
  */
 
 package com.citycon.clientService;
@@ -16,7 +19,7 @@ import javax.validation.constraints.Size;
 public class UserModel  implements java.io.Serializable {
 
     @NotBlank(message="User login can not be blank")
-    @Size(min=4, max=15, message="User login must be {min}..{max} in length")
+    @Size(min=3, max=15, message="User login must be {min}..{max} in length")
     @Pattern(regexp="^[a-z-_a-z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user login: ${validatedValue}")
     private String username;
 
@@ -26,7 +29,7 @@ public class UserModel  implements java.io.Serializable {
     private String password;
 
     @NotBlank(message="User email can not be blank")
-    @Size(min=6, max=20, message="User email must be {min}..{max} in length")
+    @Size(max=20, message="User email must be less {max}")
     @Email(message="Invalid user email: ${validatedValue}")
     private String email;
 
@@ -103,6 +106,13 @@ public class UserModel  implements java.io.Serializable {
     }
 
     private Object __equalsCalc = null;
+
+    /**
+     * Equal UserModel objects on unique parameters from DataBase: Login and Email
+     *
+     * @param obj
+     * @return
+     */
     public synchronized boolean equals(Object obj) {
         if (!(obj instanceof UserModel)) return false;
         UserModel other = (UserModel) obj;

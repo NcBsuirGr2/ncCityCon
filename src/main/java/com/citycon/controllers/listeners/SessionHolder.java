@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *  after editing.
  * 
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 public class SessionHolder implements HttpSessionListener {
     private static Set<HttpSession> sessions;

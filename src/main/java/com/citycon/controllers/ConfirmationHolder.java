@@ -13,7 +13,7 @@ import java.util.Map;
  * Contains users, that have not confirm their email yet. Singleton.
  *
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 public class ConfirmationHolder implements Serializable {
     private Map<String, UserEntity> users;

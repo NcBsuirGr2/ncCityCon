@@ -19,8 +19,8 @@ import java.util.HashMap;
 /**
  * Used to show the list of users. Updates pagination variables if need.
  * 	
- * @author Mike
- * @version 1.4
+ * @author Mike, Alex
+ * @version 2.0
  */
 public class UserListServlet extends AbstractHttpServlet {
 	private static String USER_LIST_PAGE = "/jsp/users/userList.jsp";

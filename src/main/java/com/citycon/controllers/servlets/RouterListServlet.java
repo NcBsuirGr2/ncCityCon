@@ -17,8 +17,8 @@ import java.util.HashMap;
  * Provides interface to get list of routers. Updates pagination variables if need.
  * Can return list of all routers or routers for specific city.
  * 
- * @author Mike
- * @version 1.5
+ * @author Mike, Alex
+ * @version 2.0
  */
 public class RouterListServlet  extends AbstractHttpServlet {
     private static String ROUTER_LIST_PAGE = "/jsp/routers/routerList.jsp";

@@ -14,7 +14,7 @@ import java.io.IOException;
  * Checks if user has enough rights to watch another CityCon users
  * 
  * @author Tim, Mike
- * @version 1,1
+ * @version 2.0
  */
 public class UserListFilter extends AbstractHttpFilter implements Filter {
 

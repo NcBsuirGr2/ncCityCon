@@ -4,7 +4,7 @@ package com.citycon.dao.exceptions;
  * Represents exceptions during DAO operations. 
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 public class DAOException extends Exception {
 	public DAOException(String message, Throwable cause) {

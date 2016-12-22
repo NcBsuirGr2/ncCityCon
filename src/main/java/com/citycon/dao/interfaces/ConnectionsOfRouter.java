@@ -6,7 +6,10 @@ import com.citycon.model.systemunits.entities.RouterConnectionEntity;
 import com.citycon.model.systemunits.entities.RouterEntity;
 
 /**
- * Created by Vojts on 20.11.2016.
+ * Provided connections of chosen router.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public interface ConnectionsOfRouter {
     RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input , RouterEntity router)

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * to display entity information.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 public abstract class Entity implements Serializable {
 	protected int id;

@@ -13,8 +13,8 @@ import java.util.Set;
  * DAO object is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass 
  * <code>ORMEnitity</code>. DAO initialization is lazy, so feel free to instantiate ORMCity objects.
  *
- * @author Mike
- * @version 0.4
+ * @author Mike, Alex
+ * @version 2.0
  * @see  UserEntity, ORMEntity
  */
 public class ORMUser extends ORMEntity {

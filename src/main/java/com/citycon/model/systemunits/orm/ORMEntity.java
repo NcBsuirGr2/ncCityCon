@@ -11,7 +11,7 @@ import com.citycon.model.systemunits.entities.Entity;
  * also provides common DAOAbstractFactory for concrete ORM entities.
  * 
  * @author Mike
- * @version 0.4
+ * @version 2.0
  */
 public abstract class ORMEntity {
 	static DAOAbstractFactory daoFactory = new MySQLDAOFactory();
@@ -22,7 +22,7 @@ public abstract class ORMEntity {
 	 * should not contain id field.
 	 * 
 	 * @return id the id of created element.																					
-	 * @throws ORMException if error occurs during create operation
+	 * @throws DAOException if error occurs during create operation
 	 */
 	public abstract void create() throws DAOException;
 
@@ -31,7 +31,7 @@ public abstract class ORMEntity {
 	 * there was another Entity saved in this ORMEntity, it will be lost.
 	 * 
 	 * @return id the id of retrieved element.
-	 * @throws ORMException if error occurs during read operation
+	 * @throws DAOException if error occurs during read operation
 	 */
     public abstract void read() throws DAOException;
 

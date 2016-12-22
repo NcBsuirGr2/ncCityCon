@@ -14,7 +14,7 @@ import java.io.Serializable;
  * to display city information.
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 public class CityEntity extends Entity implements Serializable {
 

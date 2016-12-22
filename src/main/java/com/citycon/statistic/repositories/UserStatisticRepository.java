@@ -18,8 +18,8 @@ import java.util.Map;
 /**
  * Provides statistic about CityCon users.
  *
- * @author Mike
- * @version 1.1
+ * @author Mike, Alex
+ * @version 2.0
  */
 @Repository
 public class UserStatisticRepository extends  AbstractRepository {

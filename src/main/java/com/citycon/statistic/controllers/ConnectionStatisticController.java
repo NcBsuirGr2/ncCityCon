@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Provides common statistic about connections.
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/connections")

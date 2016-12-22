@@ -19,11 +19,11 @@ import java.sql.Date;
  * to display city information.
  *
  * @author Mike
- * @version 1.3
+ * @version 2.0
  */
 public class UserEntity extends Entity implements Serializable {
 	@NotBlank(message="User name can not be blank")
-	@Size(min=3, max=30, message="User name must be {min}..{max} in length")
+	@Size(min=3, max=15, message="User name must be {min}..{max} in length")
 	@Pattern(regexp="^[a-z-_A-Z0-9]{2,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user name: ${validatedValue}")
 	private String name;
 
@@ -34,10 +34,12 @@ public class UserEntity extends Entity implements Serializable {
 
 
 	@NotBlank(message="User password can not be blank")
+	@Size(min=6, max=15, message="User password must be {min}..{max} in length")
 	@Pattern(regexp="^[-a-zA-Z0-9!#$%&'*+/=?^_`{|}~]{6,}$", flags=Pattern.Flag.CASE_INSENSITIVE, message="Invalid user password: ${validatedValue}")
 	private String password;	
 
 	@NotBlank(message="User email can not be blank")
+	@Size(max=20, message="User email must be less {max}")
 	@Email(message="Invalid user email: ${validatedValue}")
 	private String email;
 

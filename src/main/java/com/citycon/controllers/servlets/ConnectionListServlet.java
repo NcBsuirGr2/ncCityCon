@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * Can return list of all connection, connections of specific city or connections
  * of specific router.
  *  
- * @author Mike
- * @version 1.1
+ * @author Mike, Alex
+ * @version 2.0
  */
 public class ConnectionListServlet extends AbstractHttpServlet {
     private static String CONNECTION_LIST_PAGE = "/jsp/connections/connectionList.jsp";

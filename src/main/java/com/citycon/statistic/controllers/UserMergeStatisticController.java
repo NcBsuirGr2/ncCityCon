@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 
 /**
- * Created by Vojts on 18.12.2016.
+ * Provides statistic for merged users from OrderExpress.
+ *
+ * @author Alex
+ * @version 2.0
  */
 @Controller
 @RequestMapping("/merge")
@@ -22,6 +25,12 @@ public class UserMergeStatisticController {
         this.repo = repo;
     }
 
+    /**
+     * Provides statistics for merged users from OrderExpress.
+     *
+     * @param model     model to set attributes
+     * @return          view statistics of merge
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String UserMergeStatistic(Model model){
         model.addAttribute("mergeStatistic", repo.merge());

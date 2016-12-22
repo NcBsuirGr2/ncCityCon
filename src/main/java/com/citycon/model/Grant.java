@@ -11,7 +11,7 @@ import java.io.Serializable;
  * that user can perform.
  *
  * @author  Mike
- * @version  1.0
+ * @version  2.0
  */
 public class Grant implements Serializable {
 	public final static int NONE = 0;
