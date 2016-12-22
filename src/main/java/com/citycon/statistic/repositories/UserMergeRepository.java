@@ -106,7 +106,7 @@ public class UserMergeRepository extends AbstractRepository {
                     ormUser.create();
                     count_merged++;
                 } catch (DAOException e) {
-
+                    logger.warn("DAO exception during updating users from remote service",e);
                 }
             }
         }

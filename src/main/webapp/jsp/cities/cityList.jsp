@@ -46,8 +46,6 @@
         </div>
     </c:if>
 
-
-
     <div class="row">
         <div class="col-sm-1">
         </div>
@@ -55,12 +53,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center;">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             Cities
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                             <div class="pull-right">
                                 <form action="/cities" method="get" name="form" onsubmit="return true;">
                                     <img src="/img/search.png" height="25px">
@@ -123,7 +121,7 @@
                     <div class="row">
                         <c:if test="${showSystemUnitsOperationBtns}">
                             <div class="col-md-1-5">
-                                <a href="/city?action=add" class="btn btn-primary btn-block btn-group-md center-block routersHref">Add</a>
+                                <a href="/city?action=add" class="btn btn-primary btn-block btn-group-md center-block">Add</a>
                             </div>
 
                             <div class="col-md-1-5">
