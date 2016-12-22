@@ -205,7 +205,7 @@ public class RouterEditServlet extends AbstractHttpServlet {
             forwardToErrorPage("Internal server error", req, res);
             return;
         }
-        res.sendRedirect(ROUTER_LIST_URL+"?success=delete&"+req.getParameter("sameSelect"));
+        res.sendRedirect(ROUTER_LIST_URL+"?success=delete&"+req.getParameter("samePath"));
     }
 
     private String getRedirectPathToSamePage(String errorType, HttpServletRequest req, HttpServletResponse res) {
