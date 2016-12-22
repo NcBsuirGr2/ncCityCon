@@ -69,7 +69,7 @@
 										<form action="/connections" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">
 											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-												   maxlength="15" placeholder="search..." title="search by City or SN" required>
+												   maxlength="15" placeholder="search..." title="search by City or SN">
 										</form>
 									</div>
 								</div>
