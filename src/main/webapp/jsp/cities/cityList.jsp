@@ -55,11 +55,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center;">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-sm-5">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-sm-2">
                             Cities
                         </div>
+<<<<<<< HEAD
                         <div class="col-md-5">
                             <c:if test="${not empty entityArray and not empty param.search}">
                                 <div class="pull-right">
@@ -70,6 +71,16 @@
                                     </form>
                                 </div>
                             </c:if>
+=======
+                        <div class="col-sm-5">
+                            <div class="pull-right">
+                                <form action="/cities" method="get" name="form" onsubmit="return true;">
+                                    <img src="/img/search.png" height="25px">
+                                    <input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+                                           maxlength="15" value="${param.search}" placeholder="search..." title="search by Name of city">
+                                </form>
+                            </div>
+>>>>>>> origin/master
                         </div>
                     </div>
                 </div>
