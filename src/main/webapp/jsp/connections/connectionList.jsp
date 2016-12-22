@@ -244,7 +244,7 @@
 						<ul class="pagination">
 							<c:if test="${beginPage > previousPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${sameSelect}&page=${previousPage}" aria-label="Previous">
+									<a class="page-link" href="?${sameSelect}&page=${previousPage}&search=${param.search}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 									</a>
@@ -261,7 +261,7 @@
 										<c:set var="isActive" value=""/>
 								</c:if>
 								<li class="page-item ${isActive}">
-									<a class="page-link" href="?${sameSelect}&page=${i.index}">
+									<a class="page-link" href="?${sameSelect}&page=${i.index}&search=${param.search}">
 										${i.index}
 									</a>
 								</li>
@@ -269,7 +269,7 @@
 
 							<c:if test="${endPage < nextPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${sameSelect}&page=${nextPage}" aria-label="Next">
+									<a class="page-link" href="?${sameSelect}&page=${nextPage}&search=${param.search}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 										<span class="sr-only">Next</span>
 									</a>
