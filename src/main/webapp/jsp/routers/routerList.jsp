@@ -64,13 +64,15 @@
 									</c:choose>
 								</div>
 								<div class="col-sm-3">
-									<div class="pull-right">
-										<form action="/routers" method="get" name="form" onsubmit="return true;">
-											<img src="/img/search.png" height="25px">
-											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-												   maxlength="15" value="${param.search}" placeholder="search..." title="search by City, SN or Name">
-										</form>
-									</div>
+									<c:if test="${not empty entityArray and not empty param.search}">
+										<div class="pull-right">
+											<form action="/routers" method="get" name="form" onsubmit="return true;">
+												<img src="/img/search.png" height="25px">
+												<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+													   maxlength="15" value="${param.search}" placeholder="search..." title="search by City, SN or Name">
+											</form>
+										</div>
+									</c:if>
 								</div>
 							</div>
 					</div>

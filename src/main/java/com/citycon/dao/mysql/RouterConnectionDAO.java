@@ -96,7 +96,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
 
                 preparedStatement.executeUpdate();
 
-                logger.debug("Create {}.\n {}", nameTable, log_parameters);
+                logger.trace("Create {}.\n {}", nameTable, log_parameters);
             } catch (SQLException e){
                 logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
                 throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
@@ -170,7 +170,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                 routerSecondConnection.setCity(citySecondConnection);
                 routerConnection.setSecondRouter(routerSecondConnection);
 
-                logger.debug("Read {}.\n {}", nameTable, log_parameters);
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
             } else {
                 logger.info("{} in read not found.\n {}", nameTable, log_parameters);
                 throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
@@ -419,7 +419,7 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
                     routerConnections.add(routerConnection);
                 }
 
-                logger.debug("GetPage of {}.\n {}", nameTable, log_parameters);
+                logger.trace("GetPage of {}.\n {}", nameTable, log_parameters);
             }catch (SQLException e){
                 logger.info("GetPage {} failed.\n {}", nameTable, log_parameters, e);
                 throw new InvalidDataDAOException(String.format("GetPage %s failed", nameTable), e);

@@ -75,16 +75,18 @@
 									</c:choose>
 								</div>
 								<div class="col-sm-3">
-									<div class="pull-right">
-										<form action="/connections" method="get" name="form" onsubmit="return true;">
-											<img src="/img/search.png" height="25px">
-											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-												   maxlength="15" placeholder="search..." title="search by City or SN">
-										</form>
-									</div>
+									<c:if test="${not empty entityArray and not empty param.search}">
+										<div class="pull-right">
+											<form action="/connections" method="get" name="form" onsubmit="return true;">
+												<img src="/img/search.png" height="25px">
+												<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+													   maxlength="15" placeholder="search..." title="search by City or SN">
+											</form>
+										</div>
+									</c:if>
 								</div>
 							</div>
-					</div>
+						</div>
 						<c:if test="${not empty entityArray}">
 							<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
 								<thead>

@@ -36,7 +36,8 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
 
     @Override
     public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
-        String search = "select count(1) from " + nameTable + " where `Name` LIKE '%" + search_input + "%' ";
+        String search = "select count(1) from " + nameTable + " where `Name` LIKE '%" + search_input + "%' " +
+                "OR Country LIKE '%" + search_input + "%'";
 
         return count_search(search);
     }
@@ -65,7 +66,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
 
             search = "select C.ID, C.`Name`, C.Country, count(R.ID) as RoutersNum " +
                      "from Router R Right outer join City C on R.City_id=C.ID " +
-                     "where C.`Name` LIKE '%" + search_input + "%' " +
+                     "where C.`Name` LIKE '%" + search_input + "%' OR  C.Country LIKE '%" + search_input + "%' " +
                      "group by C.ID "+
                      "order by " + sorter + sorting_direction + " limit " +
                     ((page-1)*itemsPerPage) + "," + itemsPerPage;
@@ -178,7 +179,7 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
                     city.setCountryName(resultSet.getString("Country"));
                     city.setRoutersNum(resultSet.getInt("RoutersNum"));
 
-                    logger.debug("Read {}.\n {}", nameTable, log_parameters);
+                    logger.trace("Read {}.\n {}", nameTable, log_parameters);
                 } else {
                     logger.info("{} in read not found.\n {}", nameTable, log_parameters);
                     throw new InvalidDataDAOException(String.format("%s in read not found", nameTable));
