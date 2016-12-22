@@ -43,119 +43,75 @@
 				</div>
 			</c:if>		
 			<div class="row">
-			<div class="col-sm-1">
-			</div>
-			<div class="col-sm-10">
-				<div class="panel panel-default">
-					<div class="panel-heading" style="text-align: center;">
-						<div class="row">
-							<div class="col-md-5">
-							</div>
-							<div class="col-md-2">
-								Users
-							</div>
-							<div class="col-md-5">
-								<div class="pull-right">
-									<form action="/users" method="get" name="form" onsubmit="return true;">
-										<img src="/img/search.png" height="25px">
-<<<<<<< HEAD
-										<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+				<div class="col-sm-1">
+				</div>
+				<div class="col-sm-10">
+					<div class="panel panel-default">
+						<div class="panel-heading" style="text-align: center;">
+							<div class="row">
+								<div class="col-md-5">
+								</div>
+								<div class="col-md-2">
+									Users
+								</div>
+								<div class="col-md-5">
+									<div class="pull-right">
+										<form action="/users" method="get" name="form" onsubmit="return true;">
+											<img src="/img/search.png" height="25px">
+											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
 											   maxlength="15" value="${param.search}" placeholder="search..." title="search by Name or Login" required>
-=======
-										<input class="panel-search simpleText" name="search" type="text" id="search" size="25" maxlength="15" required>
->>>>>>> origin/master
-									</form>
+										</form>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-<<<<<<< HEAD
-					    <table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
-				     		<thead>
-								<tr>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+						<c:if test="${not empty entityArray}">
+					    	<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
+				     			<thead>
+									<tr>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="name"
 														value="Name"
 														search="${param.search}"
-										/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+											/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="login"
 														value="Login"
 														search="${param.search}"
-										/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+											/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="group"
 														value="Group"
 														search="${param.search}"
-										/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+											/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="email"
-														value="Email"/>
-									</th>
-									<th>
-										<citycon:sortBy asc="${paginationParameters['users']['asc']}"
+														value="Email"
+														search="${param.search}"
+											/>
+										</th>
+										<th>
+											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
 														sortByIs="${paginationParameters['users']['sortBy']}"
 														sortByNeed="createDate"
 														value="Joined on"
 														search="${param.search}"
-										/>
-									</th>
-							        <th class="hidden">id</th>
-				        		</tr>
-				        	</thead>
-				        	<tbody>
-								<c:forEach items="${entityArray}" var="user">
-=======
-						<c:if test="${not empty entityArray}">
-							<table class="selectable table table-striped table-bordered table-hover" style="table-layout: auto">
-								<thead>
->>>>>>> origin/master
-									<tr>
-										<th>
-											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-															sortByIs="${paginationParameters['users']['sortBy']}"
-															sortByNeed="name"
-															value="Name"/>
+											/>
 										</th>
-										<th>
-											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-															sortByIs="${paginationParameters['users']['sortBy']}"
-															sortByNeed="login"
-															value="Login"/>
-										</th>
-										<th>
-											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-															sortByIs="${paginationParameters['users']['sortBy']}"
-															sortByNeed="group"
-															value="Group"/>
-										</th>
-										<th>
-											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-															sortByIs="${paginationParameters['users']['sortBy']}"
-															sortByNeed="email"
-															value="Email"/>
-										</th>
-										<th>
-											<citycon:sortBy asc="${paginationParameters['users']['asc']}"
-															sortByIs="${paginationParameters['users']['sortBy']}"
-															sortByNeed="createDate"
-															value="Joined on"/>
-										</th>
-										<th class="hidden">id</th>
-									</tr>
-								</thead>
-								<tbody>
+							        	<th class="hidden">id</th>
+				        			</tr>
+				        		</thead>
+				        		<tbody>
 									<c:forEach items="${entityArray}" var="user">
 										<tr>
 											<td>${user.name}</td>
@@ -168,79 +124,81 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						</c:if>
-						<c:if test="${empty entityArray}">
-							<h4 class="text-center">Empty user set</h4>
-						</c:if>
 
-						<div class="panel-footer">
-							<c:if test="${showUsersOperationBtns and not empty entityArray}">
-								<div class="row">
-									<div class="col-sm-3">
-										<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
-									</div>
+							<c:if test="${empty entityArray}">
+								<h4 class="text-center">Empty user set</h4>
+							</c:if>
 
-									<div class="col-sm-3">
-										<a href="#" class="btn btn-primary center-block editHref">Edit</a>
-									</div>
+							<div class="panel-footer">
+								<c:if test="${showUsersOperationBtns and not empty entityArray}">
+									<div class="row">
+										<div class="col-sm-3">
+											<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
+										</div>
 
-									<div class="col-sm-3">
-										<form action="/user" id="deleteForm" method="POST">
-											<input type="hidden" id="deleteId" name="id" value="-1">
-											<input type="hidden" name="type" value="delete">
-											<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
-										</form>
-									</div>
+										<div class="col-sm-3">
+											<a href="#" class="btn btn-primary center-block editHref">Edit</a>
+										</div>
 
-									<div class="col-sm-3">
-										<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
-									</div>
+										<div class="col-sm-3">
+											<form action="/user" id="deleteForm" method="POST">
+												<input type="hidden" id="deleteId" name="id" value="-1">
+												<input type="hidden" name="type" value="delete">
+												<button type="button" class="btn btn-primary center-block btn-block deleteDialogBtn" data-toggle="modal" data-target=".deleteDialog">Delete</button>
+											</form>
+										</div>
 
-									<!-- Delete dialog modal -->
-									<div class="modal fade deleteDialog">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-													<h4 class="modal-title">Confirm deletion</h4>
-												</div>
+										<div class="col-sm-3">
+											<a href="/statistic/merge" class="btn center-block btn-primary">Merge Users</a>
+										</div>
 
-												<div class="modal-body">
-													<p>Are you sure you want to delete selected user?</p>
-												</div>
+										<!-- Delete dialog modal -->
+										<div class="modal fade deleteDialog">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+														<h4 class="modal-title">Confirm deletion</h4>
+													</div>
 
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-													<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+													<div class="modal-body">
+														<p>Are you sure you want to delete selected user?</p>
+													</div>
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+														<input type=submit class="btn btn-primary" form="deleteForm" value="Delete">
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</c:if>
-							<c:if test="${empty entityArray}">
-								<c:if test="${showUsersOperationBtns}">
-									<div class="row">
-										<div class="col-sm-2"></div>
-										<div class="col-sm-3">
-											<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
+								</c:if>
+								<c:if test="${empty entityArray}">
+									<c:if test="${showUsersOperationBtns}">
+										<div class="row">
+											<div class="col-sm-2"></div>
+											<div class="col-sm-3">
+												<a href="/user?action=add" class="btn btn-primary center-block">Add</a>
+											</div>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-3">
+												<a href="/users" class="btn btn-primary center-block">Back</a>
+											</div>
 										</div>
-										<div class="col-sm-2"></div>
-										<div class="col-sm-3">
-											<a href="/users" class="btn btn-primary center-block">Back</a>
-										</div>
-									</div>
+									</c:if>
 								</c:if>
 							</c:if>
+							</div>
 						</div>
 					</div>
 
 					<div class="col-sm-1">
 					</div>
 				</div>
-			</div>
+			</div> <!-- End of panel row -->
 
 			<div class="before-footer" style="text-align: center;">
 				<c:if test="${not empty entityArray}">
