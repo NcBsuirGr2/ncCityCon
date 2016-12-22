@@ -46,7 +46,6 @@
             <c:if test="${empty editRouter}">
                 <input type="text" calss="form-control" readonly name="SN" value="${param.SN}"/>
             </c:if>
-            
         </div>
     </div>
     <div class="form-group">

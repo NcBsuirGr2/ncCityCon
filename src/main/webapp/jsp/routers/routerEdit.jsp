@@ -14,7 +14,16 @@
         <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
 
-        <title>Edit router</title>
+        <title>
+            <c:choose>
+                <c:when test="${param.action == 'edit'}">
+                    Setup router
+                </c:when>
+                <c:when test="${param.action == 'add' || empty param.action}">
+                    Add router
+                </c:when>
+            </c:choose>
+        </title>
     </head>
 <body>
 

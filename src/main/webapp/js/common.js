@@ -20,6 +20,9 @@ $(document).ready(function() {
 	$(".editHref").on("click", function(event) {
         checkSelected(event);
     })
+    $(".routersHref").on("click", function(event) {
+        checkSelected(event);
+    })
     $(".connectionsHref").on("click", function(event) {
         checkSelected(event);
     })

@@ -11,7 +11,16 @@
 	<script src="/js/cityPages/suggestions.js"></script>
 	<script src="/js/formValidation.js"></script>
 	<link rel="icon" href="favicon.ico" />
-	<title>Edit city</title>
+	<title>
+		<c:choose>
+			<c:when test="${param.action == 'edit'}">
+				Edit city
+			</c:when>
+			<c:when test="${param.action == 'add' || empty param.action}">
+				Add city
+			</c:when>
+		</c:choose>
+	</title>
 </head>
 <body>
 <div class="content-wrapper">

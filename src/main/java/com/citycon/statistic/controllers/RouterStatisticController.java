@@ -46,7 +46,7 @@ public class RouterStatisticController {
         Long count_connections = connectionRepo.getCount();
         float inactive_routers_percent = count_inactive_routers/(float)count_routers;
         float connections_per_router = count_connections/(float)count_routers;
-        float used_ports_percent = count_connections/((float)count_routers_ports*2);
+        float used_ports_percent = (2*count_connections)/((float)count_routers_ports);
 
         model.addAttribute("count_routers", count_routers);
         model.addAttribute("count_routers_ports", count_routers_ports);

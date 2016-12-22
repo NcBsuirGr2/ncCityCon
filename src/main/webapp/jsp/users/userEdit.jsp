@@ -11,7 +11,19 @@
         <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
         <link rel="icon" href="favicon.ico" />
-        <title>Edit user</title>
+        <title>
+            <c:choose>
+                <c:when test="${sessionScope.user.login eq param.login}">
+                    Account
+                </c:when>
+                <c:when test="${param.action == 'edit'}">
+                    Edit user
+                </c:when>
+                <c:when test="${param.action == 'add' || empty param.action}">
+                    Add user
+                </c:when>
+            </c:choose>
+        </title>
     </head>
 <body>
     <div class="content-wrapper">
@@ -37,7 +49,7 @@
             	<div class="panel-heading text-center">
                     <c:choose>
                         <c:when test="${sessionScope.user.login eq param.login}">
-                            Edit your account
+                            Your account
                         </c:when>
                         <c:when test="${param.action == 'edit'}">
                             Edit user
