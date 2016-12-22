@@ -53,10 +53,10 @@
         <label class="col-xs-3 control-label">Name:</label>
         <div class="col-xs-7">
         <c:if test="${not empty editRouter}">
-            <input class="form-control simpleText notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
+            <input class="form-control simpleText notEmptyInput" maxlength="15" minlength="3" required placeholder="Name" name="name" type="text" value="${editRouter.name}">
         </c:if>
         <c:if test="${empty editRouter}">
-            <input class="form-control simpleText notEmptyInput" maxlength="15" required placeholder="Name" name="name" type="text" value="${param.name}">
+            <input class="form-control simpleText notEmptyInput" maxlength="15" minlength="3" required placeholder="Name" name="name" type="text" value="${param.name}">
         </c:if>
         </div>
     </div>  
