@@ -93,7 +93,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
                 preparedStatement.executeUpdate();
 
-                logger.debug("Create {}.\n {}", nameTable, log_parameters);
+                logger.trace("Create {}.\n {}", nameTable, log_parameters);
             } catch (SQLException e){
                 logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
                 throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);
@@ -158,7 +158,7 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
 
                 router.setCity(city);
 
-                logger.debug("Read {}.\n {}", nameTable, log_parameters);
+                logger.trace("Read {}.\n {}", nameTable, log_parameters);
             }
             else{
                 logger.info("{} in read not found.\n {}", nameTable, log_parameters);

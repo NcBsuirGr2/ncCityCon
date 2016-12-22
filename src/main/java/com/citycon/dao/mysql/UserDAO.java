@@ -150,7 +150,7 @@ public class UserDAO extends MySQLDAO{
 
                 preparedStatement.executeUpdate();
 
-                logger.debug("Create {}.\n {}", nameTable, log_parameters);
+                logger.trace("Create {}.\n {}", nameTable, log_parameters);
             } catch (SQLException e){
                 logger.info("Create {} failed.\n {}", nameTable, log_parameters, e);
                 throw new DublicateKeyDAOException(String.format("Create %s failed", nameTable), e);

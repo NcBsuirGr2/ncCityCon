@@ -46,7 +46,7 @@ public abstract class MySQLDAO implements DAO {
             if (resultSet.first()) {
                 count = resultSet.getInt(1);
 
-                logger.debug("Get count elements in {}", nameTable);
+                logger.trace("Get count elements in {}", nameTable);
             }
         } catch (SQLException e) {
             logger.warn("Resources wasn't created for count_element in {}", nameTable,e);
@@ -68,7 +68,7 @@ public abstract class MySQLDAO implements DAO {
 
                 preparedStatement.executeUpdate();
 
-                logger.debug("Delete was successful in {}", nameTable);
+                logger.trace("Delete was successful in {}", nameTable);
             } catch (SQLException e) {
                 logger.info("Delete failed in {}", nameTable, e);
                 throw new InvalidDataDAOException("Delete failed in " + nameTable, e);
