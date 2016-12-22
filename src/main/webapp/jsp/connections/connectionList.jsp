@@ -68,7 +68,8 @@
 									<div class="pull-right">
 										<form action="/connections" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">
-											<input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+												   maxlength="15" placeholder="search..." title="search by City or SN" required>
 										</form>
 									</div>
 								</div>
@@ -287,9 +288,49 @@
 
 						<div class="col-sm-2">
 							<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-								<option <c:if test="${paginationParameters['connections']['itemsPerPage'] == 5}">selected</c:if>  value="?${sameSelect}&itemsPerPage=5">5</option>
-								<option <c:if test="${param.itemsPerPage == 10 || empty param.itemsPerPage}">selected</c:if> value="?${sameSelect}&itemsPerPage=10">10</option>
-								<option <c:if test="${param.itemsPerPage == 15}">selected</c:if> value="?${sameSelect}&itemsPerPage=15">15</option>
+								<option
+										<c:if test="${paginationParameters['connections']['itemsPerPage'] == 5}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${sameSelect}&itemsPerPage=5&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${sameSelect}&itemsPerPage=5">
+											</c:otherwise>
+										</c:choose>
+										5
+								</option>
+								<option
+										<c:if test="${paginationParameters['connections']['itemsPerPage'] == 10 || empty paginationParameters['cities']['itemsPerPage']}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${sameSelect}&itemsPerPage=10&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${sameSelect}&itemsPerPage=10">
+											</c:otherwise>
+										</c:choose>
+										10
+								</option>
+								<option
+										<c:if test="${paginationParameters['connections']['itemsPerPage'] == 15}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${sameSelect}&itemsPerPage=15&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${sameSelect}&itemsPerPage=15">
+											</c:otherwise>
+										</c:choose>
+										15
+								</option>
+							</select>
 							</select>
 						</div>
 

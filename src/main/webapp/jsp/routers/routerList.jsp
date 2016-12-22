@@ -60,7 +60,8 @@
 									<div class="pull-right">
 										<form action="/routers" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">
-											<input class="panel-search simpleText" name="search" type="text" id="search" size="18" maxlength="15" required>
+											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+												   maxlength="15" value="${param.search}" placeholder="search..." title="search by City, SN or Name" required>
 										</form>
 									</div>
 								</div>
@@ -77,49 +78,63 @@
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="country"
 															value="Country"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="city"
 															value="City"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="SN"
 															value="SN"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="name"
 															value="Name"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="portsNum"
 															value="Ports num"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="usedPortsNum"
 															value="Used ports"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th>
 											<citycon:sortBy asc="${paginationParameters['routers']['asc']}"
 															sortByIs="${paginationParameters['routers']['sortBy']}"
 															sortByNeed="isActive"
 															value="Active"
-															prefix="${samePath}"/>
+															prefix="${samePath}"
+															search="${param.search}"
+											/>
 										</th>
 										<th class="hidden">id</th>
 									</tr>
@@ -242,7 +257,7 @@
 						<ul class="pagination">
 							<c:if test="${beginPage > previousPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${samePath}&page=${previousPage}" aria-label="Previous">
+									<a class="page-link" href="?${samePath}&page=${previousPage}&search=${param.search}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 									</a>
@@ -257,7 +272,7 @@
 										<c:set var="isActive" value=""/>
 								</c:if>
 								<li class="page-item ${isActive}">
-									<a class="page-link" href="?${samePath}&page=${i.index}">
+									<a class="page-link" href="?${samePath}&page=${i.index}&search=${param.search}">
 										${i.index}
 									</a>
 								</li>
@@ -265,7 +280,7 @@
 
 							<c:if test="${endPage < nextPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${samePath}&page=${nextPage}" aria-label="Next">
+									<a class="page-link" href="?${samePath}&page=${nextPage}&search=${param.search}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 										<span class="sr-only">Next</span>
 									</a>
@@ -284,9 +299,48 @@
 
 						<div class="col-sm-2">
 							<select class="pull-left" id="itemsPerPageSelect" onChange="window.location.href=this.value">
-								<option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 5}">selected</c:if>  value="?${samePath}&itemsPerPage=5">5</option>
-								<option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 10 || empty paginationParameters['routers']['itemsPerPage']}">selected</c:if> value="?${samePath}&itemsPerPage=10">10</option>
-								<option <c:if test="${paginationParameters['routers']['itemsPerPage'] == 15}">selected</c:if> value="?${samePath}&itemsPerPage=15">15</option>
+								<option
+										<c:if test="${paginationParameters['routers']['itemsPerPage'] == 5}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${samePath}&itemsPerPage=5&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${samePath}&itemsPerPage=5">
+											</c:otherwise>
+										</c:choose>
+										5
+								</option>
+								<option
+										<c:if test="${paginationParameters['routers']['itemsPerPage'] == 10 || empty paginationParameters['routers']['itemsPerPage']}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${samePath}&itemsPerPage=10&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${samePath}&itemsPerPage=10">
+											</c:otherwise>
+										</c:choose>
+										10
+								</option>
+								<option
+										<c:if test="${paginationParameters['routers']['itemsPerPage'] == 15}">
+											selected
+										</c:if>
+										<c:choose>
+											<c:when test="${not empty param.search}">
+												value="?${samePath}&itemsPerPage=15&search=${param.search}">
+											</c:when>
+											<c:otherwise>
+												value="?${samePath}&itemsPerPage=15">
+											</c:otherwise>
+										</c:choose>
+										15
+								</option>
 							</select>
 						</div>
 

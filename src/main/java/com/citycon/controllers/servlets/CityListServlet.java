@@ -53,7 +53,7 @@ public class CityListServlet extends AbstractHttpServlet {
                 boolean asc = paginationParameters.get("asc").equals("true");
                 String sortBy = paginationParameters.get("sortBy");
 
-            logger.warn("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
+            logger.trace("getPage of cities with args page:{} itemsPerPage:{}, sortBy:{}, asc:{}",
                     page, itemsPerPage, sortBy, asc);
 
             cities = ORMCity.getPage(page, itemsPerPage, sortBy, asc, search);
