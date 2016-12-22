@@ -3,6 +3,7 @@ body {
 	margin:0;
 	padding:0;
 	height:100%;
+	min-width: 1280px;
 }
 
 #header {
@@ -82,12 +83,14 @@ h2 {
 	min-height: 1px;
 	padding-right: 10px;
 	padding-left: 10px;
+	float: left;
 }
 
 .col-xs-1-5 {
 	width: 20%;
 	float: left;
 }
+
 
 @media (min-width: 768px) {
 	.col-sm-1-5 {

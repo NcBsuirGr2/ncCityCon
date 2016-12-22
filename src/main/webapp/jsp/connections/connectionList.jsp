@@ -59,9 +59,9 @@
 					<div class="panel panel-default">
 						<div class="panel-heading" style="text-align: center;">
 							<div class="row">
-								<div class="col-md-5">
+								<div class="col-sm-5">
 								</div>
-								<div class="col-md-2">
+								<div class="col-sm-2">
 									<c:choose>
 										<c:when test="${not empty param.SN}">
 											Connections in ${param.SN}
@@ -74,7 +74,7 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
-								<div class="col-md-5">
+								<div class="col-sm-5">
 									<div class="pull-right">
 										<form action="/connections" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">

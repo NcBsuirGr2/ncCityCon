@@ -61,7 +61,7 @@
     </div>  
     <div class="form-group">
         <label class="col-xs-3 control-label">Active:</label>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <select class="form-control notEmptyInput" id="group" name="active" form="form">
                 <option value="true" <c:if test="${param.active eq 'true' || editRouter.active eq 'true'}">selected</c:if>>true</option>
                 <option value="false" <c:if test="${param.active eq 'false' || editRouter.active eq 'false'}">selected</c:if>>false</option>
