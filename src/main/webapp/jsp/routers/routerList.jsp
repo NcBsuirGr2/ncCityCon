@@ -54,7 +54,14 @@
 								<div class="col-md-5">
 								</div>
 								<div class="col-md-2">
-									Routers
+									<c:choose>
+										<c:when test="${not empty param.country and not empty param.city}">
+											Routers in ${param.city} (${param.country})
+										</c:when>
+										<c:otherwise>
+											Routers
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="col-md-5">
 									<div class="pull-right">
