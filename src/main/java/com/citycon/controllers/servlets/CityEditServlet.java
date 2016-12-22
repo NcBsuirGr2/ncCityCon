@@ -18,7 +18,7 @@ import java.io.IOException;
  * that user has successfully logged into system.
  *
  * @author  Dima, Mike
- * @version  1.4
+ * @version  2.0
  */
 public class CityEditServlet extends AbstractHttpServlet {
     private static final String CITY_EDIT_PAGE = "/jsp/cities/cityEdit.jsp";

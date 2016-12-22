@@ -65,7 +65,7 @@
                                 <form action="/cities" method="get" name="form" onsubmit="return true;">
                                     <img src="/img/search.png" height="25px">
                                     <input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-                                           maxlength="15" value="${param.search}" placeholder="search..." title="search by City" required>
+                                           maxlength="15" value="${param.search}" placeholder="search..." title="search by Name of city">
                                 </form>
                             </div>
                         </div>

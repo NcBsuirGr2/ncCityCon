@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Checks if user has enough rights to edit another CityCon users.
  * 
  * @author Tim, Mike
- * @version 1.1
+ * @version 2.0
  */
 public class UserEditFilter extends AbstractHttpFilter implements Filter {
 

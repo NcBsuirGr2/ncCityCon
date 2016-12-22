@@ -5,7 +5,13 @@ import com.citycon.model.systemunits.entities.Entity;
 import java.util.Set;
 
 /**
- * Created by Vojts on 09.11.2016.
+ * Interface for DAO wrapper for the <code>ORMCity</code>. This class must be used in business logic for
+ * deliver CRUD operations for the plain ORMEntity. DAO object
+ * is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass
+ * <code>MySQLDAO</code>.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public interface DAO {
     void create(Entity newElement) throws DublicateKeyDAOException, 

@@ -5,7 +5,7 @@ package com.citycon.dao.exceptions;
  * in the MySQL DAO or trying to open not-existing file in the XML DAO.
  *
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 public class InternalDAOException extends DAOException {
 	public InternalDAOException(String message, Throwable cause) {

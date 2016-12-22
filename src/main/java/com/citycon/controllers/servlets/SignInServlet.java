@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * associates new session with existed.
  *
  * @author Tim, Mike
- * @version  1.3
+ * @version  2.0
  */
 public class SignInServlet extends AbstractHttpServlet {
 

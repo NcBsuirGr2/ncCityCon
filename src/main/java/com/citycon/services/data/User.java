@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
  * Simple bean class to return within web service.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 @XmlRootElement(name = "User")
 @XmlType(propOrder = {"login", "password", "email"})

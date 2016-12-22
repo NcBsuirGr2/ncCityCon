@@ -16,8 +16,8 @@ import java.util.HashMap;
 /**
  * Used to show the list of cities. Updates pagination variables if need.
  *
- * @author Dima, Mike
- * @version 1.5
+ * @author Dima, Mike, Alex
+ * @version 2.0
  */
 public class CityListServlet extends AbstractHttpServlet {
     private static final String CITY_LIST_PAGE = "/jsp/cities/cityList.jsp";

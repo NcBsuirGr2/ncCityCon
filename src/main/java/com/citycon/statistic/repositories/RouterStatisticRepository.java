@@ -17,8 +17,8 @@ import java.util.Map;
 /**
  * Provides statistic data about routers in CityCon
  *
- * @author Mike
- * @version 1.3
+ * @author Mike, Alex
+ * @version 2.0
  */
 @Repository
 public class RouterStatisticRepository extends AbstractRepository {

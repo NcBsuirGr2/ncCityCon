@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcOperations;
  * Provides common functionality for statistic repositories.
  *
  * @author Mike, Alex
- * @version 1.2
+ * @version 2.0
  */
 public abstract class AbstractRepository {
     protected JdbcOperations dao;

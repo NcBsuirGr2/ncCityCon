@@ -13,7 +13,7 @@ import java.util.Properties;
  * Provides interface for autocompete functionality. 
  * 
  * @author Mike
- * @version 0.1
+ * @version 2.0
  */
 public class AutoCompleteDAO {
 

@@ -24,11 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Vojts on 17.12.2016.
+ * Provides access to merge users statistics.
+ *
+ * @author Alex
+ * @version 2.0
  */
 @Repository
 public class UserMergeRepository extends AbstractRepository {
-    private final String TABLE_NAME = "User";
     private NamedParameterJdbcOperations namedParameterDao;
     private Logger logger;
 
@@ -39,32 +41,52 @@ public class UserMergeRepository extends AbstractRepository {
         logger = LoggerFactory.getLogger("com.citycon.statistic.repositories.UserMergeRepository");
     }
 
+    /**
+     * Merge users from OrderExpress and return information for statistic of merge
+     *
+     * @return          Map of information for statistic of merge
+     */
     public Map<String, Integer> merge(){
         Map<String, Integer> statistic = new HashMap<>();
         UserModel[] users_from_service = ClientService.getServiceUsers();
-        statistic.put("count_users_from_service", users_from_service.length);
+        List<UserModel> valid_users = null;
 
-        List<UserModel> valid_users = new ArrayList<>();
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        for(UserModel userModel:users_from_service) {
-            if (validator.validate(userModel).size() == 0) {
-                valid_users.add(userModel);
-            }
+        if(users_from_service == null){
+            statistic.put("count_users_from_service", 0);
+            statistic.put("count_valid_users_from_service", 0);
         }
+        else {
+            statistic.put("count_users_from_service", users_from_service.length);
 
-        statistic.put("count_valid_users_from_service", valid_users.size());
+            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+            Validator validator = factory.getValidator();
+
+            valid_users = new ArrayList<>();
+
+            for (UserModel userModel : users_from_service) {
+                if (validator.validate(userModel).size() == 0) {
+                    valid_users.add(userModel);
+                }
+            }
+
+            statistic.put("count_valid_users_from_service", valid_users.size());
+        }
 
         String query = "SELECT Login, Pass, `E-mail` FROM User";
         List<UserModel> users_from_DB = dao.query(query, new ResultSetToUserMapper());
 
-        statistic.put("count_users_from_database", users_from_DB.size());
+        if (users_from_DB == null){
+            statistic.put("count_users_from_database", 0);
+        }
+        else {
+            statistic.put("count_users_from_database", users_from_DB.size());
 
-        for (UserModel user:users_from_DB){
-            if(valid_users.contains(user)){
-                valid_users.remove(user);
+            if (valid_users != null) {
+                for (UserModel user : users_from_DB) {
+                    if (valid_users.contains(user)) {
+                        valid_users.remove(user);
+                    }
+                }
             }
         }
 

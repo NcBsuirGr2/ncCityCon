@@ -10,7 +10,7 @@ import java.io.Serializable;
  * to display router connection information.
  *
  * @author Mike
- * @version 1.1
+ * @version 2.0
  */
 public class RouterConnectionEntity extends Entity implements Serializable {
 	@NotNull

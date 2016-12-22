@@ -68,7 +68,7 @@
 										<form action="/routers" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">
 											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-												   maxlength="15" value="${param.search}" placeholder="search..." title="search by City, SN or Name" required>
+												   maxlength="15" value="${param.search}" placeholder="search..." title="search by City, SN or Name">
 										</form>
 									</div>
 								</div>

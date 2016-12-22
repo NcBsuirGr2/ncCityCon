@@ -5,7 +5,10 @@ import com.citycon.dao.exceptions.InvalidDataDAOException;
 import com.citycon.model.systemunits.entities.CityEntity;
 
 /**
- * Created by Vojts on 24.11.2016.
+ * Provided cities of concrete country.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public interface CitiesOfCountry {
     CityEntity[] getCities(String country) throws InternalDAOException, InvalidDataDAOException;

@@ -5,7 +5,7 @@ package com.citycon.dao.exceptions;
  * Date representation or the negative ID field.
  *
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 public class InvalidDataDAOException extends DAOException {
 	public InvalidDataDAOException(String message, Throwable cause) {

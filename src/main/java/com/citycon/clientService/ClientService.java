@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by Vojts on 18.12.2016.
+ * Web service client to get all OrderExpress users.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public class ClientService {
     public static UserModel[] getServiceUsers(){

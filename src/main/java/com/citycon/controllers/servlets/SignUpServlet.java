@@ -33,7 +33,7 @@ import java.util.Calendar;
  * <code>registration.properties</code> is <code>true</code>, sends confirmation email.
  *
  * @author Tim, Mike
- * @version  1.5
+ * @version  2.0
  */
 public class SignUpServlet extends AbstractHttpServlet {
 

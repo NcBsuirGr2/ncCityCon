@@ -10,7 +10,7 @@ import java.io.IOException;
  * Allows user to logout.
  * 
  * @author Mike
- * @veriosn 1.0
+ * @veriosn 2.0
  */
 public class LogoutServlet extends AbstractHttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) 

@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Vojts on 09.11.2016.
+ * Superclass for DAO Layer.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public abstract class MySQLDAO implements DAO {
 

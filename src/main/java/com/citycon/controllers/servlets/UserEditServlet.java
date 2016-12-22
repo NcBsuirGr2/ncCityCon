@@ -28,7 +28,7 @@ import java.util.Calendar;
  * that user has successfully logged into system. Tries to fill fields on error.
  * 
  * @author  Mike
- * @version  1.3
+ * @version  2.0
  */
 public class UserEditServlet extends AbstractHttpServlet {
 

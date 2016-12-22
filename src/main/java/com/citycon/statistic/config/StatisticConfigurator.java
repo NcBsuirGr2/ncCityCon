@@ -17,7 +17,7 @@ import javax.sql.DataSource;
  * Configuration class for Spring part of CityCon app. Configures Spring JDBC access.
  *
  * @author Mike
- * @version 1.0
+ * @version 2.0
  */
 @Configuration
 @ComponentScan(basePackages = {"com.citycon.statistic.controllers",

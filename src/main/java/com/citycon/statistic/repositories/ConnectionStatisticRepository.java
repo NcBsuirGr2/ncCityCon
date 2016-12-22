@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 /**
  * Provides statistic about connections in CityCon system
  *
- * @author Mike
- * @version 1.1
+ * @author Mike, Alex
+ * @version 2.0
  */
 @Repository
 public class ConnectionStatisticRepository extends AbstractRepository {

@@ -5,7 +5,10 @@ import com.citycon.dao.DAOAbstractFactory;
 import com.citycon.dao.exceptions.InternalDAOException;
 
 /**
- * Created by Vojts on 09.11.2016.
+ * MysqlDAO Factory provide Object for Business Layer that implement DAO interface.
+ *
+ * @author Alex
+ * @version 2.0
  */
 public class MySQLDAOFactory extends DAOAbstractFactory {
 

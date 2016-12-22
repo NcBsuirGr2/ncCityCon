@@ -14,7 +14,7 @@ import java.io.IOException;
  * not singed in and to the user working page if user has already singed in.
  *
  * @author Mike
- * @version  1.1
+ * @version  2.0
  */
 public class RootServlet extends AbstractHttpServlet {
     private static final String INDEX_PAGE = "/index.jsp";

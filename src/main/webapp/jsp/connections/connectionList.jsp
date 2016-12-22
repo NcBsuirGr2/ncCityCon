@@ -79,7 +79,7 @@
 										<form action="/connections" method="get" name="form" onsubmit="return true;">
 											<img src="/img/search.png" height="25px">
 											<input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-												   maxlength="15" placeholder="search..." title="search by City or SN" required>
+												   maxlength="15" placeholder="search..." title="search by City or SN">
 										</form>
 									</div>
 								</div>
@@ -254,7 +254,7 @@
 						<ul class="pagination">
 							<c:if test="${beginPage > previousPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${sameSelect}&page=${previousPage}" aria-label="Previous">
+									<a class="page-link" href="?${sameSelect}&page=${previousPage}&search=${param.search}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 									</a>
@@ -271,7 +271,7 @@
 										<c:set var="isActive" value=""/>
 								</c:if>
 								<li class="page-item ${isActive}">
-									<a class="page-link" href="?${sameSelect}&page=${i.index}">
+									<a class="page-link" href="?${sameSelect}&page=${i.index}&search=${param.search}">
 										${i.index}
 									</a>
 								</li>
@@ -279,7 +279,7 @@
 
 							<c:if test="${endPage < nextPage}">
 								<li class="page-item">
-									<a class="page-link" href="?${sameSelect}&page=${nextPage}" aria-label="Next">
+									<a class="page-link" href="?${sameSelect}&page=${nextPage}&search=${param.search}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 										<span class="sr-only">Next</span>
 									</a>

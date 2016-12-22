@@ -15,8 +15,8 @@ import java.util.Set;
  * DAO object is obtained from <code>DAOAbstractFactory</code>, incapsulated in superclass 
  * <code>ORMEnitity</code>. DAO initialization is lazy, so feel free to instantiate ORMCity objects.
  *
- * @author Mike
- * @version 1.0
+ * @author Mike, Alex
+ * @version 2.0
  * @see  RouterConnectionEntity, ORMEntity
  */
 public class ORMRouterConnection extends ORMEntity {

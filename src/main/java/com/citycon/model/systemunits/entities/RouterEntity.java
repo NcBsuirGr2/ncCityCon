@@ -21,7 +21,7 @@ import java.io.Serializable;
  * to display router information.
  *
  * @author Mike
- * @version 1.2
+ * @version 2.0
  */
 public class RouterEntity extends Entity implements Serializable {
 	@NotBlank(message="Router name can not be blank")
