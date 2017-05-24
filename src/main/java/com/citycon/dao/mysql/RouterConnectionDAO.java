@@ -40,12 +40,34 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         hashMap.put("ID2", "`Id2`");
     }
 
+    /**
+     * Return one page of connections that contain search_input
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
             throws InvalidDataDAOException, InternalDAOException {
 
         return getPage(page, itemsPerPage, sortBy, asc, null, null, search_input);
     }
 
+    /**
+     * Create in DB connection from ORM
+     *
+     * @param newElement
+     * @throws DublicateKeyDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void create(Entity newElement)
             throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
 
@@ -107,6 +129,14 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
     }
 
+    /**
+     * Add empty fields to RouterConnectionEntity
+     *
+     * @param readElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
         RouterConnectionEntity routerConnection = null;
 
@@ -181,6 +211,15 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
     }
 
+    /**
+     * Update in DB connection
+     *
+     * @param updateElement
+     * @throws DublicateKeyDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public void update(Entity updateElement)
             throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
         RouterConnectionEntity routerConnection = null;
@@ -233,15 +272,43 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         }
     }
 
+    /**
+     * Return count of connections that contain search_input
+     *
+     * @param search_input
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
         return count_element(search_input, null, null);
     }
 
+    /**
+     * Return count of connections that contain search_input of concrete City
+     *
+     * @param search_input
+     * @param city
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public int count_element(String search_input, CityEntity city) throws InternalDAOException, InvalidDataDAOException {
         return count_element(search_input, null, city);
     }
 
+    /**
+     * Return count of connections that contain search_input of concrete Router
+     *
+     * @param search_input
+     * @param router
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public int count_element(String search_input, RouterEntity router) throws InvalidDataDAOException, InternalDAOException {
         return count_element(search_input, router, null);
     }
@@ -295,6 +362,19 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         return count_search(search);
     }
 
+    /**
+     * Return one page of connections that contain search_input of concrete city
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input , CityEntity city)
             throws InvalidDataDAOException, InternalDAOException {
@@ -302,6 +382,19 @@ public class RouterConnectionDAO extends MySQLDAO implements ConnectionsOfCity, 
         return getPage(page, itemsPerPage, sortBy, asc, null, city, search_input);
     }
 
+    /**
+     * Return one page of connections that contain search_input of concrete router
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @param router
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public RouterConnectionEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input , RouterEntity router)
             throws InvalidDataDAOException, InternalDAOException {

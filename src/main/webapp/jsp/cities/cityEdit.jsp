@@ -8,8 +8,10 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://api-maps.yandex.ru/2.1/?lang=en-US" type="text/javascript"></script>
 	<script src="/js/cityPages/suggestions.js"></script>
 	<script src="/js/formValidation.js"></script>
+	<script src="/js/cityPages/event_reverse_geocode.js" type="text/javascript"></script>
 	<link rel="icon" href="favicon.ico" />
 	<title>
 		<c:choose>
@@ -57,31 +59,52 @@
 			<div class="panel-body">
 				<form class="form-horizontal" action="/city" method="POST" role="form" id="form">
 					<div class="form-group">
-						<label for="country" class="col-xs-3 control-label">Country:</label>
+						<div class="map">
+							<div id="map" style="width: 800px; height: 500px"></div>
+						</div>
 						<div class="col-xs-7">
-							<select class="form-control simpleText" id="country" name="countryName" form="form">
-                                <option label=" "></option>
-                                <c:if test="${not empty city or not empty param.countryName}">
-                                    <c:choose>
-                                        <c:when test="${not empty city}">
-                                            <option value="${city.countryName}" selected>${city.countryName}</option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option value="${param.countryName}" selected>${param.countryName}</option>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:if>
-                            </select>
+						</div>
+					</div>
+						<%--<label for="country" class="col-xs-3 control-label">Country:</label>--%>
+						<%--<div class="col-xs-7">--%>
+							<%--<select class="form-control simpleText" id="country" name="countryName" form="form">--%>
+                                <%--<option label=" "></option>--%>
+                                <%--<c:if test="${not empty city or not empty param.countryName}">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${not empty city}">--%>
+                                            <%--<option value="${city.countryName}" selected>${city.countryName}</option>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--<option value="${param.countryName}" selected>${param.countryName}</option>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                <%--</c:if>--%>
+                            <%--</select>--%>
+						<%--</div>--%>
+					<%--</div>--%>
+					<div class="form-group">
+						<label for="countryName" class="col-xs-3 control-label">Country:</label>
+						<div class="col-xs-7">
+							<c:if test="${not empty city}">
+								<div class="form-control-static notEmptyInput countryName">${city.countryName}</div>
+								<input class="form-control notEmptyInput countryName" required id="countryName" name="countryName" type="hidden" value="${city.countryName}">
+							</c:if>
+							<c:if test="${empty city}">
+								<div class="form-control-static notEmptyInput countryName">${param.countryName}</div>
+								<input class="form-control notEmptyInput countryName" required id="countryName" name="countryName" type="hidden" value="${param.countryName}">
+							</c:if>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-xs-3 control-label">City:</label>
 						<div class="col-xs-7">
 							<c:if test="${not empty editCity}">
-								<input class="form-control simpleText" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${editCity.name}">
+								<div class="form-control-static notEmptyInput cityName">${editCity.name}</div>
+								<input class="form-control notEmptyInput cityName" id="name" required name="name" type="hidden" value="${editCity.name}">
 							</c:if>
 							<c:if test="${empty editCity}">
-								<input class="form-control simpleText" maxlength="15" required placeholder="Name" id="name" name="name" type="text" value="${param.editName}">
+								<div class="form-control-static notEmptyInput cityName">${param.editName}</div>
+								<input class="form-control notEmptyInput cityName" id="name" required name="name" type="hidden" value="${param.editName}">
 							</c:if>
 						</div>
 					</div>

@@ -39,7 +39,7 @@ public class UserEntity extends Entity implements Serializable {
 	private String password;	
 
 	@NotBlank(message="User email can not be blank")
-	@Size(max=20, message="User email must be less {max}")
+	@Size(max=30, message="User email must be less {max}")
 	@Email(message="Invalid user email: ${validatedValue}")
 	private String email;
 

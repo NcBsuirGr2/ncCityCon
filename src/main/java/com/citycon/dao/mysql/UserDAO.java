@@ -39,6 +39,14 @@ public class UserDAO extends MySQLDAO{
         hashMap.put("createDate", "`create_date`");
     }
 
+    /**
+     * Return count of Users that contain search_input
+     *
+     * @param search_input
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
         String search = "select count(1) from " + nameTable + " where Login LIKE '%" + search_input + "%' OR `Name` LIKE '%" +
@@ -47,6 +55,18 @@ public class UserDAO extends MySQLDAO{
         return count_search(search);
     }
 
+    /**
+     * Return one page of Users that contain search_input
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public UserEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
@@ -113,6 +133,14 @@ public class UserDAO extends MySQLDAO{
         return users.toArray(new UserEntity[users.size()]);
     }
 
+    /**
+     * Create in DB user from ORM
+     *
+     * @param newElement
+     * @throws DublicateKeyDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public void create(Entity newElement) throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
         UserEntity user = null;
@@ -161,6 +189,13 @@ public class UserDAO extends MySQLDAO{
         }
     }
 
+    /**
+     * dd empty fields to UserEntity
+     *
+     * @param readElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
         UserEntity user = null;
@@ -220,6 +255,14 @@ public class UserDAO extends MySQLDAO{
         }
     }
 
+    /**
+     * Update in DB user
+     *
+     * @param updateElement
+     * @throws DublicateKeyDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public void update(Entity updateElement) throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
         UserEntity user = null;

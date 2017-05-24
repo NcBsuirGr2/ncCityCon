@@ -75,7 +75,7 @@
 									</c:choose>
 								</div>
 								<div class="col-sm-3">
-									<c:if test="${not empty entityArray and not empty param.search}">
+
 										<div class="pull-right">
 											<form action="/connections" method="get" name="form" onsubmit="return true;">
 												<img src="/img/search.png" height="25px">
@@ -83,7 +83,7 @@
 													   maxlength="15" placeholder="search..." title="search by City or SN">
 											</form>
 										</div>
-									</c:if>
+
 								</div>
 							</div>
 						</div>

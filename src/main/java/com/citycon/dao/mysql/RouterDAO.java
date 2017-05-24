@@ -43,11 +43,33 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         hashMap.put("usedPortsNum", "`UsedPortsNum`");
     }
 
+    /**
+     * Return one page of Cities that contain search_input
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
             throws InvalidDataDAOException, InternalDAOException {
         return this.getPage(page, itemsPerPage, sortBy, asc, search_input, null);
     }
 
+    /**
+     * Create in DB router from ORM
+     *
+     * @param newElement
+     * @throws DublicateKeyDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void create(Entity newElement)
             throws DublicateKeyDAOException, InternalDAOException, InvalidDataDAOException {
         RouterEntity router= null;
@@ -104,6 +126,14 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }
     }
 
+    /**
+     * Add empty fields to RouterEntity
+     *
+     * @param readElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void read(Entity readElement)
             throws InternalDAOException, InvalidDataDAOException {
         RouterEntity router = null;
@@ -171,6 +201,15 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }
     }
 
+    /**
+     * Update in DB router
+     *
+     * @param updateElement
+     * @throws DublicateKeyDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public void update(Entity updateElement)
             throws DublicateKeyDAOException, InvalidDataDAOException, InternalDAOException {
 
@@ -230,6 +269,19 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         }
     }
 
+    /**
+     * Return one page of Routers that contain search_input of concrete City
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @param city
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
     @Override
     public RouterEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc,
                                   String search_input, CityEntity city)
@@ -419,6 +471,14 @@ public class RouterDAO extends MySQLDAO implements RoutersOfCity {
         return routers.toArray(new RouterEntity[routers.size()]);
     }
 
+    /**
+     * Return count of Cities that contain search_input
+     *
+     * @param search_input
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
         return count_element(search_input, null);

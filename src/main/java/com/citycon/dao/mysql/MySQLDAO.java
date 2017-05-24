@@ -31,11 +31,24 @@ public abstract class MySQLDAO implements DAO {
         connections = MySQLDAOConnection.getInstance();
     }
 
+    /**
+     * Get parameters for sorting in Db
+     *
+     * @return
+     */
     @Override
     public Set<String> getSortingParameters() {
         return hashMap.keySet();
     }
 
+    /**
+     * Helper for get count of entity
+     *
+     * @param search
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     protected int count_search(String search) throws InternalDAOException, InvalidDataDAOException {
         int count = 0;
         try(
@@ -56,6 +69,14 @@ public abstract class MySQLDAO implements DAO {
         return count;
     }
 
+    /**
+     * Delete chosen entity from DB
+     *
+     * @param deleteElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void delete(Entity deleteElement) throws InternalDAOException, InvalidDataDAOException {
         String delete = "delete from " + nameTable + " where `id`=?";
 

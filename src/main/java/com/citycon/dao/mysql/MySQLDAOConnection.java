@@ -58,6 +58,12 @@ public class MySQLDAOConnection {
         return localInstance;
     }
 
+    /**
+     * Get connection from Pool of Connections
+     *
+     * @return
+     * @throws InternalDAOException
+     */
     public Connection getConnection() throws InternalDAOException {
         try {
             return dataSource.getConnection();

@@ -9,11 +9,32 @@
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/statistic/statisticList.css">
-    <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+              ['Group', 'Users'],
+              ['Admins', ${count_admins}],
+              ['Operators', ${count_operators}],
+              ['Guests',  ${count_guests}]
+          ]);
+         var options = {
+              title: 'My Daily Activities',
+              is3D: true,
+          };
+         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+          chart.draw(data, options);
+      }
+  </script>
 </head>
 <body>
 <div class="content-wrapper">
@@ -34,34 +55,16 @@
             </div>
           </div>
 
-            <br>
-
+          <br>
           <div class="row">
-            <div class="col-xs-6 text-right"><strong>Count admins:</strong></div>
-            <div class="col-xs-6">
-              ${count_admins} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_admins/count_users}"/>)
-            </div>
-          </div>
-
-            <br>
-
-          <div class="row">
-            <div class="col-xs-6 text-right"><strong>Count operators:</strong></div>
-            <div class="col-xs-6">
-              ${count_operators} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_operators/count_users}"/>)
-            </div>
+              <div class="col-xs-2"></div>
+              <div class="col-xs-8">
+                  <div id="piechart_3d" style="width: 500px; height: 315px; align-content: center"></div>
+              </div>
+              <div class="col-xs-2"></div>
           </div>
 
           <br>
-
-          <div class="row">
-            <div class="col-xs-6 text-right"><strong>Guests count:</strong></div>
-            <div class="col-xs-6">
-              ${count_guests} (<fmt:formatNumber type="percent" minFractionDigits="2" value="${count_guests/count_users}"/>)
-            </div>
-          </div>
-
-            <br>
 
           <c:if test="${not empty first_users}">
               <div class="row">

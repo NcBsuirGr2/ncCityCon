@@ -34,6 +34,14 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         hashMap.put("routersNum", "`RoutersNum`");
     }
 
+    /**
+     * Return count of Cities that contain search_input
+     *
+     * @param search_input
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public int count_element(String search_input) throws InternalDAOException, InvalidDataDAOException {
         String search = "select count(1) from " + nameTable + " where `Name` LIKE '%" + search_input + "%' " +
@@ -42,6 +50,19 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         return count_search(search);
     }
 
+    /**
+     * Return one page of Cities that contain search_input
+     *
+     * @param page
+     * @param itemsPerPage
+     * @param sortBy
+     * @param asc
+     * @param search_input
+     * @return
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public CityEntity[] getPage(int page, int itemsPerPage, String sortBy, boolean asc, String search_input)
                                             throws InvalidDataDAOException, InternalDAOException {
 
@@ -105,6 +126,15 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         return cities.toArray(new CityEntity[cities.size()]);
     }
 
+    /**
+     * Create in DB city from ORM
+     *
+     * @param newElement
+     * @throws DublicateKeyDAOException
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void create(Entity newElement) throws DublicateKeyDAOException,
             InternalDAOException, InvalidDataDAOException {
 
@@ -143,6 +173,15 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
     }
 
+
+    /**
+     * Add empty fields to CityEntity
+     *
+     * @param readElement
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
+    @Override
     public void read(Entity readElement) throws InternalDAOException, InvalidDataDAOException {
 
         CityEntity city;
@@ -194,6 +233,15 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
     }
 
+    /**
+     * Update in DB city
+     *
+     * @param updateElement
+     * @throws DublicateKeyDAOException
+     * @throws InvalidDataDAOException
+     * @throws InternalDAOException
+     */
+    @Override
     public void update(Entity updateElement) throws DublicateKeyDAOException,
             InvalidDataDAOException, InternalDAOException {
         CityEntity city = null;
@@ -232,6 +280,14 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         }
     }
 
+    /**
+     * Return cities of concrete Country
+     *
+     * @param country
+     * @return
+     * @throws InternalDAOException
+     * @throws InvalidDataDAOException
+     */
     @Override
     public CityEntity[] getCities(String country) throws InternalDAOException, InvalidDataDAOException {
         ArrayList<CityEntity> cities = new ArrayList();
@@ -281,6 +337,11 @@ public class CityDAO extends MySQLDAO implements CitiesOfCountry {
         return cities.toArray(new CityEntity[cities.size()]);
     }
 
+    /**
+     * Return list of all countries
+     *
+     * @return
+     */
     @Override
     public String[] getCountries(){
         String[] countries = { "Belarus", "Russia", "Ukraine", "Poland", "Moldova"};

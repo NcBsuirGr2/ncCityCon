@@ -59,15 +59,13 @@
                             Cities
                         </div>
                         <div class="col-sm-4">
-                            <c:if test="${not empty entityArray and not empty param.search}">
-                                <div class="pull-right">
-                                    <form action="/cities" method="get" name="form" onsubmit="return true;">
-                                        <img src="/img/search.png" height="25px">
-                                        <input class="panel-search simpleText" name="search" type="text" id="search" size="18"
-                                               maxlength="15" value="${param.search}" placeholder="search..." title="search by Name or Country of city">
-                                    </form>
-                                </div>
-                            </c:if>
+                            <div class="pull-right">
+                                <form action="/cities" method="get" name="form" onsubmit="return true;">
+                                    <img src="/img/search.png" height="25px">
+                                    <input class="panel-search simpleText" name="search" type="text" id="search" size="18"
+                                           maxlength="15" value="${param.search}" placeholder="search..." title="search by Name or Country of city">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

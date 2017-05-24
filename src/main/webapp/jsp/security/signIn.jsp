@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="form-horizontal" method="POST" id="form" action="/signin">                               
+                            <form class="form-horizontal" method="POST" id="form" action="/signin">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Login:</label>
                                     <div class="col-xs-7">
